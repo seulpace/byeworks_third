@@ -31,6 +31,9 @@
 	</resultMap>
 	
 	
+
+	
+	
 	<select id="selectDepartmentList" resultMap="departmentResultSet">
 	
 		SELECT DEPARTMENT_NO, DEPARTMENT_NAME FROM TB_DEPARTMENT
@@ -40,6 +43,47 @@
 	
 		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, POSITION, DEPARTMENT, EMPNO FROM TB_MEMBER WHERE DEPARTMENT = #{departmentNo} AND MEMBER_STATUS ='Y' ORDER BY POSITION
 	</select>
+	
+	<insert id="insertSignA" parameterType="SignAndAnnualSign">
+	
+		INSERT INTO TB_SIGN VALUES
+		(SEQ_SNO.NEXTVAL, SYSDATE, #{docuType}, DEFAULT, DEFAULT, #{title}, #{memberNo})
+	
+	</insert>
+	
+	<insert id="insertAnnualSign" parameterType="SignAndAnnualSign">
+		INSERT INTO TB_ANNUAL_SIGN VALUES
+		(SEQ_SNO.CURRVAL, SYSDATE, #{annualPeriod}, #{annualStartDay}, #{annualEndDay}, #{annualContent}, #{annualType})
+	
+	</insert>
+	
+	<insert id="insertSignLine" parameterType="list">
+		INSERT ALL
+		<foreach collection="list" item="item" separator=" ">
+			INTO TB_SIGNLINE VALUES
+			(#{item.signLineMemberNo}, SEQ_SNO.CURRVAL, NULL, DEFAULT, #{item.memberOrder})
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<insert id="insertSignRefer" parameterType="list">
+		INSERT ALL
+		<foreach collection="list" item="item" separator=" ">
+			INTO TB_SIGNREFER VALUES
+			(SEQ_SNO.CURRVAL, #{item.referMemberNo}, DEFAULT, NULL )
+		</foreach>
+		SELECT * FROM DUAL
+	
+	</insert>
+	
+	<insert id="insertSignAttachment" parameterType="SignAttachment">
+		INSERT INTO TB_SIGN_ATTACHMENT VALUES
+		(SEQ_FNO.NEXTVAL, #{oaName}, #{maName}, NULL, SEQ_SNO.CURRVAL)
+	
+	</insert>
+	
+
+	
 
 
 

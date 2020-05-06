@@ -13,6 +13,10 @@
 		<typeAlias type="com.dadada.byeworks.member.model.vo.AddressFav" alias="AddressFav" />
 		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizGroup" alias="BizGroup" />
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.DepartmentDto" alias="Department"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignAndAnnualSign" alias="SignAndAnnualSign"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignLine" alias="SignLine"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignRefer" alias="SignRefer"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignAttachment" alias="SignAttachment"/>
 	</typeAliases>
 	
 	<mappers>

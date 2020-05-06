@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/LogoExample.png" type="image/png" />
 <title>ByeWorks</title>
 
@@ -273,7 +275,7 @@
 
 							   <tr>
 							   	 <th>제목</th>
-							   	 <td name="title">휴가신청</td>
+							   	 <td><input type="text" name="title" style="border:none;"></td>
 							   
 							   </tr>
 							   
@@ -289,18 +291,37 @@
 
                                <tr>
                                   <th>직위</th>
-                                  <td>일반사원</td>
+                                  <td>${loginUser.position }</td>
                               </tr>
 
                               <tr>
-                                 <th>휴가종류</th>
-                                 <td>연차</td>
+                                 <th>연차종류</th>
+                                 <td>
+                                 	<select name="annualType">
+                                 		<option value="0">연차</option>
+                                 		<option value="1">오전반차</option>
+                                 		<option value="2">오후반차</option>
+                                 	</select>
+                                 </td>
                               </tr>
                               
                               <tr>
-                                <th>기간</th>
-                                <td><input type="date"> ~ <input type="date"></td>
-                                
+                              	<th>연차사유</th>
+                              	<td>
+                              		<textarea name="annualContent" style="width: 100%;resize: none;border:none;"rows="20"></textarea>
+                              	</td>
+                              </tr>
+                              
+                              
+                              
+                              <tr>
+                                <th>날짜</th>
+                                <td><input type="date" name="annualStartDay" style="border:none;"> ~ <input type="date" name="annualEndDay" style="border:none"></td>
+                              </tr>
+                              
+                              <tr>
+                              	<th>기간</th>
+								<th><input type="number" name="annualPeriod"></th>                              	
                               </tr>
 
                             </table><br>
@@ -315,17 +336,17 @@
                             <table class="table table-bordered" style="width:100%; text-align: center; height:200px">
                               <tr>
                               	 <th>제목</th>
-                              	 <td><input type="text" name="title"></td>
+                              	 <td><input type="text" name="title" style="border:none;"></td>
                               </tr>
                               
                               <tr>
                               	 <th>입사일</th>
-                              	 <td><input type="date" name="enrollDate"></td>
+                              	 <td><input type="date" name="enrollDate" style="border:none";></td>
                               </tr>
                               
                               <tr>
                               	 <th>퇴사일</th>
-                              	 <td><input type="date" name="quitDate"></td>
+                              	 <td><input type="date" name="quitDate" style="border:none;"></td>
                               </tr>
                               
                               <tr>
@@ -378,8 +399,8 @@
                                 <table id="promotion"class="table table-bordered" style="width:100%; text-align: center; height:200px; border-spacing: 25px;">
 
                                   <tr>
-                                      <th>소속</th>
-                                      <td>총무부</td>
+                                      <th>현재부서</th>
+                                      <td>${loginUser.department }</td>
                                   </tr>
 
                                   <tr>
@@ -420,9 +441,7 @@
                         <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
                           <br><br>
                           <div class="panel-body">
-                            <input type="file">
-                            <input type="file">
-                            <input type="file">
+                            <input type="file" name="upLoadFile" multiple>
                           </div>
                         </div>
                       </div>
@@ -747,10 +766,10 @@
               var level = $(this).attr("class");
               console.log(i);
               switch(level){
-              	case "0" : $("#level").append("<th style='width:80px;height:50px;!important'>대표<input type='hidden' name='slist[" + i + "].signLineMemberNo'></th>"); break;
-              	case "1" : $("#level").append("<th style='width:80px;height:50px;!important'>임원<input type='hidden' name='slist[" + i + "].signLineMemberNo'></th>"); break;
-                case "2" : $("#level").append("<th style='width:80px;height:50px;!important'>팀장<input type='hidden' name='slist[" + i + "].signLineMemberNo'></th>"); break;
-                case "3" : $("#level").append("<th style='width:80px;height:50px;!important'>대리<input type='hidden' name='slist[" + i + "].signLineMemberNo'></th>"); break;
+              	case "0" : $("#level").append("<th style='width:80px;height:50px;!important'>대표<input type='hidden' name='slist[" + i + "].signLineMemberNo' value='" + $(this).val() + "'></th>"); break;
+              	case "1" : $("#level").append("<th style='width:80px;height:50px;!important'>임원<input type='hidden' name='slist[" + i + "].signLineMemberNo' value='" + $(this).val() + "'></th>"); break;
+                case "2" : $("#level").append("<th style='width:80px;height:50px;!important'>팀장<input type='hidden' name='slist[" + i + "].signLineMemberNo' value='" + $(this).val() + "'></th>"); break;
+                case "3" : $("#level").append("<th style='width:80px;height:50px;!important'>대리<input type='hidden' name='slist[" + i + "].signLineMemberNo' value='" + $(this).val() + "'></th>"); break;
               }
               $("#stamp").append("<td style='width:80px;height:50px;!important'><input type='hidden' name='slist["+i+"].memberOrder' value='"+ (i+1) +"'></td>");
               $("#name").append("<td style='width:80px;height:50px;!important'>"+ $(this).text() + "</td>");
