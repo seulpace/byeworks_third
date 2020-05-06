@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+						"http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.dadada.byeworks.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.dadada.byeworks.member.model.dto.MemberAddress" alias="MemberAddress"/>
+		<typeAlias type="com.dadada.byeworks.member.model.vo.AddressFav" alias="AddressFav" />
+		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizGroup" alias="BizGroup" />
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.DepartmentDto" alias="Department"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/bizAddress-mapper.xml"/>
+		<mapper resource="/mappers/notice-mapper.xml"/>
+		<mapper resource="/mappers/sign-mapper.xml"/>
+	</mappers>
+	
+</configuration>

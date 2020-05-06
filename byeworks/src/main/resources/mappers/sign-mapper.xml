@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+				 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+				 
+<mapper namespace="signMapper">
+
+
+	<resultMap type="Department" id="departmentResultSet">
+		<id property="departmentNo" column="DEPARTMENT_NO" />
+		<result property="departmentName" column="DEPARTMENT_NAME" />
+	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+		<!-- property : vo클래스의 필드명 / column : DB조회된 컬럼명 -->
+		<id property="memberNo" column="member_no" />
+		<result property="memberId" column="member_id" />
+		<result property="memberName" column="member_name" />
+		<result property="memberPwd" column="member_pwd" />
+		<result property="position" column="position" />
+		<result property="department" column="department" />
+		<result property="phone" column="phone" />
+		<result property="extension" column="extension" />
+		<result property="email" column="email" />
+		<result property="address" column="address" />
+		<result property="birth" column="birth" />
+		<result property="enrollday" column="enrollday" />
+		<result property="memberStatus" column="member_status" />
+		<result property="retireday" column="retireday" />
+		<result property="profileModify" column="profile_modify" />
+		<result property="empNo" column="empno" />
+	</resultMap>
+	
+	
+	<select id="selectDepartmentList" resultMap="departmentResultSet">
+	
+		SELECT DEPARTMENT_NO, DEPARTMENT_NAME FROM TB_DEPARTMENT
+	</select>
+	
+	<select id="selectEmpList" parameterType="_int" resultMap="memberResultSet">
+	
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, POSITION, DEPARTMENT, EMPNO FROM TB_MEMBER WHERE DEPARTMENT = #{departmentNo} AND MEMBER_STATUS ='Y' ORDER BY POSITION
+	</select>
+
+
+
+
+
+
+
+</mapper>				 

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+				 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+	<resultMap type="Member" id="memberResultSet">
+		<!-- property : vo클래스의 필드명 / column : DB조회된 컬럼명 -->
+		<id property="memberNo" column="member_no" />
+		<result property="memberId" column="member_id" />
+		<result property="memberName" column="member_name" />
+		<result property="memberPwd" column="member_pwd" />
+		<result property="position" column="position" />
+		<result property="department" column="department" />
+		<result property="phone" column="phone" />
+		<result property="extension" column="extension" />
+		<result property="email" column="email" />
+		<result property="address" column="address" />
+		<result property="birth" column="birth" />
+		<result property="enrollday" column="enrollday" />
+		<result property="memberStatus" column="member_status" />
+		<result property="retireday" column="retireday" />
+		<result property="profileModify" column="profile_modify" />
+		<result property="empNo" column="empno" />
+	</resultMap>
+	
+	<resultMap type="MemberAddress" id="memberAddressSet">
+		<id property="memberNo" column="member_no"/>
+		<result property="memberName" column="member_name"/>
+		<result property="position" column="position"/>
+		<result property="department" column="department"/>
+		<result property="extension" column="extension"/>
+		<result property="email" column="email"/>
+		<result property="bookmark" column="bookmark"/>	
+	</resultMap>
+
+	<!-- 로그인 -->
+	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT,
+       		   PHONE, EXTENSION, EMAIL, ADDRESS, BIRTH, ENROLLDAY, MEMBER_STATUS, RETIREDAY, PROFILE_MODIFY, EMPNO
+		  FROM TB_MEMBER M
+		  JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
+		  JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
+		 WHERE MEMBER_ID = #{memberId}
+		   AND M.MEMBER_STATUS = 'Y'
+	</select>
+	
+	<!-- 로그인이 되었을 때 세션ID와 유효시간을 TB_MEMBER에 업데이트 -->
+	<update id="keepLogin">
+		UPDATE TB_MEMBER
+		   SET SESSIONKEY = #{sessionId}, SESSIONLIMIT = #{next}
+		 WHERE MEMBER_ID = #{memberId}
+		   AND MEMBER_STATUS = 'Y'
+	</update>
+	
+	<!-- 유효기간이 남아있으면서 전달된 sessionId를 갖고 있는 사용자 정보를 가져온다 -->
+	<select id="checkMemberWithSessionKey" parameterType="string" resultMap="memberResultSet">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT,
+      	       PHONE, EXTENSION, EMAIL, ADDRESS, BIRTH, ENROLLDAY, MEMBER_STATUS, RETIREDAY, PROFILE_MODIFY, EMPNO
+		  FROM TB_MEMBER M
+		  JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
+		  JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
+		 WHERE SESSIONKEY = #{sessionId} 
+		   AND SESSIONLIMIT > SYSDATE
+		   AND M.MEMBER_STATUS = 'Y'
+	</select>
+	
+	<!-- 이름과 이메일에 해당하는 계정이 있으면 리턴 -->
+	<select id="checkId" parameterType="Member" resultMap="memberResultSet">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT,
+      	       PHONE, EXTENSION, EMAIL, ADDRESS, BIRTH, ENROLLDAY, MEMBER_STATUS, RETIREDAY, PROFILE_MODIFY, EMPNO
+		  FROM TB_MEMBER M
+		  JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
+		  JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
+		 WHERE MEMBER_NAME = #{memberName}
+		   AND EMAIL = #{email}
+		   AND M.MEMBER_STATUS = 'Y'
+	</select>
+	
+	<!-- 아이디와 이메일에 해당하는 계정이 있으면 리턴 -->
+	<select id="checkPwd" parameterType="Member" resultMap="memberResultSet">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT,
+      	       PHONE, EXTENSION, EMAIL, ADDRESS, BIRTH, ENROLLDAY, MEMBER_STATUS, RETIREDAY, PROFILE_MODIFY, EMPNO
+		  FROM TB_MEMBER M
+		  JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
+		  JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
+		 WHERE MEMBER_ID = #{memberId}
+		   AND EMAIL = #{email}
+		   AND M.MEMBER_STATUS = 'Y'
+	</select>
+	
+	<!-- 비밀번호 업데이트 -->
+	<update id="resetNewPwd" parameterType="Member">
+		UPDATE TB_MEMBER
+		   SET MEMBER_PWD = #{memberPwd}
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND MEMBER_STATUS = 'Y'
+	</update>
+	
+	<!-- 사내 주소록 전체 조회 -->
+	<select id="selectAddrList" parameterType="_int" resultMap="memberAddressSet">
+		SELECT M.MEMBER_NO, M.MEMBER_NAME, D.DEPARTMENT_NAME AS DEPARTMENT, P.POSITION_NAME AS POSITION,
+		       CASE WHEN M.MEMBER_NO IN (SELECT A.MEMBER_NO FROM TB_ADDRESSFAV A WHERE FAV_MEMBER_NO = #{no}) THEN 'Y' ELSE 'N' END AS BOOKMARK,
+		       M.EXTENSION, M.EMAIL
+		  FROM TB_MEMBER M
+		  JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
+		  JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
+		 WHERE M.MEMBER_NO != #{no}
+		   AND M.MEMBER_STATUS = 'Y'
+		 ORDER BY MEMBER_NO
+	</select>
+	
+	<!-- 사내 주소록 즐겨찾기 조회 -->
+	<select id="selectMarkList" parameterType="_int" resultMap="memberAddressSet">
+		SELECT M.MEMBER_NO, M.MEMBER_NAME, D.DEPARTMENT_NAME AS DEPARTMENT, P.POSITION_NAME AS POSITION, 'Y' AS BOOKMARK,
+			   M.EXTENSION, M.EMAIL
+		  FROM TB_MEMBER M
+		  JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
+		  JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
+		  JOIN TB_ADDRESSFAV A ON (M.MEMBER_NO = A.MEMBER_NO)
+		 WHERE M.MEMBER_NO != #{no}
+		   AND A.FAV_MEMBER_NO = #{no}
+		   AND M.MEMBER_STATUS = 'Y'
+	</select>
+	
+	<!-- 사내 주소록 즐겨찾기 -->
+	<insert id="bookmarkAddr" parameterType="AddressFav">
+		INSERT INTO TB_ADDRESSFAV VALUES(#{favMemberNo}, #{memberNo})
+	</insert>
+	
+	<!-- 사내 주소록 즐겨찾기 제거 -->
+	<delete id="removeBookmarkAddr" parameterType="AddressFav">
+		DELETE TB_ADDRESSFAV
+		 WHERE FAV_MEMBER_NO = #{favMemberNo}
+		   AND MEMBER_NO = #{memberNo}
+	</delete>
+	
+	<select id="memberList" resultMap="memberResultSet">
+			SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT,
+			       PHONE, EXTENSION, EMAIL, ADDRESS, BIRTH, ENROLLDAY, MEMBER_STATUS, RETIREDAY, PROFILE_MODIFY, EMPNO
+			FROM TB_MEMBER M
+	        JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
+        	JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
+			ORDER BY MEMBER_NO
+		
+	</select>
+	
+	<select id="memberDetailList" resultMap="memberResultSet">
+		SELECT PROFILE_MODIFY, MEMBER_NAME, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT, EMPNO, EXTENSION, ENROLLDAY, EMAIL, PHONE, ADDRESS, BIRTH, RETIREDAY
+		FROM TB_MEMBER M
+        JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
+       	JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
+		WHERE MEMBER_NO = #{mno}
+	</select>
+	
+	<update id="updateMember" parameterType="Member" >
+		UPDATE TB_MEMBER
+		SET EXTENSION=#{extension}
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
+</mapper>

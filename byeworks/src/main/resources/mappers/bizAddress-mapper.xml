@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+					    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bizAddressMapper">
+
+	<resultMap type="BizGroup" id="bizGroupResultSet">
+		<id property="groupNo" column="group_no" />
+		<result property="groupName" column="group_name" />
+		<result property="memberNo" column="member_no" />
+		<result property="memberName" column="member_name" />
+		<result property="empNo" column="empno"/>
+	</resultMap> 
+
+	<select id="selectGroupList" resultMap="bizGroupResultSet">
+		SELECT GROUP_NO, GROUP_NAME, MEMBER_NO, MEMBER_NAME, EMPNO
+		  FROM TB_BIZGROUP
+		  JOIN TB_MEMBER USING (MEMBER_NO)
+		 WHERE GROUP_STATUS = 'Y'
+		 ORDER BY GROUP_NO DESC
+	</select>
+	
+	<insert id="insertGroup" parameterType="BizGroup">
+		INSERT INTO TB_BIZGROUP VALUES(SEQ_BGNO.NEXTVAL, #{groupName}, #{memberNo}, DEFAULT)
+	</insert>
+	
+	<update id="updateGroup" parameterType="BizGroup">
+		UPDATE TB_BIZGROUP
+		   SET GROUP_NAME = #{groupName}
+		 WHERE GROUP_NO = #{groupNo}
+	</update>
+	
+	<update id="deleteGroup" parameterType="_int">
+		UPDATE TB_BIZGROUP
+		   SET GROUP_STATUS = 'N'
+		 WHERE GROUP_NO = #{gno}
+	</update>
+
+</mapper>
