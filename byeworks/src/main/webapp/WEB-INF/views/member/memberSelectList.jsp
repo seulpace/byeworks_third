@@ -77,12 +77,12 @@
                                 <div class="modal-content">
 
                                   <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel2">사원 퇴사</h4>
+                                    <h4 class="modal-title" id="myModalLabel2">퇴사 처리하시겠습니까?</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
                                   </div>
                                   <div class="modal-body">
-                                    <h4>퇴사 처리하시겠습니까?</h4>
+                                    
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
@@ -92,7 +92,7 @@
                                 </div>
                               </div>
                             </div>
-                            <button type="button" class="btn btn-primary">사원등록</button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='memberInsertForm.me'">사원등록</button>
                           </div>
                         </div>
                     </div>

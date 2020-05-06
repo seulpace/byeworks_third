@@ -2,6 +2,7 @@ package com.dadada.byeworks.bizAddress.model.service;
 
 import java.util.ArrayList;
 
+import com.dadada.byeworks.bizAddress.model.vo.BizAddress;
 import com.dadada.byeworks.bizAddress.model.vo.BizGroup;
 
 public interface BizAddressService {
@@ -17,4 +18,10 @@ public interface BizAddressService {
 	
 	// 그룹 삭제
 	int deleteGroup(int gno);
+	
+	// 업체 주소 전체 조회
+	ArrayList<BizAddress> selectBizAddrList(int memberNo);
+	
+	// 그룹 별 업체 주소 조회
+	ArrayList<BizAddress> selectBizListGroup(int memberNo, int groupNo);
 }
