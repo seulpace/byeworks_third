@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.dadada.byeworks.bizAddress.model.dao.BizAddressDao;
 import com.dadada.byeworks.bizAddress.model.vo.BizAddress;
+import com.dadada.byeworks.bizAddress.model.vo.BizAddressFav;
 import com.dadada.byeworks.bizAddress.model.vo.BizGroup;
 
 @Service("bService")
@@ -65,6 +66,14 @@ public class BizAddressServiceImpl implements BizAddressService{
 	@Override
 	public ArrayList<BizAddress> selectBizListGroup(int memberNo, int groupNo) {
 		return bDao.selectBizListGroup(sqlSession, memberNo, groupNo);
+	}
+
+	/**
+	 * 업체 주소록 즐겨찾기
+	 */
+	@Override
+	public int bookmarkBizAddr(BizAddressFav af) {
+		return bDao.bookmarkBizAddr(sqlSession, af);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.dadada.byeworks.bizAddress.model.service;
 import java.util.ArrayList;
 
 import com.dadada.byeworks.bizAddress.model.vo.BizAddress;
+import com.dadada.byeworks.bizAddress.model.vo.BizAddressFav;
 import com.dadada.byeworks.bizAddress.model.vo.BizGroup;
 
 public interface BizAddressService {
@@ -24,4 +25,7 @@ public interface BizAddressService {
 	
 	// 그룹 별 업체 주소 조회
 	ArrayList<BizAddress> selectBizListGroup(int memberNo, int groupNo);
+	
+	// 업체 주소 북마크
+	int bookmarkBizAddr(BizAddressFav af);
 }

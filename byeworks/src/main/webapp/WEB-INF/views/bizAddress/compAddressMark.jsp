@@ -48,7 +48,7 @@
 			                	<div class="row">
 			                    	<div class="col-sm-12">
 			                        	<div class="card-box table-responsive">
-					                    	<table id="datatable-checkbox" class="table table-bordered" style="width:100%">
+					                    	<table id="datatable-checkbox" class="table table-bordered" style="width:100%" data-order="">
 					                        	<thead>
 					                            	<tr>
 			                                    		<th style="width:5px"></th>
