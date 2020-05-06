@@ -32,4 +32,6 @@ public class MainController {
 	public String goError() {
 		return "common/errorPage";
 	}
+	
+	//주석테스트!!
 }
