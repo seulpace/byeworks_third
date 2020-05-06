@@ -53,7 +53,6 @@
 				                            <option value="${ g.groupNo }"
 				                            	<c:if test="${ g.groupNo eq sessionScope.groupNo }">
 				                            		selected
-				                            		<c:remove var="groupNo"/>
 				                            	</c:if>
 				                            >${ g.groupName }</option>
 				                            </c:forEach>
@@ -63,6 +62,7 @@
 	                    	</div>
 	                  	</div>
 					</div>
+					<c:remove var="groupNo"/>
 	
 	                <!-- 본문 테이블 -->
 	                <div class="row" style="display: block;">
@@ -73,7 +73,7 @@
 	                          			<div class="col-sm-12">
 	                            			<div class="card-box table-responsive">
 	    
-	                              				<table id="datatable-checkbox" class="table table-bordered" style="width:100%">
+	                              				<table id="datatable-checkbox" class="table table-bordered" style="width:100%" data-order="">
 	                                				<thead>
 	                                  					<tr>
 						                                    <th ></th>
@@ -89,15 +89,15 @@
 	                                				<tbody>
 	                                					<c:forEach items="${ list }" var="l">
 	                                  					<tr>
-	                                    					<th style="text-align: center;">
+	                                    					<td style="text-align: center;">
 	                                      						<div class="checkbox">
 	                                        						<label>
 	                                          							<input type="checkbox" class="flat">
 	                                        						</label>
 	                                      						</div>
-	                                    					</th>
-	                                    					<th style="text-align: center; cursor: pointer;">
-				                                    			<input type="hidden" value="${ l.groupNo }">
+	                                    					</td>
+	                                    					<th style="text-align: center; cursor: pointer;" name="heartBtn">
+				                                    			<input type="hidden" value="${ l.addressNo }">
 				                                    			<input type="hidden" value="${ l.bookmark }">
 				                                    			<c:if test="${ l.bookmark eq 'Y'}">
 				                                      			<i class="fa fa-heart" style="font-size:1.5em; color:#2b90d9;"></i>
@@ -203,6 +203,11 @@
     
     <script>
     $(function() {
+    	var myNo;
+    	var addrNo;
+    	var bookmark;
+    	
+    	// 그룹 별 조회
     	$("#groupSelect").change(function() {
     		var groupNo = this.value;
     		
@@ -212,15 +217,53 @@
     				url:'group.bzad',
     				type:'POST',
     				data:{"groupNo":groupNo},
-    				success:function(data) {
+    				success:function() {
     					console.log("성공");
     				},error:function() {
     					console.log("통신 오류");
+    				},complete:function() {
+    					location.replace("selectList.bzad");
     				}
     			});
-    		} 
+    		}
+    	});
+    	
+    	$("#datatable-checkbox>tbody>tr th").click(function(){
+    		// 누르면 누른 사람의 정보를 받아온다
+    		// 받아오는 정보: groupNo, bookmark
+    		myNo = ${ loginUser.memberNo };		// 내 정보
+    		addrNo = $(this).children().eq(0);	// 주소 담는 곳
+    		bookmark = $(this).children().eq(1);// 북마크 여부 담는 곳
+    		heart = $(this).children().eq(2);	// 하트모양 아이콘
     		
-    		location.reload();
+    		// 북마크가 되어있다면
+			if(bookmark.val() == 'Y') {
+				$.ajax({
+					url:"removeBM.ad",
+					data:{favMemberNo:myNo,
+						  	  memberNo:memberNo.val()},
+  					type:"post",
+  					success:function(result) {
+						bookmark.val('N');
+						heart.css("color", "#282c37");
+					},error:function() {
+						console.log("ajax 통신 실패");
+					}
+				});
+			} else { // 되어있지 않다면 북마크에 값 넣어주기
+				$.ajax({
+					url:"bookmark.bzad",
+					data:{addressNo:addrNo.val(),
+						  memberNo:myNo},
+					type:"post",
+					success:function(result) {
+						bookmark.val('Y');
+						heart.css("color", "#2b90d9");
+					},error:function() {
+						console.log("ajax 통신 실패");
+					}
+				});
+			}
     	});
     });    
     </script>

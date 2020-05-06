@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.dadada.byeworks.bizAddress.model.vo.BizAddress;
+import com.dadada.byeworks.bizAddress.model.vo.BizAddressFav;
 import com.dadada.byeworks.bizAddress.model.vo.BizGroup;
 
 @Repository
@@ -47,6 +48,7 @@ public class BizAddressDao {
 		return (ArrayList)sqlSession.selectList("bizAddressMapper.selectBizAddrList", memberNo);
 	}
 
+	// 업체 주소록 그룹 별 조회
 	public ArrayList<BizAddress> selectBizListGroup(SqlSessionTemplate sqlSession, int memberNo, int groupNo){
 		
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -55,5 +57,10 @@ public class BizAddressDao {
 		map.put("groupNo", groupNo);
 		
 		return (ArrayList)sqlSession.selectList("bizAddressMapper.selectBizListGroup", map);
+	}
+	
+	// 업체 주소록 즐겨찾기
+	public int bookmarkBizAddr(SqlSessionTemplate sqlSession, BizAddressFav af) {
+		return sqlSession.insert("bizAddressMapper.bookmarkBizAddr", af);
 	}
 }

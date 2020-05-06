@@ -20,7 +20,7 @@
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignAndQuit" alias="SignAndQuit"/>
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignAndAppointment" alias="SignAndAppointment"/>
 		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddress" alias="BizAddress"/>
-
+		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddressFav" alias="BizAddressFav" />
 	</typeAliases>
 	
 	<mappers>

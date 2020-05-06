@@ -69,5 +69,9 @@
            AND B.GROUP_NO = #{groupNo}
 		 ORDER BY B.ADDRESS_NO DESC
 	</select>
+	
+	<insert id="bookmarkBizAddr" parameterType="BizAddressFav">
+		INSERT INTO TB_BIZADDRESSFAV VALUES(#{addressNo}, #{memberNo})
+	</insert>
 
 </mapper>
