@@ -134,6 +134,7 @@
 		   AND MEMBER_NO = #{memberNo}
 	</delete>
 	
+	<!-- 직원 전체 조회용 -->
 	<select id="memberList" resultMap="memberResultSet">
 			SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT,
 			       PHONE, EXTENSION, EMAIL, ADDRESS, BIRTH, ENROLLDAY, MEMBER_STATUS, RETIREDAY, PROFILE_MODIFY, EMPNO
@@ -144,6 +145,7 @@
 		
 	</select>
 	
+	<!-- 직원 상세조회용 -->
 	<select id="memberDetailList" resultMap="memberResultSet">
 		SELECT PROFILE_MODIFY, MEMBER_NAME, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT, EMPNO, EXTENSION, ENROLLDAY, EMAIL, PHONE, ADDRESS, BIRTH, RETIREDAY
 		FROM TB_MEMBER M
@@ -152,9 +154,25 @@
 		WHERE MEMBER_NO = #{mno}
 	</select>
 	
+
+	<!-- 직원 수정 -->
 	<update id="updateMember" parameterType="Member" >
 		UPDATE TB_MEMBER
 		SET EXTENSION=#{extension}
 		WHERE MEMBER_NO=#{memberNo}
+	</update>
+	
+	<!-- 직원등록 -->
+	<insert id="memberInsert" parameterType="Member">
+		insert into tb_member
+		values (seq_mno.nextval, 'user'||seq_mno.currval, #{memberName}, #{birth}, #{position}, 
+				#{department}, #{phone}, #{extension}, #{email}, #{address}, #{birth}, sysdate, 
+				default, default, #{profileModify}, to_char(sysdate, 'yyyymmdd')||seq_mno.currval)
+	</insert>
+	
+	<update id="myUpdate" parameterType="Member">
+		update tb_member
+		set phone=#{phone}, email=#{email}, address=#{address}
+		where member_id=#{memberId}
 	</update>
 </mapper>

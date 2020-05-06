@@ -100,7 +100,7 @@
                		<ul class="nav side-menu"> 
                  		<li><a><i class="fa fa-user"></i> 인사 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
-                     			<li><a href="index2.html">내 정보 관리</a></li>
+                     			<li><a href="myPage.me">내 정보 관리</a></li>
                      			<li><a href="memberList.me">전체 사원 조회 (관)</a></li>
                      			<li><a>발령<span class="fa fa-chevron-down"></span></a>
                        				<ul class="nav child_menu">

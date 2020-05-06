@@ -17,127 +17,115 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 
+ 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
  	<title>Byeworks</title>
 </head>
 <body class="nav-md">
+	 <c:if test="${ !empty sessionScope.myMsg }">
+			<script>
+			alertify.alert("${sessionScope.myMsg}");	
+			</script>
+			<c:remove var="myMsg" scope="session"/>
+		</c:if>
+
 	<div class="container body">
     	<div class="main_container">
         
         <!-- 메뉴바 -->
         <jsp:include page="../common/menubar.jsp"/>
-       
 
-        <!-- page content -->
+		  <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
           <div class="row" style="display: inline-block;" >
             <div class="col-md-12 ">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>사원 등록</h2>
+                  <h2>내 정보 조회</h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br />
-                  <form class="form-horizontal form-label-left" id="updateMember" method="post" enctype="multipart/form-data" action="memberInsert.me"> 
+                  <form class="form-horizontal form-label-left" action="myUpdate.me" method="post">
+                  	<input type="hidden" value="${loginUser.memberId }" name="memberId">
+                  
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">프로필사진</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="file" name="profileModify" id="profileModify" >
+                           <span class="image"><img src="${pageContext.request.contextPath}/resources/profile_modify/${loginUser.profileModify } " style="width:30%; margin-bottom:3%;" /></span>
                       </div>
                     </div>
                     
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">이름</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" id="memberName" name="memberName">
+                        <input type="text" class="form-control" readonly="readonly" value="${ loginUser.memberName }">
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
+                      <label class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <select id="department">
-                          <option value="">--------------------</option>
-                          <option value="2">사업팀1</option>
-                          <option value="3">사업팀2</option>
-                          <option value="4">인사팀1</option>
-                          <option value="5">인사팀2</option>
-                          <option value="6">총무팀1</option>
-                          <option value="7">총무팀2</option>
-                        </select>
-                      </div> 
+                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.department }">
+                      </div>
                     </div>
                     <div class="form-group row">
-                      <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
-                        <div class="col-md-9 col-sm-9 ">
-                          <select id="position">
-                                <option value="">--------------------</option>
-                                <option value="1">임원</option>
-                                <option value="2">부장</option>
-                                <option value="3">과장</option>
-                                <option value="4">사원</option>
-                          </select>
-                        </div>
+                      <label class="control-label col-md-3 col-sm-3 ">직위</label>
+                      <div class="col-md-9 col-sm-9 ">
+                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.position }">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="control-label col-md-3 col-sm-3 ">사번</label>
+                      <div class="col-md-9 col-sm-9 ">
+                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.empNo }">
+                      </div>
                     </div>
                     
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">사내 전화</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" id="extension" name="extension">
+                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.extension }">
                       </div>
                     </div>
-                 
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">휴대전화</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" id="phone" name="phone">
+                        <input type="text" class="form-control" value="${loginUser.phone }" id="phone" name="phone">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">개인이메일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="email" class="form-control" id="email" name="email">
+                        <input type="text" class="form-control" value="${loginUser.email }" id="email" name="email">
                       </div>
                     </div>
-                   
-                    <div class="form-group row ">
-                      <label class="control-label col-md-3 col-sm-3 ">주소</label>
+                    
+                    <div class="form-group row">
+                      <label class="control-label col-md-3 col-sm-3 ">입사일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control"  id="address" name="address">
+                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.enrollday }">
                       </div>
                     </div>
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">생년월일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="String" class="form-control"  id="birth" name="birth">
+                        <input type="text" class="form-control"  readonly="readonly" value="${loginUser.birth }">
                       </div>
                     </div>
+                    <div class="form-group row ">
+                      <label class="control-label col-md-3 col-sm-3 ">주소</label>
+                      <div class="col-md-9 col-sm-9 ">
+                        <input type="text" class="form-control"  value="${loginUser.address }" id="address" name="address">
+                      </div>
+                    </div>
+                   
+                    
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9  offset-md-3">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">사원등록</button>
-
-                            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
-                              <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-
-                                  <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel2">사원 등록</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <h4>사원 등록하시겠습니까?</h4>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
-                                    <button type="submit" class="btn btn-primary">네</button>
-                                  </div>
-
-                                </div>
-                              </div>
-                            </div>
+                        <button type="submit" class="btn btn-success">수정</button>
+                        <button type="button" onclick="location.href='resetForm.me'" class="btn btn-success">비밀번호  재설정</button>
                       </div>
                     </div>
                   </form>
@@ -146,8 +134,7 @@
             </div>
 
         <!-- /page content -->
-
-     <!-- footer content -->
+        <!-- footer content -->
         <jsp:include page="../common/footer.jsp"/>
         
       </div>

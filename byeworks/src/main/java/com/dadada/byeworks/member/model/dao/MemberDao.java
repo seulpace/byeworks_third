@@ -87,18 +87,33 @@ public class MemberDao {
 		return sqlSession.delete("memberMapper.removeBookmarkAddr", af);
 	}
 	
+	// 김다흰
+	// 직원 전체 조회
 	public ArrayList<Member> selectList(SqlSessionTemplate sqlSession){
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.memberList");
 	}
-	
+	// 김다흰
+	// 직원 상세조회
 	public Member memberDetailList(SqlSessionTemplate sqlSession, int mno) {
 		
 		return sqlSession.selectOne("memberMapper.memberDetailList", mno);
 		
 	}
-	
+	// 김다흰
+		// 직원 수정
 	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.updateMember", m);
+	}
+	// 김다흰
+		// 직원 등록
+	public int memberInsert(SqlSessionTemplate sqlSession, Member m) {
+
+		
+		return sqlSession.insert("memberMapper.memberInsert", m);
+	}
+	
+	public int myUpdate(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.myUpdate", m);
 	}
 }
