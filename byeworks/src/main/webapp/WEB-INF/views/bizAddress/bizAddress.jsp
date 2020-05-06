@@ -47,11 +47,16 @@
 	                      		<div class="form-group row" style="padding-right: 15px; padding-left:15px;">
 	                        		<label class="control-label col-md-2 col-sm-2" style="text-align: right;height: 35px; line-height: 35px;">그룹별로 조회하기</label>
 	                        		<div class="col-md-2 col-sm-2 ">
-	                          			<select class="select2_single form-control" tabindex="-1">
+	                          			<select class="select2_single form-control" tabindex="-1" id="groupSelect">
 				                            <option></option>
-				                            <option value="AK">비즈니스1급</option>
-				                            <option value="HI">일못함</option>
-				                            <option value="CA">성격더러움</option>
+				                            <c:forEach items="${ gList }" var="g">
+				                            <option value="${ g.groupNo }"
+				                            	<c:if test="${ g.groupNo eq sessionScope.groupNo }">
+				                            		selected
+				                            		<c:remove var="groupNo"/>
+				                            	</c:if>
+				                            >${ g.groupName }</option>
+				                            </c:forEach>
 	                          			</select>
 	                        		</div>
 	                      		</div>
@@ -82,6 +87,7 @@
 	                                  					</tr>
 	                                				</thead>
 	                                				<tbody>
+	                                					<c:forEach items="${ list }" var="l">
 	                                  					<tr>
 	                                    					<th style="text-align: center;">
 	                                      						<div class="checkbox">
@@ -90,16 +96,24 @@
 	                                        						</label>
 	                                      						</div>
 	                                    					</th>
-	                                    					<td style="text-align: center; cursor: pointer;">
-	                                      						<i class="fa fa-heart" style="font-size:1.5em; color:red"></i>
-	                                    					</td>
-						                                    <td>김정수</td>
-						                                    <td>주식회사 정식품</td>
-						                                    <td>대리</td>
-						                                    <td>비즈니스1급</td>
-						                                    <td>jeong@fat.co.kr</td>
-						                                    <td>(714)6523-4578</td>
+	                                    					<th style="text-align: center; cursor: pointer;">
+				                                    			<input type="hidden" value="${ l.groupNo }">
+				                                    			<input type="hidden" value="${ l.bookmark }">
+				                                    			<c:if test="${ l.bookmark eq 'Y'}">
+				                                      			<i class="fa fa-heart" style="font-size:1.5em; color:#2b90d9;"></i>
+				                                    			</c:if>
+				                                    			<c:if test="${ l.bookmark eq 'N'}">
+				                                    			<i class="fa fa-heart" style="font-size:1.5em; color:#282c37"></i>
+				                                    			</c:if>
+			                                    			</th>
+						                                    <td>${ l.name }</td>
+						                                    <td>${ l.bizName }</td>
+						                                    <td>${ l.position }</td>
+						                                    <td>${ l.groupName }</td>
+						                                    <td>${ l.email }</td>
+						                                    <td>${ l.phone }</td>
 	                                  					</tr>
+	                                  					</c:forEach>
 	                                				</tbody>
 	                              				</table>
 	    
@@ -165,10 +179,10 @@
 
                   			<div class="col-md-6 col-sm-6  form-group has-feedback">
                     			<select class="select2_single form-control" tabindex="-1">
-			                      <option></option>
-			                      <option value="AK">비즈니스1급</option>
-			                      <option value="HI">일못함</option>
-			                      <option value="CA">성격더러움</option>
+			                       <option></option>
+		                           <c:forEach items="${ gList }" var="g">
+		                           <option value="${ g.groupNo }">${ g.groupName }</option>
+		                           </c:forEach>
                     			</select>
                   			</div>
                			</form>
@@ -186,6 +200,30 @@
         <jsp:include page="../common/footer.jsp"/>
 
     </div>
+    
+    <script>
+    $(function() {
+    	$("#groupSelect").change(function() {
+    		var groupNo = this.value;
+    		
+    		// 값이 있으면 조회해보자
+    		if(groupNo > 0) {
+    			$.ajax({
+    				url:'group.bzad',
+    				type:'POST',
+    				data:{"groupNo":groupNo},
+    				success:function(data) {
+    					console.log("성공");
+    				},error:function() {
+    					console.log("통신 오류");
+    				}
+    			});
+    		} 
+    		
+    		location.reload();
+    	});
+    });    
+    </script>
     
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->

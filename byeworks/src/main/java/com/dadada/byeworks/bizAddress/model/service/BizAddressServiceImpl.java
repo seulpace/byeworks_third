@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dadada.byeworks.bizAddress.model.dao.BizAddressDao;
+import com.dadada.byeworks.bizAddress.model.vo.BizAddress;
 import com.dadada.byeworks.bizAddress.model.vo.BizGroup;
 
 @Service("bService")
@@ -48,6 +49,22 @@ public class BizAddressServiceImpl implements BizAddressService{
 	@Override
 	public int deleteGroup(int gno) {
 		return bDao.deleteGroup(sqlSession, gno);
+	}
+
+	/**
+	 * 업체 주소록 전체 조회
+	 */
+	@Override
+	public ArrayList<BizAddress> selectBizAddrList(int memberNo) {
+		return bDao.selectBizAddrList(sqlSession, memberNo);
+	}
+
+	/**
+	 * 그룹 별 업체 주소록 조회
+	 */
+	@Override
+	public ArrayList<BizAddress> selectBizListGroup(int memberNo, int groupNo) {
+		return bDao.selectBizListGroup(sqlSession, memberNo, groupNo);
 	}
 
 }
