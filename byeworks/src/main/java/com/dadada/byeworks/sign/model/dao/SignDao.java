@@ -16,12 +16,21 @@ import com.dadada.byeworks.sign.model.vo.SignRefer;
 
 @Repository //데이터 CRUD관련한 객체의 빈
 public class SignDao {
+	
+	//조직도 관련 ajax 메소드-----------------------------------------------------------
 
+	/**
+	 *  전 부서 select 메소드 
+	 */
 	public ArrayList<DepartmentDto> selectDepartmentList(SqlSessionTemplate sqlSession) {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectDepartmentList");
 	}
-
+	
+	
+	/**
+	 *  부서별 직원 select 메소드
+	 */
 	public ArrayList<Member> selectEmpList(SqlSessionTemplate sqlSession, int departmentNo) {
 		
 		
@@ -92,7 +101,11 @@ public class SignDao {
 	 */
 	public int insertAttachmentList(SqlSessionTemplate sqlSession, ArrayList<SignAttachment> alist) {
 		
-		return sqlSession.insert("signMapper.insertAttachmentList", alist);
+		int result = 0;
+		for(SignAttachment sa : alist) {
+			sqlSession.insert("signMapper.insertAttachmentList", sa);
+		}
+		return result;
 	}
 
 	}

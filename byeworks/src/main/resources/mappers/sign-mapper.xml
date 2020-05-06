@@ -82,6 +82,42 @@
 	
 	</insert>
 	
+	<insert id="insertSignQ" parameterType="SignAndQuit">
+		INSERT INTO TB_SIGN VALUES
+		(SEQ_SNO.NEXTVAL, SYSDATE, #{docuType}, DEFAULT, DEFAULT, #{title}, #{memberNo})
+	</insert>
+	
+	<insert id="insertQuit" parameterType="SignAndQuit">
+		INSERT INTO TB_QUIT VALUES
+		(SEQ_SNO.CURRVAL, #{enrollDate}, #{quitDate}, #{reason})
+	
+	</insert>
+	
+	<insert id="insertSignLineList" parameterType="list">
+		INSERT ALL 
+		<foreach collection="list" item="item" separator=" ">
+			INTO TB_SIGNLINE VALUES
+			(#{item.signLineMemberNo}, SEQ_SNO.CURRVAL, NULL, DEFAULT, #{item.memberOrder})
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<insert id="insertReferList" parameterType="list">
+		INSERT ALL
+		<foreach collection="list" item="item" separator=" ">
+			INTO TB_SIGNREFER VALUES
+			(SEQ_SNO.CURRVAL, #{item.referMemberNo}, DEFAULT, NULL)
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<insert id="insertAttachmentList" parameterType='SignAttachment'>
+		INSERT INTO TB_SIGN_ATTACHMENT VALUES
+		(SEQ_FNO.NEXTVAL, #{oaName}, #{maName}, NULL, SEQ_SNO.CURRVAL)
+	</insert>
+	
+	
+	
 
 	
 

@@ -17,7 +17,7 @@ public class SignAndQuit {
 
 	private int signNo;
 	private Date signUpDate;
-	private String dType;
+	private String docuType;
 	private int memberNo;
 	private String signStatus;
 	private String flag;
