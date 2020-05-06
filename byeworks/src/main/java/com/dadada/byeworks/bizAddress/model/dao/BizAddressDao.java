@@ -63,4 +63,9 @@ public class BizAddressDao {
 	public int bookmarkBizAddr(SqlSessionTemplate sqlSession, BizAddressFav af) {
 		return sqlSession.insert("bizAddressMapper.bookmarkBizAddr", af);
 	}
+	
+	// 업체 주소록 즐겨찾기 해제
+	public int removeBookmarkBizAddr(SqlSessionTemplate sqlSession, BizAddressFav af) {
+		return sqlSession.delete("bizAddressMapper.removeBookmarkBizAddr", af);
+	}
 }

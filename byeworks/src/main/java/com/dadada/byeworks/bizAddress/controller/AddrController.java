@@ -116,6 +116,9 @@ public class AddrController {
 		
 		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
+		if(groupNo.equals("")) {
+			groupNo = "0";
+		}
 		ArrayList<BizAddress> groupList = bService.selectBizListGroup(no, Integer.parseInt(groupNo));
 		
 		// 조회 시에 읽어오려고 넣어준다
@@ -130,6 +133,15 @@ public class AddrController {
 	public String bookmarkBizAddr(BizAddressFav af) {
 		// 받아온 정보를 insert 해준다
 		int result = bService.bookmarkBizAddr(af);
+		
+		return String.valueOf(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping("removeBM.bzad")
+	public String removeBookmarkBizAddr(BizAddressFav af) {
+		
+		int result = bService.removeBookmarkBizAddr(af);
 		
 		return String.valueOf(result);
 	}

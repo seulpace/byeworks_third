@@ -121,7 +121,7 @@
 	                              				<!-- 버튼들 -->
 	                              				<div style="padding-left: 15px; padding-right: 15px;">
 	                                				<div style="float:right;">
-	                                  					<button class="btn btn-diy" style="color:white;" data-toggle="modal" data-target=".addAddress"><small>주소 추가</small></button>
+	                                  					<button class="btn btn-diy" style="color:white;" data-toggle="modal" id="insertBtn"><small>주소 추가</small></button>
 	                                  					<button class="btn btn-diy" style="color:white;"><small>주소 삭제</small></button>
 	                                				</div>
 	                              				</div>
@@ -144,7 +144,7 @@
            		<div class="modal-content">
 
               		<div class="modal-header">
-                		<h4 class="modal-title" id="myModalLabel">주소록 추가</h4>
+                		<h4 class="modal-title" id="myModalLabel"></h4>
                 		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
               		</div>
               		
@@ -190,7 +190,7 @@
               
               		<div class="modal-footer">
                 		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                		<button type="button" class="btn btn-diy" style="color: white;">추가</button>
+                		<button type="button" class="btn btn-diy" style="color: white;" id="submitBtn">추가</button>
               		</div>
             	</div>
           	</div>
@@ -202,32 +202,48 @@
     </div>
     
     <script>
+    var action = '';
+    var url = '';
+    var type = '';
+    var addrNo = 0;
+    
     $(function() {
     	var myNo;
     	var addrNo;
     	var bookmark;
     	
+    	// 주소 추가 버튼 클릭 시
+    	$("#insertBtn").click(function() {
+    		action = 'insert';
+    		type = 'POST';
+    		
+    		// 추가 용 세팅
+    		$("#myModalLabel").text("주소록 추가");
+    		$("#submitBtn").text("추가");
+    		
+    		// 안에 내용 세팅
+    	});
+    	
     	// 그룹 별 조회
     	$("#groupSelect").change(function() {
     		var groupNo = this.value;
     		
-    		// 값이 있으면 조회해보자
-    		if(groupNo > 0) {
-    			$.ajax({
-    				url:'group.bzad',
-    				type:'POST',
-    				data:{"groupNo":groupNo},
-    				success:function() {
-    					console.log("성공");
-    				},error:function() {
-    					console.log("통신 오류");
-    				},complete:function() {
-    					location.replace("selectList.bzad");
-    				}
-    			});
-    		}
+    		$.ajax({
+				url:'group.bzad',
+				type:'POST',
+				data:{"groupNo":groupNo},
+				success:function() {
+					console.log("성공");
+				},error:function() {
+					console.log("통신 오류");
+				},complete:function() {
+					location.replace("selectList.bzad");
+				}
+			});
+    		
     	});
     	
+    	// 즐겨찾기 처리
     	$("#datatable-checkbox>tbody>tr th").click(function(){
     		// 누르면 누른 사람의 정보를 받아온다
     		// 받아오는 정보: groupNo, bookmark
@@ -239,9 +255,9 @@
     		// 북마크가 되어있다면
 			if(bookmark.val() == 'Y') {
 				$.ajax({
-					url:"removeBM.ad",
-					data:{favMemberNo:myNo,
-						  	  memberNo:memberNo.val()},
+					url:"removeBM.bzad",
+					data:{addressNo:addrNo.val(),
+						  memberNo:myNo},
   					type:"post",
   					success:function(result) {
 						bookmark.val('N');
