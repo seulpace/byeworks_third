@@ -4,27 +4,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+	<link rel="icon" href="${pageContext.request.contextPath}/resources/images/LogoExample.png" type="image/png" />
+
+	<!-- menubar 위에 있던 파일의 경우에 css가 적용되지 않아 두 개의 css 따로 적용  -->
+    <!-- Bootstrap -->
+    <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
+ 
+ 	<title>Byeworks</title>
 </head>
-<body>
-	<jsp:include page="../common/menubar.jsp"/>
-	
+<body class="nav-md">
+	<div class="container body">
+    	<div class="main_container">
+        
+			<!-- 메뉴바 -->
+			<jsp:include page="../common/menubar.jsp"/>
 
-<div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>공지사항 <small>전체목록</small></h3>
-              </div>
+			<div class="right_col" role="main">
+          		<div class="">
+            		<div class="page-title">
+              			<div class="title_left">
+                			<h3>공지사항 <small>전체목록</small></h3>
+              			</div>
+					</div>
 
+            		<div class="clearfix"></div>
 
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-12 col-sm-12 ">
+            		<div class="row">
+              			<div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2><small>공지사항</small></h2>
@@ -149,11 +163,18 @@
                 </div>
               </div>
 
-
-
-
-
-	
 	<jsp:include page="../common/footer.jsp"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
+	<!-- Bootstrap -->
+    <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
+	
 </body>
 </html>

@@ -187,7 +187,7 @@
                		<ul class="nav side-menu"> 
                  		<li><a><i class="fa fa-info"></i> 공지사항 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
-		                     	<li><a href="WEB-INF/views/notice/NoticeListView.jsp">공지사항 조회</a></li>
+		                     	<li><a href="list.not">공지사항 조회</a></li>
 		                     	<li><a href="index2.html">공지사항 등록 (관)</a></li>
 		                   	</ul>
                  		</li>
