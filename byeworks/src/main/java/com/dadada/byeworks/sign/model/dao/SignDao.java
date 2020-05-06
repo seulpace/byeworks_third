@@ -1,3 +1,5 @@
+
+
 package com.dadada.byeworks.sign.model.dao;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
+import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -92,8 +95,12 @@ public class SignDao {
 	 * 참조자테이블 등록 메소드
 	 */
 	public int insertReferList(SqlSessionTemplate sqlSession, SignRefer rlist) {
+		int result=0;
 		
-		return sqlSession.insert("signMapper.insertReferList", rlist.getRlist());
+		if(rlist !=null) {
+		  result = sqlSession.insert("signMapper.insertReferList", rlist.getRlist());
+		}
+		return result;
 	}
 	
 	/**
@@ -107,5 +114,18 @@ public class SignDao {
 		}
 		return result;
 	}
+
+
+	public int insertSignAp(SqlSessionTemplate sqlSession, SignAndAppointment signAndAppointment) {
+		int result = sqlSession.insert("signMapper.insertSignAp", signAndAppointment);
+		return result;
+	}
+	
+	public int insertAppointment(SqlSessionTemplate sqlSession, SignAndAppointment signAndAppointment) {
+		int result = sqlSession.insert("signMapper.insertAppointment", signAndAppointment);
+		
+		return result;
+	}
+	
 
 	}

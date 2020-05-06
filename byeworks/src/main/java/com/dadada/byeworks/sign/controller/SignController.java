@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
+import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
 import com.dadada.byeworks.sign.model.service.SignService;
 import com.dadada.byeworks.sign.model.vo.Appointment;
@@ -40,8 +41,24 @@ public class SignController {
 		return "sign/enrollSignForm";
 	}
 	
-	@RequestMapping("insetSignQuit.si")
-	public String enrollSign(SignAndQuit signAndQuit, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file) {
+	@RequestMapping("insertSignAppointment.si")
+	public String insertSignAp(SignAndAppointment signAndAppointment, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file) {
+		
+		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
+		
+		
+		if(!file[0].getOriginalFilename().equals("")) {
+			
+			alist = saveFile(file, request);
+		}
+		
+		int result = sService.insertSignAp(signAndAppointment, slist, rlist, alist);
+		
+		return "sign/totalSignList";
+	}
+	
+	@RequestMapping("insertSignQuit.si")
+	public String insertSignQ(SignAndQuit signAndQuit, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file) {
 		
 		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
 
@@ -72,7 +89,7 @@ public class SignController {
 	}
 
 	@RequestMapping("insertSignAnnual.si")
-	public String enrollSign(SignAndAnnualSign signAndAnnualSign, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file ) {
+	public String insertSingAn(SignAndAnnualSign signAndAnnualSign, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file ) {
 		
 		
 		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
@@ -90,15 +107,7 @@ public class SignController {
 		
 		return "sign/totalSignList";
 	}
-	
-	@RequestMapping("insertSignAppointment.si")
-	public String enrollSign(Appointment Appointment) {
-		
-		return "sign/totalSignList";
-	}
 
-
-	
 	
 	@RequestMapping("totalSignList.si")
 	public String totalSignList() {

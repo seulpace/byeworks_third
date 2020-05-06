@@ -116,6 +116,16 @@
 		(SEQ_FNO.NEXTVAL, #{oaName}, #{maName}, NULL, SEQ_SNO.CURRVAL)
 	</insert>
 	
+	<insert id="insertSignAp" parameterType="SignAndAppointment">
+		INSERT INTO TB_SIGN VALUES
+		(SEQ_SNO.NEXTVAL, SYSDATE, #{docuType}, DEFAULT, DEFAULT, #{title}, #{memberNo})
+	</insert>
+	
+	<insert id="insertAppointment" parameterType="SignAndAppointment">
+		INSERT INTO TB_APPOINTMENT VALUES
+		(SEQ_SNO.CURRVAL, #{positionBefore}, #{positionAfter}, #{depBefore}, #{depAfter}, #{appointmentLev}, #{appointmentMem}, #{appointmentDate})
+	</insert>
+	
 	
 	
 
