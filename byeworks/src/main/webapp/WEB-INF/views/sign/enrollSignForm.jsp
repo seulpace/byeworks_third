@@ -565,6 +565,9 @@
       <div id="notif-group" class="tabbed_notifications"></div>
     </div>
 </div>
+</div>
+</div>
+
 
 
     <script>
