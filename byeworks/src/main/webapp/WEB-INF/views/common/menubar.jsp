@@ -101,7 +101,8 @@
                  		<li><a><i class="fa fa-user"></i> 인사 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
                      			<li><a href="myPage.me">내 정보 관리</a></li>
-                     			<li><a href="memberList.me">전체 사원 조회 (관)</a></li>
+                     			
+                     			<li><a href="memberList.me">전체 사원 조회 (인)</a></li>
                      			<li><a>발령<span class="fa fa-chevron-down"></span></a>
                        				<ul class="nav child_menu">
                          				<li class="sub_menu"><a href="businessAddress.html">발령내역</a>
@@ -115,15 +116,15 @@
 	                 	<li><a><i class="fa fa-briefcase"></i> 근태 관리 <span class="fa fa-chevron-down"></span></a>
 	                   		<ul class="nav child_menu">
 	                     		<li><a href="form.html">출퇴근 이력 조회</a></li>
-	                     		<li><a href="form.html">출퇴근 현황 조회 (관)</a></li>
-	                     		<li><a href="form.html">지각 초과 직원 조회 (관)</a></li>
+	                     		<li><a href="form.html">출퇴근 현황 조회 (인)</a></li>
+	                     		<li><a href="form.html">지각 초과 직원 조회 (인)</a></li>
 	                   		</ul>
 	                 	</li>
                  		<li><a><i class="fa fa-inbox"></i> 연차 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
                      			<li><a href="general_elements.html">연차 신청</a></li>
                      			<li><a href="media_gallery.html">연차 현황 조회</a></li>
-                     			<li><a href="media_gallery.html">연차 현황 조회 (관)</a></li>
+                     			<li><a href="media_gallery.html">연차 현황 조회 (인)</a></li>
                    			</ul>
                  		</li>
                		</ul>
@@ -188,7 +189,7 @@
                  		<li><a><i class="fa fa-info"></i> 공지사항 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
 		                     	<li><a href="list.not">공지사항 조회</a></li>
-		                     	<li><a href="index2.html">공지사항 등록 (관)</a></li>
+		                     	<li><a href="index2.html">공지사항 등록 (인)</a></li>
 		                   	</ul>
                  		</li>
                  		<li><a><i class="fa fa-unlock-alt"></i> 예약 관리 <span class="fa fa-chevron-down"></span></a>

@@ -60,7 +60,7 @@
                                 <c:forEach items="${ list }" var="m">
 	                                <tr>
 	                              	  <input type="hidden" name="memberNo" value="${ m.memberNo }">
-	                                  <td><input type="checkbox" id="retireday" name="retireday" ></td>
+	                                  <td onclick="event.cancelBubble=true"><input type="checkbox" name="retireday" value="${ m.memberNo }" ></td>
 	                                  <td>${ m.memberName }</td>
 	                                  <td>${ m.department }</td>
 	                                  <td>${ m.position }</td>
@@ -82,16 +82,28 @@
                                     </button>
                                   </div>
                                   <div class="modal-body">
-                                    
+                                     <label for="memberName">* 이름 :</label>
+				                    <input type="text" class="form-control" id="memberName" name="memberName" value="" readonly><br>
+				                    
+				                    <label for="empNo">* 사번 :</label>
+				                    <input type="text" class="form-control" id="empNo" name="empNo" value="" readonly><br>
+				                    
+				                    <label for="position">* 직급 :</label>
+				                    <input type="text" class="form-control" id="position" name="position" value="" readonly><br>
+				                    
+				                    <label for="소속">* 소속 :</label>
+				                    <input type="text" class="form-control" id="department" name="department" value="" readonly><br>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
-                                    <button type="button" class="btn btn-primary">네</button>
+                                    <button type="button" onclick="deletemem();" class="btn btn-primary">네</button>
                                   </div>
 
                                 </div>
                               </div>
                             </div>
+                          
+		                            
                             <button type="button" class="btn btn-primary" onclick="location.href='memberInsertForm.me'">사원등록</button>
                           </div>
                         </div>
@@ -109,6 +121,33 @@
         			location.href="detail.me?mno=" + $(this).children().eq(0).val();	
         		});
         	});
+        	/*
+        	$(function deleteMem(){
+        		
+        			
+        			$.each($("#datatable :checkbox:checked"),function(){
+        				$("#deleteForm").children().eq(0).val();
+        			});
+        			
+        			
+        			$("#deleteForm").submit();
+        	});
+        			
+        	*/
+        	$(function(){
+        		$('input[type="checkbox"][name="retireday"]').click(function(){
+        			if($(this).prop('checked')){
+        				$('input[type="checkbox"][name="retireday"]').prop('checked', false);
+        				$(this).prop('checked',true);
+        			}
+	        		var tr = $(this).parent().parent();
+	        		var td = tr.eq(2);
+	        		
+        		});
+        	});
+        	
+        	
+        	
         
         </script>
         

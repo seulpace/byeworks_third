@@ -549,4 +549,21 @@ public class MemberController {
 		}
 		
 	}
+	
+	@RequestMapping("retire.me")
+	public String retire(HttpSession session, Model model) {
+		int memberNo = ((Member)session.getAttribute("m")).getMemberNo();
+		
+		int result = mService.retireMember(memberNo);
+		
+		if(result > 0) {
+			
+			return "redirect:memberSelectList";
+		}else {
+			model.addAttribute("msg", "직원 퇴사처리 실패했습니다. 다시해주세요");
+			
+			return "redirct:memberSelectList";
+		}
+		
+	}
 }

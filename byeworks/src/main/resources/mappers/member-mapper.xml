@@ -170,9 +170,16 @@
 				default, default, #{profileModify}, to_char(sysdate, 'yyyymmdd')||seq_mno.currval)
 	</insert>
 	
+	<!-- 내 정보 수정 -->
 	<update id="myUpdate" parameterType="Member">
 		update tb_member
 		set phone=#{phone}, email=#{email}, address=#{address}
 		where member_id=#{memberId}
+	</update>
+	
+	<update id="retireMember" parameterType="string">
+		update tb_member
+		set member_status='N'
+		where member_no=#{memberNo}
 	</update>
 </mapper>
