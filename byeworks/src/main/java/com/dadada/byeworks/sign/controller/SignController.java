@@ -52,20 +52,22 @@ public class SignController {
 			
 		}
 			int result1 = sService.insertSignQ(signAndQuit);
-			
-			int result2 = sService.insertQuit(signAndQuit);
-			int result3 = sService.insertSignLineList(slist);
-			
+			int result2 = 0;
+			int result3 = 0;
 			int result4 = 1;
-			if(rlist.getRlist()!=null) {
-				result4 = sService.insertReferList(rlist); 
-			}
-			
 			int result5 = 1;
+			
+			if(result1 == 1) {
+			 result2 = sService.insertQuit(signAndQuit);
+			 result3 = sService.insertSignLineList(slist);
+			
+			if(rlist.getRlist()!=null) {
+			 result4 = sService.insertReferList(rlist); 
+			}
 			if(!alist.isEmpty()) {
 				result5 = sService.insertAttachmentList(alist);
 			}
-		
+		}
 		return "sign/totalSignList";
 	}
 

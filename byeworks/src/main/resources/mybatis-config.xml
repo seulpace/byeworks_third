@@ -17,7 +17,9 @@
 		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignLine" alias="SignLine"/>
 		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignRefer" alias="SignRefer"/>
 		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignAttachment" alias="SignAttachment"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignAndQuit" alias="SignAndQuit"/>
 		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddress" alias="BizAddress"/>
+		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddressFav" alias="BizAddressFav" />
 	</typeAliases>
 	
 	<mappers>

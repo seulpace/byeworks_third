@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dadada.byeworks.bizAddress.model.service.BizAddressService;
 import com.dadada.byeworks.bizAddress.model.vo.BizAddress;
+import com.dadada.byeworks.bizAddress.model.vo.BizAddressFav;
 import com.dadada.byeworks.bizAddress.model.vo.BizGroup;
 import com.dadada.byeworks.member.model.vo.Member;
 
@@ -28,19 +29,20 @@ public class AddrController {
 		
 		// 그룹 전체 조회
 		ArrayList<BizGroup> gList = bService.selectGroupList();
+		mv.addObject("gList", gList);
 		
 		// 혹시 그룹으로 조회된 값인지 확인하기
 		ArrayList<BizAddress> list = (ArrayList<BizAddress>)session.getAttribute("groupList");
 		
 		// 있으면
 		if(list != null) {
+			mv.addObject("list", list);
 			// 일단 걘 지워주고
 			session.removeAttribute("groupList");
 		} else { // 없으면 전체 주소록을 조회해준다
 			list = bService.selectBizAddrList(no);
+			mv.addObject("list", list);
 		}
-		
-		mv.addObject("list", list).addObject("gList", gList);
 		
 		mv.setViewName("bizAddress/bizAddress");
 		
@@ -121,6 +123,15 @@ public class AddrController {
 		session.setAttribute("groupNo", groupNo);
 		
 		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping("bookmark.bzad")
+	public String bookmarkBizAddr(BizAddressFav af) {
+		// 받아온 정보를 insert 해준다
+		int result = bService.bookmarkBizAddr(af);
+		
+		return String.valueOf(result);
 	}
 	
 
