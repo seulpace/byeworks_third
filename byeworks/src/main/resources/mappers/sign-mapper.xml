@@ -30,6 +30,17 @@
 		<result property="empNo" column="empno" />
 	</resultMap>
 	
+	<resultMap type="SignDto" id="signDtoResultSet">
+		<id property="signNo" column="SIGN_NO" />
+		<result property="signUpDate" column="SIGNUP_DATE" />
+		<result property="docuType" column="D_TYPE" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="signStatus" column="SIGN_STATUS" />
+		<result property="flag" column="FLAG" />
+		<result property="title" column="TITLE" />
+		<result property="memberNo" column="MEMBER_NO" />
+	</resultMap>
+	
 	
 
 	
@@ -125,6 +136,36 @@
 		INSERT INTO TB_APPOINTMENT VALUES
 		(SEQ_SNO.CURRVAL, #{positionBefore}, #{positionAfter}, #{depBefore}, #{depAfter}, #{appointmentLev}, #{appointmentMem}, #{appointmentDate})
 	</insert>
+	
+	<select id="selectSignList" parameterType="hashmap" resultMap="signDtoResultSet">
+	SELECT SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE, MEMBER_NO, MEMBER_NAME FROM TB_SIGN JOIN TB_MEMBER USING(MEMBER_NO)
+	WHERE MEMBER_NO = #{memberNo}
+	
+	<if test="type == 1">
+		AND FLAG ='Y'
+	</if>
+	
+	<if test="type == 2">
+		AND FLAG ='N' AND SIGN_STATUS = 'O'
+	</if>
+
+	<if test="type == 3">
+		AND FLAG ='Y' AND SIGN_STATUS = 'O'
+	</if>
+
+	<if test="type == 4">
+		AND FLAG = 'Y' AND SIGN_STATUS = 'C'
+	</if>
+
+	<if test="type == 5">
+		AND FLAG = 'Y' AND SIGN_STATUS = 'R'
+	</if>
+	
+	<if test="type == 6">
+		AND FLAG = 'N' AND SIGN_STATUS = 'D'
+	</if>
+
+	</select>
 	
 	
 	

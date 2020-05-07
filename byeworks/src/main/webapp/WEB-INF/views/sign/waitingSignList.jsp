@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,44 +14,18 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 
-  <body class="nav-md">
+<body class="nav-md">
     <div class="container body">
       <div class="main_container">
 
 	<!-- menubar include -->
 	<jsp:include page="../common/menubar.jsp"/>
-	
-	 <div class="right_col" role="main">
+
+<div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-              
-              <c:choose>
-              	<c:when test="${ type == 1}">
-                	<h3>내 결재 전체 조회</h3>
-                </c:when>
-                
-                <c:when test="${ type == 2 }">
-                	<h3>결재 대기 문서 조회</h3>
-                </c:when>
-                
-                <c:when test="${ type == 3 }">
-                	<h3>결재 진행 문서 조회</h3>
-                </c:when>
-                
-                <c:when test="${ type == 4}">
-                	<h3>결재 완료 문서 조회</h3>
-                </c:when>
-                
-                <c:when test="${ type == 5 }">
-                	<h3>결재 반려 문서 조회</h3>
-                </c:when>
-                
-                <c:when test="${ type == 6 }">
-                	<h3>결재 회수 문서 조회</h3>
-                </c:when>
-              </c:choose>
+                <h3> 결재 대기 문서 조회</h3>
               </div>
             </div>
 
@@ -63,24 +38,15 @@
                       <div class="row">
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                            <c:choose>
-                            	<c:when test="${ type == 1}">
-	                                <button disabled style="width: 100px;height: 30px; border: none;">반 려 (0)</button>
-	                                <button disabled style="width: 100px;height: 30px; border: none;">결재 진행 (0)</button>
-	                                <button disabled style="width: 100px;height: 30px; border: none;">결재완료(12)</button>
-	                                <br><br>
-	                            </c:when>
-	                            
-	                            <c:when test="${ type == 2 }">
-	                            	<button style="width: 100px;height: 30px;border-radius: 5px;">상 신</button>
-	                            </c:when>
-                    		</c:choose>
+                           <button style="width: 100px;height: 30px;border-radius: 5px;">상 신</button> 
+                           <br><br>
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%;text-align: center;">
                       <thead>
                         <tr>
+                          <th style="width:5%">선택</th>
                           <th style="width: 5%;">번호</th>
                           <th style="width: 20%">제목</th>
-                          <th style="width: 40%">진행상태</th>
+                          <th style="width: 35%">진행상태</th>
                           <th style="width: 10%">작성자</th>
                           <th style="width: 15%">작성일자</th>
                           <th style="width: 10%">결재상태</th>
@@ -89,37 +55,21 @@
 
 
                       <tbody>
+                      
                       <c:forEach items="${ list }" var="l">
+                      
                         <tr>
+                          <th><input type="checkbox"></th>
                           <td>${ l.signNo }</td>
                           <td>${ l.title }</td>
                           <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>${ loginUser.memberName }</td>
+                          <td>${ l.memberName }</td>
                           <td>${ l.signUpDate }</td>
-                          
-                        
-                          		<c:choose>
-                          			<c:when test="${ l.signStatus eq 'C' }">
-                          				<td>승인</td>
-                          			</c:when>
-                          			
-                          			<c:when test="${ l.signStatus eq 'R' }">
-                          				<td>반려</td>
-                          			</c:when>
-                          			
-                          			<c:when test="${ l.signStatus eq 'O' }">
-                          				<td>진행중</td>
-                          			</c:when>
-                          			
-                          			<c:when test="${ l.signStatus eq 'D' }">
-                          				<td>회수</td>
-                          			</c:when>
-                          		</c:choose>
-
-                          
+                          <td>대기중</td>
                         </tr>
-                        </c:forEach>
-     
+                        
+					 </c:forEach>
+					 
                       </tbody>
                     </table>
                   </div>
@@ -130,19 +80,17 @@
               </div>
           </div>
         </div>
-        
         </div>
         </div>
         </div>
         
-   <!-- footer include -->
+        <!-- footer include -->
 	<jsp:include page="../common/footer.jsp"/>
 	<!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
-        
-	
+
 </body>
 </html>

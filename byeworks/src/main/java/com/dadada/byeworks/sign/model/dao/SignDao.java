@@ -3,7 +3,7 @@
 package com.dadada.byeworks.sign.model.dao;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,6 +13,7 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
 import com.dadada.byeworks.sign.model.vo.SignRefer;
@@ -126,6 +127,17 @@ public class SignDao {
 		
 		return result;
 	}
-	
+
+
+	public ArrayList<Sign> selectSignList(SqlSessionTemplate sqlSession, int mno, int type) {
+		
+		HashMap<String, Integer> data = new HashMap<String, Integer>();
+		
+		data.put("memberNo",mno);
+		data.put("type",type);
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectSignList", data);
+	}
+
 
 	}

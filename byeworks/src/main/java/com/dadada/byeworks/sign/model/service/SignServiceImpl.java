@@ -12,6 +12,7 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
 import com.dadada.byeworks.sign.model.vo.SignRefer;
@@ -114,6 +115,14 @@ public class SignServiceImpl implements SignService {
 		return result1*result2*result6;
 	}
 
+	//결재 리스트 조회(type에 따라 조회해오는 결과틀림)----------------------------------
+	@Override
+	public ArrayList<Sign> selectSignList(int mno, int type) {
+		
+		return sDao.selectSignList(sqlSession, mno, type);
+	}
 	
+
+
 
 }
