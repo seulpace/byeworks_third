@@ -107,4 +107,46 @@ public class BizAddressServiceImpl implements BizAddressService{
 	public int deleteBizAddr(ArrayList<Integer> list) {
 		return bDao.deleteBizAddr(sqlSession, list);
 	}
+
+	/**
+	 * 업체 주소록 북마크 조회
+	 */
+	@Override
+	public ArrayList<BizAddress> selectBizMarkList(int memberNo) {
+		return bDao.selectBizMarkList(sqlSession, memberNo);
+	}
+
+	/**
+	 * 휴지통 조회
+	 */
+	@Override
+	public ArrayList<BizAddress> selectWBList(int memberNo) {
+		return bDao.selectWBList(sqlSession, memberNo);
+	}
+
+	/**
+	 * 주소 삭제 복원
+	 */
+	@Override
+	public int restoreBizAddr(ArrayList<Integer> list) {
+		return bDao.restoreBizAddr(sqlSession, list);
+	}
+
+	/**
+	 * 즐겨찾기 삭제 (영구 삭제 때문에)
+	 */
+	@Override
+	public int removeBookmarkMany(ArrayList<Integer> list) {
+		return bDao.removeBookmarkMany(sqlSession, list);
+	}
+
+	/**
+	 * 주소 영구 삭제
+	 */
+	@Override
+	public int purgeBizAddr(ArrayList<Integer> list) {
+		return bDao.purgeBizAddr(sqlSession, list);
+	}
+	
+	
 }

@@ -337,7 +337,7 @@
     				$("#addrModal").modal('toggle');
     			},
     			complete:function(data) {
-    				location.reload();
+    				location.href = "selectList.bzad";
     			}
     		});
     	});
@@ -384,7 +384,7 @@
 						type:"post",
 						data:{"no":deleteNo},
 						success:function(data){
-							location.reload();
+							location.href = "wasteBasket.bzad";
 						},error:function(){
 							console.log("ajax 통신 에러");
 						}

@@ -86,8 +86,8 @@
                        				<ul class="nav child_menu">
                          				<li class="sub_menu"><a href="selectList.bzgr">그룹 관리</a></li>
                          				<li><a href="selectList.bzad">주소록 전체 조회</a></li>
-				                        <li><a href="#">즐겨찾기</a></li>
-				                        <li><a href="#">휴지통</a></li>
+				                        <li><a href="markList.bzad">즐겨찾기</a></li>
+				                        <li><a href="wasteBasket.bzad">휴지통</a></li>
                        				</ul>
                      			</li>
                    			</ul>
