@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
@@ -24,7 +25,7 @@ import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
 import com.dadada.byeworks.sign.model.service.SignService;
-import com.dadada.byeworks.sign.model.vo.Appointment;
+import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
 import com.dadada.byeworks.sign.model.vo.SignRefer;
@@ -35,12 +36,24 @@ public class SignController {
 	@Autowired
 	private SignService sService;
 	
+	/**
+	 * 결재 작성화면 이동
+	 */
 	@RequestMapping("enrollForm.si")
 	public String enrollSignForm() {
 		
 		return "sign/enrollSignForm";
 	}
 	
+	/**
+	 * @param signAndAppointment
+	 * @param slist
+	 * @param rlist
+	 * @param request
+	 * @param file
+	 * 승진/발령 결재 등록 
+	 * 
+	 */
 	@RequestMapping("insertSignAppointment.si")
 	public String insertSignAp(SignAndAppointment signAndAppointment, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file) {
 		
@@ -54,9 +67,18 @@ public class SignController {
 		
 		int result = sService.insertSignAp(signAndAppointment, slist, rlist, alist);
 		
-		return "sign/totalSignList";
+		return "sign/waitingSignList";
 	}
 	
+	/**
+	 * @param signAndQuit
+	 * @param slist
+	 * @param rlist
+	 * @param request
+	 * @param file
+	 * @return
+	 * 사직 결재 등록
+	 */
 	@RequestMapping("insertSignQuit.si")
 	public String insertSignQ(SignAndQuit signAndQuit, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file) {
 		
@@ -85,9 +107,18 @@ public class SignController {
 				result5 = sService.insertAttachmentList(alist);
 			}
 		}
-		return "sign/totalSignList";
+		return "sign/waitingSignList";
 	}
 
+	/**
+	 * @param signAndAnnualSign
+	 * @param slist
+	 * @param rlist
+	 * @param request
+	 * @param file
+	 * @return
+	 * 연차 결재 등록
+	 */
 	@RequestMapping("insertSignAnnual.si")
 	public String insertSingAn(SignAndAnnualSign signAndAnnualSign, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file ) {
 		
@@ -97,45 +128,37 @@ public class SignController {
 		
 		if(!file[0].getOriginalFilename().equals("")) {
 			
-			alist = saveFile(file, request);
-			
-			
-		}
-		
+			alist = saveFile(file, request);	
+		}	
 		int result = sService.insertSignAnnual(signAndAnnualSign, slist, rlist, alist);
 		
-		
-		return "sign/totalSignList";
+		return "sign/waitingSignList";
 	}
+	
+
+	@RequestMapping("selectSignList.si")
+	public ModelAndView selectSignList(ModelAndView mv, int mno, int type) {
+		
+		ArrayList<Sign> list = sService.selectSignList(mno,type);
+		
+		mv.addObject("list", list).addObject("type", type).setViewName("sign/totalSignList");
+		
+//		switch(type) {
+//		case 1 : mv.addObject("list", list).setViewName("sign/totalSignList"); break;
+//		case 2 : mv.addObject("list", list).setViewName("sign/waitingSignList"); break;
+//		case 3 : mv.addObject("list", list).setViewName("sign/progressingSignList"); break;
+//		case 4 : mv.addObject("list", list).setViewName("sign/confirmedSignList"); break;
+//		case 5 : mv.addObject("list", list).setViewName("sign/returnSignList"); break;
+//		case 6 : mv.addObject("list", list).setViewName("sign/cancelSignList"); break;
+//		
+//		}
+		return mv;
+	
+	}
+	
 
 	
-	@RequestMapping("totalSignList.si")
-	public String totalSignList() {
-		
-		return "sign/totalSignList";
-	}
-	
-	
-	
-	@RequestMapping("waitingSignList.si")
-	public String waitingSignList() {
-		
-		return "sign/waitngSignList";
-	}
-	
-	@RequestMapping("progressingSignList.si")
-	public String progressingSignList() {
-		
-		return "sign/progressingSignList";
-		
-	}
-	
-	@RequestMapping("referSignList.si")
-	public String referSignList() {
-		
-		return "sign/referSignList";
-	}
-	
+
 //	@RequestMapping("selectSignList.si")
 //	public String selectSignList(int status) {
 //		
@@ -160,25 +183,6 @@ public class SignController {
 
 //	} --> 이렇게 하게되면 메뉴바에 누른 상태 화면 표시 안됨. 매개변수넘겨서 안하고 각각의 url mapping 값 따로줌.
 	
-	@RequestMapping("confirmedSignList.si")
-	public String selectSignList() {
-		return "sign/confirmedSignList";
-	}
-	
-	@RequestMapping("returnSignList.si")
-	public String returnSignList() {
-		return "sign/returnSignList";
-	}
-	
-	@RequestMapping("cancelSignList.si")
-	public String cancelSignList() {
-		return "sign/cancelSignList";
-	}
-	
-	@RequestMapping("doSignList.si")
-	public String doSignList() {
-		return "sign/doSignList";
-	}
 	
 	/**
 	 * 부서목록 가져오는 ajax

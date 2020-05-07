@@ -141,19 +141,19 @@
                       
                       			<li><a>내 결재 문서<span class="fa fa-chevron-down"></span></a>
                         			<ul class="nav child_menu">
-                          				<li class="sub_menu"><a href="totalSignList.si">전체문서</a> <!-- 전체결재리스트이동 -->
+                          				<li class="sub_menu"><a href="selectSignList.si?mno=${loginUser.memberNo }&type=1">전체문서</a> <!-- 전체결재리스트이동 -->
                           				</li>
-			                          	<li><a href="waitingSignList.si">대기</a> <!-- 대기중결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=2">대기</a> <!-- 대기중결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="progressingSignList.si">진행</a> <!-- 진행중결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=3">진행</a> <!-- 진행중결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="confirmedSignList.si">완료</a> <!-- 완료된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=4">완료</a> <!-- 완료된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="returnSignList.si">반려</a> <!-- 반려된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=5">반려</a> <!-- 반려된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="cancelSignList.si">회수</a> <!-- 회수된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=6">회수</a> <!-- 회수된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="referSignList.si">참조</a> <!-- 참조된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=7">참조</a> <!-- 참조된결재리스트이동 -->
 			                          	</li>
                         			</ul>
                       			</li>
