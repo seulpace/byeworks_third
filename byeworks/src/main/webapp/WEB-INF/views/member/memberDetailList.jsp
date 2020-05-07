@@ -27,7 +27,7 @@
        <div class="main_container">
         <c:if test="${ !empty sessionScope.msg }">
 			<script>
-			alertify.alert("${sessionScope.msg}");	// alert("회원가입성공"); 으로 뜨기 때문에 안에 el 태그 string으로 취급해야함
+			alertify.alert("${sessionScope.msg}");	
 			</script>
 			<c:remove var="msg" scope="session"/>
 		</c:if>

@@ -17,7 +17,9 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 
+ 		<!-- alertifyJS 스크립트 -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <title>Byeworks</title>
 </head>
 <body class="nav-md">
@@ -26,7 +28,12 @@
         
         <!-- 메뉴바 -->
         <jsp:include page="../common/menubar.jsp"/>
-
+  		<c:if test="${ !empty sessionScope.retire }">
+			<script>
+			alertify.alert("${sessionScope.retire}");	
+			</script>
+			<c:remove var="retire" scope="session"/>
+		</c:if>
 
         <!-- page content -->
         <div class="right_col" role="main">
@@ -60,7 +67,7 @@
                                 <c:forEach items="${ list }" var="m">
 	                                <tr>
 	                              	  <input type="hidden" name="memberNo" value="${ m.memberNo }">
-	                                  <td onclick="event.cancelBubble=true"><input type="checkbox" name="retireday" value="${ m.memberNo }" ></td>
+	                                  <td onclick="event.cancelBubble=true"><input type="checkbox" id="retireday" name="retireday" value="${ m.memberNo }" ></td>
 	                                  <td>${ m.memberName }</td>
 	                                  <td>${ m.department }</td>
 	                                  <td>${ m.position }</td>
@@ -70,7 +77,7 @@
                                 </c:forEach>
                               </tbody>
                             </table>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">사원퇴사</button>
+                            <button id="retireBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">사원퇴사</button>
 
                             <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog modal-sm">
@@ -82,6 +89,10 @@
                                     </button>
                                   </div>
                                   <div class="modal-body">
+                                  	<form id="retireForm" action="" method="post">
+                                  		<input type="hidden" id="reMemberNo" name="mno" value="">
+                                  	</form>
+                                  
                                      <label for="memberName">* 이름 :</label>
 				                    <input type="text" class="form-control" id="memberName" name="memberName" value="" readonly><br>
 				                    
@@ -96,7 +107,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
-                                    <button type="submit" onclick="deletemem();" class="btn btn-primary">네</button>
+                                    <button type="button" onclick="deleteMem()" class="btn btn-primary">네</button>
                                   </div>
 
                                 </div>
@@ -120,31 +131,52 @@
         		$("#datatable tbody tr").click(function(){
         			location.href="detail.me?mno=" + $(this).children().eq(0).val();	
         		});
-        	});
-        	/*
-        	$(function deleteMem(){
+        		
+        		$("#retireBtn").click(function(){
         		
         			
-        			$.each($("#datatable :checkbox:checked"),function(){
-        		
+        			if($('input[name="retireday"]').is(":checked")){
         				
+	        			$.ajax({
+	        				url:"retireList.me",
+	        				data:{mno:$('input[name="retireday"]:checked').val()},
+	        				type:"get",
+	        				success:function(m){
+	        					$("#reMemberNo").val(m.memberNo);
+	        					$("#memberName").val(m.memberName);
+	        					$("#empNo").val(m.empNo);
+	        					$("#position").val(m.position);
+	        					$("#department").val(m.department);
+	        				},error:function(){
+	        					console.log("에이작스x");
+	        				}
+        				})	
+        			}else{
+        				alert("체크해야됨");
+        			}
+        		});
         	});
-        			
-        	*/
+        	
+        	
+        
+        	
+        
         	$(function(){
         		$('input[type="checkbox"][name="retireday"]').click(function(){
         			if($(this).prop('checked')){
         				$('input[type="checkbox"][name="retireday"]').prop('checked', false);
         				$(this).prop('checked',true);
         			}
-	        		var tr = $(this).parent().parent();
-	        		var td = tr.eq(2);
 	        		
         		});
         	});
         	
         	
-        	
+		function deleteMem(){
+			$("#retireForm").attr("action", "retire.me");
+			
+			$("#retireForm").submit();
+		}        
         
         </script>
         

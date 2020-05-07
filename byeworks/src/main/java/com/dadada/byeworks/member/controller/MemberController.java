@@ -34,6 +34,8 @@ import com.dadada.byeworks.member.model.dto.MemberLogin;
 import com.dadada.byeworks.member.model.service.MemberService;
 import com.dadada.byeworks.member.model.vo.AddressFav;
 import com.dadada.byeworks.member.model.vo.Member;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 
 @Controller
 public class MemberController {
@@ -550,19 +552,44 @@ public class MemberController {
 		
 	}
 	
+	/** 김다흰 : 퇴사처리 직원 조회하기
+	 * @param memberNo
+	 * @param model
+	 * @return
+	 * @throws IOException 
+	 * @throws JsonIOException 
+	 */
+	
+	@RequestMapping(value="retireList.me")
+	public void retireList(int mno, HttpServletResponse response) throws JsonIOException, IOException {
+		
+		Member m = mService.memberDetailList(mno);
+		
+	
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(m, response.getWriter());
+		
+	}
+	
+	/** 김다흰 : 퇴사처리 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("retire.me")
-	public String retire(HttpSession session, Model model) {
-		int memberNo = ((Member)session.getAttribute("m")).getMemberNo();
+	public String retire(int mno, HttpSession session) {
 		
-		int result = mService.retireMember(memberNo);
 		
+		int result = mService.retireMember(mno);
+	
 		if(result > 0) {
+			session.setAttribute("retire", "직원 퇴사처리 완료됐습니다.");
 			
-			return "redirect:memberSelectList";
+			return "redirect:memberList.me";
 		}else {
-			model.addAttribute("msg", "직원 퇴사처리 실패했습니다. 다시해주세요");
+			session.setAttribute("retire", "직원 퇴사처리 실패했습니다. 다시해주세요");
 			
-			return "redirct:memberSelectList";
+			return "redirct:memberList.me";
 		}
 		
 	}
