@@ -76,4 +76,35 @@ public class BizAddressServiceImpl implements BizAddressService{
 		return bDao.bookmarkBizAddr(sqlSession, af);
 	}
 
+	/**
+	 * 업체 주소록 
+	 */
+	@Override
+	public int removeBookmarkBizAddr(BizAddressFav af) {
+		return bDao.removeBookmarkBizAddr(sqlSession, af);
+	}
+	
+	/**
+	 * 주소 추가
+	 */
+	@Override
+	public int insertBizAddr(BizAddress addr) {
+		return bDao.insertBizAddr(sqlSession, addr);
+	}
+	
+	/**
+	 * 주소 수정
+	 */
+	@Override
+	public int updateBizAddr(BizAddress addr) {
+		return bDao.updateBizAddr(sqlSession, addr);
+	}
+
+	/**
+	 * 주소 삭제
+	 */
+	@Override
+	public int deleteBizAddr(ArrayList<Integer> list) {
+		return bDao.deleteBizAddr(sqlSession, list);
+	}
 }

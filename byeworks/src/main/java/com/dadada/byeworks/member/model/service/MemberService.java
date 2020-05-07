@@ -53,4 +53,7 @@ public interface MemberService {
 	
 	// 내 정보 수정하기
 	int myUpdate(Member m);
+	
+	// 직원 퇴사처리
+	int retireMember(int memberNo);
 }

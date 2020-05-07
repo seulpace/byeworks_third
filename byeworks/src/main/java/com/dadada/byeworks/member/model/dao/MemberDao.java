@@ -113,7 +113,16 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.memberInsert", m);
 	}
 	
+	// 김다흰
+	// 내 정보 수정
 	public int myUpdate(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.myUpdate", m);
 	}
+	
+	//김다흰
+	// 직원 퇴사처리
+	public int retireMember(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.update("memberMapper.retireMember", memberNo);
+	}
+	
 }

@@ -1,6 +1,8 @@
 package com.dadada.byeworks.bizAddress.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -110,12 +112,21 @@ public class AddrController {
 		return String.valueOf(result);
 	}
 	
+	/**
+	 * 업체 주소록 그룹 별 조회
+	 * @param session
+	 * @param groupNo
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("group.bzad")
 	public String selectBizListGroup(HttpSession session, String groupNo) {
 		
 		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
+		if(groupNo.equals("")) {
+			groupNo = "0";
+		}
 		ArrayList<BizAddress> groupList = bService.selectBizListGroup(no, Integer.parseInt(groupNo));
 		
 		// 조회 시에 읽어오려고 넣어준다
@@ -125,6 +136,11 @@ public class AddrController {
 		return "";
 	}
 	
+	/**
+	 * 업체 주소록 즐겨찾기
+	 * @param af
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("bookmark.bzad")
 	public String bookmarkBizAddr(BizAddressFav af) {
@@ -134,5 +150,57 @@ public class AddrController {
 		return String.valueOf(result);
 	}
 	
+	/**
+	 * 업체 주소록 즐겨찾기 해제
+	 * @param af
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("removeBM.bzad")
+	public String removeBookmarkBizAddr(BizAddressFav af) {
+		
+		int result = bService.removeBookmarkBizAddr(af);
+		
+		return String.valueOf(result);
+	}
+	
+	/**
+	 * 주소 추가
+	 * @param addr
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("insert.bzad")
+	public String insertBizAddr(BizAddress addr) {
+		
+		int result = bService.insertBizAddr(addr);
+		
+		return String.valueOf(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping("update.bzad")
+	public String updateBizAddr(BizAddress addr) {
+		
+		int result = bService.updateBizAddr(addr);
+		
+		return String.valueOf(result);
+	}
 
+	@ResponseBody
+	@RequestMapping("delete.bzad")
+	public String deleteBizAddr(String no) {
+		// 리스트로 변환
+		List<String> list = Arrays.asList(no.split("\\s*,\\s*"));
+		
+		ArrayList<Integer> intList = new ArrayList<>();
+		
+		for(String s : list) {
+			intList.add(Integer.parseInt(s));
+		}
+		
+		int result = bService.deleteBizAddr(intList);
+		
+		return String.valueOf(result);
+	}
 }

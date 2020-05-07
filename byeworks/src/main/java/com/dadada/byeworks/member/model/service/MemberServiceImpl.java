@@ -114,4 +114,11 @@ public class MemberServiceImpl implements MemberService {
 		
 		return mDao.myUpdate(sqlSession, m);
 	}
+
+	// 김다흰
+	@Override
+	public int retireMember(int memberNo) {
+
+		return mDao.retireMember(sqlSession, memberNo);
+	}
 }

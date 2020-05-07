@@ -28,4 +28,16 @@ public interface BizAddressService {
 	
 	// 업체 주소 북마크
 	int bookmarkBizAddr(BizAddressFav af);
+	
+	// 업체 주소 북마크 제거
+	int removeBookmarkBizAddr(BizAddressFav af);
+	
+	// 주소 추가
+	int insertBizAddr(BizAddress addr);
+	
+	// 주소 수정
+	int updateBizAddr(BizAddress addr);
+	
+	// 주소 삭제
+	int deleteBizAddr(ArrayList<Integer> list);
 }
