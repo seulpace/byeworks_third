@@ -96,7 +96,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
-                                    <button type="button" onclick="deletemem();" class="btn btn-primary">네</button>
+                                    <button type="submit" onclick="deletemem();" class="btn btn-primary">네</button>
                                   </div>
 
                                 </div>
@@ -126,11 +126,8 @@
         		
         			
         			$.each($("#datatable :checkbox:checked"),function(){
-        				$("#deleteForm").children().eq(0).val();
-        			});
-        			
-        			
-        			$("#deleteForm").submit();
+        		
+        				
         	});
         			
         	*/
