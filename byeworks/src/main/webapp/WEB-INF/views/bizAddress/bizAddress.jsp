@@ -17,6 +17,9 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
+    <!-- alertifyJs -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
  
  	<title>Byeworks</title>
 </head>
@@ -89,14 +92,16 @@
 	                                				<tbody>
 	                                					<c:forEach items="${ list }" var="l">
 	                                  					<tr>
-	                                    					<td style="text-align: center;">
+	                                    					<td style="text-align: center;" onclick="event.cancelBubble=true">
+	                                    						<input type="hidden" value="${ l.memberNo }">
+						                                    	<input type="hidden" value="${ l.groupNo }">
 	                                      						<div class="checkbox">
 	                                        						<label>
-	                                          							<input type="checkbox" class="flat">
+	                                          							<input type="checkbox" class="flat" name="dCheck" value="${ l.addressNo }">
 	                                        						</label>
 	                                      						</div>
 	                                    					</td>
-	                                    					<th style="text-align: center; cursor: pointer;" name="heartBtn">
+	                                    					<th style="text-align: center; cursor: pointer;" name="heartBtn" onclick="event.cancelBubble=true">
 				                                    			<input type="hidden" value="${ l.addressNo }">
 				                                    			<input type="hidden" value="${ l.bookmark }">
 				                                    			<c:if test="${ l.bookmark eq 'Y'}">
@@ -122,7 +127,7 @@
 	                              				<div style="padding-left: 15px; padding-right: 15px;">
 	                                				<div style="float:right;">
 	                                  					<button class="btn btn-diy" style="color:white;" data-toggle="modal" id="insertBtn"><small>주소 추가</small></button>
-	                                  					<button class="btn btn-diy" style="color:white;"><small>주소 삭제</small></button>
+	                                  					<button class="btn btn-diy" style="color:white;" id="deleteBtn"><small>주소 삭제</small></button>
 	                                				</div>
 	                              				</div>
 	                            			</div>
@@ -138,8 +143,8 @@
     		<!-- /page content -->
 		</div>
 		
-        <!-- Modal 연락처 추가 -->
-		<div class="modal fade addAddress" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- Modal  -->
+		<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="addrModal">
           	<div class="modal-dialog modal-lg">
            		<div class="modal-content">
 
@@ -153,44 +158,48 @@
                 		<form class="form-label-left input_mask">
 
                   			<div class="col-md-6 col-sm-6  form-group has-feedback">
-                    			<input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="이름">
+                    			<input type="text" class="form-control has-feedback-left" id="name" placeholder="이름" required>
                     			<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                   			</div>
 
                   			<div class="col-md-6 col-sm-6  form-group has-feedback">
-                    			<input type="text" class="form-control" id="inputSuccess3" placeholder="회사명">
+                    			<input type="text" class="form-control" id="bizName" placeholder="회사명">
                     			<span class="fa fa-building form-control-feedback right" aria-hidden="true"></span>
                   			</div>
 
                   			<div class="col-md-6 col-sm-6  form-group has-feedback">
-                    			<input type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="이메일">
+                    			<input type="text" class="form-control has-feedback-left" id="email" placeholder="이메일">
                     			<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
                   			</div>
 
                   			<div class="col-md-6 col-sm-6  form-group has-feedback">
-                    			<input type="text" class="form-control" id="inputSuccess5" placeholder="연락처">
+                    			<input type="text" class="form-control" id="phone" placeholder="연락처">
                     			<span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                   			</div>
 
                   			<div class="col-md-6 col-sm-6  form-group has-feedback">
-                    			<input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="직급">
+                    			<input type="text" class="form-control has-feedback-left" id="position" placeholder="직급">
                     			<span class="fa fa-smile-o form-control-feedback left" aria-hidden="true"></span>
                   			</div>
 
                   			<div class="col-md-6 col-sm-6  form-group has-feedback">
-                    			<select class="select2_single form-control" tabindex="-1">
-			                       <option></option>
+                    			<select class="select2_single form-control" tabindex="-1" id="group">
+			                       <option value="0">그룹</option>
 		                           <c:forEach items="${ gList }" var="g">
 		                           <option value="${ g.groupNo }">${ g.groupName }</option>
 		                           </c:forEach>
                     			</select>
                   			</div>
                			</form>
+               			
+               			<!-- 필수사항 적어두는 부분 -->
+               			<div id="checkSubmit">
+               			</div>
               		</div>
               
               		<div class="modal-footer">
                 		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                		<button type="button" class="btn btn-diy" style="color: white;" id="submitBtn">추가</button>
+                		<button type="submit" class="btn btn-diy" style="color: white;" id="submitBtn">추가</button>
               		</div>
             	</div>
           	</div>
@@ -205,7 +214,7 @@
     var action = '';
     var url = '';
     var type = '';
-    var addrNo = 0;
+    var no = 0;
     
     $(function() {
     	var myNo;
@@ -221,7 +230,169 @@
     		$("#myModalLabel").text("주소록 추가");
     		$("#submitBtn").text("추가");
     		
-    		// 안에 내용 세팅
+    		// 안에 내용 빈 칸으로 세팅
+    		$("#name").val("");
+    		$("#bizName").val("");
+    		$("#phone").val("");
+    		$("#email").val("");
+    		$("#position").val("");
+    		$("#group").val(0);
+    		$("#checkSubmit").html("&nbsp;&nbsp;&nbsp;&nbsp;이름, 회사명, 그룹은 필수 입력 사항입니다.");
+    		
+    		// 모달 띄워주기
+    		$("#addrModal").modal();
+    	});
+    	
+    	// tr 클릭 시 --> 수정하기
+    	$("#datatable-checkbox>tbody>tr").click(function() {
+    		action = 'update';
+    		type= 'POST';
+    		
+    		// 값 세팅
+    		$("#name").val($(this).children().eq(2).text());
+    		$("#bizName").val($(this).children().eq(3).text());
+    		$("#position").val($(this).children().eq(4).text());
+    		$("#group").val($(this).children().eq(0).children().eq(1).val());
+    		$("#email").val($(this).children().eq(6).text());
+    		$("#phone").val($(this).children().eq(7).text());
+    		
+    		$("#submitBtn").text("수정");
+    		
+    		// 수정하기 클릭 시 만약 내 번호와 수정자의 번호가 같으면 readonly가 없고
+    		// 만약 다르면 readonly 태그를 생성해서 넣어주어야 한다...
+    		// 다를 경우에는 submit 버튼도 활성화 되면 안 되겠다
+    		
+    		// 해당 주소를 생성한 사람의 memberNo
+    		var no = $(this).children().eq(0).children().eq(0).val();
+    		
+    		// 내가 만들었다면, 수정하기가 가능하고
+    		if(no == ${loginUser.memberNo}) {
+    			$("#myModalLabel").text("주소록 수정");
+    			$("#submitBtn").removeAttr("disabled");
+    			
+    			$("#name").removeAttr("readonly");
+    			$("#bizName").removeAttr("readonly");
+    			$("#position").removeAttr("readonly");
+    			$("#group").removeAttr("readonly");
+    			$("#email").removeAttr("readonly");
+    			$("#phone").removeAttr("readonly");
+    			
+    			$("#checkSubmit").html("&nbsp;&nbsp;&nbsp;&nbsp;이름, 회사명, 그룹은 필수 입력 사항입니다.");
+    			
+    			addrNo = $(this).children().eq(1).children().eq(0).val();
+    		} else { // 아니면 읽기만 가능해
+    			$("#myModalLabel").text("주소록 조회");
+    			$("#submitBtn").attr("disabled", true);
+    			
+    			$("#name").attr("readonly", true);
+    			$("#bizName").attr("readonly", true);
+    			$("#position").attr("readonly", true);
+    			$("#group").attr("readonly", true);
+    			$("#email").attr("readonly", true);
+    			$("#phone").attr("readonly", true);
+    		}
+    		
+    		$("#addrModal").modal();
+    	});
+    	
+    	// modal창의 submitBtn 클릭 시
+    	$("#submitBtn").click(function() {
+    		// 지금 누른 버튼이 주소 추가라면
+    		if(action == 'insert') {
+    			addrNo = 0;
+    			url = 'insert.bzad'
+    		} else if(action == 'update'){
+    			url = 'update.bzad'
+    		}
+    		
+    		if($("#name").val().trim().length == 0) {
+    			alertify.alert("이름을 입력해주세요");
+    			return;
+    		}
+    		if($("#bizName").val().trim().length == 0) {
+    			alertify.alert("회사명을 입력해주세요");
+    			return;
+    		}
+    		if($("#group").val() == 0) {
+    			alertify.alert("그룹을 설정해주세요");
+    			return;
+    		}
+    		
+    		var data = {
+    			"addressNo" : addrNo,
+    			"name" : $("#name").val(),
+    			"bizName" : $("#bizName").val(),
+    			"email" : $("#email").val(),
+    			"phone" : $("#phone").val(),
+    			"position" : $("#position").val(),
+    			"groupNo" : $("#group").val(),
+    			"memberNo" : ${ loginUser.memberNo }
+    		}
+    		
+    		$.ajax({
+    			url: url,
+    			type: type,
+    			data: data,
+    			success:function(data) {
+    				$("#addrModal").modal('toggle');
+    			},
+    			complete:function(data) {
+    				location.reload();
+    			}
+    		});
+    	});
+    	
+    	// 삭제 처리
+    	$("#deleteBtn").click(function() {
+    		
+    		// 우선 내가 생성한 건만 체크 되었는지 확인해야 한다
+    		var memberArr = new Array();
+    		var noCount = 0;
+    		
+    		var checkbox = $('input:checkbox[name=dCheck]:checked');
+    		var td;
+    		var mem;
+    		
+    		checkbox.each(function(i) {
+    			td = checkbox.parent().parent().parent().parent().eq(i);
+    			mem = td.children().eq(0).val();
+    			
+    			var memberNo = ${ loginUser.memberNo };
+    			
+    			if(mem != memberNo) {
+    				alertify.alert("${ loginUser.memberName }" + "님이 작성하지 않은 주소는 삭제할 수 없습니다.");
+    				noCount = 1;
+    				return false;
+    			} else {
+    				noCount = 0;
+    			}
+    		}); 
+    		
+    		if(noCount == 0) {
+    			// 내가 생성한 건만 선택되었다면
+				var deleteArr = new Array();
+	    		
+	    		$('input:checkbox[name=dCheck]:checked').each(function() {
+	    			deleteArr.push(this.value);
+	    		});
+	    		
+	    		if(deleteArr.length >= 1) {
+	    			var deleteNo = deleteArr.join(",");
+
+					$.ajax({
+						url:"delete.bzad",
+						type:"post",
+						data:{"no":deleteNo},
+						success:function(data){
+							location.reload();
+						},error:function(){
+							console.log("ajax 통신 에러");
+						}
+					});
+	    		} else {
+	    			alertify.alert("삭제할 건을 선택해주세요");
+	    		}
+    		}
     	});
     	
     	// 그룹 별 조회

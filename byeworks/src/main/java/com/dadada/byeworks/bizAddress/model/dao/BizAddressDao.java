@@ -68,4 +68,19 @@ public class BizAddressDao {
 	public int removeBookmarkBizAddr(SqlSessionTemplate sqlSession, BizAddressFav af) {
 		return sqlSession.delete("bizAddressMapper.removeBookmarkBizAddr", af);
 	}
+	
+	// 업체 주소록 추가
+	public int insertBizAddr(SqlSessionTemplate sqlSession, BizAddress addr) {
+		return sqlSession.insert("bizAddressMapper.insertBizAddr", addr);
+	}
+	
+	// 업체 주소록 수정
+	public int updateBizAddr(SqlSessionTemplate sqlSession, BizAddress addr) {
+		return sqlSession.update("bizAddressMapper.updateBizAddr", addr);
+	}
+	
+	// 업체 주소록 삭제
+	public int deleteBizAddr(SqlSessionTemplate sqlSession, ArrayList<Integer> list) {
+		return sqlSession.update("bizAddressMapper.deleteBizAddr", list);
+	}
 }

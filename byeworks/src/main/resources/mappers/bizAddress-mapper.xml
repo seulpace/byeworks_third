@@ -79,5 +79,24 @@
 	<delete id="removeBookmarkBizAddr" parameterType="BizAddressFav">
 		DELETE TB_BIZADDRESSFAV WHERE ADDRESS_NO = #{addressNo} AND MEMBER_NO = #{memberNo}
 	</delete>
+	
+	<insert id="insertBizAddr" parameterType="BizAddress">
+		INSERT INTO TB_BIZADDRESS VALUES(SEQ_BANO.NEXTVAL, #{name}, #{bizName}, #{position}, #{email}, #{phone}, DEFAULT, #{groupNo}, #{memberNo})
+	</insert>
+	
+	<update id="updateBizAddr" parameterType="BizAddress">
+		UPDATE TB_BIZADDRESS
+		   SET NAME = #{name}, BIZ_NAME = #{bizName}, POSITION = #{position}, EMAIL = #{email}, PHONE = #{phone}, GROUP_NO = #{groupNo}
+		 WHERE ADDRESS_NO = #{addressNo}
+	</update>
+	
+	<update id="deleteBizAddr" parameterType="_int">
+		UPDATE TB_BIZADDRESS
+		   SET STATUS = 'N'
+		 WHERE ADDRESS_NO IN 
+		 <foreach item="i" index="index" collection="list" open="(" separator="," close=")">
+		 	#{i}
+		 </foreach>
+	</update>
 
 </mapper>
