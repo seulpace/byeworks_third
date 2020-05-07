@@ -10,6 +10,7 @@ import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dao.SignDao;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
+import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -92,6 +93,25 @@ public class SignServiceImpl implements SignService {
 	public int insertAttachmentList(ArrayList<SignAttachment> alist) {
 		
 		return sDao.insertAttachmentList(sqlSession, alist);
+	}
+	
+	//승진/발령 결재 등록-------------------------------------------------------
+	@Override
+	public int insertSignAp(SignAndAppointment signAndAppointment, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist) {
+		
+		int result1 = sDao.insertSignAp(sqlSession, signAndAppointment);
+		int result2 = sDao.insertAppointment(sqlSession, signAndAppointment);
+		int result6 = 0;
+		if(result1>0) {
+			int result3 = sDao.insertSignLineList(sqlSession, slist);
+			int result4 = sDao.insertReferList(sqlSession, rlist);
+			int result5 = sDao.insertAttachmentList(sqlSession, alist);
+			
+			result6 = result3*result4*result5;
+		}
+
+		return result1*result2*result6;
 	}
 
 	

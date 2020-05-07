@@ -28,4 +28,7 @@ public interface BizAddressService {
 	
 	// 업체 주소 북마크
 	int bookmarkBizAddr(BizAddressFav af);
+	
+	// 업체 주소 북마크 제거
+	int removeBookmarkBizAddr(BizAddressFav af);
 }

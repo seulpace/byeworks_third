@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
+import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -28,5 +29,8 @@ public interface SignService {
 	int insertReferList(SignRefer rlist);
 
 	int insertAttachmentList(ArrayList<SignAttachment> alist);
+
+	int insertSignAp(SignAndAppointment signAndAppointment, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist);
 
 }
