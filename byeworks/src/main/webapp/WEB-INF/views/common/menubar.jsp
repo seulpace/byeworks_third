@@ -30,6 +30,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/jqvmap/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="${pageContext.request.contextPath}/resources/css/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
     
     <!-- 데이터테이블 -->
     <link href="${pageContext.request.contextPath}/resources/css/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -42,7 +44,7 @@
 
 </head>
 <body>
-	<div class="col-md-3 left_col">
+	<div class="col-md-3 left_col menu_fixed">
 		<div class="left_col scroll-view">
 			<div class="navbar nav_title" style="border: 0;">
 				<a href="main.do" class="site_title">
@@ -220,7 +222,7 @@
 	                   		<img src="${pageContext.request.contextPath}/resources/profile_modify/${ loginUser.profileModify }" alt="">${ loginUser.memberName }
 	                 	</a>
 	                 	<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-	                   		<a class="dropdown-item"  href="javascript:;"> Profile</a>
+	                   		<a class="dropdown-item"  href="myPage.me"> Profile</a>
 	                   		<a class="dropdown-item"  href="note.html"> Note</a>
 	                   		<a class="dropdown-item"  href="logout.me"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
 	                 	</div>
@@ -314,6 +316,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/datatables/jszip.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/datatables/pdfmake.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/datatables/vfs_fonts.js"></script>
-
+	<!-- jQuery custom content scroller -->
+    <script src="${pageContext.request.contextPath}/resources/css/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 </body>
 </html>

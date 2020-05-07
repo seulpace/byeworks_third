@@ -290,7 +290,14 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("resetForm.me")
-	public String goResetForm() {
+	public String goResetForm(HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		if(m != null) {
+			session.setAttribute("memberNo", m.getMemberNo());
+		}
+		
 		return "login/resetPwd";
 	}
 	
