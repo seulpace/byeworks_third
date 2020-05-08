@@ -56,7 +56,7 @@
 
             <div class="page-title">
               <div class="title_left">
-                <h3>공지사항 <small>|작성하기</small></h3>
+                <h3>공지사항 <small> | 작성하기</small></h3>
               </div>
 
 
@@ -89,15 +89,18 @@
                     <br>
                     <textarea class="form-control" rows="3" placeholder="공지사항 내용 작성" style="margin-top: 0px; margin-bottom: 0px; height: 106px;"></textarea>
  -->
- <form id="enrollForm" method="post" action="insert.not" enctype="multipart/form-data">
+ 				<form id="enrollForm" method="post" action="insert.not" enctype="multipart/form-data">
                     <table align="center">
                       <tr>
                           <th><label for="title" style="margin-right:60px ;">제목</label></th>
                           <td><input type="text" id="title" class="form-notice" name="noticeTitle" required></td>
                       </tr>
                       <tr>
-                          <th><label for="writer">작성자</label></th>
-                          <td><input type="text" id="writer" class="form-control" value="${ loginUser.memberNo }" name="memberNo" readonly></td>
+                          <th>
+                          	<label for="writer">작성자</label>
+                          	<input type="hidden" value="${ loginUser.memberNo }" name="memberNo">
+                          </th>
+                          <td><input type="text" id="writer" class="form-control" value="${ loginUser.memberName }" name="memberName" readonly></td>
                       </tr>
                       <tr>
                           <th><label for="upfile">첨부파일</label></th>
