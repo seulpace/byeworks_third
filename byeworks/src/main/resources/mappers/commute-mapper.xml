@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+				 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+				 
+<mapper namespace="commuteMapper">
+
+	<resultMap type="Commute" id="commuteResultSet">
+		<id property="commuteDate" column="commute_date" />
+		<id property="commuteMember" column="commute_member" />
+		<result property="commuteStatus" column="commute_status" />
+		<result property="commuteWork" column="commute_work" />
+		<result property="commuteLeaved" column="commute_leaved" />
+		<result property="commuteAnnual" column="commute_annual" />
+		<result property="empName" column="member_name" />
+		<result property="empNo" column="empNo" />
+		<result property="empDept" column="department" />
+		<result property="empPos" column="position" />
+	</resultMap>
+
+	<select id="commuteList" parameterType="Commute" resultMap="commuteResultSet">
+		select member_name, empNo, department, position, commute_work, commute_leaved, 
+		        case when commute_status = 0 then '출근'
+		             when commute_status = 1 then '연차사용'
+		             when commute_status = 2 then '오전반차사용'
+		             when commute_status = 3 then '오후반차사용'
+		             when commute_status = 4 then '지각'
+		             when commute_status = 5 then '무단결근'
+		        end, 
+		        case when commute_annual = 0 then '연차'
+		            when commute_annual = 1 then '오전반차'
+		            when commute_annual = 2 then '오후반차'
+		        end
+		from tb_commute c
+		join tb_member m on (c.commute_member = m.member_no)
+		where commute_date = #{commuteDate}
+		order by commute_member
+	</select>
+
+
+
+
+
+</mapper>				 
