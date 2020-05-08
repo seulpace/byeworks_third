@@ -77,7 +77,7 @@
                         <tr>
                           <td>${ n.noticeNo }</td>
                           <td>${ n.noticeTitle }</td>
-                          <td>${ n.memberNo }</td>
+                          <td>${ n.memberName }</td>
                           <td>${ n.noticeReadcnt }</td>
                           <td>${ n.noticeDate }</td>
                         </tr>

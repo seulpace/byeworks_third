@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Setter
 @Getter
 @NoArgsConstructor
@@ -26,4 +25,7 @@ public class Notice {
 	private String fileName;
 	private String fRename;
 	private int memberNo;
+	
+	// 공지사항에서 작성자 명을 보여주기 위해 수정
+	private String memberName;
 }

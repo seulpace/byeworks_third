@@ -15,7 +15,7 @@
 		<result column="file_name" property="fileName" />
 		<result column="fRename" property="fRename" />
 		<result column="member_no" property="memberNo" />
-		
+		<result column="member_name" property="memberName" />		
 	</resultMap>	
 	
 	<select id="getListCount" resultType="_int">
@@ -25,10 +25,11 @@
 	</select>
 	
 	<select id="selectList" resultMap="NoticeResultSet">
-		select * 
-		from TB_NOTICE
-		where status='Y'
-		order by notice_no desc
+		SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE, NOTICE_MODIFY_DATE, N.STATUS, NOTICE_READCNT, FILE_NAME, FRENAME, N.MEMBER_NO, M.MEMBER_NAME
+		  FROM TB_NOTICE N
+		  JOIN TB_MEMBER M ON (N.MEMBER_NO = M.MEMBER_NO)
+		 WHERE N.STATUS = 'Y'
+		 ORDER BY N.NOTICE_NO DESC
 	</select>
 	
 	<!-- 공지사항 작성 추가 -->
