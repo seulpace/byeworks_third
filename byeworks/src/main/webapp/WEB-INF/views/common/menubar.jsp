@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +30,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/jqvmap/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="${pageContext.request.contextPath}/resources/css/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
     
     <!-- 데이터테이블 -->
     <link href="${pageContext.request.contextPath}/resources/css/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -41,7 +44,7 @@
 
 </head>
 <body>
-	<div class="col-md-3 left_col">
+	<div class="col-md-3 left_col menu_fixed">
 		<div class="left_col scroll-view">
 			<div class="navbar nav_title" style="border: 0;">
 				<a href="main.do" class="site_title">
@@ -85,8 +88,8 @@
                        				<ul class="nav child_menu">
                          				<li class="sub_menu"><a href="selectList.bzgr">그룹 관리</a></li>
                          				<li><a href="selectList.bzad">주소록 전체 조회</a></li>
-				                        <li><a href="#">즐겨찾기</a></li>
-				                        <li><a href="#">휴지통</a></li>
+				                        <li><a href="markList.bzad">즐겨찾기</a></li>
+				                        <li><a href="wasteBasket.bzad">휴지통</a></li>
                        				</ul>
                      			</li>
                    			</ul>
@@ -100,8 +103,9 @@
                		<ul class="nav side-menu"> 
                  		<li><a><i class="fa fa-user"></i> 인사 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
-                     			<li><a href="index2.html">내 정보 관리</a></li>
-                     			<li><a href="memberList.me">전체 사원 조회 (관)</a></li>
+                     			<li><a href="myPage.me">내 정보 관리</a></li>
+                     			
+                     			<li><a href="memberList.me">전체 사원 조회 (인)</a></li>
                      			<li><a>발령<span class="fa fa-chevron-down"></span></a>
                        				<ul class="nav child_menu">
                          				<li class="sub_menu"><a href="businessAddress.html">발령내역</a>
@@ -115,15 +119,17 @@
 	                 	<li><a><i class="fa fa-briefcase"></i> 근태 관리 <span class="fa fa-chevron-down"></span></a>
 	                   		<ul class="nav child_menu">
 	                     		<li><a href="form.html">출퇴근 이력 조회</a></li>
-	                     		<li><a href="form.html">출퇴근 현황 조회 (관)</a></li>
-	                     		<li><a href="form.html">지각 초과 직원 조회 (관)</a></li>
+	                     	<c:if test= "${fn:contains(loginUser.department, '인사팀')}">
+	                     		<li><a href="form.html">출퇴근 현황 조회 (인)</a></li>
+	                     		<li><a href="form.html">지각 초과 직원 조회 (인)</a></li>
+	                     	</c:if>
 	                   		</ul>
 	                 	</li>
                  		<li><a><i class="fa fa-inbox"></i> 연차 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
                      			<li><a href="general_elements.html">연차 신청</a></li>
                      			<li><a href="media_gallery.html">연차 현황 조회</a></li>
-                     			<li><a href="media_gallery.html">연차 현황 조회 (관)</a></li>
+                     			<li><a href="media_gallery.html">연차 현황 조회 (인)</a></li>
                    			</ul>
                  		</li>
                		</ul>
@@ -137,19 +143,19 @@
                       
                       			<li><a>내 결재 문서<span class="fa fa-chevron-down"></span></a>
                         			<ul class="nav child_menu">
-                          				<li class="sub_menu"><a href="totalSignList.si">전체문서</a> <!-- 전체결재리스트이동 -->
+                          				<li class="sub_menu"><a href="selectSignList.si?mno=${loginUser.memberNo }&type=1">전체문서</a> <!-- 전체결재리스트이동 -->
                           				</li>
-			                          	<li><a href="waitingSignList.si">대기</a> <!-- 대기중결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=2">대기</a> <!-- 대기중결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="progressingSignList.si">진행</a> <!-- 진행중결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=3">진행</a> <!-- 진행중결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="confirmedSignList.si">완료</a> <!-- 완료된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=4">완료</a> <!-- 완료된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="returnSignList.si">반려</a> <!-- 반려된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=5">반려</a> <!-- 반려된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="cancelSignList.si">회수</a> <!-- 회수된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=6">회수</a> <!-- 회수된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="referSignList.si">참조</a> <!-- 참조된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=7">참조</a> <!-- 참조된결재리스트이동 -->
 			                          	</li>
                         			</ul>
                       			</li>
@@ -188,7 +194,7 @@
                  		<li><a><i class="fa fa-info"></i> 공지사항 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
 		                     	<li><a href="list.not">공지사항 조회</a></li>
-		                     	<li><a href="index2.html">공지사항 등록 (관)</a></li>
+		                     	<li><a href="index2.html">공지사항 등록 (인)</a></li>
 		                   	</ul>
                  		</li>
                  		<li><a><i class="fa fa-unlock-alt"></i> 예약 관리 <span class="fa fa-chevron-down"></span></a>
@@ -216,7 +222,7 @@
 	                   		<img src="${pageContext.request.contextPath}/resources/profile_modify/${ loginUser.profileModify }" alt="">${ loginUser.memberName }
 	                 	</a>
 	                 	<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-	                   		<a class="dropdown-item"  href="javascript:;"> Profile</a>
+	                   		<a class="dropdown-item"  href="myPage.me"> Profile</a>
 	                   		<a class="dropdown-item"  href="note.html"> Note</a>
 	                   		<a class="dropdown-item"  href="logout.me"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
 	                 	</div>
@@ -310,6 +316,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/datatables/jszip.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/datatables/pdfmake.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/datatables/vfs_fonts.js"></script>
-
+	<!-- jQuery custom content scroller -->
+    <script src="${pageContext.request.contextPath}/resources/css/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 </body>
 </html>

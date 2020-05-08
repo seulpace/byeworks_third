@@ -17,6 +17,12 @@
 		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignLine" alias="SignLine"/>
 		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignRefer" alias="SignRefer"/>
 		<typeAlias type="com.dadada.byeworks.sign.model.vo.SignAttachment" alias="SignAttachment"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignAndQuit" alias="SignAndQuit"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignAndAppointment" alias="SignAndAppointment"/>
+		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddress" alias="BizAddress"/>
+		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddressFav" alias="BizAddressFav" />
+		<typeAlias type="com.dadada.byeworks.sign.model.vo.Sign" alias="Sign" />
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignDto" alias="SignDto" />
 	</typeAliases>
 	
 	<mappers>

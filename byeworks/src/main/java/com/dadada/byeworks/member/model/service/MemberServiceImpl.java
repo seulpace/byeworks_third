@@ -80,23 +80,45 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.removeBookmarkAddr(sqlSession, af);
 	}
 	
+	// 김다흰
 	@Override
 	public ArrayList<Member> selectList() {
 		
 		
 		return mDao.selectList(sqlSession);
 	}
-
+	// 김다흰
 	@Override
 	public Member memberDetailList(int mno) {
 		
 		
 		return mDao.memberDetailList(sqlSession, mno);
 	}
-
+	// 김다흰
 	@Override
 	public int updateMember(Member m) {
 
 		return mDao.updateMember(sqlSession, m);
+	}
+	// 김다흰
+	@Override
+	public int memberInsert(Member m) {
+		
+		
+		return mDao.memberInsert(sqlSession, m);
+	}
+	// 김다흰
+	@Override
+	public int myUpdate(Member m) {
+
+		
+		return mDao.myUpdate(sqlSession, m);
+	}
+
+	// 김다흰
+	@Override
+	public int retireMember(int memberNo) {
+
+		return mDao.retireMember(sqlSession, memberNo);
 	}
 }

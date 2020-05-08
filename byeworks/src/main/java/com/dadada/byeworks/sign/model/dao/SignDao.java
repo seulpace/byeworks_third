@@ -1,7 +1,9 @@
+
+
 package com.dadada.byeworks.sign.model.dao;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,19 +11,30 @@ import org.springframework.stereotype.Repository;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
+import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
 import com.dadada.byeworks.sign.model.vo.SignRefer;
 
 @Repository //데이터 CRUD관련한 객체의 빈
 public class SignDao {
+	
+	//조직도 관련 ajax 메소드-----------------------------------------------------------
 
+	/**
+	 *  전 부서 select 메소드 
+	 */
 	public ArrayList<DepartmentDto> selectDepartmentList(SqlSessionTemplate sqlSession) {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectDepartmentList");
 	}
-
+	
+	
+	/**
+	 *  부서별 직원 select 메소드
+	 */
 	public ArrayList<Member> selectEmpList(SqlSessionTemplate sqlSession, int departmentNo) {
 		
 		
@@ -83,8 +96,12 @@ public class SignDao {
 	 * 참조자테이블 등록 메소드
 	 */
 	public int insertReferList(SqlSessionTemplate sqlSession, SignRefer rlist) {
+		int result=0;
 		
-		return sqlSession.insert("signMapper.insertReferList", rlist.getRlist());
+		if(rlist !=null) {
+		  result = sqlSession.insert("signMapper.insertReferList", rlist.getRlist());
+		}
+		return result;
 	}
 	
 	/**
@@ -92,7 +109,35 @@ public class SignDao {
 	 */
 	public int insertAttachmentList(SqlSessionTemplate sqlSession, ArrayList<SignAttachment> alist) {
 		
-		return sqlSession.insert("signMapper.insertAttachmentList", alist);
+		int result = 0;
+		for(SignAttachment sa : alist) {
+			sqlSession.insert("signMapper.insertAttachmentList", sa);
+		}
+		return result;
 	}
+
+
+	public int insertSignAp(SqlSessionTemplate sqlSession, SignAndAppointment signAndAppointment) {
+		int result = sqlSession.insert("signMapper.insertSignAp", signAndAppointment);
+		return result;
+	}
+	
+	public int insertAppointment(SqlSessionTemplate sqlSession, SignAndAppointment signAndAppointment) {
+		int result = sqlSession.insert("signMapper.insertAppointment", signAndAppointment);
+		
+		return result;
+	}
+
+
+	public ArrayList<Sign> selectSignList(SqlSessionTemplate sqlSession, int mno, int type) {
+		
+		HashMap<String, Integer> data = new HashMap<String, Integer>();
+		
+		data.put("memberNo",mno);
+		data.put("type",type);
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectSignList", data);
+	}
+
 
 	}

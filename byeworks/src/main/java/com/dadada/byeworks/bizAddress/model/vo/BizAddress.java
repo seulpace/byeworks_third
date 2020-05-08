@@ -23,4 +23,7 @@ public class BizAddress {
 	private int groupNo;		// 그룹 번호
 	private int memberNo;		// 등록한 직원 번호
 
+	// 내 맘대로 DTO
+	private String bookmark;	// 즐겨찾기 여부
+	private String groupName;	// 그룹명
 }

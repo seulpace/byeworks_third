@@ -1,9 +1,10 @@
 package com.dadada.byeworks.member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.util.Random;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -21,9 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
@@ -33,6 +35,7 @@ import com.dadada.byeworks.member.model.service.MemberService;
 import com.dadada.byeworks.member.model.vo.AddressFav;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 
 @Controller
 public class MemberController {
@@ -287,7 +290,14 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("resetForm.me")
-	public String goResetForm() {
+	public String goResetForm(HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		if(m != null) {
+			session.setAttribute("memberNo", m.getMemberNo());
+		}
+		
 		return "login/resetPwd";
 	}
 	
@@ -392,7 +402,7 @@ public class MemberController {
 		return String.valueOf(result);
 	}
 	
-	/** 김다흰 : 멤버 전체 조회
+	/** 김다흰 : 직원 전체 조회
 	 * @param model
 	 * @return jsp 파일명
 	 */
@@ -405,7 +415,7 @@ public class MemberController {
 		return "member/memberSelectList";
 	}
 	
-	/** 김다흰 : 멤버 상세 조회
+	/** 김다흰 : 직원 상세 조회
 	 * @param mno
 	 * @param mv
 	 * @return
@@ -421,6 +431,12 @@ public class MemberController {
 		
 	}
 	
+	/** 김다흰 : 직원 수정
+	 * @param m
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("update.me")
 	public String memberUpdate(Member m, Model model, HttpSession session) {
 		
@@ -434,5 +450,154 @@ public class MemberController {
 			model.addAttribute("msg", "수정 실패");
 			return "member/memberDetailList";
 		}
+	}
+	
+	/** 김다흰 : 직원등록 페이지 이동
+	 * @return
+	 */
+	@RequestMapping("memberInsertForm.me")
+	public String memberInsert() {
+		
+		return "member/memberInsert";
+	}
+	
+	/** 김다흰 : 직원 등록(인)
+	 * @param m
+	 * @param request
+	 * @param model
+	 * @param file
+	 * @return
+	 */
+	@RequestMapping("memberInsert.me")
+	public String memberInsert(Member m, HttpServletRequest request, Model model,
+							   @RequestParam(value="profileModify", required=true) MultipartFile file) {
+		
+		
+		
+		String profileName = memSaveFile(m, file, request);
+		m.setProfileModify(profileName);
+		m.setMemberPwd(bcryptPasswordEncoder.encode(m.getBirth()));
+		
+		int result = mService.memberInsert(m);
+		
+		System.out.println(m);
+		if(result>0) {
+			
+			return "member/memberDetailList";
+		}else {
+			model.addAttribute("msg", "작성 실패");
+			return "member/memberInsert";
+		}
+		
+		
+	}
+	
+	/** 김다흰 : 직원 프로필사진 등록
+	 * @param m
+	 * @param file
+	 * @param request
+	 * @return
+	 */
+	public String memSaveFile(Member m,  MultipartFile file, HttpServletRequest request) {
+		
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "\\profile_modify\\";
+		
+		String originName = file.getOriginalFilename();
+		
+		
+		
+		String changeName = "사진 " + m.getMemberNo();
+		
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		
+		String profileModify = changeName + ext;
+		
+		
+		try {
+			file.transferTo(new File(savePath + profileModify));
+		} catch (IllegalStateException | IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		System.out.println(profileModify);
+		return profileModify;
+	}
+	
+	/** 김다흰 : 내정보 수정하기 페이지 이동
+	 * @return
+	 */
+	@RequestMapping("myPage.me")
+	public String myPage() {
+		
+		return "member/myInfo";
+	}
+	
+	/** 김다흰 : 내정보 수정하기
+	 * @param m
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("myUpdate.me")
+	public String myUpdate(Member m, Model model, HttpSession session) {
+		
+		int result = mService.myUpdate(m);
+		
+		
+		if(result > 0) {
+			session.setAttribute("loginUser", mService.loginMember(m));
+			session.setAttribute("myMsg", "내 정보 수정 성공!");
+			
+			return "redirect:myPage.me";
+		}else {
+			model.addAttribute("myMsg", "내 정보 수정 실패!");
+			return "redirect:myPage.me";
+		}
+		
+	}
+	
+	/** 김다흰 : 퇴사처리 직원 조회하기
+	 * @param memberNo
+	 * @param model
+	 * @return
+	 * @throws IOException 
+	 * @throws JsonIOException 
+	 */
+	
+	@RequestMapping(value="retireList.me")
+	public void retireList(int mno, HttpServletResponse response) throws JsonIOException, IOException {
+		
+		Member m = mService.memberDetailList(mno);
+		
+	
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(m, response.getWriter());
+		
+	}
+	
+	/** 김다흰 : 퇴사처리 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("retire.me")
+	public String retire(int mno, HttpSession session) {
+		
+		
+		int result = mService.retireMember(mno);
+	
+		if(result > 0) {
+			session.setAttribute("retire", "직원 퇴사처리 완료됐습니다.");
+			
+			return "redirect:memberList.me";
+		}else {
+			session.setAttribute("retire", "직원 퇴사처리 실패했습니다. 다시해주세요");
+			
+			return "redirct:memberList.me";
+		}
+		
 	}
 }

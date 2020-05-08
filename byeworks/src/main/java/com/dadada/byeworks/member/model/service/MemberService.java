@@ -42,9 +42,18 @@ public interface MemberService {
 	// 전체 조회(인)
 	ArrayList<Member> selectList();
 		
-	// 멤버 상세조회(인)
+	// 직원 상세조회(인)
 	Member memberDetailList(int mno);
 	
-	// 멤버 수정하기(인)
+	// 직원 수정하기(인)
 	int updateMember(Member m);
+	
+	// 직원 등록하기(인)
+	int memberInsert(Member m);
+	
+	// 내 정보 수정하기
+	int myUpdate(Member m);
+	
+	// 직원 퇴사처리
+	int retireMember(int memberNo);
 }
