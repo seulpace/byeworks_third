@@ -65,3 +65,6 @@ Servers/Tomcat v8.5 Server at localhost-config/web.xml
 Servers/.settings/org.eclipse.wst.server.core.prefs
 Servers/.settings/org.eclipse.wst.server.core.prefs
 byeworks/target/classes/com/dadada/byeworks/bizAddress/model/vo/BizAddressFav.class
+byeworks/target/classes/com/dadada/byeworks/notice/model/service/NoticeServiceImpl.class
+byeworks/target/classes/com/dadada/byeworks/notice/model/service/NoticeService.class
+byeworks/target/classes/com/dadada/byeworks/notice/model/dao/NoticeDao.class

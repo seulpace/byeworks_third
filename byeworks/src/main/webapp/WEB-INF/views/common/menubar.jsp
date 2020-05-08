@@ -194,7 +194,6 @@
                  		<li><a><i class="fa fa-info"></i> 공지사항 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
 		                     	<li><a href="list.not">공지사항 조회</a></li>
-		                     	<li><a href="index2.html">공지사항 등록 (인)</a></li>
 		                   	</ul>
                  		</li>
                  		<li><a><i class="fa fa-unlock-alt"></i> 예약 관리 <span class="fa fa-chevron-down"></span></a>

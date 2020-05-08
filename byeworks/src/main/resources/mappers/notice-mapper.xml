@@ -3,4 +3,59 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="noticeMapper">
 
+
+	<resultMap id="NoticeResultSet" type="Notice">
+		<id column="notice_no" property="noticeNo" />
+		<result column="notice_title" property="noticeTitle" />
+		<result column="notice_content" property="noticeContent" />
+		<result column="notice_date" property="noticeDate" />
+		<result column="notice_modify_date" property="noticeModifyDate" />
+		<result column="status" property="status" />
+		<result column="notice_readcnt" property="noticeReadcnt" />
+		<result column="file_name" property="fileName" />
+		<result column="fRename" property="fRename" />
+		<result column="member_no" property="memberNo" />
+		
+	</resultMap>	
+	
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from TB_NOTICE
+		where status='Y'
+	</select>
+	
+	<select id="selectList" resultMap="NoticeResultSet">
+		select * 
+		from TB_NOTICE
+		where status='Y'
+		order by notice_no desc
+	</select>
+	
+	<!-- 공지사항 작성 추가 -->
+	<insert id="insertNotice" parameterType="Notice">
+		insert into tb_Notice
+		values(SEQ_NOTICENO.NEXTVAL, 
+		#{noticeTitle},
+		#{noticeContent},
+		default,
+		#{noticeModifyDate},
+		default,
+		default,
+		#{fileName},
+		#{fRename},
+		#{memberNo} )
+	</insert>
+	
+	<update id="increaseCount" parameterType="_int">
+		update tb_Notice
+		set NOTICE_READCNT=NOTICE_READCNT+1
+		where notice_no=#{nno} and status='Y'
+	</update>
+
+	<select id="selectNotice" parameterType="_int" resultMap="NoticeResultSet">
+		select *
+		from tb_Notice
+		where notice_no=#{nno} and status='Y'
+	</select>
+
 </mapper>
