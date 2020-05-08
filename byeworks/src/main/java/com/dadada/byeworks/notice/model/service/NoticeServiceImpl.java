@@ -36,7 +36,6 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int increaseCount(int nno) {
-		// TODO Auto-generated method stub
 		return nDao.increaseCount(sqlSession, nno);
 	}
 

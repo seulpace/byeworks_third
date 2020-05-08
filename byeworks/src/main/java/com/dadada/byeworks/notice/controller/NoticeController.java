@@ -59,8 +59,8 @@ public class NoticeController {
 		if(!file.getOriginalFilename().equals("")) {
 			String changeName = saveFile(file, request);
 			String originName = file.getOriginalFilename();
-			n.setFRename(changeName);
-			n.setFileName(originName);
+			n.setFRename(changeName);//changeName
+			n.setFileName(originName);// originName
 		}
 		
 		int result = nService.insertNotice(n);
