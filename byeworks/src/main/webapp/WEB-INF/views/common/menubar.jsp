@@ -30,6 +30,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/jqvmap/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="${pageContext.request.contextPath}/resources/css/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
     
     <!-- 데이터테이블 -->
     <link href="${pageContext.request.contextPath}/resources/css/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -42,7 +44,7 @@
 
 </head>
 <body>
-	<div class="col-md-3 left_col">
+	<div class="col-md-3 left_col menu_fixed">
 		<div class="left_col scroll-view">
 			<div class="navbar nav_title" style="border: 0;">
 				<a href="main.do" class="site_title">
@@ -86,8 +88,8 @@
                        				<ul class="nav child_menu">
                          				<li class="sub_menu"><a href="selectList.bzgr">그룹 관리</a></li>
                          				<li><a href="selectList.bzad">주소록 전체 조회</a></li>
-				                        <li><a href="#">즐겨찾기</a></li>
-				                        <li><a href="#">휴지통</a></li>
+				                        <li><a href="markList.bzad">즐겨찾기</a></li>
+				                        <li><a href="wasteBasket.bzad">휴지통</a></li>
                        				</ul>
                      			</li>
                    			</ul>
@@ -192,7 +194,6 @@
                  		<li><a><i class="fa fa-info"></i> 공지사항 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
 		                     	<li><a href="list.not">공지사항 조회</a></li>
-		                     	<li><a href="index2.html">공지사항 등록 (인)</a></li>
 		                   	</ul>
                  		</li>
                  		<li><a><i class="fa fa-unlock-alt"></i> 예약 관리 <span class="fa fa-chevron-down"></span></a>
@@ -220,7 +221,7 @@
 	                   		<img src="${pageContext.request.contextPath}/resources/profile_modify/${ loginUser.profileModify }" alt="">${ loginUser.memberName }
 	                 	</a>
 	                 	<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-	                   		<a class="dropdown-item"  href="javascript:;"> Profile</a>
+	                   		<a class="dropdown-item"  href="myPage.me"> Profile</a>
 	                   		<a class="dropdown-item"  href="note.html"> Note</a>
 	                   		<a class="dropdown-item"  href="logout.me"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
 	                 	</div>
@@ -314,6 +315,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/datatables/jszip.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/datatables/pdfmake.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/datatables/vfs_fonts.js"></script>
-
+	<!-- jQuery custom content scroller -->
+    <script src="${pageContext.request.contextPath}/resources/css/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 </body>
 </html>

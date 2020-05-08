@@ -17,9 +17,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 
- 	<title>Byeworks</title>
-    <style>
+<title>Insert title here</title>
+  <style>
       #enrollForm>table{width:100%;}
       #enrollForm>table *{ margin:5px;}
       .form-notice {
@@ -37,11 +36,11 @@
             border-radius: .25rem;
             transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
-
         .btn-primary {
-          margin-left: 130px;
+          margin-left: 180px;
         }
-    </style>
+          
+  </style>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -50,14 +49,14 @@
         <!-- 메뉴바 -->
         <jsp:include page="../common/menubar.jsp"/>
 	
-
+	
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
 
             <div class="page-title">
               <div class="title_left">
-                <h3>공지사항 <small>상세조회</small></h3>
+                <h3>공지사항 <small> | 작성하기</small></h3>
               </div>
 
 
@@ -69,66 +68,62 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <!-- <div class="x_title"> -->
-                    <!-- <h2>(공지사항제목입력되는곳)<small>작성자 : </small></h2> -->
-                    <!-- <div class="clearfix"></div> -->
-                  <!-- </div> -->
-                  
-                  <!-- <div class="btn-group">
-                    <a class="btn" title="Insert picture (or just drag &amp; drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
-                    <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage">
-                  </div> -->
+                    <!-- <h2>
+                      <label for="fullname">공지사항 제목 * :</label>
+                      <input type="text" id="fullname" class="form-control" name="fullname" required="" style="width: 760px;">              
+                      <div class="col-md-12 col-sm-12  form-group">
+                      <input type="text" placeholder="공지사항제목수정부분" class="form-control">
+                      </div>
+                    </h2>
+                    <small>작성자 : (작성자이름) </small>
+                    <div class="clearfix"></div>
+                  </div>
 
-                  <!-- <div class="x_content"> -->
+                  <div class="x_content">
                     <br>
 
 
-                    <!-- <p>Riusmod tempor incididunt ut labor erem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                      mollit anim id est laborum.
-                    </p> -->
+                    <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage">
+                    <br>
+                    <br>
+                    <br>
+                    <textarea class="form-control" rows="3" placeholder="공지사항 내용 작성" style="margin-top: 0px; margin-bottom: 0px; height: 106px;"></textarea>
+ -->
+ 				<form id="enrollForm" method="post" action="insert.not" enctype="multipart/form-data">
                     <table align="center">
                       <tr>
                           <th><label for="title" style="margin-right:60px ;">제목</label></th>
-                          <td><p style="width: 600px;">${ n.noticeTitle }</p></td>
+                          <td><input type="text" id="title" class="form-notice" name="noticeTitle" required></td>
                       </tr>
                       <tr>
-                          <th><label for="writer">작성자</label></th>
-                          <td><p>${ n.memberNo }</p></td>
+                          <th>
+                          	<label for="writer">작성자</label>
+                          	<input type="hidden" value="${ loginUser.memberNo }" name="memberNo">
+                          </th>
+                          <td><input type="text" id="writer" class="form-control" value="${ loginUser.memberName }" name="memberName" readonly></td>
                       </tr>
                       <tr>
                           <th><label for="upfile">첨부파일</label></th>
-                          <td><a href="" download="">파일명.jpg</a></td>
+                          <td><input type="file" id="upfile" class="form-control-file border" name="uploadFile"></td>
                       </tr>
                       <br>
                       <tr>
                           <th colspan="5"><label for="content">내용</label></th>
                       </tr>
                       <tr>
-                          <th colspan="5">
-                            <!-- <textarea class="form-control" required name="" id="content" rows="10" style="resize:none;"></textarea> -->
-                            <br>
-                            <p>${ n.noticeContent }</p>
-
-
-
-
-
-
-                            
-                          </th>
+                          <th colspan="5"><textarea class="form-control" required name="noticeContent" id="content" rows="10" style="resize:none;"></textarea></th>
                       </tr>
                     </table>
+
                     
-                 
-                    <br><br><br><br><br>
+                    
+                    <br>
                     <div class="item form-group">
                       <div class="col-md-6 col-sm-6 offset-md-3">
-                        <button class="btn btn-primary" type="button">수정하기</button>
-                        <button class="btn btn-success" type="reset">목록으로</button>
-                        <button type="submit" class="btn btn-danger">삭제하기</button>
+                        <button type="submit" class="btn btn-primary">등록하기</button>
                       </div>
                     </div>
-                    
+ </form>                   
                     
                   <!-- </div> -->
 
@@ -139,14 +134,17 @@
           </div>
         </div>
         <!-- /page content -->
-        
+	
+	
+	
+	
         <!-- footer content -->
         <jsp:include page="../common/footer.jsp"/>
         
       </div>
     </div>
     
-        <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
+    <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->

@@ -23,6 +23,7 @@
 		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddressFav" alias="BizAddressFav" />
 		<typeAlias type="com.dadada.byeworks.sign.model.vo.Sign" alias="Sign" />
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignDto" alias="SignDto" />
+		<typeAlias type="com.dadada.byeworks.notice.model.vo.Notice" alias="Notice"/>
 	</typeAliases>
 	
 	<mappers>
