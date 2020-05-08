@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +25,32 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>내 결재 전체 조회</h3>
+              
+              <c:choose>
+              	<c:when test="${ type == 1}">
+                	<h3>내 결재 전체 조회</h3>
+                </c:when>
+                
+                <c:when test="${ type == 2 }">
+                	<h3>결재 대기 문서 조회</h3>
+                </c:when>
+                
+                <c:when test="${ type == 3 }">
+                	<h3>결재 진행 문서 조회</h3>
+                </c:when>
+                
+                <c:when test="${ type == 4}">
+                	<h3>결재 완료 문서 조회</h3>
+                </c:when>
+                
+                <c:when test="${ type == 5 }">
+                	<h3>결재 반려 문서 조회</h3>
+                </c:when>
+                
+                <c:when test="${ type == 6 }">
+                	<h3>결재 회수 문서 조회</h3>
+                </c:when>
+              </c:choose>
               </div>
             </div>
 
@@ -37,12 +63,19 @@
                       <div class="row">
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                                <button disabled style="width: 100px;height: 30px; border: none;">반 려 (0)</button>
-                                <button disabled style="width: 100px;height: 30px; border: none;">결재 진행 (0)</button>
-                                <button disabled style="width: 100px;height: 30px; border: none;">결재완료(12)</button>
-                                <br><br>
-                    
-                    <table id="datatable" class="table table-striped table-bordered" style="width:100%;text-align: center;">
+                            <c:choose>
+                            	<c:when test="${ type == 1}">
+	                                <button disabled style="width: 100px;height: 30px; border: none;">반 려 (${ rcount })</button>
+	                                <button disabled style="width: 100px;height: 30px; border: none;">결재 진행 (${ ocount })</button>
+	                                <button disabled style="width: 100px;height: 30px; border: none;">결재완료 (<c:out value="${ ccount }"/>)</button>
+	                                <br><br>
+	                            </c:when>
+	                            
+	                            <c:when test="${ type == 2 }">
+	                            	<button style="width: 100px;height: 30px;border-radius: 5px;">상 신</button>
+	                            </c:when>
+                    		</c:choose>
+                    <table id="datatable" class="table table-striped table-bordered" style="width:100%;text-align: center;" data-order="">
                       <thead>
                         <tr>
                           <th style="width: 5%;">번호</th>
@@ -56,111 +89,42 @@
 
 
                       <tbody>
+                      <c:forEach items="${ list }" var="l">
                         <tr>
-                          <td>1</td>
-                          <td>김가네</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2011/04/25</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>김밥은</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2011/07/25</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>맛있지만</td>
-                          <td>김종선(결재완료)->류호석(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2009/01/12</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>쓸데없이</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2012/03/29</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>비싸다</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2008/11/28</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>6</td>
-                          <td>고로</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2012/12/02</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>7</td>
-                          <td>김밥은</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2012/08/06</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>8</td>
-                          <td>싸다김밥을</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2010/10/14</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>9</td>
-                          <td>이용하자</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2009/09/15</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <td>10</td>
-                          <td>맛도 준수 값도 준수</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2008/12/13</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>맛도 준수 값도 준수</td>
-                            <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                            <td>김김밥</td>
-                            <td>2008/12/13</td>
-                            <td>뀨</td>
-                          </tr>
-                          <tr>
-                            <td>10</td>
-                            <td>맛도 준수 값도 준수</td>
-                            <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                            <td>김김밥</td>
-                            <td>2008/12/13</td>
-                            <td>뀨</td>
-                          </tr>
-                          <tr>
-                            <td>10</td>
-                            <td>맛도 준수 값도 준수</td>
-                            <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                            <td>김김밥</td>
-                            <td>2008/12/13</td>
-                            <td>결재완료</td>
-                          </tr>
+                          <td>${ l.signNo }</td>
+                          <td>${ l.title }</td> 
+                          <td>${ l.signLine }</td>
+                          <td>${ loginUser.memberName }</td>
+                          <td>${ l.signUpDate }</td>
+                          
                         
+                          		<c:choose>                       		
+                          		
+                          			<c:when test="${ l.signStatus eq 'C' && l.flag eq 'Y' }">
+                          				<td>완료</td>
+                          			</c:when>
+                          			
+                          			<c:when test="${ l.signStatus eq 'R' && flag eq 'R' }">
+                          				<td>반려</td>
+                          			</c:when>
+                          			
+                          			<c:when test="${ l.signStatus eq 'O' && flag eq 'O' }">
+                          				<td>진행</td>
+                          			</c:when>
+                          			
+                          			<c:when test="${ l.signStatus eq 'D' && flag eq 'N' }">
+                          				<td>회수</td>
+                          			</c:when>
+                          			
+                          			<c:otherwise>
+                          				<td>대기</td>
+                          			</c:otherwise>
+                          		</c:choose>
+
+                          
+                        </tr>
+                        </c:forEach>
+     
                       </tbody>
                     </table>
                   </div>

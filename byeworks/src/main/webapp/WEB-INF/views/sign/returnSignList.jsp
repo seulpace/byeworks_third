@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,123 +57,18 @@
 
 
                       <tbody>
+                      
+                      <c:forEach items="${ list }" var="l">
                         <tr>
                           <th><input type="checkbox"></th>
-                          <td>1</td>
-                          <td>김가네</td>
+                          <td>${ l.signNo }</td>
+                          <td>${ l.title }</td>
                           <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2011/04/25</td>
-                          <td>결재완료</td>
+                          <td>${ l.memberName }</td>
+                          <td>${ l.signUpDate }</td>
+                          <td>반려</td>
                         </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>2</td>
-                          <td>김밥은</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2011/07/25</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>3</td>
-                          <td>맛있지만</td>
-                          <td>김종선(결재완료)->류호석(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2009/01/12</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>4</td>
-                          <td>쓸데없이</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2012/03/29</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>5</td>
-                          <td>비싸다</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2008/11/28</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>6</td>
-                          <td>고로</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2012/12/02</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>7</td>
-                          <td>김밥은</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2012/08/06</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>8</td>
-                          <td>싸다김밥을</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2010/10/14</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>9</td>
-                          <td>이용하자</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2009/09/15</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                          <th><input type="checkbox"></th>
-                          <td>10</td>
-                          <td>맛도 준수 값도 준수</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                          <td>김김밥</td>
-                          <td>2008/12/13</td>
-                          <td>결재완료</td>
-                        </tr>
-                        <tr>
-                            <th><input type="checkbox"></th>
-                            <td>10</td>
-                            <td>맛도 준수 값도 준수</td>
-                            <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                            <td>김김밥</td>
-                            <td>2008/12/13</td>
-                            <td>뀨</td>
-                          </tr>
-                          <tr>
-                            <th><input type="checkbox"></th>
-                            <td>10</td>
-                            <td>맛도 준수 값도 준수</td>
-                            <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                            <td>김김밥</td>
-                            <td>2008/12/13</td>
-                            <td>뀨</td>
-                          </tr>
-                          <tr>
-                            <th><input type="checkbox"></th>
-                            <td>10</td>
-                            <td>맛도 준수 값도 준수</td>
-                            <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
-                            <td>김김밥</td>
-                            <td>2008/12/13</td>
-                            <td>결재완료</td>
-                          </tr>
+                       </c:forEach>
                         
                       </tbody>
                     </table>

@@ -16,7 +16,7 @@ public class Sign {
 	
 	private int signNo;
 	private Date signUpDate;
-	private String docType;
+	private String docuType;
 	private int memberNo;
 	private String signStatus;
 	private String flag;

@@ -71,3 +71,10 @@ byeworks/target/classes/com/dadada/byeworks/commute/model/service/CommuteService
 byeworks/target/classes/com/dadada/byeworks/commute/model/service/CommuteServiceImpl.class
 byeworks/target/classes/com/dadada/byeworks/commute/model/vo/Commute.class
 byeworks/target/classes/mappers/commute-mapper.xml
+byeworks/target/classes/com/dadada/byeworks/sign/model/dto/SignDto.class
+byeworks/target/classes/com/dadada/byeworks/sign/model/dto/SignDto.class
+byeworks/target/classes/com/dadada/byeworks/sign/model/dto/SignDto.class
+byeworks/target/classes/com/dadada/byeworks/notice/model/service/NoticeServiceImpl.class
+byeworks/target/classes/com/dadada/byeworks/notice/model/service/NoticeService.class
+byeworks/target/classes/com/dadada/byeworks/notice/model/dao/NoticeDao.class
+

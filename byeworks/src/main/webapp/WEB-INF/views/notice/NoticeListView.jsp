@@ -43,6 +43,8 @@
                   <div class="x_title">
                     <h2><small>공지사항</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
+                    <!-- 5월 6일 공지사항 작성하기 추가1번 -->
+                    <a class="btn btn-primary" href="enrollForm.no">작성하기</a>
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
 
@@ -56,7 +58,7 @@
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
 
-                    <table id="datatable" class="table table-striped table-bordered" style="width:100%">
+                    <table id="datatable" class="table table-striped table-bordered" style="width:100%" data-order="">
                       <thead>
                         <tr>
                           <th>번호</th>
@@ -70,90 +72,17 @@
 
 
                       <tbody>
+                      
+                      <c:forEach items="${ list }" var="n">
                         <tr>
-                          <td>12</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
+                          <td>${ n.noticeNo }</td>
+                          <td>${ n.noticeTitle }</td>
+                          <td>${ n.memberName }</td>
+                          <td>${ n.noticeReadcnt }</td>
+                          <td>${ n.noticeDate }</td>
                         </tr>
-                        <tr>
-                          <td>11</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>
-                        <tr>
-                          <td>10</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>
-                        <tr>
-                          <td>9</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>                      
-                        <tr>
-                          <td>8</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>
-                        <tr>
-                          <td>7</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>
-                        <tr>
-                          <td>6</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>                    
-                        <tr>
-                          <td>4</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td>공지사항 시스템</td>
-                          <td>인사팀</td>
-                          <td>20</td>
-                          <td>2019/04/25</td>
-                        </tr>                        
+                  		</c:forEach>
+                  		
                       </tbody>
                     </table>
                   </div>
@@ -169,6 +98,14 @@
 </div>
 </div>
 </div>
+
+	<script>
+		$(function(){
+			$("#datatable tbody tr").click(function(){
+				location.href="detail.not?nno=" + $(this).children().eq(0).text();
+			});
+		})
+	</script>
 
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->

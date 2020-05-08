@@ -31,4 +31,28 @@ public interface BizAddressService {
 	
 	// 업체 주소 북마크 제거
 	int removeBookmarkBizAddr(BizAddressFav af);
+	
+	// 주소 추가
+	int insertBizAddr(BizAddress addr);
+	
+	// 주소 수정
+	int updateBizAddr(BizAddress addr);
+	
+	// 주소 삭제
+	int deleteBizAddr(ArrayList<Integer> list);
+	
+	// 업체 주소 북마크 조회
+	ArrayList<BizAddress> selectBizMarkList(int memberNo);
+	
+	// 휴지통 조회
+	ArrayList<BizAddress> selectWBList(int memberNo);
+	
+	// 주소록 삭제 복원
+	int restoreBizAddr(ArrayList<Integer> list);
+	
+	// 즐겨찾기 여러 개 삭제
+	int removeBookmarkMany(ArrayList<Integer> list);
+	
+	// 주소 영구 삭제
+	int purgeBizAddr(ArrayList<Integer> list);
 }

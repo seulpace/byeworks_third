@@ -1,6 +1,8 @@
 package com.dadada.byeworks.bizAddress.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -110,6 +112,12 @@ public class AddrController {
 		return String.valueOf(result);
 	}
 	
+	/**
+	 * 업체 주소록 그룹 별 조회
+	 * @param session
+	 * @param groupNo
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("group.bzad")
 	public String selectBizListGroup(HttpSession session, String groupNo) {
@@ -128,6 +136,11 @@ public class AddrController {
 		return "";
 	}
 	
+	/**
+	 * 업체 주소록 즐겨찾기
+	 * @param af
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("bookmark.bzad")
 	public String bookmarkBizAddr(BizAddressFav af) {
@@ -137,6 +150,11 @@ public class AddrController {
 		return String.valueOf(result);
 	}
 	
+	/**
+	 * 업체 주소록 즐겨찾기 해제
+	 * @param af
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("removeBM.bzad")
 	public String removeBookmarkBizAddr(BizAddressFav af) {
@@ -146,5 +164,137 @@ public class AddrController {
 		return String.valueOf(result);
 	}
 	
+	/**
+	 * 주소 추가
+	 * @param addr
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("insert.bzad")
+	public String insertBizAddr(BizAddress addr) {
+		
+		int result = bService.insertBizAddr(addr);
+		
+		return String.valueOf(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping("update.bzad")
+	public String updateBizAddr(BizAddress addr) {
+		
+		int result = bService.updateBizAddr(addr);
+		
+		return String.valueOf(result);
+	}
 
+	/**
+	 * 주소 삭제
+	 * @param no
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("delete.bzad")
+	public String deleteBizAddr(String no) {
+		// 리스트로 변환
+		List<String> list = Arrays.asList(no.split("\\s*,\\s*"));
+		
+		ArrayList<Integer> intList = new ArrayList<>();
+		
+		for(String s : list) {
+			intList.add(Integer.parseInt(s));
+		}
+		
+		int result = bService.deleteBizAddr(intList);
+		
+		return String.valueOf(result);
+	}
+	
+	/**
+	 * 즐겨찾기 주소록 조회
+	 * @param mv
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("markList.bzad")
+	public ModelAndView selectBizMarkList(ModelAndView mv, HttpSession session) {
+		
+		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		ArrayList<BizAddress> list = bService.selectBizMarkList(no);
+		
+		mv.addObject("list", list);
+		mv.setViewName("bizAddress/bizAddressMark");
+		
+		return mv;
+	}
+	
+	/**
+	 * 휴지통 조회
+	 * @param mv
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("wasteBasket.bzad")
+	public ModelAndView selectWBList(ModelAndView mv, HttpSession session) {
+		
+		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		ArrayList<BizAddress> list = bService.selectWBList(no);
+		
+		mv.addObject("list", list);
+		mv.setViewName("bizAddress/wastebasketAddr");
+		
+		return mv;
+	}
+	
+	/**
+	 * 삭제된 주소 복원
+	 * @param no
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("restore.bzad")
+	public String restoreBizAddr(String no) {
+		// 리스트로 변환
+		List<String> list = Arrays.asList(no.split("\\s*,\\s*"));
+		
+		ArrayList<Integer> intList = new ArrayList<>();
+		
+		for(String s : list) {
+			intList.add(Integer.parseInt(s));
+		}
+		
+		int result = bService.restoreBizAddr(intList);
+		
+		return String.valueOf(result);
+	}
+	
+	/**
+	 * 주소 영구 삭제
+	 * @param no
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("purge.bzad")
+	public String purgeBizAddr(String no) {
+		// 리스트로 변환
+		List<String> list = Arrays.asList(no.split("\\s*,\\s*"));
+		
+		ArrayList<Integer> intList = new ArrayList<>();
+		
+		for(String s : list) {
+			intList.add(Integer.parseInt(s));
+		}
+		
+		// 우선 참조하고 있는 즐겨찾기부터 삭제
+		int result1 = bService.removeBookmarkMany(intList);
+		int result = 0;
+		
+		// 삭제 성공했으면 
+		if(result1 > 0) {
+			result = bService.purgeBizAddr(intList);
+		} 
+		
+		return String.valueOf(result);
+	}
 }
