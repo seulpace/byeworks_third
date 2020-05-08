@@ -42,7 +42,7 @@
                     <div class="control-group">
                       <div class="controls">
                         <div class="col-md-11 xdisplay_inputx form-group row has-feedback">
-                          <input type="text" class="form-control has-feedback-left" id="single_cal1" value="" name="" aria-describedby="inputSuccess2Status">
+                          <input type="text" class="form-control has-feedback-left" id="commuteDateStr" value="" name="commuteDateStr" aria-describedby="inputSuccess2Status">
                           <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                           <span id="inputSuccess2Status" class="sr-only">(success)</span>
                         </div>
@@ -50,6 +50,7 @@
                     </div>
                   </fieldset>
                 
+
                 </div>
               </div>
               <div class="col-md-12"></div>
@@ -70,33 +71,7 @@
 
 
                     <tbody>
-                      <tr>
-                        <td>홍길동</td>
-                        <td>20200423112</td>
-                        <td>사업팀</td>
-                        <td>사원</td>
-                        <td>6:00</td>
-                        <td>9:00</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>강강강</td>
-                        <td>20200423112</td>
-                        <td>사업팀</td>
-                        <td>사원</td>
-                        <td>9:10</td>
-                        <td>6:00</td> 
-                        <td>지각</td>
-                      </tr>
-                      <tr>
-                        <td>강강강</td>
-                        <td>20200423113</td>
-                        <td>사업팀</td>
-                        <td>사원</td>
-                        <td></td>
-                        <td></td> 
-                        <td>연차</td>
-                      </tr>
+                    	
                       
                     </tbody>
                   </table>
@@ -105,7 +80,60 @@
               </div>    
 
             </div>
-          
+			
+			
+			<script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+      <script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/moment.min.js"></script>
+			<script>
+		
+			$(function() {
+				
+				 selectCommuteList();
+				  $('input[name="commuteDateStr"]').daterangepicker({
+				    singleDatePicker: true,
+				    showDropdowns: true,
+				    locale : {
+				    	format:'YY/MM/DD'
+				    }
+				  });
+				  
+				 
+				  
+				 
+			});
+			
+			function selectCommuteList(){
+				 $('input[name="commuteDateStr"]').change(function(){
+					 $.ajax({
+						url:"commuteDate.co",
+						data:{commuteDateStr:$("input[name='commuteDateStr']").val()},
+						type:"get",
+						success:function(list){
+							console.log(list);
+							var value = "";
+							$.each(list, function(i, obj){
+								value += "<tr>" +
+			                        			"<td>" + obj.empName + "</td>" +
+						                        "<td>" + obj.empNos + "</td>" +
+						                        "<td>" + obj.empDept + "</td>" +
+						                        "<td>" + obj.empPos +  "</td>" +
+						                        "<td>" + obj.commuteWork + "</td>" + 
+						                        "<td>" + obj.commuteLeaved + "</td>" +
+						                        "<td>" + obj.commuteStatus + "</td>" +
+						                 "</tr>";
+								
+							});
+	                    	 $("#datatable tbody").html(value);
+						},error:function(){
+							
+						}
+						 
+					 });
+					  
+				  });
+			}
+			
+			</script>
      
 
           <div class="clearfix"></div>
@@ -123,6 +151,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
-	
+	 <!-- datepicker js-->
+    
 </body>
 </html>

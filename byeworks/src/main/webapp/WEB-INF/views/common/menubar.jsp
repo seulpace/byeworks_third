@@ -119,10 +119,10 @@
 	                 	<li><a><i class="fa fa-briefcase"></i> 근태 관리 <span class="fa fa-chevron-down"></span></a>
 	                   		<ul class="nav child_menu">
 	                     		<li><a href="form.html">출퇴근 이력 조회</a></li>
-	                     	<c:if test= "${fn:contains(loginUser.department, '인사팀')}">
-	                     		<li><a href="form.html">출퇴근 현황 조회 (인)</a></li>
+	                  
+	                     		<li><a href="commuteList.co">출퇴근 현황 조회 (인)</a></li>
 	                     		<li><a href="form.html">지각 초과 직원 조회 (인)</a></li>
-	                     	</c:if>
+	                   
 	                   		</ul>
 	                 	</li>
                  		<li><a><i class="fa fa-inbox"></i> 연차 관리 <span class="fa fa-chevron-down"></span></a>
@@ -155,11 +155,11 @@
 			                          	</li>
 			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=6">회수</a> <!-- 회수된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=7">참조</a> <!-- 참조된결재리스트이동 -->
+			                          	<li><a href="selectReferList.si?mno=${loginUser.memberNo }">참조</a> <!-- 참조된결재리스트이동 -->
 			                          	</li>
                         			</ul>
                       			</li>
-                      			<li><a href="doSignList.si">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
+                      			<li><a href="doSignList.si?mno=${ loginUser.memberNo }">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
                       			</li>
 		                      	<li><a href="enrollForm.si">결재 작성하기</a> <!-- 결재 등록화면 이동 -->
 		                      	</li>
