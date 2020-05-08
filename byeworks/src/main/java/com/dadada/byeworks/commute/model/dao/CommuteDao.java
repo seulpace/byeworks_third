@@ -10,9 +10,11 @@ import com.dadada.byeworks.commute.model.vo.Commute;
 @Repository
 public class CommuteDao {
 
-	public ArrayList<Commute> commuteList(SqlSessionTemplate sqlSession){
+	// 김다흰
+	// 직원 일별 출퇴근 조회
+	public ArrayList<Commute> commuteList(SqlSessionTemplate sqlSession, String commuteDateStr){
 		
-		return (ArrayList)sqlSession.selectList("commuteMapper.commuteList");
+		return (ArrayList)sqlSession.selectList("commuteMapper.commuteList", commuteDateStr);
 	}
 	
 	

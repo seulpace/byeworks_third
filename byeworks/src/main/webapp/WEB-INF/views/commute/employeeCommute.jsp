@@ -71,17 +71,7 @@
 
 
                     <tbody>
-                    	<c:forEach items="${list}" var="co">
-                    	  <tr>
-	                        <td>${co.empName }</td>
-	                        <td>${co.empNo }</td>
-	                        <td>${co.empDept }</td>
-	                        <td>${co.empPos }</td>
-	                        <td>${co.commuteWork }</td>
-	                        <td>${co.commuteLeaved }</td>
-	                        <td></td>
-	                      </tr>
-	                     </c:forEach>
+                    	
                       
                     </tbody>
                   </table>
@@ -97,6 +87,8 @@
 			<script>
 		
 			$(function() {
+				
+				 selectCommuteList();
 				  $('input[name="commuteDateStr"]').daterangepicker({
 				    singleDatePicker: true,
 				    showDropdowns: true,
@@ -104,7 +96,42 @@
 				    	format:'YY/MM/DD'
 				    }
 				  });
-				});
+				  
+				 
+				  
+				 
+			});
+			
+			function selectCommuteList(){
+				 $('input[name="commuteDateStr"]').change(function(){
+					 $.ajax({
+						url:"commuteDate.co",
+						data:{commuteDateStr:$("input[name='commuteDateStr']").val()},
+						type:"get",
+						success:function(list){
+							console.log(list);
+							var value = "";
+							$.each(list, function(i, obj){
+								value += "<tr>" +
+			                        			"<td>" + obj.empName + "</td>" +
+						                        "<td>" + obj.empNos + "</td>" +
+						                        "<td>" + obj.empDept + "</td>" +
+						                        "<td>" + obj.empPos +  "</td>" +
+						                        "<td>" + obj.commuteWork + "</td>" + 
+						                        "<td>" + obj.commuteLeaved + "</td>" +
+						                        "<td>" + obj.commuteStatus + "</td>" +
+						                 "</tr>";
+								
+							});
+	                    	 $("#datatable tbody").html(value);
+						},error:function(){
+							
+						}
+						 
+					 });
+					  
+				  });
+			}
 			
 			</script>
      

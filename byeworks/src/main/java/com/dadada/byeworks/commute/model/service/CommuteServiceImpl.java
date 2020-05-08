@@ -17,12 +17,12 @@ public class CommuteServiceImpl implements CommuteService {
 	@Autowired
 	private CommuteDao cDao;
 	
-	
+	// 김다흰
 	@Override
-	public ArrayList<Commute> commuteList() {
+	public ArrayList<Commute> commuteList(String commuteDateStr) {
 		
 		
-		return cDao.commuteList(sqlSession);
+		return cDao.commuteList(sqlSession, commuteDateStr);
 	}
 	
 	
