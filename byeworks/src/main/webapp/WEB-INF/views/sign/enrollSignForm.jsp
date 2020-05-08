@@ -157,7 +157,7 @@
                       console.log(docu);
                       if(docu == "사직서"){
                         $(".quit").show();
-                        $("#enroll").attr("action","insetSignQuit.si");
+                        $("#enroll").attr("action","insertSignQuit.si");
                         $(".up").hide();
                         $(".vacation").hide();
                         $(".promotion").hide();

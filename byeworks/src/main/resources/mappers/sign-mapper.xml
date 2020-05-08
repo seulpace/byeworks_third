@@ -39,6 +39,7 @@
 		<result property="flag" column="FLAG" />
 		<result property="title" column="TITLE" />
 		<result property="memberNo" column="MEMBER_NO" />
+		<result property="signLine" column="SIGNLINE"/>
 	</resultMap>
 	
 	
@@ -138,34 +139,85 @@
 	</insert>
 	
 	<select id="selectSignList" parameterType="hashmap" resultMap="signDtoResultSet">
-	SELECT SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE, MEMBER_NO, MEMBER_NAME FROM TB_SIGN JOIN TB_MEMBER USING(MEMBER_NO)
-	WHERE MEMBER_NO = #{memberNo}
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME ,
+	LISTAGG(SLM.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','진행','R','반려')||')',',')
+	WITHIN GROUP (ORDER BY SLM.POSITION DESC, SIGNUP_DATE)AS SIGNLINE
+	FROM TB_SIGN S
+	JOIN TB_MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
+	JOIN TB_SIGNLINE SL ON (S.SIGN_NO = SL.SIGN_NO)
+	JOIN TB_MEMBER SLM ON (SL.MEMBER_NO = SLM.MEMBER_NO)
+	WHERE S.MEMBER_NO = #{ memberNo }
 	
+	
+	<!-- 전체 -->
 	<if test="type == 1">
-		AND FLAG ='Y'
+		AND FLAG ='Y' 
+		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+		S.MEMBER_NO, M.MEMBER_NAME
+		ORDER BY SIGNUP_DATE DESC
 	</if>
-	
+	<!-- 대기 -->
 	<if test="type == 2">
-		AND FLAG ='N' AND SIGN_STATUS = 'O'
+		AND FLAG ='N' AND SIGN_STATUS = 'N' 
+		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+		S.MEMBER_NO, M.MEMBER_NAME
+		ORDER BY SIGN_NO DESC
 	</if>
-
+	<!-- 진행 -->
 	<if test="type == 3">
-		AND FLAG ='Y' AND SIGN_STATUS = 'O'
+		AND FLAG ='Y' AND SIGN_STATUS = 'O' 
+		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+		S.MEMBER_NO, M.MEMBER_NAME
+		ORDER BY SIGNUP_DATE DESC
 	</if>
-
+	<!-- 완료 -->
 	<if test="type == 4">
 		AND FLAG = 'Y' AND SIGN_STATUS = 'C'
+		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+		S.MEMBER_NO, M.MEMBER_NAME
+		ORDER BY SIGNUP_DATE DESC
 	</if>
-
+	<!-- 반려 -->
 	<if test="type == 5">
 		AND FLAG = 'Y' AND SIGN_STATUS = 'R'
+		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+		S.MEMBER_NO, M.MEMBER_NAME
+		ORDER BY SIGNUP_DATE DESC
 	</if>
-	
+	<!-- 회수 -->
 	<if test="type == 6">
 		AND FLAG = 'N' AND SIGN_STATUS = 'D'
+		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+		S.MEMBER_NO, M.MEMBER_NAME
+		ORDER BY SIGNUP_DATE DESC
 	</if>
-
+	
 	</select>
+	
+	
+	<!-- 참조된 결재 조회 -->
+	<select id="selectSignReferList" parameterType="_int" resultMap="signDtoResultSet">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, RM.MEMBER_NO, RM.MEMBER_NAME
+	FROM TB_SIGNREFER R
+	JOIN TB_MEMBER RM ON (R.MEMBER_NO = RM.MEMBER_NO)
+	JOIN TB_SIGN S ON (S.SIGN_NO = R.SIGN_NO)
+	JOIN TB_MEMBER SM ON (S.MEMBER_NO = SM.MEMBER_NO)
+	WHERE RM.MEMBER_NO=#{memberNo}
+	</select>
+	
+	<!-- 해야할 결재 조회 -->
+	<select id="selectDoSignList" parameterType="_int" resultMap="signDtoResultSet">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, RM.MEMBER_NO, RM.MEMBER_NAME
+	FROM TB_SIGNLINE R
+	JOIN TB_MEMBER RM ON (R.MEMBER_NO = RM.MEMBER_NO)
+	JOIN TB_SIGN S ON (S.SIGN_NO = R.SIGN_NO)
+	JOIN TB_MEMBER SM ON (S.MEMBER_NO = SM.MEMBER_NO)
+	WHERE RM.MEMBER_NO=#{memberNo}
+	</select>
+	
+	
+	
 	
 	
 	

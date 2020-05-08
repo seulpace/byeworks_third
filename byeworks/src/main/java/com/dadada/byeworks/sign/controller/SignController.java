@@ -24,6 +24,7 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.dto.SignDto;
 import com.dadada.byeworks.sign.model.service.SignService;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
@@ -67,7 +68,7 @@ public class SignController {
 		
 		int result = sService.insertSignAp(signAndAppointment, slist, rlist, alist);
 		
-		return "sign/waitingSignList";
+		return "redirect:selectSignList.si?mno=" + signAndAppointment.getMemberNo() + "&type=2";
 	}
 	
 	/**
@@ -107,7 +108,7 @@ public class SignController {
 				result5 = sService.insertAttachmentList(alist);
 			}
 		}
-		return "sign/waitingSignList";
+		return "redirect:selectSignList.si?mno=" + signAndQuit.getMemberNo() + "&type=2";
 	}
 
 	/**
@@ -132,16 +133,17 @@ public class SignController {
 		}	
 		int result = sService.insertSignAnnual(signAndAnnualSign, slist, rlist, alist);
 		
-		return "sign/waitingSignList";
+		return "redirect:selectSignList.si?mno=" + signAndAnnualSign.getMemberNo() + "&type=2";
 	}
 	
 
 	@RequestMapping("selectSignList.si")
 	public ModelAndView selectSignList(ModelAndView mv, int mno, int type) {
-		
 		ArrayList<Sign> list = sService.selectSignList(mno,type);
-		
+
+		System.out.println(list);
 		mv.addObject("list", list).addObject("type", type).setViewName("sign/totalSignList");
+
 		
 //		switch(type) {
 //		case 1 : mv.addObject("list", list).setViewName("sign/totalSignList"); break;
@@ -182,6 +184,26 @@ public class SignController {
 		
 
 //	} --> 이렇게 하게되면 메뉴바에 누른 상태 화면 표시 안됨. 매개변수넘겨서 안하고 각각의 url mapping 값 따로줌.
+	
+	
+	@RequestMapping("selectReferList.si")
+	public ModelAndView selectReferList(ModelAndView mv, int mno) {
+		
+		ArrayList<SignDto> list = sService.selectReferList(mno);
+		
+		mv.addObject("list",list).setViewName("sign/referSignList");
+		return mv;
+	}
+	
+	@RequestMapping("doSignList.si")
+	public ModelAndView selectDoSignList(ModelAndView mv, int mno) {
+		
+		ArrayList<SignDto> list = sService.selectDoSignList(mno);
+		System.out.println(list);
+		mv.addObject("list", list).setViewName("sign/doSignList");
+		
+		return mv;
+	}
 	
 	
 	/**

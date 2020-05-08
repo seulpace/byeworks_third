@@ -153,11 +153,11 @@
 			                          	</li>
 			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=6">회수</a> <!-- 회수된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=7">참조</a> <!-- 참조된결재리스트이동 -->
+			                          	<li><a href="selectReferList.si?mno=${loginUser.memberNo }">참조</a> <!-- 참조된결재리스트이동 -->
 			                          	</li>
                         			</ul>
                       			</li>
-                      			<li><a href="doSignList.si">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
+                      			<li><a href="doSignList.si?mno=${ loginUser.memberNo }">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
                       			</li>
 		                      	<li><a href="enrollForm.si">결재 작성하기</a> <!-- 결재 등록화면 이동 -->
 		                      	</li>

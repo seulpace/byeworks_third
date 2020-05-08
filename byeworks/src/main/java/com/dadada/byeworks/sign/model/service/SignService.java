@@ -7,6 +7,7 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.dto.SignDto;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -35,6 +36,12 @@ public interface SignService {
 			ArrayList<SignAttachment> alist);
 
 	ArrayList<Sign> selectSignList(int mno, int type);
+
+	ArrayList<SignDto> selectReferList(int mno);
+
+	ArrayList<SignDto> selectDoSignList(int mno);
+
+
 
 
 }

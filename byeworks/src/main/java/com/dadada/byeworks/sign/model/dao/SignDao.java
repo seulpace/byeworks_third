@@ -13,6 +13,7 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.dto.SignDto;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -138,6 +139,21 @@ public class SignDao {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectSignList", data);
 	}
+
+
+	public ArrayList<SignDto> selectReferList(SqlSessionTemplate sqlSession, int memberNo) {
+		
+	return (ArrayList)sqlSession.selectList("signMapper.selectSignReferList", memberNo);
+	}
+
+
+	public ArrayList<SignDto> selectDoSignList(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectDoSignList", memberNo );
+	}
+
+
+
 
 
 	}
