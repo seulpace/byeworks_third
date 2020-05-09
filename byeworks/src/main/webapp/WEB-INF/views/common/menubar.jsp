@@ -221,7 +221,7 @@
 	                 	</a>
 	                 	<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 	                   		<a class="dropdown-item"  href="myPage.me"> Profile</a>
-	                   		<a class="dropdown-item"  href="note.html"> Note</a>
+	                   		<a class="dropdown-item"  href="selectList.not"> Note</a>
 	                   		<a class="dropdown-item"  href="logout.me"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
 	                 	</div>
 	               	</li>
