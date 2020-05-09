@@ -21,5 +21,13 @@ public class NoteDao {
 	public int sendNote(SqlSessionTemplate sqlSession, Note n) {
 		return sqlSession.insert("noteMapper.sendNote", n);
 	}
+	
+	public Note detailNote(SqlSessionTemplate sqlSession, int noteNo) {
+		return sqlSession.selectOne("noteMapper.detailNote", noteNo);
+	}
+	
+	public int updateReadcheck(SqlSessionTemplate sqlSession, Note n) {
+		return sqlSession.update("noteMapper.updateReadcheck", n);
+	}
 
 }

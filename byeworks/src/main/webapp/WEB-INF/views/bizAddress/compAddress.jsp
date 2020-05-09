@@ -19,6 +19,12 @@
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
  
  	<title>Byeworks</title>
+ 	
+ 	<style>
+ 		textarea:focus {
+ 			outline:none;
+ 		}
+ 	</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -80,7 +86,7 @@
 			                                          				<a class="dropdown-item" onclick="$('#noteForm${ a.memberNo }').submit();">쪽지 보내기</a>
 			                                        			</div>
 			                                        			
-			                                        			<form id="noteForm${ a.memberNo }" action="sendForm.not" method="post">
+			                                        			<form id="noteForm${ a.memberNo }" action="sendForm.nt" method="post">
 			                                        				<input type="hidden" name="receiveNo" value="${ a.memberNo }">
 			                                        				<input type="hidden" name="receiveName" value="${ a.memberName }">
 			                                        			</form>
