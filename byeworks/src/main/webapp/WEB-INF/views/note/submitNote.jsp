@@ -17,13 +17,18 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 
+    
  	<title>Byeworks</title>
+ 	<style>
+ 		textarea:focus {
+ 			outline:none;
+ 		}
+ 	</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
-        
+		
 			<!-- 메뉴바 -->
 			<jsp:include page="../common/menubar.jsp"/>
 		
@@ -47,7 +52,7 @@
                   				<div class="x_content">
                     				<div class="row">
                       					<div class="col-sm-12">
-                        					<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        					<form id="demo-form2" action="send.not" method="post" data-parsley-validate class="form-horizontal form-label-left" onsubmit="return checkTextarea();">
 												<input type="hidden" name="sendNo" value="${ loginUser.memberNo }">
                           						<div class="item form-group">
                             						<label class="col-form-label col-md-2 col-sm-2 label-align" for="first-name">제목 <span class="required">*</span></label>
@@ -59,8 +64,10 @@
                           						<div class="item form-group">
                             						<label class="col-form-label col-md-2 col-sm-2 label-align" for="last-name">받는 사람 <span class="required">*</span></label>
                             						<div class="col-md-6 col-sm-6">
-                                						<input type="text" id="receiveName" name="receiveName" required="required" class="form-control" readonly>
-                                						<input type="hidden" id="receiveNo" name="receiveNo"> 
+                                						<input type="text" id="receiveName" name="receiveName" required="required" class="form-control" readonly value="${ sessionScope.rName }">
+                                						<input type="hidden" id="receiveNo" name="receiveNo" value="${ sessionScope.rNo }">
+                                						<c:remove var="rName"/>
+                                						<c:remove var="rNo"/> 
                             						</div>
                             						<button type="button" class="btn btn-diy" style="float:left; color:white;" data-toggle="modal" data-target=".searchAddress"><small>찾아보기</small></button>
                           						</div>
@@ -72,12 +79,12 @@
                             						</div>
 
                             						<div class="x_content">
-                               							<textarea style="resize: none; width: 100%; height: 250px;" name="noteContent" id="noteContent"></textarea>
+                               							<textarea style="resize: none; width: 100%; height: 250px;" name="noteContent" id="noteContent" placeholder="내용을 입력해주세요" required></textarea>
                                							<div class="ln_solid">
                                								<br>
                                								<div style="padding-left: 15px; padding-right: 15px;">
                                  								<div style="float:right;">
-                                   									<button class="btn btn-diy" style="color:white;"><small>뒤로 가기</small></button>
+                                   									<button class="btn btn-diy" style="color:white;" onclick="goList();"><small>뒤로 가기</small></button>
                                    									<button class="btn btn-warning" type="submit"><small>보내기</small></button>
                                  								</div>
                                								</div>
@@ -121,7 +128,11 @@
                 					<tbody>
                 						<c:forEach items="${ list }" var="l">
                   						<tr>
-						                    <td>${ l.memberName }</td>
+						                    <td>
+						                    	<input type="hidden" value="${ l.memberNo }">
+						                    	<input type="hidden" value="${ l.memberName }">
+						                    	${ l.memberName }
+						                    </td>
 						                    <td>${ l.department }</td>
 						                    <td>${ l.position }</td>
 						                    <td>${ l.email }</td>
@@ -149,14 +160,28 @@
 	
 	<script>
 		$(function() {
-			$("#addrTable").DataTable({
-				"pageLength" : 5
+			var table = $("#addrTable").DataTable({
+				pageLength: 5
 			});
 			
-			// 그 컬럼이 눌렸을 때 값이 들어가면서 dismiss 되도록 해야 한다
+			// 그 컬럼이 눌렸을 때 값이 들어가면서 없어지도록
+			$("#addrTable tbody").on('click', 'tr', function() {
+				// 받는 사람 번호
+				var no = $(this).children().eq(0).children().eq(0).val();
+				// 받는 사람 이름
+				var name = $(this).children().eq(0).children().eq(1).val();
+				
+				// 이름 설정해주기
+				$("#receiveName").val(name);
+				$("#receiveNo").val(no);
+				$(".searchAddress").modal('hide');
+			});
 			
 		});
 		
+		function goList() {
+			location.href = "selectList.not";
+		}
 		
 	</script>
 </body>

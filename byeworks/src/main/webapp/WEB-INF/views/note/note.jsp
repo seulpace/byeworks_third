@@ -18,11 +18,28 @@
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
  
+    <!-- alertifyJs -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+ 
  	<title>Byeworks</title>
+ 	
+ 	<style>
+ 		table>tbody>tr:hover{
+ 			cursor:pointer;
+ 		}
+ 	</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
     	<div class="main_container">
+        
+			<c:if test="${ !empty sessionScope.sendMsg }">
+			<script>
+				alertify.alert("${sessionScope.sendMsg}"); 
+			</script>
+			<c:remove var="sendMsg" scope="session"/>
+			</c:if>
         
 	        <!-- 메뉴바 -->
 	        <jsp:include page="../common/menubar.jsp"/>
@@ -58,13 +75,13 @@
 	                        			<div class="row">
 	                          				<div class="col-sm-12">
 	                            				<div class="card-box table-responsive">
-	                              					<table id="datatable" class="table table-bordered" style="width:100%">
+	                              					<table id="datatable" class="table table-bordered" style="width:100%" data-order="">
 	                                					<thead>
 	                                  						<tr>
 							                                    <th style="width:5%"></th>
-							                                    <th >보낸 사람</th>
-							                                    <th >내용</th>
-							                                    <th >보낸 시간</th>
+							                                    <th style="width:15%" >보낸 사람</th>
+							                                    <th >제목</th>
+							                                    <th style="width:20%">보낸 시간</th>
 	                                  						</tr>
 	                                					</thead>
 	                                					<tbody>
@@ -79,7 +96,7 @@
 	                                      							</div>
 	                                    						</th>
 	                                    						<td>${ r.sendName }</td>
-	                                    						<td>${ r.noteContent }</td>
+	                                    						<td>${ r.noteTitle }</td>
 	                                    						<td>${ r.sendDateStr }</td>
 	                                  						</tr>
 	                                  						</c:forEach>
@@ -115,12 +132,12 @@
 	                        			<div class="row">
 	                          				<div class="col-sm-12">
 	                            				<div class="card-box table-responsive">
-	                              					<table id="datatable-checkbox" class="table table-bordered" style="width:100%">
+	                              					<table id="datatable-checkbox" class="table table-bordered" style="width:100%" data-order="">
 	                                					<thead>
 	                                  						<tr>
 							                                    <th ></th>
 							                                    <th >받는 사람</th>
-							                                    <th >내용</th>
+							                                    <th >제목</th>
 							                                    <th >보낸 시간</th>
 							                                    <th >수신 확인</th>
 	                                  						</tr>
@@ -137,17 +154,17 @@
 	                                      							</div>
 	                                    						</th>
 							                                    <td>${ s.receiveName }</td>
-							                                    <td>${ s.noteContent }</td>
+							                                    <td>${ s.noteTitle }</td>
 							                                    <td>${ s.sendDateStr }</td>
 							                                    <td>
 							                                    	<c:choose>
-							                                    	<c:when test="${ s.readCheck eq 1 }">
-							                                    		읽음
+							                                    	<c:when test="${ s.readCheck eq 0 }">
+							                                    		<strong>읽음</strong>
 							                                    	</c:when>
-							                                    	<c:when test="${ s.readCheck eq 2 }">
+							                                    	<c:when test="${ s.readCheck eq 1 }">
 							                                    		읽지 않음
 							                                    	</c:when>
-							                                    	<c:when test="${ s.readCheck eq 3 }">
+							                                    	<c:when test="${ s.readCheck eq 2 }">
 							                                    		발송 취소
 							                                    	</c:when>
 							                                    	</c:choose>

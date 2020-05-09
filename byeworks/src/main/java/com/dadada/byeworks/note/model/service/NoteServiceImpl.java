@@ -28,4 +28,9 @@ public class NoteServiceImpl implements NoteService{
 		return ntDao.sendList(sqlSession, no);
 	}
 
+	@Override
+	public int sendNote(Note n) {
+		return ntDao.sendNote(sqlSession, n);
+	}
+
 }

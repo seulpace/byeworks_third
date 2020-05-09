@@ -17,5 +17,9 @@ public class NoteDao {
 	public ArrayList<Note> sendList(SqlSessionTemplate sqlSession, int no) {
 		return (ArrayList)sqlSession.selectList("noteMapper.sendList", no);
 	}
+	
+	public int sendNote(SqlSessionTemplate sqlSession, Note n) {
+		return sqlSession.insert("noteMapper.sendNote", n);
+	}
 
 }

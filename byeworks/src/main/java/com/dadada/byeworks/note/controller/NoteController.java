@@ -51,13 +51,40 @@ public class NoteController {
 	}
 	
 	@RequestMapping("sendForm.not")
-	public ModelAndView sendForm(HttpSession session, ModelAndView mv) {
+	public ModelAndView sendForm(HttpSession session, ModelAndView mv, String receiveNo, String receiveName) {
 		
 		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		ArrayList<MemberAddress> list = mService.selectAddrList(no);
 		
+		// 사내 주소록에서 눌렀을 경우 받는 사람 번호와 받는 사람 이름이 입력되어야 한다
+		if(receiveNo != null) {
+			// 만약 받는 사람 주소가 있을 경우 int형으로 변환
+			int rNo = Integer.parseInt(receiveNo);
+			
+			// session에 담아주기
+			session.setAttribute("rNo", rNo);
+			session.setAttribute("rName", receiveName);
+		}
+		
 		mv.addObject("list", list).setViewName("note/submitNote");
 		
 		return mv;
+	}
+	
+	@RequestMapping("send.not")
+	public String sendNote(HttpSession session, Note n) {
+		
+		int result = ntService.sendNote(n);
+		
+		String view = "";
+		
+		if(result > 0) {
+			session.setAttribute("sendMsg", "발송되었습니다");
+			view = "redirect:selectList.not";
+		} else {
+			view = "common/errorPage";
+		}
+				
+		return view;
 	}
 }

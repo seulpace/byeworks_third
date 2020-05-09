@@ -12,5 +12,6 @@ public interface NoteService {
 	// 보낸 쪽지 전체 조회
 	ArrayList<Note> sendList(int no);
 	
-	// 
+	// 쪽지 보내기
+	int sendNote(Note n);
 }

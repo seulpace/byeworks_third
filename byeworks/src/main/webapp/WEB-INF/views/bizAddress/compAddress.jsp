@@ -77,8 +77,13 @@
 			                                          				${ a.memberName }
 			                                        			</a>
 			                                        			<div class="dropdown-menu" aria-labelledby="dropdownNote">
-			                                          				<a class="dropdown-item" href="#">쪽지 보내기</a>
+			                                          				<a class="dropdown-item" onclick="$('#noteForm${ a.memberNo }').submit();">쪽지 보내기</a>
 			                                        			</div>
+			                                        			
+			                                        			<form id="noteForm${ a.memberNo }" action="sendForm.not" method="post">
+			                                        				<input type="hidden" name="receiveNo" value="${ a.memberNo }">
+			                                        				<input type="hidden" name="receiveName" value="${ a.memberName }">
+			                                        			</form>
 			                                      			</div>
 			                                    		</td>
 			                                    		<td>${ a.department }</td>
