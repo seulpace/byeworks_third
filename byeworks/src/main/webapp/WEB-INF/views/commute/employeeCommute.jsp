@@ -56,7 +56,7 @@
               <div class="col-md-12"></div>
               <div class="row" style="display: block;">
                 <div class="col-md-12 col-sm-12">
-                  <table id="datatable" class="table table-bordered" style="width:100%">
+                  <table id="commuteTable" class="table table-bordered" style="width:100%">
                     <thead>
                       <tr>
                         <th>사원</th>
@@ -109,7 +109,7 @@
 						data:{commuteDateStr:$("input[name='commuteDateStr']").val()},
 						type:"get",
 						success:function(list){
-							console.log(list);
+							
 							var value = "";
 							$.each(list, function(i, obj){
 								value += "<tr>" +
@@ -123,7 +123,7 @@
 						                 "</tr>";
 								
 							});
-	                    	 $("#datatable tbody").html(value);
+	                    	 $("#commuteTable tbody").html(value);
 						},error:function(){
 							
 						}
