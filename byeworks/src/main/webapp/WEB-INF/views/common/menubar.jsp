@@ -118,7 +118,7 @@
                  		</li>
 	                 	<li><a><i class="fa fa-briefcase"></i> 근태 관리 <span class="fa fa-chevron-down"></span></a>
 	                   		<ul class="nav child_menu">
-	                     		<li><a href="form.html">출퇴근 이력 조회</a></li>
+	                     		<li><a href="myCommuteList.co">출퇴근 이력 조회</a></li>
 	                     		<li><a href="commuteList.co">출퇴근 현황 조회 (인)</a></li>
 	                     		<li><a href="form.html">지각 초과 직원 조회 (인)</a></li>
 	                   
