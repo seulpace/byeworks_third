@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/LogoExample.png" type="image/png" />
 <title>ByeWorks</title>
+<style>
+	#datatable tbody tr:hover{
+		cursor:pointer;
+	}
+
+</style>
 </head>
 <!-- menubar 위에 있던 파일의 경우에 css가 적용되지 않아 두 개의 css 따로 적용  -->
     <!-- Bootstrap -->
@@ -91,7 +97,7 @@
                       <tbody>
                       <c:forEach items="${ list }" var="l">
                         <tr>
-                          <td>${ l.signNo }</td>
+                          <td>${ l.signNo }<input type="hidden" value="${l.docuType }"></td>
                           <td>${ l.title }</td> 
                           <td>${ l.signLine }</td>
                           <td>${ loginUser.memberName }</td>
@@ -139,6 +145,16 @@
         </div>
         </div>
         </div>
+        
+        <script>
+        	$(function(){
+        		$("#datatable tbody tr").click(function(){
+        			console.log($(this).children().eq(0).children().eq(0));
+        			location.href = "signDetail.si?sno=" + $(this).children().eq(0).text() + "&type=" + $(this).children().eq(0).children("input").val();
+        		
+        		});
+        	});
+        </script>
         
    <!-- footer include -->
 	<jsp:include page="../common/footer.jsp"/>

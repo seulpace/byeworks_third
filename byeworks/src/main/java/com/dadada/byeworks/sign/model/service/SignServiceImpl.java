@@ -129,11 +129,35 @@ public class SignServiceImpl implements SignService {
 		
 		return sDao.selectReferList(sqlSession, mno);
 	}
-
+	//결재해야할 결재 리스트 조회
 	@Override
 	public ArrayList<SignDto> selectDoSignList(int mno) {
 		
 		return sDao.selectDoSignList(sqlSession, mno);
+	}
+	//결재 상세보기 (문서type별)
+	@Override
+	public SignAndAnnualSign selectSignAnnual(int sno) {
+		System.out.println(sno);
+		return sDao.selectSignAnnual(sqlSession,sno);
+	}
+
+	@Override
+	public SignAndQuit selectSignQuit(int sno) {
+		
+		return sDao.selectSignQuit(sqlSession, sno);
+	}
+
+	@Override
+	public SignAndAppointment selectSignAppointment(int sno) {
+		
+		return sDao.selectSignAppointment(sqlSession, sno);
+	}
+	//결재선 상세보기
+	@Override
+	public ArrayList<SignLine> selectSignLine(int sno) {
+		
+		return sDao.selectSignLine(sqlSession, sno);
 	}
 
 	

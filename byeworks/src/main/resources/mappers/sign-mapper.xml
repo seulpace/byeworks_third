@@ -42,9 +42,58 @@
 		<result property="signLine" column="SIGNLINE"/>
 	</resultMap>
 	
+	<resultMap type="SignAndAnnualSign" id="SAANResultSet">
+		<id property="signNo" column="SIGN_NO" />
+		<result property="signUpDate" column="SIGNUP_DATE" />
+		<result property="docuType" column="D_TYPE" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="signStatus" column="SIGN_STATUS" />
+		<result property="flag" column="FLAG" />
+		<result property="title" column="TITLE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="signUse" column="ANNUAL_USE"/>
+		<result property="annualPeriod" column="ANNUAL_PERIOD"/>
+		<result property="annualStartDay" column="ANNUAL_STARTDAY"/>
+		<result property="annualEndDay" column="ANNUAL_ENDDAY"/>
+		<result property="annualContent" column="ANNUAL_CONTENT"/>
+		<result property="annualType" column="ANNUAL_TYPE"/>
+		<result property="department" column="DEPARTMENT_NAME"/>
+	</resultMap>
 	
+	<resultMap type="SignAndAppointment" id="SAAPResultSet">
+		<id property="signNo" column="SIGN_NO" />
+		<result property="signUpDate" column="SIGNUP_DATE" />
+		<result property="docuType" column="D_TYPE" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="signStatus" column="SIGN_STATUS" />
+		<result property="flag" column="FLAG" />
+		<result property="title" column="TITLE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="positionBefore" column="POSITION_BEFORE"/>
+		<result property="positionAfter" column="POSITION_AFTER"/>
+		<result property="depBefore" column="DEP_BEFORE"/>
+		<result property="depAfter" column="DEP_AFTER"/>
+		<result property="appointmentLev" column="APPOINTMENT_LEV"/>
+		<result property="appointmentMem" column="APPOINT_MEM"/>
+		<result property="appointmentDate" column="APPOINTMENT_DATE"/>
+		<result property="department" column="DEPARTMENT_NAME"/>
+	</resultMap>
+	
+	<resultMap type="SignAndQuit" id="SAQResultSet">
+		<id property="signNo" column="SIGN_NO" />
+		<result property="signUpDate" column="SIGNUP_DATE" />
+		<result property="docuType" column="D_TYPE" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="signStatus" column="SIGN_STATUS" />
+		<result property="flag" column="FLAG" />
+		<result property="title" column="TITLE" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="quitDate" column="QUIT_DATE"/>
+		<result property="reason" column="REASON"/>
+		<result property="department" column="DEPARTMENT_NAME"/>
+	</resultMap>
 
-	
 	
 	<select id="selectDepartmentList" resultMap="departmentResultSet">
 	
@@ -198,26 +247,61 @@
 	
 	<!-- 참조된 결재 조회 -->
 	<select id="selectSignReferList" parameterType="_int" resultMap="signDtoResultSet">
-	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, RM.MEMBER_NO, RM.MEMBER_NAME
+	SELECT S.SIGN_NO, S.SIGNUP_DATE, S.D_TYPE, S.SIGN_STATUS, S.FLAG,
+	S.TITLE, S.MEMBER_NO, M.MEMBER_NAME
 	FROM TB_SIGNREFER R
-	JOIN TB_MEMBER RM ON (R.MEMBER_NO = RM.MEMBER_NO)
-	JOIN TB_SIGN S ON (S.SIGN_NO = R.SIGN_NO)
-	JOIN TB_MEMBER SM ON (S.MEMBER_NO = SM.MEMBER_NO)
-	WHERE RM.MEMBER_NO=#{memberNo}
+	JOIN TB_SIGN S ON (S.SIGN_NO=R.SIGN_NO)
+	JOIN TB_MEMBER M ON (M.MEMBER_NO = S.MEMBER_NO)
+	WHERE R.MEMBER_NO = #{memberNo} AND FLAG ='Y'
 	</select>
 	
 	<!-- 해야할 결재 조회 -->
 	<select id="selectDoSignList" parameterType="_int" resultMap="signDtoResultSet">
-	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, RM.MEMBER_NO, RM.MEMBER_NAME
-	FROM TB_SIGNLINE R
-	JOIN TB_MEMBER RM ON (R.MEMBER_NO = RM.MEMBER_NO)
-	JOIN TB_SIGN S ON (S.SIGN_NO = R.SIGN_NO)
-	JOIN TB_MEMBER SM ON (S.MEMBER_NO = SM.MEMBER_NO)
-	WHERE RM.MEMBER_NO=#{memberNo}
+	SELECT S.SIGN_NO, S.SIGNUP_DATE, S.D_TYPE, S.SIGN_STATUS, S.FLAG,
+	S.TITLE, S.MEMBER_NO, MEMBER_NAME
+	FROM TB_SIGNLINE SL
+	JOIN TB_SIGN S ON(S.SIGN_NO = SL.SIGN_NO)
+	JOIN TB_MEMBER M ON(M.MEMBER_NO = S.MEMBER_NO)
+	WHERE SL.MEMBER_NO = #{memberNo} AND S.FLAG = 'Y' AND S.SIGN_STATUS='N' AND SL.STATUS='N'
 	</select>
 	
+	<select id="selectSignAnnual" parameterType="_int" resultMap="SAANResultSet">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	MEMBER_NO, MEMBER_NAME,
+	ANNUAL_USE, ANNUAL_PERIOD, ANNUAL_STARTDAY, ANNUAL_ENDDAY, ANNUAL_CONTENT,
+	ANNUAL_TYPE,
+	DEPARTMENT_NAME
+	FROM TB_SIGN S
+	JOIN TB_ANNUAL_SIGN AN ON (S.SIGN_NO = AN.SIGN_NO)
+	JOIN TB_MEMBER M USING(MEMBER_NO)
+	JOIN TB_DEPARTMENT D ON(D.DEPARTMENT_NO = M.DEPARTMENT)
+	WHERE S.SIGN_NO = #{sno}
+	</select>
 	
+	<select id="selectSignQuit" parameterType="_int" resultMap="SAQResultSet">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	MEMBER_NO, MEMBER_NAME,
+	ENROLL_DATE, QUIT_DATE, REASON,
+	DEPARTMENT_NAME
+	FROM TB_SIGN S
+	JOIN TB_QUIT Q ON (S.SIGN_NO = Q.SIGN_NO)
+	JOIN TB_MEMBER M USING(MEMBER_NO)
+	JOIN TB_DEPARTMENT D ON(D.DEPARTMENT_NO = M.DEPARTMENT)
+	WHERE S.SIGN_NO = #{sno}
+	</select>	
 	
+	<select id="selectSignAppointment" parameterType="_int" resultMap="SAAPResultSet">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	MEMBER_NO, MEMBER_NAME,
+	POSITION_BEFORE, POSITION_AFTER, DEP_BEFORE, DEP_AFTER, APPOINTMENT_LEV, APPOINT_MEM,
+	APPOINTMENT_DATE,
+	DEPARTMENT_NAME
+	FROM TB_SIGN S
+	JOIN TB_APPOINTMENT AP ON (S.SIGN_NO = AP.SIGN_NO)
+	JOIN TB_MEMBER M USING(MEMBER_NO)
+	JOIN TB_DEPARTMENT D ON(D.DEPARTMENT_NO = M.DEPARTMENT)
+	WHERE S.SIGN_NO = #{sno}
+	</select>
 	
 	
 	

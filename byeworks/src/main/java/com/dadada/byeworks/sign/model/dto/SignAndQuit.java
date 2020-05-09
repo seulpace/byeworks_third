@@ -19,11 +19,13 @@ public class SignAndQuit {
 	private Date signUpDate;
 	private String docuType;
 	private int memberNo;
+	private String memberName;
 	private String signStatus;
 	private String flag;
 	private String title;
 	private Date enrollDate;
 	private Date quitDate;
 	private String reason;
+	private String department;
 	
 }
