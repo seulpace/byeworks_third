@@ -153,6 +153,30 @@ public class SignDao {
 	}
 
 
+	public SignAndAnnualSign selectSignAnnual(SqlSessionTemplate sqlSession, int sno) {
+		System.out.println(sno);
+		return sqlSession.selectOne("signMapper.selectSignAnnual", sno);
+	}
+
+
+	public SignAndQuit selectSignQuit(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.selectOne("signMapper.selectSignQuit", sno);
+	}
+
+
+	public SignAndAppointment selectSignAppointment(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.selectOne("signMapper.selectSignAppointment", sno);
+	}
+
+
+	public ArrayList<SignLine> selectSignLine(SqlSessionTemplate sqlSession, int sno) {
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectSignLine", sno);
+	}
+
+
 
 
 
