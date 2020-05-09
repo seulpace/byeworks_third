@@ -41,6 +41,14 @@ public interface SignService {
 
 	ArrayList<SignDto> selectDoSignList(int mno);
 
+	SignAndAnnualSign selectSignAnnual(int sno);
+
+	SignAndQuit selectSignQuit(int sno);
+
+	SignAndAppointment selectSignAppointment(int sno);
+
+	ArrayList<SignLine> selectSignLine(int sno);
+
 
 
 

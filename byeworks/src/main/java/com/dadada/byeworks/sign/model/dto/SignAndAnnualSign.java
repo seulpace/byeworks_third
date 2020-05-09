@@ -18,6 +18,7 @@ public class SignAndAnnualSign {
 	private Date signUpDate;
 	private String docuType;
 	private int memberNo;
+	private String memberName;
 	private String signStatus;
 	private String flag;
 	private String title;
@@ -27,5 +28,6 @@ public class SignAndAnnualSign {
 	private Date annualEndDay;
 	private String annualContent;
 	private int annualType;
+	private String department;
 
 }

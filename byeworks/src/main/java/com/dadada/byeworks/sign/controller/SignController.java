@@ -47,6 +47,30 @@ public class SignController {
 	}
 	
 	/**
+	 * 결재문서 상세보기 이동
+	 */
+	@RequestMapping("signDetail.si")
+	public ModelAndView signDetail(ModelAndView mv, int sno, String type) {
+		
+	if(type.equals("V")) {
+		SignAndAnnualSign an = sService.selectSignAnnual(sno);
+		ArrayList<SignLine> list = sService.selectSignLine(sno);
+		
+		mv.addObject("list",an).setViewName("sign/signDetail");
+	}else if(type.equals("Q")) {
+		SignAndQuit sq = sService.selectSignQuit(sno);
+		
+		mv.addObject("list",sq).setViewName("sign/signDetail");
+	}else {
+		SignAndAppointment sp = sService.selectSignAppointment(sno);
+		
+		mv.addObject("list",sp).setViewName("sign/signDetail");
+	}
+		
+		return mv;
+	}
+	
+	/**
 	 * @param signAndAppointment
 	 * @param slist
 	 * @param rlist
@@ -141,7 +165,7 @@ public class SignController {
 	public ModelAndView selectSignList(ModelAndView mv, int mno, int type) {
 		ArrayList<Sign> list = sService.selectSignList(mno,type);
 
-		System.out.println(list);
+		
 		mv.addObject("list", list).addObject("type", type).setViewName("sign/totalSignList");
 
 		

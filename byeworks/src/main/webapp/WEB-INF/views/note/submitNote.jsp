@@ -17,140 +17,140 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 
+    
  	<title>Byeworks</title>
+ 	<style>
+ 		textarea:focus {
+ 			outline:none;
+ 		}
+ 	</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
-    	<div class="main_container">
-        
-        <!-- 메뉴바 -->
-        <jsp:include page="../common/menubar.jsp"/>
+		<div class="main_container">
 		
-		<div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>쪽지 보내기</h3>
-              </div>
-            </div>
-
-            <div class="clearfix"></div>
-            <br>
-
-            <!-- 본문 테이블 -->  
-            <div class="row" style="display: block;">
-              <div class="col-md-12 col-sm-12 ">
-                <div class="x_panel">                  
-                  <div class="x_content">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                          <div class="item form-group">
-                            <label class="col-form-label col-md-2 col-sm-2 label-align" for="first-name">제목 <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6 ">
-                              <input type="text" id="first-name" required="required" class="form-control ">
-                            </div>
-                          </div>
-                          <div class="item form-group">
-                            <label class="col-form-label col-md-2 col-sm-2 label-align" for="last-name">받는 사람 <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6">
-                                <input type="text" id="last-name" name="last-name" required="required" class="form-control">
-                            </div>
-                            <button type="button" class="btn btn-diy" style="float:left; color:white;" data-toggle="modal" data-target=".searchAddress"><small>찾아보기</small></button>
-                          </div>
-
-                          <div class="x_panel">
-                            <div class="x_title">
-                              <h2>내용 작성</h2>
-                              <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                              </ul>
-                              <div class="clearfix"></div>
-                            </div>
-
-                            <div class="x_content">
-                              
-                              <form>
-                                <textarea style="resize: none; width: 100%; height: 250px;">
-
-                                </textarea>
-                                <div class="ln_solid">
-                                  <br>
-                                  <div style="padding-left: 15px; padding-right: 15px;">
-                                    <div style="float:right;">
-                                      <button class="btn btn-diy" style="color:white;"><small>뒤로 가기</small></button>
-                                      <button class="btn btn-warning"><small>보내기</small></button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </form>
-                            </div>
-                          </div>  
-                        </form>
-                      </div>                      
-                    </div>                    
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+			<!-- 메뉴바 -->
+			<jsp:include page="../common/menubar.jsp"/>
 		
-        <!-- footer content -->
-        <jsp:include page="../common/footer.jsp"/>
+			<div class="right_col" role="main">
+          		<!-- top tiles -->
+          		<div class="">
+            		<div class="page-title">
+              			<div class="title_left">
+                			<h3>쪽지 보내기</h3>
+              			</div>
+            		</div>
+
+            		<div class="clearfix"></div>
+            		
+            		<br>
+
+            		<!-- 본문 테이블 -->  
+            		<div class="row" style="display: block;">
+              			<div class="col-md-12 col-sm-12 ">
+                			<div class="x_panel">                  
+                  				<div class="x_content">
+                    				<div class="row">
+                      					<div class="col-sm-12">
+                        					<form id="demo-form2" action="send.not" method="post" data-parsley-validate class="form-horizontal form-label-left" onsubmit="return checkTextarea();">
+												<input type="hidden" name="sendNo" value="${ loginUser.memberNo }">
+                          						<div class="item form-group">
+                            						<label class="col-form-label col-md-2 col-sm-2 label-align" for="first-name">제목 <span class="required">*</span></label>
+                            						<div class="col-md-6 col-sm-6 ">
+                              							<input type="text" id="noteTitle" name="noteTitle" required="required" class="form-control ">
+                            						</div>
+                          						</div>
+                          						
+                          						<div class="item form-group">
+                            						<label class="col-form-label col-md-2 col-sm-2 label-align" for="last-name">받는 사람 <span class="required">*</span></label>
+                            						<div class="col-md-6 col-sm-6">
+                                						<input type="text" id="receiveName" name="receiveName" required="required" class="form-control" readonly value="${ sessionScope.rName }">
+                                						<input type="hidden" id="receiveNo" name="receiveNo" value="${ sessionScope.rNo }">
+                                						<c:remove var="rName"/>
+                                						<c:remove var="rNo"/> 
+                            						</div>
+                            						<button type="button" class="btn btn-diy" style="float:left; color:white;" data-toggle="modal" data-target=".searchAddress"><small>찾아보기</small></button>
+                          						</div>
+
+                          						<div class="x_panel">
+                            						<div class="x_title">
+                              							<h2>내용 작성</h2>
+                              							<div class="clearfix"></div>
+                            						</div>
+
+                            						<div class="x_content">
+                               							<textarea style="resize: none; width: 100%; height: 250px;" name="noteContent" id="noteContent" placeholder="내용을 입력해주세요" required></textarea>
+                               							<div class="ln_solid">
+                               								<br>
+                               								<div style="padding-left: 15px; padding-right: 15px;">
+                                 								<div style="float:right;">
+                                   									<button class="btn btn-diy" style="color:white;" onclick="goList();"><small>뒤로 가기</small></button>
+                                   									<button class="btn btn-warning" type="submit"><small>보내기</small></button>
+                                 								</div>
+                               								</div>
+                               							</div>
+                            						</div>
+                          						</div>  
+                        					</form>
+                      					</div>                      
+                    				</div>                    
+                  				</div>                  
+                			</div>
+              			</div>
+            		</div>
+          		</div>
+        	</div>
+		
+        	<!-- footer content -->
+        	<jsp:include page="../common/footer.jsp"/>
         
-        <!-- Modal -->
-        <div class="modal fade searchAddress" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        	<!-- Modal -->
+        	<div class="modal fade searchAddress" tabindex="-1" role="dialog" aria-hidden="true">
+      			<div class="modal-dialog modal-lg">
+        			<div class="modal-content">
 
-          <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">주소록 찾아보기</h4>
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-
-            <!-- 모달창 그룹 추가 본문 내용 -->
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-              <table id="datatable" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>이름</th>
-                    <th>부서</th>
-                    <th>직책</th>
-                    <th>이메일</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td>Tiger Nixon</td>
-                    <td>사업팀</td>
-                    <td>팀장</td>
-                    <td>61hi@naver.com</td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-          </div>
-
-        </div>
-      </div>
-    </div>
-        
-      </div>
-    </div>
+          				<div class="modal-header">
+            				<h4 class="modal-title" id="myModalLabel">주소록 찾아보기</h4>
+            				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+          				</div>
+          				
+          				<div class="modal-body">
+            				<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+              					<table id="addrTable" class="table table-striped table-bordered" style="width:100%" data-order="">
+                					<thead>
+                  						<tr>
+						                    <th>이름</th>
+						                    <th>부서</th>
+						                    <th>직책</th>
+						                    <th>이메일</th>
+                  						</tr>
+                					</thead>
+                					<tbody>
+                						<c:forEach items="${ list }" var="l">
+                  						<tr>
+						                    <td>
+						                    	<input type="hidden" value="${ l.memberNo }">
+						                    	<input type="hidden" value="${ l.memberName }">
+						                    	${ l.memberName }
+						                    </td>
+						                    <td>${ l.department }</td>
+						                    <td>${ l.position }</td>
+						                    <td>${ l.email }</td>
+                  						</tr>
+                  						</c:forEach>
+                					</tbody>
+              					</table>
+            				</form>
+          				</div>
+          				
+          				<div class="modal-footer">
+            				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          				</div>
+					</div>
+      			</div>
+    		</div>
+		</div>
+	</div>
     
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->
@@ -158,5 +158,31 @@
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
 	
+	<script>
+		$(function() {
+			var table = $("#addrTable").DataTable({
+				pageLength: 5
+			});
+			
+			// 그 컬럼이 눌렸을 때 값이 들어가면서 없어지도록
+			$("#addrTable tbody").on('click', 'tr', function() {
+				// 받는 사람 번호
+				var no = $(this).children().eq(0).children().eq(0).val();
+				// 받는 사람 이름
+				var name = $(this).children().eq(0).children().eq(1).val();
+				
+				// 이름 설정해주기
+				$("#receiveName").val(name);
+				$("#receiveNo").val(no);
+				$(".searchAddress").modal('hide');
+			});
+			
+		});
+		
+		function goList() {
+			location.href = "selectList.not";
+		}
+		
+	</script>
 </body>
 </html>
