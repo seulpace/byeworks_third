@@ -39,6 +39,7 @@
 		<url-pattern>*.not</url-pattern>
 		<url-pattern>*.si</url-pattern>
 		<url-pattern>*.co</url-pattern>
+		<url-pattern>*.ann</url-pattern>		
 		<url-pattern>*.nt</url-pattern>
 	</servlet-mapping>
 	

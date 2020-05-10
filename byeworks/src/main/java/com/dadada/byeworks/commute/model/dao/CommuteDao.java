@@ -29,4 +29,5 @@ public class CommuteDao {
 		
 		return (ArrayList)sqlSession.selectList("commuteMapper.myCommute", map);
 	}
+
 }

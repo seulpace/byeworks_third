@@ -483,7 +483,7 @@ public class MemberController {
 		System.out.println(m);
 		if(result>0) {
 			
-			return "member/memberDetailList";
+			return "redirect:memberDetailList.me";
 		}else {
 			model.addAttribute("msg", "작성 실패");
 			return "member/memberInsert";
