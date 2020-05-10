@@ -26,4 +26,9 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.selectNotice", nno);
 	}
 	
+	// 이슬희
+	public ArrayList<Notice> selectMainList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectMainList");
+	}
+	
 }
