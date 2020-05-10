@@ -107,7 +107,9 @@ public class SignServiceImpl implements SignService {
 		int result6 = 0;
 		if(result1>0) {
 			int result3 = sDao.insertSignLineList(sqlSession, slist);
+			
 			int result4 = sDao.insertReferList(sqlSession, rlist);
+		
 			int result5 = sDao.insertAttachmentList(sqlSession, alist);
 			
 			result6 = result3*result4*result5;
@@ -123,18 +125,6 @@ public class SignServiceImpl implements SignService {
 		return sDao.selectSignList(sqlSession, mno, type);
 	}
 
-	//참조된 결재 리스트 조회
-	@Override
-	public ArrayList<SignDto> selectReferList(int mno) {
-		
-		return sDao.selectReferList(sqlSession, mno);
-	}
-	//결재해야할 결재 리스트 조회
-	@Override
-	public ArrayList<SignDto> selectDoSignList(int mno) {
-		
-		return sDao.selectDoSignList(sqlSession, mno);
-	}
 	//결재 상세보기 (문서type별)
 	@Override
 	public SignAndAnnualSign selectSignAnnual(int sno) {
@@ -158,6 +148,123 @@ public class SignServiceImpl implements SignService {
 	public ArrayList<SignLine> selectSignLine(int sno) {
 		
 		return sDao.selectSignLine(sqlSession, sno);
+	}
+	//참조자 상세보기
+	@Override
+	public ArrayList<SignRefer> selectSignRefer(int sno) {
+		
+		return sDao.selectSignRefer(sqlSession, sno);
+	}
+	//첨부파일 상세보기
+	@Override
+	public ArrayList<SignAttachment> selectAttachment(int sno) {
+		
+		return sDao.selectAttachment(sqlSession, sno);
+	}
+	
+	//결재 상신 올리기
+	@Override
+	public int signUp(int sno) {
+		int result1 = sDao.signUp(sqlSession,sno);
+		int result2 = sDao.signLineUp(sqlSession,sno);
+		return result1*result2;
+	}
+
+	
+	@Override
+	public int updateSignQuit(SignAndQuit signAndQuit, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist) {
+
+		int result1 = sDao.updateSignQ(sqlSession, signAndQuit);
+		int result2 = sDao.updateSignQuit(sqlSession, signAndQuit);
+		int result9 = 1;
+		if(result1>0 && result2>0) {
+			
+			int result3 = sDao.deleteSignLineList(sqlSession,slist.getSlist().get(0).getSignNo());
+			int result6 = sDao.updateSignLineList(sqlSession, slist.getSlist());
+			
+			int result4=1;
+			int result5=1;
+			int result7=1;
+			int result8=1;
+			
+			if(rlist.getRlist()!=null) {
+			result4 = sDao.deleteSignReferList(sqlSession, rlist.getRlist().get(0).getSignNo());
+			result7 = sDao.updateReferList(sqlSession, rlist.getRlist());
+			}
+			if(!alist.isEmpty()) {
+			 result5 = sDao.deleteSignAttachmentList(sqlSession, alist.get(0).getSignNo());
+			 result8 = sDao.updateAttachmentList(sqlSession, alist);
+			}
+			result9 = result3*result4*result5*result6*result7*result8;
+			
+		}
+		
+		return  result1*result2*result9;
+	}
+
+	@Override
+	public int updateSignAnnual(SignAndAnnualSign signAndAnnualSign, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist) {
+		
+		int result1 = sDao.updateSignAN(sqlSession, signAndAnnualSign);
+		int result2 = sDao.updateSignAnnual(sqlSession, signAndAnnualSign);
+		int result9 = 1;
+		if(result1>0 && result2>0) {
+			
+			int result3 = sDao.deleteSignLineList(sqlSession,slist.getSlist().get(0).getSignNo());
+			int result6 = sDao.updateSignLineList(sqlSession, slist.getSlist());
+			
+			int result4=1;
+			int result5=1;
+			int result7=1;
+			int result8=1;
+			
+			if(rlist.getRlist()!=null) {
+			result4 = sDao.deleteSignReferList(sqlSession, rlist.getRlist().get(0).getSignNo());
+			result7 = sDao.updateReferList(sqlSession, rlist.getRlist());
+			}
+			if(!alist.isEmpty()) {
+			 result5 = sDao.deleteSignAttachmentList(sqlSession, alist.get(0).getSignNo());
+			 result8 = sDao.updateAttachmentList(sqlSession, alist);
+			}
+			result9 = result3*result4*result5*result6*result7*result8;
+			
+		}
+		
+		return  result1*result2*result9;
+	}
+
+	@Override
+	public int updateSignAnnual(SignAndAppointment signAndAppointment, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist) {
+		
+		int result1 = sDao.updateSignAP(sqlSession, signAndAppointment);
+		int result2 = sDao.updateSignAppointment(sqlSession, signAndAppointment);
+		int result9 = 1;
+		if(result1>0 && result2>0) {
+			
+			int result3 = sDao.deleteSignLineList(sqlSession,slist.getSlist().get(0).getSignNo());
+			int result6 = sDao.updateSignLineList(sqlSession, slist.getSlist());
+			
+			int result4=1;
+			int result5=1;
+			int result7=1;
+			int result8=1;
+			
+			if(rlist.getRlist()!=null) {
+			result4 = sDao.deleteSignReferList(sqlSession, rlist.getRlist().get(0).getSignNo());
+			result7 = sDao.updateReferList(sqlSession, rlist.getRlist());
+			}
+			if(!alist.isEmpty()) {
+			 result5 = sDao.deleteSignAttachmentList(sqlSession, alist.get(0).getSignNo());
+			 result8 = sDao.updateAttachmentList(sqlSession, alist);
+			}
+			result9 = result3*result4*result5*result6*result7*result8;
+			
+		}
+		
+		return  result1*result2*result9;
 	}
 
 	

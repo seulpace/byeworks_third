@@ -37,10 +37,6 @@ public interface SignService {
 
 	ArrayList<Sign> selectSignList(int mno, int type);
 
-	ArrayList<SignDto> selectReferList(int mno);
-
-	ArrayList<SignDto> selectDoSignList(int mno);
-
 	SignAndAnnualSign selectSignAnnual(int sno);
 
 	SignAndQuit selectSignQuit(int sno);
@@ -48,6 +44,20 @@ public interface SignService {
 	SignAndAppointment selectSignAppointment(int sno);
 
 	ArrayList<SignLine> selectSignLine(int sno);
+
+	ArrayList<SignRefer> selectSignRefer(int sno);
+
+	ArrayList<SignAttachment> selectAttachment(int sno);
+
+	int signUp(int sno);
+
+	int updateSignQuit(SignAndQuit signAndQuit, SignLine slist, SignRefer rlist, ArrayList<SignAttachment> alist);
+
+	int updateSignAnnual(SignAndAnnualSign signAndAnnualSign, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist);
+
+	int updateSignAnnual(SignAndAppointment signAndAppointment, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist);
 
 
 

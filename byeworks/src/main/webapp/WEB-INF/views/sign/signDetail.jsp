@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,34 +62,76 @@
               <div class="panel">
                   <div class="panel-body">
                     <table class="table table-bordered"  style="text-align: center;">
-                          <tr>
-                            <th rowspan="4" style="vertical-align: middle;">결재</th>
-                            <th>과장</th>
-                            <th>부장</th>
-                            <th>이사</th>
-                          </tr>
-
-                          <tr>
-                              <td rowspan="2">ㅇ</td>
-                              <td rowspan="2">ㅇ</td>
-                              <td rowspan="2">ㅇ</td>
-                          </tr>
-
-                          <tr></tr>
-
-                          <tr>
-                              <td>김가네</td>
-                              <td>김밥은</td>
-                              <td>비싸요</td>
-                          </tr>
+                        
+                      <tr>
+                        <th rowspan="3" style="vertical-align: middle;">결재선</th>
+                        <c:forEach items="${ slist }" var="s">
+                        	<th>${ s.position }</th>
+                       	</c:forEach>
+                      </tr>
+                      
+                      <tr>
+         				  
+         				  	
+	                      		<c:forEach items="${ slist }" var="s" varStatus="status">
+	                      		
+	                      		  <c:if test = "${loginUser.memberNo ne s.memberNo }">
+	                      			<c:choose>
+	                      				<c:when test="${ s.status eq 'C' }">
+	                        				<td>승인</td>
+	                      				</c:when>
+	                      		
+	                      				<c:when test="${ s.status eq 'O' }">
+	                      					<td>진행</td>
+	                      				</c:when>
+	                      				
+	                      				<c:when test="${ s.status eq 'N' }">
+	                      					<td>대기</td>
+	                      				</c:when>
+	                      		
+	                      				<c:otherwise>
+	                      					<td>반려</td>
+	                      				</c:otherwise>			
+	                      			</c:choose>
+	                      		   </c:if> 
+	                      		   
+	                      		   
+	                      		   <c:if test = "${ loginUser.memberNo eq s.memberNo}">
+	                      		   	<c:choose>
+	                      		   		<c:when test = "${ count.first }">
+	                      		   		  <td><button id="signLineConfirm">승인</button><button id="signLineReturn">반려</button></td>
+	          							</c:when>
+	          							
+	          							
+	  
+	          						</c:choose>	
+	                      		   </c:if>
+	                      		   
+	                      	
+	                      		   
+	                      		 
+	                      		
+                      			</c:forEach>
+                      		
+							
+                      </tr>
+					  
+					  
+					  
+                      <tr>
+                      <c:forEach items="${ slist }" var="s">
+                        <td>${ s.memberName }</td>
+                      </c:forEach>
+                      </tr>
 
                       </table>
-                      	<div>참조자</div>
+                      	
+                      	<div><h6>참조자</h6></div>
                       	<div>
-                      		<span>누구</span>
-                      		<span>누구</span>
-                      		<span>누구</span>
-                      		<span>누구</span>
+                      		<c:forEach items="${ rlist }" var="r">
+                      			<span>${ r.memberName } <c:choose><c:when test="${ r.status eq 'C'}">(확인)</c:when><c:otherwise>(미확인)</c:otherwise></c:choose></span>&nbsp;/&nbsp;                   		
+                      		</c:forEach>
+                      		
                       	</div>
                       	<br><br>
                       
@@ -107,12 +150,12 @@
                               		</c:when>
                               		
                               		<c:when test = "${ list.annualType eq 1 }">
-                              			<td>오전반차<td>
+                              			<td>오전반차</td>
                               		</c:when>
                               		
-                              		<c:otherwise>
+                              		<c:when test= "${ list.annualType eq 2 }">
                               			<td>오후반차</td>
-                              		</c:otherwise>
+                              		</c:when>
 
                                </c:choose>
                         </tr>
@@ -187,6 +230,9 @@
                                       	</c:otherwise>
                                       </c:choose>
                                   </tr>
+                                  <tr>
+                                  	
+                                  </tr>
 								  
                                   <tr>
                                       <th>기존부서</th>
@@ -217,11 +263,27 @@
 				  		</div>
 				  </c:otherwise>
           	</c:choose>
-						
+          	
+          	<c:if test = "${!empty alist  }">
+          	<div>
+          		<h6>첨부파일 :</h6> 
+          		<c:forEach items="${ alist }" var="a">
+          			<a href="${pageContext.servletContext.contextPath }/resources/sign_files/${ a.maName }" download="${ a.oaName }">${ a.oaName}</a>&nbsp;&nbsp; // &nbsp;&nbsp;
+          		</c:forEach>
+          		
+          	</div>
+			</c:if>	
 						
 						
 			
-			<div align="center"><button>결재 수정</button></div>
+			<div align="center">
+			
+			<c:if test="${ list.signStatus eq 'N' }">
+			<button id="signUpBtn">결재상신</button>
+			<button id="signUpdateBtn">결재 수정</button>
+			</c:if>
+			
+			</div>
 
 
             	</div>
@@ -230,6 +292,27 @@
           
           </div>
           </div>
+          
+          <script>
+          	$(function(){
+          		$("#signUpBtn").on("click",function(){
+          					
+          			location.href = "signUp.si?sno=${ list.signNo }&mno=${ list.memberNo}";
+          			
+          		});
+          		
+          		$("#signUpdateBtn").on("click",function(){
+          			
+          			location.href = "signFormUpdate.si?sno=${ list.signNo}&mno=${ list.memberNo}&type=${list.docuType}";
+          		});
+          		
+          		
+          		
+          		
+          		
+          	});
+          
+          </script>
           
 
 	<!-- footer include -->

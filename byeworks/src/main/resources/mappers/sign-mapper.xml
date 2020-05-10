@@ -64,19 +64,21 @@
 		<id property="signNo" column="SIGN_NO" />
 		<result property="signUpDate" column="SIGNUP_DATE" />
 		<result property="docuType" column="D_TYPE" />
-		<result property="memberName" column="MEMBER_NAME" />
 		<result property="signStatus" column="SIGN_STATUS" />
 		<result property="flag" column="FLAG" />
 		<result property="title" column="TITLE" />
 		<result property="memberNo" column="MEMBER_NO" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="department" column="DEPARTMENT_NAME"/>
 		<result property="positionBefore" column="POSITION_BEFORE"/>
 		<result property="positionAfter" column="POSITION_AFTER"/>
 		<result property="depBefore" column="DEP_BEFORE"/>
 		<result property="depAfter" column="DEP_AFTER"/>
 		<result property="appointmentLev" column="APPOINTMENT_LEV"/>
 		<result property="appointmentMem" column="APPOINT_MEM"/>
+		<result property="appointmentMemName" column="APPOINT_MEMNAME"/>
 		<result property="appointmentDate" column="APPOINTMENT_DATE"/>
-		<result property="department" column="DEPARTMENT_NAME"/>
+		
 	</resultMap>
 	
 	<resultMap type="SignAndQuit" id="SAQResultSet">
@@ -92,6 +94,33 @@
 		<result property="quitDate" column="QUIT_DATE"/>
 		<result property="reason" column="REASON"/>
 		<result property="department" column="DEPARTMENT_NAME"/>
+	</resultMap>
+	
+	<resultMap type="SignLineDto" id="SignLineResultSet">
+		<id property="signNo" column="SIGN_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="approvalDate" column="APPROVAL_DATE"/>
+		<result property="status" column="STATUS"/>
+		<result property="memberOrder" column="MEMBER_ORDER"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="position" column="POSITION_NAME"/>
+	</resultMap>
+	
+	<resultMap type="SignReferDto" id="SignReferResultSet">
+		<id property="signNo" column="SIGN_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="status" column="STATUS"/>
+		<result property="checkDate" column="CHECK_DATE"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="position" column="POSITION_NAME"/>		
+	</resultMap>
+	
+	<resultMap type="SignAttachment" id="SignAttachmentResultSet">
+		<id property="fileNo" column="FILE_NO"/>
+		<result property="oaName" column="OA_NAME"/>
+		<result property="maName" column="MA_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="signNo" column="SIGN_NO"/>
 	</resultMap>
 
 	
@@ -188,19 +217,18 @@
 	</insert>
 	
 	<select id="selectSignList" parameterType="hashmap" resultMap="signDtoResultSet">
-	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+
+	<!-- 전체 -->
+	<if test="type == 1">
+		SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
 	S.MEMBER_NO, M.MEMBER_NAME ,
-	LISTAGG(SLM.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','진행','R','반려')||')',',')
+	LISTAGG(SLM.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','대기','O','진행','R','반려')||')',',')
 	WITHIN GROUP (ORDER BY SLM.POSITION DESC, SIGNUP_DATE)AS SIGNLINE
 	FROM TB_SIGN S
 	JOIN TB_MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
 	JOIN TB_SIGNLINE SL ON (S.SIGN_NO = SL.SIGN_NO)
 	JOIN TB_MEMBER SLM ON (SL.MEMBER_NO = SLM.MEMBER_NO)
 	WHERE S.MEMBER_NO = #{ memberNo }
-	
-	
-	<!-- 전체 -->
-	<if test="type == 1">
 		AND FLAG ='Y' 
 		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
 		S.MEMBER_NO, M.MEMBER_NAME
@@ -208,6 +236,15 @@
 	</if>
 	<!-- 대기 -->
 	<if test="type == 2">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME ,
+	LISTAGG(SLM.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','대기','O','진행','R','반려')||')',',')
+	WITHIN GROUP (ORDER BY SLM.POSITION DESC, SIGNUP_DATE)AS SIGNLINE
+	FROM TB_SIGN S
+	JOIN TB_MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
+	JOIN TB_SIGNLINE SL ON (S.SIGN_NO = SL.SIGN_NO)
+	JOIN TB_MEMBER SLM ON (SL.MEMBER_NO = SLM.MEMBER_NO)
+	WHERE S.MEMBER_NO = #{ memberNo }
 		AND FLAG ='N' AND SIGN_STATUS = 'N' 
 		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
 		S.MEMBER_NO, M.MEMBER_NAME
@@ -215,6 +252,15 @@
 	</if>
 	<!-- 진행 -->
 	<if test="type == 3">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME ,
+	LISTAGG(SLM.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','대기','O','진행','R','반려')||')',',')
+	WITHIN GROUP (ORDER BY SLM.POSITION DESC, SIGNUP_DATE)AS SIGNLINE
+	FROM TB_SIGN S
+	JOIN TB_MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
+	JOIN TB_SIGNLINE SL ON (S.SIGN_NO = SL.SIGN_NO)
+	JOIN TB_MEMBER SLM ON (SL.MEMBER_NO = SLM.MEMBER_NO)
+	WHERE S.MEMBER_NO = #{ memberNo }
 		AND FLAG ='Y' AND SIGN_STATUS = 'O' 
 		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
 		S.MEMBER_NO, M.MEMBER_NAME
@@ -222,6 +268,15 @@
 	</if>
 	<!-- 완료 -->
 	<if test="type == 4">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME ,
+	LISTAGG(SLM.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','대기','O','진행','R','반려')||')',',')
+	WITHIN GROUP (ORDER BY SLM.POSITION DESC, SIGNUP_DATE)AS SIGNLINE
+	FROM TB_SIGN S
+	JOIN TB_MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
+	JOIN TB_SIGNLINE SL ON (S.SIGN_NO = SL.SIGN_NO)
+	JOIN TB_MEMBER SLM ON (SL.MEMBER_NO = SLM.MEMBER_NO)
+	WHERE S.MEMBER_NO = #{ memberNo }
 		AND FLAG = 'Y' AND SIGN_STATUS = 'C'
 		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
 		S.MEMBER_NO, M.MEMBER_NAME
@@ -229,6 +284,15 @@
 	</if>
 	<!-- 반려 -->
 	<if test="type == 5">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME ,
+	LISTAGG(SLM.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','대기','O','진행','R','반려')||')',',')
+	WITHIN GROUP (ORDER BY SLM.POSITION DESC, SIGNUP_DATE)AS SIGNLINE
+	FROM TB_SIGN S
+	JOIN TB_MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
+	JOIN TB_SIGNLINE SL ON (S.SIGN_NO = SL.SIGN_NO)
+	JOIN TB_MEMBER SLM ON (SL.MEMBER_NO = SLM.MEMBER_NO)
+	WHERE S.MEMBER_NO = #{ memberNo }
 		AND FLAG = 'Y' AND SIGN_STATUS = 'R'
 		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
 		S.MEMBER_NO, M.MEMBER_NAME
@@ -236,33 +300,59 @@
 	</if>
 	<!-- 회수 -->
 	<if test="type == 6">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME ,
+	LISTAGG(SLM.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','대기','O','진행','R','반려')||')',',')
+	WITHIN GROUP (ORDER BY SLM.POSITION DESC, SIGNUP_DATE)AS SIGNLINE
+	FROM TB_SIGN S
+	JOIN TB_MEMBER M ON (S.MEMBER_NO = M.MEMBER_NO)
+	JOIN TB_SIGNLINE SL ON (S.SIGN_NO = SL.SIGN_NO)
+	JOIN TB_MEMBER SLM ON (SL.MEMBER_NO = SLM.MEMBER_NO)
+	WHERE S.MEMBER_NO = #{ memberNo }
 		AND FLAG = 'N' AND SIGN_STATUS = 'D'
 		GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
 		S.MEMBER_NO, M.MEMBER_NAME
 		ORDER BY SIGNUP_DATE DESC
 	</if>
+	<!-- 참조 -->
+	<if test ="type == 7">
+	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME,
+	LISTAGG(M1.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','대기','O','진행','R','반려')||')',',')
+	WITHIN GROUP(ORDER BY SL.MEMBER_ORDER)AS SIGNLINE
+	FROM TB_SIGN S
+	JOIN
+	TB_MEMBER M ON(M.MEMBER_NO = S.MEMBER_NO)
+	JOIN TB_SIGNLINE SL
+	ON(SL.SIGN_NO = S.SIGN_NO)
+	JOIN TB_MEMBER M1 ON(M1.MEMBER_NO =
+	SL.MEMBER_NO)
+	JOIN TB_SIGNREFER SF ON(SF.SIGN_NO = S.SIGN_NO)
+	WHERE
+	SF.MEMBER_NO = #{memberNo} AND FLAG = 'Y'
+	GROUP BY S.SIGN_NO, SIGNUP_DATE,
+	D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME
+	ORDER BY
+	SIGNUP_DATE DESC
 	
-	</select>
+	</if>
+	<!-- 결재할  -->
+	<if test="type == 8">
+	    SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
+	S.MEMBER_NO, M.MEMBER_NAME,
+	LISTAGG(ML.MEMBER_NAME||'('||DECODE(SL.STATUS,'C','완료','N','대기','O','진행','R','반려')||')',',')
+	WITHIN GROUP (ORDER BY SL.MEMBER_ORDER)AS SIGNLINE
+	FROM TB_SIGN S
+	JOIN TB_MEMBER M ON(M.MEMBER_NO=S.MEMBER_NO)
+	JOIN TB_SIGNLINE SL ON(SL.SIGN_NO = S.SIGN_NO)
+	JOIN TB_MEMBER ML ON(ML.MEMBER_NO=SL.MEMBER_NO)
+	JOIN TB_SIGNLINE SL1 ON(SL1.SIGN_NO =S.SIGN_NO)
+	WHERE SL1.MEMBER_NO = #{memberNo} AND S.SIGN_STATUS = 'O' AND FLAG ='Y'
+	GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,S.MEMBER_NO, M.MEMBER_NAME
+	ORDER BY SIGNUP_DATE DESC
+	</if>
 	
-	
-	<!-- 참조된 결재 조회 -->
-	<select id="selectSignReferList" parameterType="_int" resultMap="signDtoResultSet">
-	SELECT S.SIGN_NO, S.SIGNUP_DATE, S.D_TYPE, S.SIGN_STATUS, S.FLAG,
-	S.TITLE, S.MEMBER_NO, M.MEMBER_NAME
-	FROM TB_SIGNREFER R
-	JOIN TB_SIGN S ON (S.SIGN_NO=R.SIGN_NO)
-	JOIN TB_MEMBER M ON (M.MEMBER_NO = S.MEMBER_NO)
-	WHERE R.MEMBER_NO = #{memberNo} AND FLAG ='Y'
-	</select>
-	
-	<!-- 해야할 결재 조회 -->
-	<select id="selectDoSignList" parameterType="_int" resultMap="signDtoResultSet">
-	SELECT S.SIGN_NO, S.SIGNUP_DATE, S.D_TYPE, S.SIGN_STATUS, S.FLAG,
-	S.TITLE, S.MEMBER_NO, MEMBER_NAME
-	FROM TB_SIGNLINE SL
-	JOIN TB_SIGN S ON(S.SIGN_NO = SL.SIGN_NO)
-	JOIN TB_MEMBER M ON(M.MEMBER_NO = S.MEMBER_NO)
-	WHERE SL.MEMBER_NO = #{memberNo} AND S.FLAG = 'Y' AND S.SIGN_STATUS='N' AND SL.STATUS='N'
 	</select>
 	
 	<select id="selectSignAnnual" parameterType="_int" resultMap="SAANResultSet">
@@ -291,20 +381,149 @@
 	</select>	
 	
 	<select id="selectSignAppointment" parameterType="_int" resultMap="SAAPResultSet">
-	SELECT S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,
-	MEMBER_NO, MEMBER_NAME,
-	POSITION_BEFORE, POSITION_AFTER, DEP_BEFORE, DEP_AFTER, APPOINTMENT_LEV, APPOINT_MEM,
-	APPOINTMENT_DATE,
-	DEPARTMENT_NAME
+	SELECT S.SIGN_NO, S.SIGNUP_DATE, S.D_TYPE, S.SIGN_STATUS, S.FLAG,
+	S.TITLE, S.MEMBER_NO, M.MEMBER_NAME, D.DEPARTMENT_NAME,
+	P.POSITION_NAME POSITION_BEFORE, P1.POSITION_NAME POSITION_AFTER, D1.DEPARTMENT_NAME
+	DEP_BEFORE, D2.DEPARTMENT_NAME DEP_AFTER, APPOINTMENT_LEV, APPOINT_MEM,
+	M1.MEMBER_NAME APPOINT_MEMNAME, APPOINTMENT_DATE
 	FROM TB_SIGN S
-	JOIN TB_APPOINTMENT AP ON (S.SIGN_NO = AP.SIGN_NO)
-	JOIN TB_MEMBER M USING(MEMBER_NO)
+	JOIN TB_MEMBER M ON (M.MEMBER_NO = S.MEMBER_NO)
 	JOIN TB_DEPARTMENT D ON(D.DEPARTMENT_NO = M.DEPARTMENT)
+	JOIN TB_APPOINTMENT AP ON(AP.SIGN_NO = S.SIGN_NO)
+	JOIN TB_MEMBER M1 ON (AP.APPOINT_MEM = M1.MEMBER_NO)
+	JOIN TB_POSITION P ON(P.POSITION_NO = AP.POSITION_BEFORE)
+	JOIN TB_POSITION P1 ON(P1.POSITION_NO = AP.POSITION_AFTER)
+	JOIN TB_DEPARTMENT D1 ON(D1.DEPARTMENT_NO = AP.DEP_BEFORE)
+	JOIN TB_DEPARTMENT D2 ON(D2.DEPARTMENT_NO = AP.DEP_AFTER)
 	WHERE S.SIGN_NO = #{sno}
 	</select>
 	
+	<select id="selectSignLine" parameterType="_int" resultMap="SignLineResultSet">
+	SELECT MEMBER_NO, MEMBER_NAME, SIGN_NO, APPROVAL_DATE, STATUS,
+	MEMBER_ORDER, POSITION_NAME
+	FROM TB_SIGNLINE
+	JOIN TB_MEMBER USING(MEMBER_NO)
+	JOIN TB_POSITION ON(POSITION = POSITION_NO)
+	WHERE SIGN_NO = #{sno}
+	ORDER BY MEMBER_ORDER
+	</select>
+	
+	<select id="selectSignRefer" parameterType="_int" resultMap="SignReferResultSet">
+	SELECT MEMBER_NO, MEMBER_NAME, SIGN_NO, STATUS, CHECK_DATE,
+	POSITION_NAME
+	FROM TB_SIGNREFER
+	JOIN TB_MEMBER USING(MEMBER_NO)
+	JOIN TB_POSITION ON(POSITION = POSITION_NO)
+	WHERE SIGN_NO = #{sno}
+	ORDER BY POSITION DESC
+	</select>
+	
+	<select id="selectAttachment" parameterType="_int" resultMap="SignAttachmentResultSet">
+	SELECT FILE_NO, OA_NAME, MA_NAME, FILE_PATH, SIGN_NO
+	FROM TB_SIGN_ATTACHMENT
+	WHERE SIGN_NO = #{sno}
+	
+	</select>
+	
+	<update id="signUp" parameterType="_int">
+	UPDATE TB_SIGN 
+	SET FLAG = 'Y',
+		SIGN_STATUS = 'O'
+	WHERE SIGN_NO = #{sno}
+	
+	</update>
+	
+	<update id="signLineUp" parameterType="_int">
+	UPDATE TB_SIGNLINE
+	SET STATUS = 'O'
+	WHERE SIGN_NO = #{sno}
+	</update>
+	
+	<update id="updateSignQ" parameterType="SignAndQuit">
+	UPDATE TB_SIGN
+	SET TITLE = #{title}
+	WHERE SIGN_NO = #{signNo}	
+	</update>
+	
+	<update id="updateSignQuit" parameterType="SignAndQuit">
+	UPDATE TB_QUIT
+	SET ENROLL_DATE = #{enrollDate}, QUIT_DATE = #{quitDate}, REASON = #{reason}
+	WHERE SIGN_NO = #{signNo}
+	</update>
+	
+	<delete id="deleteSignLine" parameterType="_int">
+	DELETE FROM TB_SIGNLINE
+	WHERE SIGN_NO = #{signNo}
+	
+	</delete>
+	
+	<delete id="deleteSignRefer" parameterType="_int">
+	DELETE FROM TB_SIGNREFER
+	WHERE SIGN_NO = #{signNo}
+	</delete>
+	
+	<delete id="deleteSignAttachment" parameterType="_int">
+	DELETE FROM TB_SIGN_ATTACHMENT
+	WHERE SIGN_NO = #{signNo}
+	</delete>
+	
+	<insert id="updateSignLine" parameterType="list">
+	INSERT ALL
+		<foreach collection="list" item="item" separator=" ">
+			INTO TB_SIGNLINE VALUES
+			(#{item.signLineMemberNo}, #{item.signNo}, NULL, DEFAULT, #{item.memberOrder})
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<insert id="updateSignRefer" parameterType="list">
+	INSERT ALL
+		<foreach collection="list" item="item" separator=" ">
+			INTO TB_SIGNREFER VALUES
+			(#{item.signNo}, #{item.referMemberNo}, DEFAULT, NULL )
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<insert id="updateAttachmentList" parameterType="SignAttachment">
+	INSERT INTO TB_SIGN_ATTACHMENT VALUES
+		(#{fileNo}, #{oaName}, #{maName}, NULL, #{signNo})
+	</insert>
+	
+	<update id="updateSignAN" parameterType="SignAndAnnualSign">
+	UPDATE TB_SIGN
+	SET TITLE = #{title}
+	WHERE SIGN_NO = #{signNo}
+	
+	</update>
 	
 	
+	<update id="updateSignAnnual" parameterType="SignAndAnnualSign">
+	UPDATE TB_ANNUAL_SIGN
+	SET ANNUAL_PERIOD = #{annualPeriod},
+	 	ANNUAL_STARTDAY = #{annualStartDay}, ANNUAL_ENDDAY = #{annualEndDay},
+	 	ANNUAL_CONTENT = #{annualContent}, ANNUAL_TYPE = #{annualType}
+	WHERE SIGN_NO = #{signNo} 
+	
+	</update>
+	
+	<update id="updateSignAP" parameterType="SignAndAppointment">
+	UPDATE TB_SIGN
+	SET TITLE = #{title}
+	WHERE SIGN_NO = #{signNo}
+	
+	</update>
+	
+	<update id="updateSignAppointment" parameterType="SignAndAppointment">
+	UPDATE TB_APPOINTMENT
+	SET POSITION_BEFORE = #{positionBefore}, POSITION_AFTER = #{positionAfter},
+		DEP_BEFORE = #{depBefore}, DEP_AFTER = #{depAfter},
+		APPOINTMENT_LEV = #{appointmentLev}, APPOINT_MEM = #{appointmentMem},
+		APPOINTMENT_DATE = #{appointmentDate}
+	WHERE SIGN_NO = #{signNo}
+	</update>
+	
+
 
 	
 

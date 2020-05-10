@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +27,6 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
-import com.dadada.byeworks.sign.model.dto.SignDto;
 import com.dadada.byeworks.sign.model.service.SignService;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
@@ -54,19 +56,32 @@ public class SignController {
 		
 	if(type.equals("V")) {
 		SignAndAnnualSign an = sService.selectSignAnnual(sno);
-		ArrayList<SignLine> list = sService.selectSignLine(sno);
-		
-		mv.addObject("list",an).setViewName("sign/signDetail");
+
+		mv.addObject("list",an);
 	}else if(type.equals("Q")) {
 		SignAndQuit sq = sService.selectSignQuit(sno);
 		
-		mv.addObject("list",sq).setViewName("sign/signDetail");
+		mv.addObject("list",sq);
 	}else {
 		SignAndAppointment sp = sService.selectSignAppointment(sno);
 		
-		mv.addObject("list",sp).setViewName("sign/signDetail");
+		mv.addObject("list",sp);
 	}
+		ArrayList<SignLine> slist = sService.selectSignLine(sno);
 		
+		mv.addObject("slist",slist);
+		
+		ArrayList<SignRefer> rlist = sService.selectSignRefer(sno);
+		if(!rlist.isEmpty()) {
+			mv.addObject("rlist", rlist);
+		}
+		ArrayList<SignAttachment> alist = sService.selectAttachment(sno);
+		if(!alist.isEmpty()) {
+			mv.addObject("alist", alist);
+		}
+		
+		
+		mv.setViewName("sign/signDetail");
 		return mv;
 	}
 	
@@ -91,7 +106,6 @@ public class SignController {
 		}
 		
 		int result = sService.insertSignAp(signAndAppointment, slist, rlist, alist);
-		
 		return "redirect:selectSignList.si?mno=" + signAndAppointment.getMemberNo() + "&type=2";
 	}
 	
@@ -108,7 +122,7 @@ public class SignController {
 	public String insertSignQ(SignAndQuit signAndQuit, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file) {
 		
 		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
-
+			
 			if(!file[0].getOriginalFilename().equals("")) {
 			
 			alist = saveFile(file, request);
@@ -163,8 +177,9 @@ public class SignController {
 
 	@RequestMapping("selectSignList.si")
 	public ModelAndView selectSignList(ModelAndView mv, int mno, int type) {
+		
 		ArrayList<Sign> list = sService.selectSignList(mno,type);
-
+		
 		
 		mv.addObject("list", list).addObject("type", type).setViewName("sign/totalSignList");
 
@@ -181,6 +196,157 @@ public class SignController {
 		return mv;
 	
 	}
+	
+	/**
+	 * @param sno
+	 * @return
+	 * 결재 대기에서 결재 진행으로 변경 (N to O)
+	 */
+	@RequestMapping("signUp.si")
+	public String signUp(int sno, int mno) {
+		
+		int result = sService.signUp(sno);
+		
+		if(result>0) {
+			return "redirect:selectSignList.si?mno=" + mno + "&type=3";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
+	
+	/**
+	 * @param mv
+	 * @param sno
+	 * @param mno
+	 * @param type
+	 * @return
+	 * 결재 수정폼 이동
+	 */
+	@RequestMapping("signFormUpdate.si")
+	public ModelAndView signUpdateForm(ModelAndView mv, int sno, int mno, String type) {
+		
+		if(type.equals("V")) {
+			SignAndAnnualSign an = sService.selectSignAnnual(sno);
+
+			mv.addObject("list",an);
+		}else if(type.equals("Q")) {
+			SignAndQuit sq = sService.selectSignQuit(sno);
+			
+			mv.addObject("list",sq);
+		}else {
+			SignAndAppointment sp = sService.selectSignAppointment(sno);
+			
+			mv.addObject("list",sp);
+		}
+			ArrayList<SignLine> slist = sService.selectSignLine(sno);
+			
+			mv.addObject("slist",slist);
+			
+			ArrayList<SignRefer> rlist = sService.selectSignRefer(sno);
+			
+			if(!rlist.isEmpty()) {
+				mv.addObject("rlist", rlist);
+			}
+			ArrayList<SignAttachment> alist = sService.selectAttachment(sno);
+			if(!alist.isEmpty()) {
+				mv.addObject("alist", alist);
+			}
+			
+			
+			mv.setViewName("sign/signUpdateForm");
+		
+		
+			return mv;
+	}
+	
+	@RequestMapping("updateSignQuit.si")
+	public String updateSignQuit(SignAndQuit signAndQuit, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, @ModelAttribute SignAttachment atList, MultipartHttpServletRequest request, @RequestParam(value="reUpLoadFile", required=false) MultipartFile[] file) {
+		
+		
+			ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
+					
+					
+					if(!file[0].getOriginalFilename().equals("")) {
+						
+						if(atList.getAlist()!=null) {
+						
+							deleteFile(atList.getAlist(),request);
+							alist = saveFile(file, request);
+						}
+			
+						}
+					int result = sService.updateSignQuit(signAndQuit, slist, rlist, alist);
+					
+					String ad = "";
+					if(result>0) {
+						ad = "redirect:selectSignList.si?mno=" + signAndQuit.getMemberNo() + "&type=2";
+					}else {
+						ad = "common/errorPage";
+					}
+					
+					return ad;
+	}
+	
+	@RequestMapping("updateSignAnnual.si")
+	public String updateSignAnnual(SignAndAnnualSign signAndAnnualSign, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, @ModelAttribute SignAttachment atList, MultipartHttpServletRequest request, @RequestParam(value="reUpLoadFile", required=false) MultipartFile[] file ) {
+		
+		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
+		
+		
+		if(!file[0].getOriginalFilename().equals("")) {
+			
+			if(atList.getAlist()!=null) {
+			
+				deleteFile(atList.getAlist(),request);
+				alist = saveFile(file, request);
+			}
+
+			}
+		int result = sService.updateSignAnnual(signAndAnnualSign, slist, rlist, alist);
+		
+		String ad = "";
+		if(result>0) {
+			ad = "redirect:selectSignList.si?mno=" + signAndAnnualSign.getMemberNo() + "&type=2";
+		}else {
+			ad = "common/errorPage";
+		}
+		
+		return ad;
+		
+	}
+	
+	@RequestMapping("updateSignAppointment.si")
+	public String updateSignAppointment(SignAndAppointment signAndAppointment, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, @ModelAttribute SignAttachment atList, MultipartHttpServletRequest request, @RequestParam(value="reUpLoadFile", required=false) MultipartFile[] file ) {
+		System.out.println(signAndAppointment);
+		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
+
+		if(!file[0].getOriginalFilename().equals("")) {
+			
+			if(atList.getAlist()!=null) {
+			
+				deleteFile(atList.getAlist(),request);
+				alist = saveFile(file, request);
+			}
+
+			}
+		int result = sService.updateSignAnnual(signAndAppointment, slist, rlist, alist);
+		
+		String ad = "";
+		if(result>0) {
+			ad = "redirect:selectSignList.si?mno=" + signAndAppointment.getMemberNo() + "&type=2";
+		}else {
+			ad = "common/errorPage";
+		}
+		
+		return ad;
+	}
+					
+					
+	
+	//@RequestMapping("updateSignAnnual.si")
+	
+	//@RequestMapping("updateSignAppointment.si")
 	
 
 	
@@ -208,26 +374,6 @@ public class SignController {
 		
 
 //	} --> 이렇게 하게되면 메뉴바에 누른 상태 화면 표시 안됨. 매개변수넘겨서 안하고 각각의 url mapping 값 따로줌.
-	
-	
-	@RequestMapping("selectReferList.si")
-	public ModelAndView selectReferList(ModelAndView mv, int mno) {
-		
-		ArrayList<SignDto> list = sService.selectReferList(mno);
-		
-		mv.addObject("list",list).setViewName("sign/referSignList");
-		return mv;
-	}
-	
-	@RequestMapping("doSignList.si")
-	public ModelAndView selectDoSignList(ModelAndView mv, int mno) {
-		
-		ArrayList<SignDto> list = sService.selectDoSignList(mno);
-		System.out.println(list);
-		mv.addObject("list", list).setViewName("sign/doSignList");
-		
-		return mv;
-	}
 	
 	
 	/**
@@ -304,5 +450,19 @@ public class SignController {
 		return list;
 		
 	}
+	
+	// 전달받은 파일명을 찾아서 삭제시키는 메소드(공유해서 쓸수 있게끔 따로 빼줌)
+		public void deleteFile(List<SignAttachment> list, HttpServletRequest request) {
+			String resources = request.getSession().getServletContext().getRealPath("resources");
+			
+			String savePath = resources + "\\sign_files\\";
+			
+			for(int i=0;i<list.size();i++) {
+			
+			File deleteFile = new File(savePath + list.get(i).getMaName());
+			
+			deleteFile.delete();
+			}
+		}
 	
 }

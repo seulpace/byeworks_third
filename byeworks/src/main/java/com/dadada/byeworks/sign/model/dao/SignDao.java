@@ -4,6 +4,7 @@ package com.dadada.byeworks.sign.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -97,9 +98,9 @@ public class SignDao {
 	 * 참조자테이블 등록 메소드
 	 */
 	public int insertReferList(SqlSessionTemplate sqlSession, SignRefer rlist) {
-		int result=0;
+		int result=1;
 		
-		if(rlist !=null) {
+		if( (rlist.getRlist())!=null) {
 		  result = sqlSession.insert("signMapper.insertReferList", rlist.getRlist());
 		}
 		return result;
@@ -141,18 +142,6 @@ public class SignDao {
 	}
 
 
-	public ArrayList<SignDto> selectReferList(SqlSessionTemplate sqlSession, int memberNo) {
-		
-	return (ArrayList)sqlSession.selectList("signMapper.selectSignReferList", memberNo);
-	}
-
-
-	public ArrayList<SignDto> selectDoSignList(SqlSessionTemplate sqlSession, int memberNo) {
-		
-		return (ArrayList)sqlSession.selectList("signMapper.selectDoSignList", memberNo );
-	}
-
-
 	public SignAndAnnualSign selectSignAnnual(SqlSessionTemplate sqlSession, int sno) {
 		System.out.println(sno);
 		return sqlSession.selectOne("signMapper.selectSignAnnual", sno);
@@ -175,6 +164,109 @@ public class SignDao {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectSignLine", sno);
 	}
+
+
+	public ArrayList<SignRefer> selectSignRefer(SqlSessionTemplate sqlSession, int sno) {
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectSignRefer", sno);
+	}
+
+
+	public ArrayList<SignAttachment> selectAttachment(SqlSessionTemplate sqlSession, int sno) {
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectAttachment", sno);
+	}
+
+
+	public int signUp(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.update("signMapper.signUp", sno);
+	}
+
+
+	public int signLineUp(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.update("signMapper.signLineUp", sno);
+	}
+
+
+	public int updateSignQ(SqlSessionTemplate sqlSession, SignAndQuit signAndQuit) {
+		
+		return sqlSession.update("signMapper.updateSignQ", signAndQuit);
+	}
+
+
+	public int updateSignQuit(SqlSessionTemplate sqlSession, SignAndQuit signAndQuit) {
+		
+		return sqlSession.update("signMapper.updateSignQuit", signAndQuit);
+	}
+
+
+	public int deleteSignLineList(SqlSessionTemplate sqlSession, int signNo) {
+		
+		return sqlSession.delete("signMapper.deleteSignLine", signNo);
+	}
+
+
+	public int deleteSignReferList(SqlSessionTemplate sqlSession, int signNo) {
+		
+		return sqlSession.delete("signMapper.deleteSignRefer", signNo);
+	}
+
+
+	public int deleteSignAttachmentList(SqlSessionTemplate sqlSession, int signNo) {
+		
+		return sqlSession.delete("signMapper.deleteSignAttachment", signNo);
+	}
+
+
+	public int updateSignLineList(SqlSessionTemplate sqlSession, List<SignLine> list) {
+		
+		return sqlSession.insert("signMapper.updateSignLine", list);
+	}
+
+
+	public int updateReferList(SqlSessionTemplate sqlSession, List<SignRefer> list) {
+		
+		return sqlSession.insert("signMapper.updateSignRefer", list);
+	}
+
+
+	public int updateAttachmentList(SqlSessionTemplate sqlSession, ArrayList<SignAttachment> alist) {
+		
+		int result = 0;
+		for(SignAttachment sa : alist) {
+			sqlSession.insert("signMapper.updateAttachmentList", sa);
+		}
+		return result;
+	}
+
+
+	public int updateSignAN(SqlSessionTemplate sqlSession, SignAndAnnualSign signAndAnnualSign) {
+		
+		return sqlSession.update("signMapper.updateSignAN", signAndAnnualSign);
+	}
+
+
+	public int updateSignAnnual(SqlSessionTemplate sqlSession, SignAndAnnualSign signAndAnnualSign) {
+		
+		return sqlSession.update("signMapper.updateSignAnnual", signAndAnnualSign);
+	}
+
+
+	public int updateSignAP(SqlSessionTemplate sqlSession, SignAndAppointment signAndAppointment) {
+		
+		return sqlSession.update("signMapper.updateSignAP", signAndAppointment);
+	}
+
+
+	public int updateSignAppointment(SqlSessionTemplate sqlSession, SignAndAppointment signAndAppointment) {
+		
+		return sqlSession.update("signMapper.updateSignAppointment", signAndAppointment);
+	}
+
+
+
 
 
 

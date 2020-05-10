@@ -56,6 +56,14 @@
                 <c:when test="${ type == 6 }">
                 	<h3>결재 회수 문서 조회</h3>
                 </c:when>
+                
+                <c:when test="${ type ==7 }">
+                	<h3>참조 결재 문서 조회</h3>
+                </c:when>
+                
+                <c:otherwise>
+                	<h3>결재 할 문서 조회</h3>
+                </c:otherwise>
               </c:choose>
               </div>
             </div>
@@ -100,7 +108,7 @@
                           <td>${ l.signNo }<input type="hidden" value="${l.docuType }"></td>
                           <td>${ l.title }</td> 
                           <td>${ l.signLine }</td>
-                          <td>${ loginUser.memberName }</td>
+                          <td>${ l.memberName }</td>
                           <td>${ l.signUpDate }</td>
                           
                         
@@ -110,15 +118,16 @@
                           				<td>완료</td>
                           			</c:when>
                           			
-                          			<c:when test="${ l.signStatus eq 'R' && flag eq 'R' }">
-                          				<td>반려</td>
-                          			</c:when>
-                          			
-                          			<c:when test="${ l.signStatus eq 'O' && flag eq 'O' }">
+                          			<c:when test="${ l.signStatus eq 'O' && l.flag eq 'Y' }">
                           				<td>진행</td>
                           			</c:when>
                           			
-                          			<c:when test="${ l.signStatus eq 'D' && flag eq 'N' }">
+                          			<c:when test="${ l.signStatus eq 'R' && l.flag eq 'R' }">
+                          				<td>반려</td>
+                          			</c:when>
+                          			
+                          			
+                          			<c:when test="${ l.signStatus eq 'D' && l.flag eq 'N' }">
                           				<td>회수</td>
                           			</c:when>
                           			

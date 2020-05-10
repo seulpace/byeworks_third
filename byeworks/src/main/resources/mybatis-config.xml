@@ -26,6 +26,8 @@
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignDto" alias="SignDto" />
 		<typeAlias type="com.dadada.byeworks.notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.dadada.byeworks.note.model.vo.Note" alias="Note"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignLineDto" alias="SignLineDto"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignReferDto" alias="SignReferDto"/>
 	</typeAliases>
 	
 	<mappers>

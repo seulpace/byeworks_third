@@ -22,13 +22,15 @@ public class SignAndAppointment {
 	private String signStatus;
 	private String flag;
 	private String title;
-	private int positionBefore;
-	private int positionAfter;
-	private int depBefore;
-	private int depAfter;
+	private String positionBefore;
+	private String positionAfter;
+	private String depBefore;
+	private String depAfter;
 	private int appointmentLev;
 	private int appointmentMem;
+	private String appointmentMemName;
 	private Date appointmentDate;
 	private String department;
+
 
 }

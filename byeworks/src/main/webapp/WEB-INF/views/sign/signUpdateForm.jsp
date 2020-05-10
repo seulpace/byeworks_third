@@ -151,13 +151,13 @@
                   <script>
 
                     $(function(){
-                     $("#docu").change(function(){
+                    
                       var docu = $("#docu option:selected").text();
 
                       console.log(docu);
                       if(docu == "사직서"){
                         $(".quit").show();
-                        $("#enroll").attr("action","insertSignQuit.si");
+                        $("#enroll").attr("action","updateSignQuit.si");
                         $(".up").hide();
                         $(".vacation").hide();
                         $(".promotion").hide();
@@ -170,14 +170,14 @@
                    
                       }else if(docu =="휴가/연차"){
                         $(".vacation").show();
-                        $("#enroll").attr("action","insertSignAnnual.si");
+                        $("#enroll").attr("action","updateSignAnnual.si");
                         $(".up").hide();
                         $(".quit").hide();
                         $(".promotion").hide();
                         
                       }else if(docu =="승진/발령"){
                         $(".promotion").show();
-                        $("#enroll").attr("action","insertSignAppointment.si");
+                        $("#enroll").attr("action","updateSignAppointment.si");
                         $(".up").hide();
                         $(".vacation").hide();
                         $(".quit").hide();
@@ -186,7 +186,7 @@
 
                      });
 
-                    });
+                    
 
 
                      </script>
@@ -204,20 +204,44 @@
                           
                           <div class="panel-body">
                             
-                              	
+                              	<input type="hidden" name="signNo" value="${ list.signNo }">
                             <table class="table table-bordered">
                                 <tr>
                                   <th>문서종류</th>
                                   <td>
-                                      <select style="border:none;" id="docu" name="docuType">
-                                        <option>선택</option>
-                                        <option value="">기안서</option>
-                                        <option value="V">휴가/연차</option>
-                                        <option value="A">승진/발령</option>
-                                        <option value="Q">사직서</option>
-                                      </select>
+                                  	<c:choose>
+                                  		<c:when test="${ list.docuType eq 'V' }">
+		                                      <select style="border:none;" id="docu" name="docuType">
+		                                        <option>선택</option>
+		                                        <option value="">기안서</option>
+		                                        <option value="V" selected>휴가/연차</option>
+		                                        <option value="A">승진/발령</option>
+		                                        <option value="Q">사직서</option>
+	                                      </select>
+	                                     </c:when>
+	                                      
+	                                      <c:when test="${ list.docuType eq 'A' }">
+		                                      <select style="border:none;" id="docu" name="docuType">
+		                                        <option>선택</option>
+		                                        <option value="">기안서</option>
+		                                        <option value="V">휴가/연차</option>
+		                                        <option value="A" selected>승진/발령</option>
+		                                        <option value="Q">사직서</option>
+		                                      </select>
+	                                      </c:when>
+	                                      <c:otherwise>
+		                                      <select style="border:none;" id="docu" name="docuType">
+		                                        <option>선택</option>
+		                                        <option value="">기안서</option>
+		                                        <option value="V">휴가/연차</option>
+		                                        <option value="A">승진/발령</option>
+		                                        <option value="Q" selected>사직서</option>
+		                                      </select>
+	                                      </c:otherwise>
+                                      
+                                    </c:choose>
                                   </td>
-                                  <th>작성자</th>
+                                  <th>작성자<input type="hidden" name="signNo" value="${list.signNo }"></th>
                                   <td>${loginUser.memberName }<input type='hidden' name="memberNo" value="${ loginUser.memberNo }"></td>
                                 </tr>
                               
@@ -234,27 +258,62 @@
                           <div class="panel-body">
                             <br>
 
-                            <div class="fa-hover col-md-3 col-sm-4"class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#/plus"><i class="fa fa-plus"></i><span id="signLineAdd">결재선지정</span>  </a>
-            
+                            <div class="fa-hover col-md-3 col-sm-4"class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"><a href="#/plus"><i class="fa fa-plus"></i><span id="signLineAdd">결재선수정</span>  </a>
+            						<c:forEach items="${slist }" var="s" varStatus="status">
+            							<input type="hidden" name="slist[${ status.index }].signNo" value="${ s.signNo }">
+            						</c:forEach>
                             </div>
                             <br><br>
                             <table id="signList" class="table table-bordered"  style="text-align: center;">
                                   <tr id="level">
-                                    
+                                  	<c:forEach items="${slist }" var="s" varStatus="status">
+                                  		<th style='width:80px;height:50px;!important'>${ s.position }<input type='hidden' name='slist[${ status.index }].signLineMemberNo' value='${ s.memberNo }'></th>
+                                  	</c:forEach>
                                   </tr>
 
                                   <tr id="stamp">
+                                  <c:forEach items="${slist }" var ="s" varStatus="status">
+                                  	<td style='width:80px;height:50px;!important'><input type='hidden' name='slist[${ status.index }].memberOrder' value='${ status.index+1 }'></td>
+                                  
+                                  </c:forEach>
                                       
                                   </tr>
 
                                   <tr id="name">
+                                  <c:forEach items="${ slist }" var ="s" varStatus="status">
+                                  	<td style='width:80px;height:50px;!important'>${ s.memberName }</td>
+                                  </c:forEach>
+                                  
                                       
                                   </tr>
 
                                   
                               </table>
-                              
-                              <div id="referList"></div>
+                              <br>
+                              <h6>참조자</h6>
+                              <div id="referList">
+                              	
+                              		<c:forEach items="${ rlist }" var="r" varStatus="rStatus">
+	                              		
+	                              		<input type="hidden" name="rlist[${rStatus.index}].signNo" value="${ r.signNo }">
+	                              	
+	                              	</c:forEach>
+                              	
+                              <c:choose>
+                              	<c:when test = "${ !empty rlist }">
+	                              	<c:forEach items="${ rlist }" var="r" varStatus="rStatus">
+	                              		
+	                              		${ r.memberName }&nbsp;//&nbsp;<input type='hidden' name='rlist[${rStatus.index}].referMemberNo' value='${ r.memberNo }'><input type="hidden" name="rlist[${rStatus.index}].signNo" value="${ r.signNo }">
+	                              	
+	                              	</c:forEach>
+                              	</c:when>
+                              	
+                              	<c:otherwise>
+                              	
+                              		참조자 없음
+                              	</c:otherwise>
+                              	</c:choose>
+                              </div>
                               
                               
                             
@@ -267,6 +326,7 @@
                           <h4 class="panel-title">상세입력</h4>
                         </a>
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <c:if test="${ list.docuType eq 'V' }">
                           <div class="panel-body vacation" style="display: none;">
                             <h2 align="center">휴 가 신 청</h2>
                             <br><hr><br>
@@ -275,18 +335,18 @@
 
 							   <tr>
 							   	 <th>제목</th>
-							   	 <td><input type="text" name="title" style="border:none;"></td>
+							   	 <td><input type="text" name="title" style="border:none;" value="${ list.title }"></td>
 							   
 							   </tr>
 							   
                                <tr>
                                   <th>소속</th>
-                                  <td>총무부</td>
+                                  <td>${list.department }</td>
                               </tr>
 
                                <tr>
                                   <th>성명</th>
-                                  <td>${loginUser.memberName }</td>
+                                  <td>${list.memberName }</td>
                                </tr>
 
                                <tr>
@@ -297,18 +357,39 @@
                               <tr>
                                  <th>연차종류</th>
                                  <td>
-                                 	<select name="annualType">
-                                 		<option value="0">연차</option>
-                                 		<option value="1">오전반차</option>
-                                 		<option value="2">오후반차</option>
-                                 	</select>
+                                 	
+                                <c:choose>
+                                	<c:when test="${list.annualType eq '0' }">
+	                                 	<select name="annualType">
+	                                 		<option value="0" selected>연차</option>
+	                                 		<option value="1">오전반차</option>
+	                                 		<option value="2">오후반차</option>
+	                                 	</select>
+                                 	</c:when>
+                                 	
+                                 	<c:when test="${list.annualType eq '1' }">
+	                                 	<select name="annualType">
+	                                 		<option value="0">연차</option>
+	                                 		<option value="1" selected>오전반차</option>
+	                                 		<option value="2">오후반차</option>
+	                                 	</select>
+                                 	</c:when>
+                                 	
+                                 	<c:when test="${list.annualType eq '2' }">
+	                                 	<select name="annualType">
+	                                 		<option value="0">연차</option>
+	                                 		<option value="1">오전반차</option>
+	                                 		<option value="2" selected>오후반차</option>
+	                                 	</select>
+                                 	</c:when>
+                                </c:choose>
                                  </td>
                               </tr>
                               
                               <tr>
                               	<th>연차사유</th>
                               	<td>
-                              		<textarea name="annualContent" style="width: 100%;resize: none;border:none;"rows="20"></textarea>
+                              		<textarea name="annualContent" style="width: 100%;resize: none;border:none;"rows="20">${list.annualContent }</textarea>
                               	</td>
                               </tr>
                               
@@ -316,19 +397,21 @@
                               
                               <tr>
                                 <th>날짜</th>
-                                <td><input type="date" name="annualStartDay" style="border:none;"> ~ <input type="date" name="annualEndDay" style="border:none"></td>
+                                <td><input type="date" name="annualStartDay" style="border:none;" value="${list.annualStartDay }"> ~ <input type="date" name="annualEndDay" style="border:none;" value="${list.annualEndDay }"></td>
                               </tr>
                               
                               <tr>
                               	<th>기간</th>
-								<th><input type="number" name="annualPeriod"></th>                              	
+								<th><input type="number" name="annualPeriod" value="${list.annualPeriod }"></th>                              	
                               </tr>
 
                             </table><br>
 
 
                           </div>
+                          </c:if>
                         
+                         <c:if test="${ list.docuType eq 'Q' }">
                           <div class="panel-body quit" style="display: none;">
                             <h2 align="center">사직</h2>
                             <br><hr><br>
@@ -336,23 +419,23 @@
                             <table class="table table-bordered" style="width:100%; text-align: center; height:200px">
                               <tr>
                               	 <th>제목</th>
-                              	 <td><input type="text" name="title" style="border:none;"></td>
+                              	 <td><input type="text" name="title" style="border:none;" value="${list.title }"></td>
                               </tr>
                               
                               <tr>
                               	 <th>입사일</th>
-                              	 <td><input type="date" name="enrollDate" style="border:none";></td>
+                              	 <td><input type="date" name="enrollDate" style="border:none;" value="${list.enrollDate }"></td>
                               </tr>
                               
                               <tr>
                               	 <th>퇴사일</th>
-                              	 <td><input type="date" name="quitDate" style="border:none;"></td>
+                              	 <td><input type="date" name="quitDate" style="border:none;" value="${list.quitDate }"></td>
                               </tr>
                               
                               <tr>
                                  <th>퇴사이유</th>
                                  <td>
-                                    <textarea style="width: 100%;resize: none;border:none;" name="reason"rows="20"></textarea>
+                                    <textarea style="width: 100%;resize: none;border:none;" name="reason"rows="20">${ list.reason }</textarea>
                                 </td>
                               </tr>
 
@@ -361,6 +444,7 @@
 
 
                           </div>
+                          </c:if>
 
                           <div class="panel-body up" style="display: none;">
                             
@@ -390,7 +474,8 @@
       
 
                           </div>
-
+							
+						<c:if test="${ list.docuType eq 'A' }">
                           <div class="panel-body promotion" style="display:none">
                             <br>
                                 <h2 align="center">승진/발령</h2>
@@ -400,23 +485,26 @@
 								  
 								  <tr>
 								  	  <th>제목</th>
-								  	  <td><input type="text" name="title" style="border:none;"></td>
+								  	  <td><input type="text" name="title" style="border:none;"value="${list.title }"></td>
 								  </tr>
 								  
 								  <tr>
                                       <th>(승진/발령)종류</th>
-                                      <td>
-                                      	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev">&nbsp; 
-                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
-                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev">&nbsp; 
-                                      </td>
+
+		                                      <td>
+		                                      	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev" checked>&nbsp; 
+		                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
+		                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev">&nbsp; 
+		                                      </td>
                                   </tr>
 								  
                                   <tr>
                                       <th>성명</th>
                                       <td>
                                       	<select id="aDepartment" name="depBefore" style="border:none;">
+
                                       		<option>부서를 선택하세요</option>
+
                                       	</select>
                                       
                                       	<select id="aEmpList" name="appointmentMem" style="border:none;">
@@ -462,6 +550,7 @@
                                 </table><br>
 
                           </div>
+                          </c:if>
                         
                         </div>
                       </div>
@@ -470,7 +559,7 @@
                       <script>
                       		//ajax 요청으로 문서 타입이 'A'일경우 셀렉트 박스에  부서출력
 							$(function(){
-								$("#docu").on("change",function(){
+								
 									$("#aDepartment option").remove();
 									$("#updateDepartment option").remove();
 									
@@ -507,7 +596,7 @@
 										$("#selectedMemPosition").val("");
 									}
 									
-								});
+								
 								
 								//ajax 요청으로 부서 클릭시 오른쪽 직원 명단 출력
 								$("#aDepartment").on("change", function(){
@@ -606,13 +695,36 @@
                         <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
                           <br><br>
                           <div class="panel-body">
-                            <input type="file" name="upLoadFile" multiple>
+                            <input type="file" name="reUpLoadFile" multiple>
+                            <c:choose>
+                            <c:when test = "${!empty alist  }">
+					          	<div>
+					          		<h6>첨부파일 :</h6> 
+					          		<c:forEach items="${ alist }" var="a" varStatus="aStatus">
+					          			<a href="${pageContext.servletContext.contextPath }/resources/sign_files/${ a.maName }" download="${ a.oaName }">${ a.oaName}</a>&nbsp;&nbsp; // &nbsp;&nbsp;
+					          			<br><br>
+					          			
+					          			
+					          			<input type="hidden" name="alist[${ aStatus.index }].oaName" value="${ a.oaName }">
+					          			<input type="hidden" name="alist[${ aStatus.index }].maName" value="${ a.maName }">
+					          			<input type="hidden" name="alist[${ aStatus.index }].signNo" value="${ a.signNo }">
+					          			<input type="hidden" name="alist[${ aStatus.index }].fileNo" value="${ a.fileNo }">
+					          		</c:forEach>
+					          		
+					          	</div>
+							</c:when>
+							
+							<c:otherwise>
+								<br><br><br>기존 결재에 첨부된 파일이 없습니다.
+							</c:otherwise>
+							</c:choose>	
+                            
                           </div>
                         </div>
                       </div>
                       <br>
                       <div id="buttonArea" style="text-align:center;">
-                      <button type="submit">결재등록</button> <button type="reset">초기화</button>
+                      <button type="submit">결재수정</button> <button type="reset">초기화</button>
                       </div>
                       </form>
                     </div>
@@ -927,7 +1039,9 @@
             $("#stamp").children().remove();
             $("#name").children().remove();
             $("#referTitle").remove();
+
             $("#referList").text("");
+           
           
 		
             $("#sign option").each(function(i,item){
@@ -959,7 +1073,7 @@
                 $("#refer option").each(function(i,item){
                 var emp = $(this);
                 
-                $("#referList").append(emp.text()+" / " + "<input type='hidden' name='rlist[" + i + "].referMemberNo' value='" + emp.val() + "'>");
+                $("#referList").append(emp.text()+" // " + "<input type='hidden' name='rlist[" + i + "].referMemberNo' value='" + emp.val() + "'>" + "<input type='hidden' name='rlist[" + i + "].signNo' value='${list.signNo}'>");
 
               });
               }
