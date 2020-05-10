@@ -88,7 +88,7 @@
 	                                						<c:forEach items="${ receiveList }" var="r">
 	                                  						<tr
 	                                  						<c:if test="${ r.readCheck eq 0 }">
-	                                  						style="background:lightgray;"
+	                                  						style="background:#F2F2F2;"
 	                                  						</c:if>
 	                                  						>
 	                                    						<th style="text-align: center;">
@@ -402,14 +402,19 @@
 					type:"post",
 					data:data,
 					success:function() {
-						console.log("성공");
 						alertify.alert("삭제되었습니다.");
 						
+						var countFor = 0;
 						deleteCheck.each(function(i) {
 			    			tr = deleteCheck.parent().parent().parent().parent().parent().eq(i);
 			    			tr.addClass("deleted");
-			    			rTable.row(".deleted").remove().draw(false);
+			    			countFor ++;
 			    		}); 
+						
+						for(var i=0; i<countFor; i++) {
+							rTable.row(".deleted").remove().draw(false);
+							sTable.row(".deleted").remove().draw(false);
+						}
 						
 					},error:function() {
 						console.log("ajax 통신 오류");
