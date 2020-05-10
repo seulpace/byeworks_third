@@ -2,12 +2,15 @@ package com.dadada.byeworks.note.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dadada.byeworks.member.model.dto.MemberAddress;
@@ -15,6 +18,7 @@ import com.dadada.byeworks.member.model.service.MemberService;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.note.model.service.NoteService;
 import com.dadada.byeworks.note.model.vo.Note;
+import com.google.gson.Gson;
 
 @Controller
 public class NoteController {
@@ -50,8 +54,10 @@ public class NoteController {
 		return mv;
 	}
 	
+	// 쪽지 작성하는 폼으로 가는 메서드
+	// 사내 주소록에서 쪽지 작성하기, 받은 쪽지함 등에서 쪽지 보내기, 답장하기 등이 해당 메서드를 거친다
 	@RequestMapping("sendForm.nt")
-	public ModelAndView sendForm(HttpSession session, ModelAndView mv, String receiveNo, String receiveName) {
+	public ModelAndView sendForm(HttpSession session, ModelAndView mv, String receiveNo, String receiveName, String receiveTitle) {
 		
 		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		ArrayList<MemberAddress> list = mService.selectAddrList(no);
@@ -64,6 +70,12 @@ public class NoteController {
 			// session에 담아주기
 			session.setAttribute("rNo", rNo);
 			session.setAttribute("rName", receiveName);
+		}
+		
+		// 답장하기의 경우에만 title이 들어오기 때문에 re 붙여주기
+		if(receiveTitle != null) {
+			String rTitle = "RE: " + receiveTitle;
+			session.setAttribute("rTitle", rTitle);
 		}
 		
 		mv.addObject("list", list).setViewName("note/submitNote");
@@ -107,4 +119,46 @@ public class NoteController {
 		
 		return mv;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="cancel.nt", produces="application/json; charset=utf-8")
+	public String cancelNote(String no) {
+		
+		// no를 분리해서 리스트에 담기
+		List<String> list = Arrays.asList(no.split("\\s*,\\s*")); 
+		
+		ArrayList<Integer> intList = new ArrayList<>();
+		
+		for(String s : list) {
+			intList.add(Integer.parseInt(s));
+		}
+		
+		// readCheck를 2로 업데이트 시키기
+		ntService.cancelNote(intList);
+		
+		// 업데이트 한 리스트를 반환하기
+		ArrayList<Note> nList = ntService.selectList(intList);
+		
+		Gson gson = new Gson();
+		
+		return gson.toJson(nList);
+	}
+	
+	@ResponseBody
+	@RequestMapping("delete.nt")
+	public String deleteNote(String no, String classStr) {
+		// no를 분리해서 리스트에 담기
+		List<String> list = Arrays.asList(no.split("\\s*,\\s*")); 
+		
+		ArrayList<Integer> intList = new ArrayList<>();
+		
+		for(String s : list) {
+			intList.add(Integer.parseInt(s));
+		}
+		
+		int result = ntService.deleteNote(intList, classStr);
+		
+		return String.valueOf(result);
+	}
+	
 }

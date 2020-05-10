@@ -57,7 +57,7 @@
                           						<div class="item form-group">
                             						<label class="col-form-label col-md-2 col-sm-2 label-align" for="first-name">제목 <span class="required">*</span></label>
                             						<div class="col-md-6 col-sm-6 ">
-                              							<input type="text" id="noteTitle" name="noteTitle" required="required" class="form-control ">
+                              							<input type="text" id="noteTitle" name="noteTitle" required="required" class="form-control" value="${ sessionScope.rTitle }">
                             						</div>
                           						</div>
                           						
@@ -100,6 +100,11 @@
             		</div>
           		</div>
         	</div>
+        	
+        	<!-- 답장하기 혹은 주소록에서 넘어왔다면 세션에서 지워줄 데이터가 있음 -->
+        	<c:remove var="rTitle"/>
+        	<c:remove var="rName"/>
+        	<c:remove var="rNo"/>
 		
         	<!-- footer content -->
         	<jsp:include page="../common/footer.jsp"/>

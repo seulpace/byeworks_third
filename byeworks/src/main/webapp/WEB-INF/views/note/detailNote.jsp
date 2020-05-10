@@ -78,7 +78,7 @@
                                   								<div style="float:right;">
                                     								<button class="btn btn-diy" type="button" style="color:white;" onclick="location.href='selectList.nt'"><small>뒤로 가기</small></button>
                                     								<c:if test="${ loginUser.memberNo ne n.sendNo }">
-                                    								<button class="btn btn-warning"><small>답장 하기</small></button>
+                                    									<button class="btn btn-warning" type="button" onclick="$('#replyForm').submit();"><small>답장 하기</small></button>
                                     								</c:if>
                                   								</div>
                                 							</div>
@@ -86,6 +86,12 @@
                             						</div>
                           						</div>  
                         					</form>
+                        					<!-- 답장하기를 위한 폼 -->
+                        					<form action="sendForm.nt" method="post" id="replyForm">
+           										<input type="hidden" name="receiveNo" value="${ n.sendNo }">
+           										<input type="hidden" name="receiveName" value="${ n.sendName }">
+           										<input type="hidden" name="receiveTitle" value="${ n.noteTitle }">
+           									</form>
                       					</div>                      
                     				</div>                    
                   				</div>                  
