@@ -26,6 +26,7 @@
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignDto" alias="SignDto" />
 		<typeAlias type="com.dadada.byeworks.notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.dadada.byeworks.note.model.vo.Note" alias="Note"/>
+		<typeAlias type="com.dadada.byeworks.work.model.vo.Annual" alias="Annual"/>
 	</typeAliases>
 	
 	<mappers>
@@ -35,6 +36,7 @@
 		<mapper resource="/mappers/sign-mapper.xml"/>
 		<mapper resource="/mappers/note-mapper.xml"/>
 		<mapper resource="/mappers/commute-mapper.xml"/>
+		<mapper resource="/mappers/annual-mapper.xml"/>
 	</mappers>
 	
 </configuration>

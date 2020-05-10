@@ -94,4 +94,10 @@ public class CommuteController {
 		return new Gson().toJson(myCommuteList);
 	
 	}
+	
+	@RequestMapping("lateCommute.co")
+	public String lateCommute() {
+		
+		return "commute/lateCommute";
+	}
 }
