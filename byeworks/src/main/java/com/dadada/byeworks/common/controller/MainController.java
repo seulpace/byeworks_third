@@ -1,18 +1,36 @@
 package com.dadada.byeworks.common.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.dadada.byeworks.notice.model.service.NoticeService;
+import com.dadada.byeworks.notice.model.vo.Notice;
 
 @Controller
 public class MainController {
 
+	// 공지사항 조회를 하기 위해
+	@Autowired
+	private NoticeService nService;
+	
 	/**
 	 * 이슬희: 메인 가는 메서드
 	 * @return
 	 */
 	@RequestMapping("main.do")
-	public String goMain() {
-		return "main";
+	public ModelAndView goMain(ModelAndView mv) {
+		
+		// 공지사항 조회
+		ArrayList<Notice> nList = nService.selectMainList();
+		mv.addObject("nList", nList);
+		
+		mv.setViewName("main");
+		
+		return mv;
 	}
 	
 	/**

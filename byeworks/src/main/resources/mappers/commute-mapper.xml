@@ -19,7 +19,7 @@
 	
 	
 	
-
+	<!--날짜별 직원 출퇴근 조회 -->
 	<select id="commuteList" resultMap="commuteResultSet">
 		select member_name, empNo, d.department_name, p.position_name, NVL(commute_work, ' ') commute_work, NVL(commute_leaved, ' ') commute_leaved, 
 		        case when commute_status = 0 then '출근'
@@ -38,7 +38,21 @@
 	
 	</select>
 
-
+	<select id="myCommute" resultMap="commuteResultSet">
+	
+		select to_char(commute_date, 'MM/DD') commute_date, NVL(commute_work, ' ') commute_work, NVL(commute_leaved, ' ') commute_leaved, 
+				case when commute_annual = 0 then '연차'
+					 when commute_annual = 1 then '오전반차'
+					 when commute_annual = 2 then '오후반차'
+					 else ' '
+				end commute_annual
+		from tb_commute
+		where commute_member = #{commuteMember}
+		and to_char(commute_date, 'YY/MM') = #{commuteDate}
+		order by commute_date;
+	
+	</select>
+	
 
 
 

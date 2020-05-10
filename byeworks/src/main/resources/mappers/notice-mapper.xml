@@ -58,5 +58,14 @@
 		from tb_Notice
 		where notice_no=#{nno} and status='Y'
 	</select>
+	
+	<!-- 이슬희 -->
+	<select id="selectMainList" resultMap="NoticeResultSet">
+		SELECT NN.NOTICE_NO, NN.NOTICE_TITLE 
+		  FROM (SELECT ROWNUM, NOTICE_NO, NOTICE_TITLE
+				  FROM TB_NOTICE N
+				 ORDER BY N.NOTICE_NO DESC) NN
+				 WHERE ROWNUM <![CDATA[<= ]]>3
+	</select>
 
 </mapper>

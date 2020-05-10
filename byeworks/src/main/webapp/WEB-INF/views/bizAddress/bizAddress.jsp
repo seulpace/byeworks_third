@@ -22,6 +22,12 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
  
  	<title>Byeworks</title>
+ 	
+ 	<style>
+ 		table>tbody>tr:hover{
+ 			cursor:pointer;
+ 		}
+ 	</style>
 </head>
 <body class="nav-md">
 	<div class="container body">

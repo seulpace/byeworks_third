@@ -26,11 +26,10 @@
         
         <!-- 메뉴바 -->
         <jsp:include page="../common/menubar.jsp"/>
-		<!-- page content -->
-        <div class="right_col" role="main">   
+			<div class="right_col" role="main">   
           
          
-          <h2>전사원 출퇴근 조회</h2>
+          <h2>직원 연차 조회</h2>
             <div class="x_title">
               <div class="clearfix"></div>
               
@@ -42,7 +41,7 @@
                     <div class="control-group">
                       <div class="controls">
                         <div class="col-md-11 xdisplay_inputx form-group row has-feedback">
-                          <input type="text" class="form-control has-feedback-left" id="commuteDateStr" value="" name="commuteDateStr" aria-describedby="inputSuccess2Status">
+                          <input type="text" class="form-control has-feedback-left" id="annualUseDay" value="" name="annualUseDay" aria-describedby="inputSuccess2Status">
                           <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                           <span id="inputSuccess2Status" class="sr-only">(success)</span>
                         </div>
@@ -50,46 +49,40 @@
                     </div>
                   </fieldset>
                 
-
                 </div>
               </div>
-              <div class="col-md-12"></div>
               <div class="row" style="display: block;">
-                <div class="col-md-12 col-sm-12">
-                  <table id="commuteTable" class="table table-bordered" style="width:100%">
+                <div class="col-md-8 col-sm-8">
+                  <table id="annualTable" class="table">
                     <thead>
                       <tr>
-                        <th>사원</th>
-                        <th>사번</th>
+                        <th>No</th>
+                        <th>이름</th>
                         <th>부서</th>
                         <th>직책</th>
-                        <th>출근시간</th>
-                        <th>퇴근시간</th>
-                        <th>비고</th>
+                        <th>입사일</th>
+                        <th>총 연차일</th>
+                        <th>사용 현황</th>
                       </tr>
                     </thead>
-
-
                     <tbody>
-                    	
                       
                     </tbody>
                   </table>
-                  
+
+                
                 </div>
               </div>    
 
             </div>
-			
-			
-			<script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/daterangepicker.js"></script>
-      <script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/moment.min.js"></script>
+          <script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+      		<script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/moment.min.js"></script>
 			<script>
 		
 			$(function() {
 				
-				 selectCommuteList();
-				  $('input[name="commuteDateStr"]').daterangepicker({
+				 selectAnnualList();
+				  $('input[name="annualUseDay"]').daterangepicker({
 				    singleDatePicker: true,
 				    showDropdowns: true,
 				    locale : {
@@ -102,30 +95,32 @@
 				 
 			});
 			
-			function selectCommuteList(){
-				 $('input[name="commuteDateStr"]').change(function(){
+			function selectAnnualList(){
+				 $('input[name="annualUseDay"]').change(function(){
+				
 					 $.ajax({
-						url:"commuteDate.co",
-						data:{commuteDateStr:$("input[name='commuteDateStr']").val()},
+						url:"annualUseList.ann",
+						data:{annualUseDay:$("input[name='annualUseDay']").val()},
 						type:"get",
 						success:function(list){
-							
+							console.log(list);
 							var value = "";
+							var num = 1;
 							$.each(list, function(i, obj){
 								value += "<tr>" +
-			                        			"<td>" + obj.empName + "</td>" +
-						                        "<td>" + obj.empNos + "</td>" +
-						                        "<td>" + obj.empDept + "</td>" +
-						                        "<td>" + obj.empPos +  "</td>" +
-						                        "<td>" + obj.commuteWork + "</td>" + 
-						                        "<td>" + obj.commuteLeaved + "</td>" +
-						                        "<td>" + obj.commuteStatus + "</td>" +
+			                        			"<td>" + num++ + "</td>" +
+						                        "<td>" + obj.annName + "</td>" +
+						                        "<td>" + obj.annDept + "</td>" +
+						                        "<td>" + obj.annPos +  "</td>" +
+						                        "<td>" + obj.annEnrollday + "</td>" + 
+						                        "<td>" + obj.annualCreate + "</td>" +
+						                        "<td>" + obj.annualSign + "</td>" +
 						                 "</tr>";
 								
 							});
-	                    	 $("#commuteTable tbody").html(value);
+	                    	 $("#annualTable tbody").html(value);
 						},error:function(){
-							
+							console.log('통신x');
 						}
 						 
 					 });
@@ -134,6 +129,7 @@
 			}
 			
 			</script>
+     
      
 
           <div class="clearfix"></div>
@@ -151,7 +147,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
-	 <!-- datepicker js-->
-    
+	
 </body>
 </html>

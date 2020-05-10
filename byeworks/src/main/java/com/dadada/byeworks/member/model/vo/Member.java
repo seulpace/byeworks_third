@@ -32,4 +32,6 @@ public class Member {
 	private String profileModify;	// 프로필 수정명
 	private String empNo;			// 직원 사번
 	
+	private int departmentNo;		// 부서 번호
+	private int positionNo;			// 포지션 번호
 }

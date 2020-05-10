@@ -27,4 +27,8 @@ public interface NoticeService {
 	
 	// 5. 공지사항 수정용 서비스
 	int updateNotice(Notice n);
+	
+	// 이슬희
+	// Main) 메인에서 공지사항 조회용 서비스
+	ArrayList<Notice> selectMainList();
 }
