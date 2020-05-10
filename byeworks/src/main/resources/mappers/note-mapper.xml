@@ -23,6 +23,7 @@
           JOIN TB_MEMBER SM ON (N.SEND_NO = SM.MEMBER_NO)
 		 WHERE RECEIVE_NO = #{no}
 		   AND SEND_STATUS = 'N'
+		   AND READ_CHECK != 2
 		 ORDER BY NOTE_NO DESC
 	</select>
 	
@@ -38,4 +39,22 @@
 	<insert id="sendNote" parameterType="Note">
 		INSERT INTO TB_NOTE VALUES(SEQ_NTNO.NEXTVAL, #{noteTitle}, #{noteContent}, SYSDATE, DEFAULT, DEFAULT, DEFAULT, #{sendNo}, #{receiveNo})
 	</insert>
+	
+	<select id="detailNote" parameterType="_int" resultMap="noteResultSet">
+		SELECT NOTE_NO, NOTE_TITLE, NOTE_CONTENT, SEND_DATE, READ_CHECK, SEND_STATUS, RECEIVE_STATUS
+              ,SEND_NO, S.MEMBER_NAME SEND_NAME
+              ,RECEIVE_NO, M.MEMBER_NAME RECEIVE_NAME
+		  FROM TB_NOTE N
+          JOIN TB_MEMBER M ON (N.RECEIVE_NO = M.MEMBER_NO)
+          JOIN TB_MEMBER S ON (N.SEND_NO = S.MEMBER_NO)
+         WHERE NOTE_NO = #{noteNo}
+           AND RECEIVE_STATUS = 'N'
+		 ORDER BY NOTE_NO DESC
+	</select>
+	
+	<update id="updateReadcheck" parameterType="Note">
+		UPDATE TB_NOTE
+		   SET READ_CHECK = 0
+		 WHERE NOTE_NO = #{noteNo}
+	</update>
 </mapper>

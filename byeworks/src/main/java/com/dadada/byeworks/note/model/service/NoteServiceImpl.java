@@ -33,4 +33,14 @@ public class NoteServiceImpl implements NoteService{
 		return ntDao.sendNote(sqlSession, n);
 	}
 
+	@Override
+	public Note detailNote(int noteNo) {
+		return ntDao.detailNote(sqlSession, noteNo);
+	}
+
+	@Override
+	public int updateReadcheck(Note n) {
+		return ntDao.updateReadcheck(sqlSession, n);
+	}
+
 }

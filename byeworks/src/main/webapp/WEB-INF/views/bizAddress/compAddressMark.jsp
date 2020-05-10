@@ -80,7 +80,7 @@
 			                                          				<a class="dropdown-item" onclick="$('#noteForm${ m.memberNo }').submit();">쪽지 보내기</a>
 			                                        			</div>
 			                                        			
-			                                        			<form id="noteForm${ m.memberNo }" action="sendForm.not" method="post">
+			                                        			<form id="noteForm${ m.memberNo }" action="sendForm.nt" method="post">
 			                                        				<input type="hidden" name="receiveNo" value="${ m.memberNo }">
 			                                        				<input type="hidden" name="receiveName" value="${ m.memberName }">
 			                                        			</form>

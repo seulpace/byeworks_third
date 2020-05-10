@@ -52,7 +52,7 @@
                   				<div class="x_content">
                     				<div class="row">
                       					<div class="col-sm-12">
-                        					<form id="demo-form2" action="send.not" method="post" data-parsley-validate class="form-horizontal form-label-left" onsubmit="return checkTextarea();">
+                        					<form id="demo-form2" action="send.nt" method="post" data-parsley-validate class="form-horizontal form-label-left" onsubmit="return checkTextarea();">
 												<input type="hidden" name="sendNo" value="${ loginUser.memberNo }">
                           						<div class="item form-group">
                             						<label class="col-form-label col-md-2 col-sm-2 label-align" for="first-name">제목 <span class="required">*</span></label>
@@ -180,7 +180,7 @@
 		});
 		
 		function goList() {
-			location.href = "selectList.not";
+			location.href = "selectList.nt";
 		}
 		
 	</script>

@@ -25,7 +25,7 @@ public class NoteController {
 	@Autowired
 	private MemberService mService;
 	
-	@RequestMapping("selectList.not")
+	@RequestMapping("selectList.nt")
 	public ModelAndView selectNoteList(ModelAndView mv, HttpSession session) {
 		
 		// 로그인 한 유저의 pk
@@ -50,7 +50,7 @@ public class NoteController {
 		return mv;
 	}
 	
-	@RequestMapping("sendForm.not")
+	@RequestMapping("sendForm.nt")
 	public ModelAndView sendForm(HttpSession session, ModelAndView mv, String receiveNo, String receiveName) {
 		
 		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
@@ -71,7 +71,7 @@ public class NoteController {
 		return mv;
 	}
 	
-	@RequestMapping("send.not")
+	@RequestMapping("send.nt")
 	public String sendNote(HttpSession session, Note n) {
 		
 		int result = ntService.sendNote(n);
@@ -80,11 +80,31 @@ public class NoteController {
 		
 		if(result > 0) {
 			session.setAttribute("sendMsg", "발송되었습니다");
-			view = "redirect:selectList.not";
+			view = "redirect:selectList.nt";
 		} else {
 			view = "common/errorPage";
 		}
 				
 		return view;
+	}
+	
+	@RequestMapping("detail.nt")
+	public ModelAndView goDetail(String noteNo, ModelAndView mv, HttpSession session) {
+		
+		Note n = null;
+		
+		if(noteNo != null) {
+			n = ntService.detailNote(Integer.parseInt(noteNo));
+			
+			// 만약 쪽지의 정보를 가져왔는데
+			// 그 쪽지의 받는 사람 번호와 내 번호가 동일하면 읽은 거니까 그때 읽음으로 업데이트 처리
+			if(n.getReceiveNo() == ((Member)session.getAttribute("loginUser")).getMemberNo()) {
+				ntService.updateReadcheck(n);
+			}
+		}
+		
+		mv.addObject("n", n).setViewName("note/detailNote");
+		
+		return mv;
 	}
 }

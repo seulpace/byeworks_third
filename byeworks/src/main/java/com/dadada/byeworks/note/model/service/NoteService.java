@@ -14,4 +14,10 @@ public interface NoteService {
 	
 	// 쪽지 보내기
 	int sendNote(Note n);
+	
+	// 쪽지 세부조회
+	Note detailNote(int noteNo);
+	
+	// 쪽지 읽음 처리
+	int updateReadcheck(Note n);
 }

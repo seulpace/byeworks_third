@@ -86,7 +86,11 @@
 	                                					</thead>
 	                                					<tbody>
 	                                						<c:forEach items="${ receiveList }" var="r">
-	                                  						<tr>
+	                                  						<tr
+	                                  						<c:if test="${ r.readCheck eq 0 }">
+	                                  						style="background:lightgray;"
+	                                  						</c:if>
+	                                  						>
 	                                    						<th style="text-align: center;">
 	                                    							<input type="hidden" value="${ r.noteNo }">
 	                                      							<div class="checkbox">
@@ -94,6 +98,10 @@
 	                                          								<input type="checkbox" class="flat">
 	                                        							</label>
 	                                      							</div>
+	                                      							<!-- 디테일 보여주기 위한 폼 -->
+																	<form id="detailForm${ r.noteNo }" action="detail.nt" method="post">
+																		<input type="hidden" name="noteNo" value="${ r.noteNo }">
+																	</form>
 	                                    						</th>
 	                                    						<td>${ r.sendName }</td>
 	                                    						<td>${ r.noteTitle }</td>
@@ -152,6 +160,10 @@
 	                                          								<input type="checkbox" class="flat">
 	                                        							</label>
 	                                      							</div>
+																	<!-- 디테일 보여주기 위한 폼 -->
+																	<form id="detailForm${ s.noteNo }" action="detail.nt" method="post">
+																		<input type="hidden" name="noteNo" value="${ s.noteNo }">
+																	</form>
 	                                    						</th>
 							                                    <td>${ s.receiveName }</td>
 							                                    <td>${ s.noteTitle }</td>
@@ -201,13 +213,22 @@
 	        
 	</div>
 </div>
-	
 	<script>
 		$(function(){
+			// 쪽지 보내기
 			$("#sendBtn").click(function() {
-				location.href = "sendForm.not";
+				location.href = "sendForm.nt";
 			});
+			
+			// 쪽지 세부조회
+			$("table>tbody>tr").click(function() {
+				var noteNo = $(this).children().eq(0).children().eq(0).val();
+				var formName = "#detailForm" + noteNo;
+				$(formName).submit();
+			});
+			
 		});
+		
 	</script>
     
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
