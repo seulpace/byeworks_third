@@ -27,6 +27,7 @@
 		<typeAlias type="com.dadada.byeworks.notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.dadada.byeworks.note.model.vo.Note" alias="Note"/>
 		<typeAlias type="com.dadada.byeworks.work.model.vo.Annual" alias="Annual"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.AppointmentDto" alias="AppointmentDto"/>
 	</typeAliases>
 	
 	<mappers>

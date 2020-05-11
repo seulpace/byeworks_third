@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dao.SignDao;
+import com.dadada.byeworks.sign.model.dto.AppointmentDto;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
@@ -158,6 +159,14 @@ public class SignServiceImpl implements SignService {
 	public ArrayList<SignLine> selectSignLine(int sno) {
 		
 		return sDao.selectSignLine(sqlSession, sno);
+	}
+
+	// 김다흰
+	// 발령내역 조회
+	@Override
+	public ArrayList<AppointmentDto> selectAppointmentList(int num) {
+
+		return sDao.selectAppointmentList(sqlSession, num);
 	}
 
 	

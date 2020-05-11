@@ -94,6 +94,20 @@
 		<result property="department" column="DEPARTMENT_NAME"/>
 	</resultMap>
 
+
+	<resultMap type="AppointmentDto" id="appointmentListSet">
+		<result property="signNo" column="sign_no"/>
+		<result property="positionAfter" column="position"/>
+		<result property="positionBefore" column="position"/>
+		<result property="positionName" column="position_name"/>
+		<result property="deptAfter" column="department"/>
+		<result property="deptBefore" column="department"/>
+		<result property="departmentName" column="department_name"/>
+		<result property="appintmentName" column="member_name"/>
+		<result property="appointmentLev" column="appointment_lev"/>
+		<result property="appEmpno" column="empNo"/>
+	</resultMap> 
+	
 	
 	<select id="selectDepartmentList" resultMap="departmentResultSet">
 	
@@ -303,8 +317,33 @@
 	WHERE S.SIGN_NO = #{sno}
 	</select>
 	
+	<select id="selectAppointmentList" resultMap="appointmentListSet">
 	
+		select empno, member_name, position_name, department_name, 
+                case when appointment_lev = '1' then '승진'
+                    when appointment_lev = '2' then '부서이동' 
+                    when appointment_lev = '3' then '부서이동과 승진'
+                end appointment_lev
+        from tb_appointment a
+        join tb_member m on (m.member_no = a.appoint_mem)
+        join tb_department d on (m.department = d.department_no)
+        join tb_position p on (m.position = p.position_no)
+        join tb_sign s on (s.sign_no = a.sign_no)
+        where d_type='A'
+        <if test='num == 1'>
+	        and appointment_lev=#{appointmentLev}        
+        </if>
+        <if test='num == 2'>
+       		and appointment_lev=#{appointmentLev}
+        
+        </if>
+        <if test='num == 3'>
+        
+        	and appointment_lev=#{appointmentLev}
+        </if>
 	
+	</select>
+	 
 
 	
 

@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dadada.byeworks.member.model.vo.Member;
+import com.dadada.byeworks.sign.model.dto.AppointmentDto;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
@@ -305,4 +308,25 @@ public class SignController {
 		
 	}
 	
+	/** 김다흰 : 발령 내역 조회
+	 * @param session
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping("appointmentList.adto")
+	public ModelAndView selectAppointmentList(HttpSession session, ModelAndView mv) {
+		
+		ArrayList<AppointmentDto> appList1 = sService.selectAppointmentList(1);
+		ArrayList<AppointmentDto> appList2 = sService.selectAppointmentList(2);
+		ArrayList<AppointmentDto> appList3 = sService.selectAppointmentList(3);
+		mv.addObject("appList1", appList1);
+		mv.addObject("appList2", appList2);
+		mv.addObject("appList3", appList3);
+		
+		
+		mv.setViewName("work/appointmentList");
+		
+		return mv;
+		
+	}
 }

@@ -26,10 +26,10 @@ public class CommuteServiceImpl implements CommuteService {
 	}
 
 	@Override
-	public ArrayList<Commute> myCommute(int commuteMember, String commuteDay) {
+	public ArrayList<Commute> myCommute(String commuteDay) {
 
 		
-		return cDao.myCommute(sqlSession, commuteMember, commuteDay);
+		return cDao.myCommute(sqlSession, commuteDay);
 	}
 	
 	

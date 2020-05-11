@@ -83,11 +83,11 @@ public class CommuteController {
 //	}
 	@ResponseBody
 	@RequestMapping(value="myCommute.co", produces="application/json; charset=utf-8")
-	public String myCommute(int commuteMember, String commuteDay){
+	public String myCommute(String commuteDay){
 		
 	
 		
-		ArrayList<Commute> myCommuteList = cService.myCommute(commuteMember, commuteDay);
+		ArrayList<Commute> myCommuteList = cService.myCommute(commuteDay);
 		
 	
 	

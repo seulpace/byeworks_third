@@ -47,9 +47,8 @@
 					 else ' '
 				end commute_annual
 		from tb_commute
-		where commute_member = #{commuteMember}
-		and to_char(commute_date, 'YY/MM') = #{commuteDate}
-		order by commute_date;
+		where to_char(commute_date, 'YYYY/MM') = #{commuteDate}
+		order by commute_date
 	
 	</select>
 	

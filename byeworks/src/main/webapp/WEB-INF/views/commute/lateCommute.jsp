@@ -99,7 +99,8 @@
 		$("#commuteLate").change(function(){
 			var commuteLateDay = $("select[id='commuteLateYear']").val() + '/' + $("select[id='commuteLate']").val();
 			
-			console.log(commuteDay);
+			console.log(commuteLateDay);
+			
 			
 			$.ajax({
 				url:"myCommute.co",
@@ -109,7 +110,7 @@
 					var value = "";
 					$.each(list, function(i, obj){
 						value += "<tr>" +
-		    	                      "<th scope="row">" + obj.empName + "</th>" + 
+		    	                      "<th scope='row'>" + obj.empName + "</th>" + 
 		    	                      "<td>" + obj.empNos + "</td>" + 
 		    	                      "<td>" + obj.empDept + "</td>" + 
 		    	                      "<td>" + obj.empPos + "</td>" +

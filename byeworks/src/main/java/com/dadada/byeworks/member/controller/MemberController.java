@@ -421,12 +421,14 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping("detail.me")
-	public String memberDetailList(int mno, Model model) {
+	public String memberDetailList(int mno, Model model, HttpSession session) {
 		
 		Member m = mService.memberDetailList(mno);
 		
+		
 		model.addAttribute("m", m);
 	
+		
 		return "member/memberDetailList";
 		
 	}
@@ -470,9 +472,7 @@ public class MemberController {
 	 */
 	@RequestMapping("memberInsert.me")
 	public String memberInsert(Member m, HttpServletRequest request, Model model,
-							   @RequestParam(value="profileModify", required=true) MultipartFile file) {
-		
-		
+							   @RequestParam(value="profilePicture", required=true) MultipartFile file) {
 		
 		String profileName = memSaveFile(m, file, request);
 		m.setProfileModify(profileName);
@@ -480,16 +480,17 @@ public class MemberController {
 		
 		int result = mService.memberInsert(m);
 		
-		System.out.println(m);
+		
 		if(result>0) {
-			
-			return "redirect:memberDetailList.me";
+			model.addAttribute("mno", m.getMemberNo());
+			// System.out.println(m.getMemberNo());
+			return "redirect:detail.me";
 		}else {
 			model.addAttribute("msg", "작성 실패");
 			return "member/memberInsert";
 		}
 		
-		
+
 	}
 	
 	/** 김다흰 : 직원 프로필사진 등록
@@ -505,9 +506,10 @@ public class MemberController {
 		
 		String originName = file.getOriginalFilename();
 		
+	
 		
 		
-		String changeName = "사진 " + m.getMemberNo();
+		String changeName = m.getMemberName() + m.getPhone();
 		
 		String ext = originName.substring(originName.lastIndexOf("."));
 		
@@ -522,9 +524,33 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		
-		System.out.println(profileModify);
+		
 		return profileModify;
 	}
+	
+	
+	/** 김다흰 : 직원 등록 후 상세페이지 보기
+	 * @param m
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	/*
+	@RequestMapping("memberdetail.me")
+	public String memberDetail(Member m, Model model, HttpSession session) {
+		
+		int mno = m.getMemberNo();
+		m = mService.memberDetailList(mno);
+		System.out.println(m.getMemberNo());
+		System.out.println(m);
+		model.addAttribute("m", m);
+	
+	
+		return "member/memberDetailList";
+		
+	}
+	*/
+	
 	
 	/** 김다흰 : 내정보 수정하기 페이지 이동
 	 * @return

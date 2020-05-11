@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.dadada.byeworks.member.model.vo.Member;
+import com.dadada.byeworks.sign.model.dto.AppointmentDto;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
@@ -177,7 +178,9 @@ public class SignDao {
 	}
 
 
-
+	public ArrayList<AppointmentDto> selectAppointmentList(SqlSessionTemplate sqlSession, int num){
+		return (ArrayList)sqlSession.selectList("signMapper.selectAppointmentList", num);
+	}
 
 
 	}
