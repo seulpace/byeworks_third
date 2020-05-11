@@ -14,9 +14,11 @@
 		<result property="commuteAnn" column="commute_ann"/>
 		<result property="empName" column="member_name"/>
 		<result property="empNos" column="empno" />
+		<result property="departmentNo" column="department_no"/>
 		<result property="empDept" column="department_name"/>
 		<result property="empPos" column="position_name"/>
 		<result property="commuteDateStr" column="commute_date_str"/>
+		<result property="lateCount" column="late_count"/>
 	</resultMap>
 	
 	
@@ -52,6 +54,31 @@
 		where commute_member = #{commuteMember}
 		 	and to_char(commute_date, 'YYYY/MM') = #{commuteDateStr}
 		order by commute_date
+	
+	</select>
+	
+	<select id="lateCommuteList" resultMap="commuteResultSet">
+		select member_name, late_count, empno, department_name, position_name
+        from (select count(case when commute_status='4' then 1 end) as late_count, commute_member  
+             from tb_commute
+             where EXTRACT(MONTH FROM commute_date) = #{commuteDateStr}
+             group by commute_member) a
+        join tb_member me on (me.member_no = a.commute_member)    
+        join tb_department d on(d.department_no = me.department)
+        join tb_position p on(p.position_no = me.position)
+        where late_count > 0
+	</select>
+	
+	<select id="lateCommuteDept" resultMap="commuteResultSet">
+	    select * 
+        from (select count(case when commute_status='4' then 1 end) as late_count, department_no
+             from tb_commute c
+             join tb_member m on (m.member_no = c.commute_member)
+             join tb_department d on (m.department = d.department_no)
+             where EXTRACT(MONTH FROM commute_date) = #{commuteDateStr}
+             group by department_no)
+        where late_count > 0
+	
 	
 	</select>
 	

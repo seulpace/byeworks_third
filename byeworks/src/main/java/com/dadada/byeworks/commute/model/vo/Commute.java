@@ -28,4 +28,6 @@ public class Commute {
 	private String empDept;			// 직원 소속
 	private String empPos;			// 직원 직급
 	private String commuteDateStr;	// 출근날짜String용
+	private int lateCount;			// 지각횟수
+	private int departmentNo;		// 부서번호
 }

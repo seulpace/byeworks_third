@@ -46,15 +46,15 @@
 		             </select> 
 	                 <select class="form-control-sm" id="commuteLate" name="commuteLate">
 		                 <option class="dropdown-item"  value="">월</option>
-		                 <option class="dropdown-item"  value="01">1월</option>
-		                 <option class="dropdown-item"  value="02">2월</option>
-		                 <option class="dropdown-item"  value="03">3월</option>
-		                 <option class="dropdown-item"  value="04">4월</option>
-		                 <option class="dropdown-item"  value="05">5월</option>
-		                 <option class="dropdown-item"  value="06">6월</option>
-		                 <option class="dropdown-item"  value="07">7월</option>
-		                 <option class="dropdown-item"  value="08">8월</option>
-		                 <option class="dropdown-item"  value="09">9월</option>
+		                 <option class="dropdown-item"  value="1">1월</option>
+		                 <option class="dropdown-item"  value="2">2월</option>
+		                 <option class="dropdown-item"  value="3">3월</option>
+		                 <option class="dropdown-item"  value="4">4월</option>
+		                 <option class="dropdown-item"  value="5">5월</option>
+		                 <option class="dropdown-item"  value="6">6월</option>
+		                 <option class="dropdown-item"  value="7">7월</option>
+		                 <option class="dropdown-item"  value="8">8월</option>
+		                 <option class="dropdown-item"  value="9">9월</option>
 		                 <option class="dropdown-item"  value="10">10월</option>
 		                 <option class="dropdown-item"  value="11">11월</option>
 		                 <option class="dropdown-item"  value="12">12월</option>
@@ -63,7 +63,7 @@
 	              </div>	
                 </div>
 
-                <table class="lateTable">
+                <table class="table" id="lateTable">
                   <thead>
                     <tr>
                       <th>이름</th>
@@ -97,14 +97,13 @@
     $(function(){
 		
 		$("#commuteLate").change(function(){
-			var commuteLateDay = $("select[id='commuteLateYear']").val() + '/' + $("select[id='commuteLate']").val();
-			
-			console.log(commuteLateDay);
+			/* var commuteDateStr = $("select[id='commuteLateYear']").val() + '/' + $("select[id='commuteLate']").val(); */
+			var commuteLate = $("select[id='commuteLate']").val();
 			
 			
 			$.ajax({
-				url:"myCommute.co",
-				data:{"commuteLateDay":commuteLateDay},
+				url:"lateCommuteList.co",
+				data:{"commuteDateStr":commuteLate},
 				type:"get",
 				success:function(list){
 					var value = "";
@@ -114,7 +113,7 @@
 		    	                      "<td>" + obj.empNos + "</td>" + 
 		    	                      "<td>" + obj.empDept + "</td>" + 
 		    	                      "<td>" + obj.empPos + "</td>" +
-		    	                      "<td>" + obj.commuteAnnual + "</td>" + 
+		    	                      "<td>" + obj.lateCount + "</td>" + 
 		    	                    "</tr>";
 		    						
 					});

@@ -29,5 +29,14 @@ public class CommuteDao {
 		
 		return (ArrayList)sqlSession.selectList("commuteMapper.myCommute", map);
 	}
+	
+	// 김다흰
+	// 지각 조회
+	public ArrayList<Commute> lateCommuteList(SqlSessionTemplate sqlSession, String commuteDateStr){
+		
+		return (ArrayList)sqlSession.selectList("commuteMapper.lateCommuteList", commuteDateStr);
+		
+		
+	}
 
 }
