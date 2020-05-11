@@ -9,10 +9,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.dadada.byeworks.member.model.vo.Member;
+import com.dadada.byeworks.sign.model.dto.AppointmentDto;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.dto.SignDto;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -137,6 +139,47 @@ public class SignDao {
 		data.put("type",type);
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectSignList", data);
+	}
+
+
+	public ArrayList<SignDto> selectReferList(SqlSessionTemplate sqlSession, int memberNo) {
+		
+	return (ArrayList)sqlSession.selectList("signMapper.selectSignReferList", memberNo);
+	}
+
+
+	public ArrayList<SignDto> selectDoSignList(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectDoSignList", memberNo );
+	}
+
+
+	public SignAndAnnualSign selectSignAnnual(SqlSessionTemplate sqlSession, int sno) {
+		System.out.println(sno);
+		return sqlSession.selectOne("signMapper.selectSignAnnual", sno);
+	}
+
+
+	public SignAndQuit selectSignQuit(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.selectOne("signMapper.selectSignQuit", sno);
+	}
+
+
+	public SignAndAppointment selectSignAppointment(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.selectOne("signMapper.selectSignAppointment", sno);
+	}
+
+
+	public ArrayList<SignLine> selectSignLine(SqlSessionTemplate sqlSession, int sno) {
+		
+		return (ArrayList)sqlSession.selectList("signMapper.selectSignLine", sno);
+	}
+
+
+	public ArrayList<AppointmentDto> selectAppointmentList(SqlSessionTemplate sqlSession, int num){
+		return (ArrayList)sqlSession.selectList("signMapper.selectAppointmentList", num);
 	}
 
 

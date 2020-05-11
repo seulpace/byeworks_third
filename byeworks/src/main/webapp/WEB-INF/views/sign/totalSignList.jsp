@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/LogoExample.png" type="image/png" />
 <title>ByeWorks</title>
+<style>
+	#datatable tbody tr:hover{
+		cursor:pointer;
+	}
+
+</style>
 </head>
 <!-- menubar 위에 있던 파일의 경우에 css가 적용되지 않아 두 개의 css 따로 적용  -->
     <!-- Bootstrap -->
@@ -65,9 +71,9 @@
                             <div class="card-box table-responsive">
                             <c:choose>
                             	<c:when test="${ type == 1}">
-	                                <button disabled style="width: 100px;height: 30px; border: none;">반 려 (0)</button>
-	                                <button disabled style="width: 100px;height: 30px; border: none;">결재 진행 (0)</button>
-	                                <button disabled style="width: 100px;height: 30px; border: none;">결재완료(12)</button>
+	                                <button disabled style="width: 100px;height: 30px; border: none;">반 려 (${ rcount })</button>
+	                                <button disabled style="width: 100px;height: 30px; border: none;">결재 진행 (${ ocount })</button>
+	                                <button disabled style="width: 100px;height: 30px; border: none;">결재완료 (<c:out value="${ ccount }"/>)</button>
 	                                <br><br>
 	                            </c:when>
 	                            
@@ -75,7 +81,7 @@
 	                            	<button style="width: 100px;height: 30px;border-radius: 5px;">상 신</button>
 	                            </c:when>
                     		</c:choose>
-                    <table id="datatable" class="table table-striped table-bordered" style="width:100%;text-align: center;">
+                    <table id="datatable" class="table table-striped table-bordered" style="width:100%;text-align: center;" data-order="">
                       <thead>
                         <tr>
                           <th style="width: 5%;">번호</th>
@@ -91,29 +97,34 @@
                       <tbody>
                       <c:forEach items="${ list }" var="l">
                         <tr>
-                          <td>${ l.signNo }</td>
-                          <td>${ l.title }</td>
-                          <td>김종선(결재완료)->류호수(결재완료)->김종광(결재완료)</td>
+                          <td>${ l.signNo }<input type="hidden" value="${l.docuType }"></td>
+                          <td>${ l.title }</td> 
+                          <td>${ l.signLine }</td>
                           <td>${ loginUser.memberName }</td>
                           <td>${ l.signUpDate }</td>
                           
                         
-                          		<c:choose>
-                          			<c:when test="${ l.signStatus eq 'C' }">
-                          				<td>승인</td>
+                          		<c:choose>                       		
+                          		
+                          			<c:when test="${ l.signStatus eq 'C' && l.flag eq 'Y' }">
+                          				<td>완료</td>
                           			</c:when>
                           			
-                          			<c:when test="${ l.signStatus eq 'R' }">
+                          			<c:when test="${ l.signStatus eq 'R' && flag eq 'R' }">
                           				<td>반려</td>
                           			</c:when>
                           			
-                          			<c:when test="${ l.signStatus eq 'O' }">
-                          				<td>진행중</td>
+                          			<c:when test="${ l.signStatus eq 'O' && flag eq 'O' }">
+                          				<td>진행</td>
                           			</c:when>
                           			
-                          			<c:when test="${ l.signStatus eq 'D' }">
+                          			<c:when test="${ l.signStatus eq 'D' && flag eq 'N' }">
                           				<td>회수</td>
                           			</c:when>
+                          			
+                          			<c:otherwise>
+                          				<td>대기</td>
+                          			</c:otherwise>
                           		</c:choose>
 
                           
@@ -134,6 +145,16 @@
         </div>
         </div>
         </div>
+        
+        <script>
+        	$(function(){
+        		$("#datatable tbody tr").click(function(){
+        			console.log($(this).children().eq(0).children().eq(0));
+        			location.href = "signDetail.si?sno=" + $(this).children().eq(0).text() + "&type=" + $(this).children().eq(0).children("input").val();
+        		
+        		});
+        	});
+        </script>
         
    <!-- footer include -->
 	<jsp:include page="../common/footer.jsp"/>

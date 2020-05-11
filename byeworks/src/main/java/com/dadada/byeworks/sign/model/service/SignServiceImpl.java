@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dao.SignDao;
+import com.dadada.byeworks.sign.model.dto.AppointmentDto;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.dto.SignDto;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -121,6 +123,53 @@ public class SignServiceImpl implements SignService {
 		
 		return sDao.selectSignList(sqlSession, mno, type);
 	}
+
+	//참조된 결재 리스트 조회
+	@Override
+	public ArrayList<SignDto> selectReferList(int mno) {
+		
+		return sDao.selectReferList(sqlSession, mno);
+	}
+	//결재해야할 결재 리스트 조회
+	@Override
+	public ArrayList<SignDto> selectDoSignList(int mno) {
+		
+		return sDao.selectDoSignList(sqlSession, mno);
+	}
+	//결재 상세보기 (문서type별)
+	@Override
+	public SignAndAnnualSign selectSignAnnual(int sno) {
+		System.out.println(sno);
+		return sDao.selectSignAnnual(sqlSession,sno);
+	}
+
+	@Override
+	public SignAndQuit selectSignQuit(int sno) {
+		
+		return sDao.selectSignQuit(sqlSession, sno);
+	}
+
+	@Override
+	public SignAndAppointment selectSignAppointment(int sno) {
+		
+		return sDao.selectSignAppointment(sqlSession, sno);
+	}
+	//결재선 상세보기
+	@Override
+	public ArrayList<SignLine> selectSignLine(int sno) {
+		
+		return sDao.selectSignLine(sqlSession, sno);
+	}
+
+	// 김다흰
+	// 발령내역 조회
+	@Override
+	public ArrayList<AppointmentDto> selectAppointmentList(int num) {
+
+		return sDao.selectAppointmentList(sqlSession, num);
+	}
+
+	
 	
 
 

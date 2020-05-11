@@ -21,9 +21,13 @@
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignAndAppointment" alias="SignAndAppointment"/>
 		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddress" alias="BizAddress"/>
 		<typeAlias type="com.dadada.byeworks.bizAddress.model.vo.BizAddressFav" alias="BizAddressFav" />
+		<typeAlias type="com.dadada.byeworks.commute.model.vo.Commute" alias="Commute"/>
 		<typeAlias type="com.dadada.byeworks.sign.model.vo.Sign" alias="Sign" />
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.SignDto" alias="SignDto" />
 		<typeAlias type="com.dadada.byeworks.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.dadada.byeworks.note.model.vo.Note" alias="Note"/>
+		<typeAlias type="com.dadada.byeworks.work.model.vo.Annual" alias="Annual"/>
+		<typeAlias type="com.dadada.byeworks.sign.model.dto.AppointmentDto" alias="AppointmentDto"/>
 	</typeAliases>
 	
 	<mappers>
@@ -31,8 +35,9 @@
 		<mapper resource="/mappers/bizAddress-mapper.xml"/>
 		<mapper resource="/mappers/notice-mapper.xml"/>
 		<mapper resource="/mappers/sign-mapper.xml"/>
+		<mapper resource="/mappers/note-mapper.xml"/>
+		<mapper resource="/mappers/commute-mapper.xml"/>
+		<mapper resource="/mappers/annual-mapper.xml"/>
 	</mappers>
-	
-	<!-- 수정 테스트 -->
 	
 </configuration>

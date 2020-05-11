@@ -24,5 +24,6 @@ public class SignDto {
 	private String signStatus;
 	private String flag;
 	private String title;
+	private String signLine;
 
 }

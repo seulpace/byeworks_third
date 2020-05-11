@@ -8,7 +8,7 @@
 <title>Byeworks</title>
 </head>
 <body>
-	<!-- 김다흰 테스트 -->
+	
 	<!-- 
 	
 	index.jsp 실행 시, main.do를 실행

@@ -18,6 +18,7 @@ public class SignAndAppointment {
 	private Date signUpDate;
 	private String docuType;
 	private int memberNo;
+	private String memberName;
 	private String signStatus;
 	private String flag;
 	private String title;
@@ -28,5 +29,6 @@ public class SignAndAppointment {
 	private int appointmentLev;
 	private int appointmentMem;
 	private Date appointmentDate;
+	private String department;
 
 }

@@ -29,4 +29,10 @@ public class NoticeDao {
 	public int deleteNotice(SqlSessionTemplate sqlSession, int nno) {
 		return sqlSession.update("noticeMapper.deleteNotice", nno);
 	}
+
+	// 이슬희
+	public ArrayList<Notice> selectMainList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectMainList");
+	}
+	
 }
