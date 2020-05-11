@@ -75,7 +75,7 @@
 	                        			<div class="row">
 	                          				<div class="col-sm-12">
 	                            				<div class="card-box table-responsive">
-	                              					<table id="datatable" class="table table-bordered" style="width:100%" data-order="">
+	                              					<table id="rTable" class="table table-bordered" style="width:100%" data-order="">
 	                                					<thead>
 	                                  						<tr>
 							                                    <th style="width:5%"></th>
@@ -88,19 +88,25 @@
 	                                						<c:forEach items="${ receiveList }" var="r">
 	                                  						<tr
 	                                  						<c:if test="${ r.readCheck eq 0 }">
-	                                  						style="background:lightgray;"
+	                                  						style="background:#F2F2F2;"
 	                                  						</c:if>
 	                                  						>
 	                                    						<th style="text-align: center;">
 	                                    							<input type="hidden" value="${ r.noteNo }">
 	                                      							<div class="checkbox">
 	                                       	 							<label>
-	                                          								<input type="checkbox" class="flat">
+	                                          								<input type="checkbox" class="flat" name="checkBtn" value="${ r.noteNo }">
 	                                        							</label>
 	                                      							</div>
 	                                      							<!-- 디테일 보여주기 위한 폼 -->
 																	<form id="detailForm${ r.noteNo }" action="detail.nt" method="post">
 																		<input type="hidden" name="noteNo" value="${ r.noteNo }">
+																	</form>
+																	<!-- 답장하기 위한 폼 -->
+																	<form id="replyForm${ r.noteNo }" action="sendForm.nt" method="post">
+																		<input type="hidden" name="receiveNo" value="${ r.sendNo }">
+																		<input type="hidden" name="receiveName" value="${ r.sendName }">
+																		<input type="hidden" name="receiveTitle" value="${ r.noteTitle }">
 																	</form>
 	                                    						</th>
 	                                    						<td>${ r.sendName }</td>
@@ -116,9 +122,9 @@
 	                              					<!-- 버튼들 -->
 	                              					<div style="padding-left: 15px; padding-right: 15px;">
 						                                <button class="btn btn-dark" style="float: left;" id="sendBtn"><small>쪽지 보내기</small></button>
-						                                <button class="btn btn-dark" style="float: left;" data-toggle="modal" data-target=".updateGroup"><small>답장</small></button>
+						                                <button class="btn btn-dark" style="float: left;" id="replyBtn"><small>답장하기</small></button>
 	                                					<div style="float:right;">
-	                                  						<button class="btn btn-diy" style="color:white;" data-toggle="modal" data-target=".addAddress"><small>삭제하기</small></button>
+	                                  						<button class="btn btn-diy" style="color:white;" id="deleteReceive"><small>삭제하기</small></button>
 	                                					</div>  
 	                              					</div>
 	                            				</div>
@@ -140,7 +146,7 @@
 	                        			<div class="row">
 	                          				<div class="col-sm-12">
 	                            				<div class="card-box table-responsive">
-	                              					<table id="datatable-checkbox" class="table table-bordered" style="width:100%" data-order="">
+	                              					<table id="sTable" class="table table-bordered" style="width:100%" data-order="">
 	                                					<thead>
 	                                  						<tr>
 							                                    <th ></th>
@@ -157,7 +163,7 @@
 	                                    							<input type="hidden" value="${ s.noteNo }">
 	                                      							<div class="checkbox">
 	                                        							<label>
-	                                          								<input type="checkbox" class="flat">
+	                                          								<input type="checkbox" class="flat" name="rcvCheckBtn" value="${ s.noteNo }">
 	                                        							</label>
 	                                      							</div>
 																	<!-- 디테일 보여주기 위한 폼 -->
@@ -169,17 +175,20 @@
 							                                    <td>${ s.noteTitle }</td>
 							                                    <td>${ s.sendDateStr }</td>
 							                                    <td>
-							                                    	<c:choose>
-							                                    	<c:when test="${ s.readCheck eq 0 }">
-							                                    		<strong>읽음</strong>
-							                                    	</c:when>
-							                                    	<c:when test="${ s.readCheck eq 1 }">
-							                                    		읽지 않음
-							                                    	</c:when>
-							                                    	<c:when test="${ s.readCheck eq 2 }">
-							                                    		발송 취소
-							                                    	</c:when>
-							                                    	</c:choose>
+							                                    	<input type="hidden" value="${ s.readCheck }" id="readNo${ s.noteNo }">
+							                                    	<label id="readStr${ s.noteNo }">
+								                                    	<c:choose>
+								                                    	<c:when test="${ s.readCheck eq 0 }">
+								                                    		<strong>읽음</strong>
+								                                    	</c:when>
+								                                    	<c:when test="${ s.readCheck eq 1 }">
+								                                    		읽지 않음
+								                                    	</c:when>
+								                                    	<c:when test="${ s.readCheck eq 2 }">
+								                                    		발송 취소
+								                                    	</c:when>
+								                                    	</c:choose>
+							                                    	</label>
 							                                    </td>
 	                                  						</tr>
 	                                  						</c:forEach>
@@ -191,7 +200,8 @@
 	                              					<!-- 버튼들 -->
 	                              					<div style="padding-left: 15px; padding-right: 15px;">
 	                                					<div style="float:right;">
-	                                  						<button class="btn btn-diy" style="color:white;" data-toggle="modal" data-target=".addAddress"><small>발송 취소</small></button>
+	                                  						<button class="btn btn-diy" style="color:white;" id="cancelBtn"><small>발송 취소</small></button>
+	                                  						<button class="btn btn-diy" style="color:white;" id="deleteSend"><small>삭제하기</small></button>
 	                                					</div>  
 	                              					</div>
 	                            				</div>
@@ -214,6 +224,13 @@
 	</div>
 </div>
 	<script>
+		var url;
+		var data;
+		var deleteCheck;
+		
+		var rTable = $("#rTable").DataTable();
+		var sTable = $("#sTable").DataTable();
+		
 		$(function(){
 			// 쪽지 보내기
 			$("#sendBtn").click(function() {
@@ -227,6 +244,183 @@
 				$(formName).submit();
 			});
 			
+			// 답장하기
+			$("#replyBtn").click(function() {
+				
+				// 한 건만 체크하도록 카운트 세기
+				var count = 0;
+	    		
+	    		$('input:checkbox[name=checkBtn]:checked').each(function() {
+	    			count++;
+	    		});
+	    		
+	    		// 체크된 건이 2개 이상이면
+	    		if(count >= 2) {
+	    			alertify.alert("1개의 쪽지를 선택해주세요");
+	    			return;
+	    		} else if(count == 1) { // 그렇지 않으면 답장하기 가능
+	    			// 답장하기의 경우, 받는 사람 이름, 번호, 받았던 쪽지의 제목이 필요하다...
+	    			// 답장하는 폼에 데이터를 넣은 뒤에 submit 시킨다
+	    			
+	    			// 체크박스
+	    			var checkbox = $('input:checkbox[name=checkBtn]:checked');
+	    			// 체크박스 된 줄의 해당 칸
+	    			var td = checkbox.parent().parent().parent().parent();
+	    			// 해당 쪽지 번호
+	    			var nNo = td.children().eq(0).val();
+	    			
+	    			var replyFormName = "#replyForm" + nNo;
+	    			
+	    			// 제출하기
+	    			$(replyFormName).submit();
+	    		} else {
+	    			alertify.alert("답장할 쪽지를 선택해주세요");
+	    		}
+			});
+			
+			// 발송 취소
+			$("#cancelBtn").click(function() {
+				// 얘도 체크박스를 읽어와서
+				// 이 중에 readCheck가 0인 건이 있다면 이미 읽음처리 된 쪽지가 있습니다. 가 나오도록 하자
+				
+				// 우선 내가 생성한 건만 체크 되었는지 확인해야 한다
+				var checkbox = $('input:checkbox[name=rcvCheckBtn]:checked');
+				var tr;
+				var readCheck;
+				
+				var cnt = 0;
+				
+	    		checkbox.each(function(i) {
+	    			tr = checkbox.parent().parent().parent().parent().parent().eq(i);
+	    			readCheck = tr.children().eq(4).children().eq(0).val();
+	    			
+	    			console.log(readCheck);
+	    			if(readCheck == 0 || readCheck == 2) {
+	    				alertify.alert("이미 읽음처리 되거나 발송취소 된 쪽지가 있습니다.");
+	    				cnt = 1;
+	    				return false;
+	    			} else {
+	    				cnt = 0;
+	    			}
+	    		}); 
+    		
+	    		if(cnt == 0) {
+	    			// 읽지 않은 건들만 선택 되었다면
+					var cancelArr = new Array();
+	    			
+		    		$('input:checkbox[name=rcvCheckBtn]:checked').each(function() {
+		    			cancelArr.push(this.value);
+		    		});
+		    		
+		    		if(cancelArr.length >= 1) {
+		    			
+		    			alertify.confirm("정말 발송을 취소하시겠습니까?", function() {
+				    		
+			    			var cancelNo = cancelArr.join(",");
+		
+							$.ajax({
+								url:"cancel.nt",
+								type:"post",
+								data:{"no":cancelNo},
+								success:function(list){
+									console.log("성공");
+									
+									var readStr;
+									var readNo;
+									// 발송취소가 되었으니 해당 컬럼의 발송취소 칸의 값과 텍스트를 변경시켜야 한다
+									$.each(list, function(i, obj){
+										readStr = "#readStr" + obj.noteNo;
+										$(readStr).html("발송 취소");
+										
+										readNo = "#readNo" + obj.noteNo;
+										$(readNo).val(obj.readCheck);
+										
+										alertify.alert("발송 취소되었습니다.");
+									});
+								},error:function(){
+									console.log("ajax 통신 에러");
+								}
+							});
+		    			});
+		    		} else {
+		    			alertify.alert("취소할 쪽지를 선택해주세요");
+		    		}
+	    		}
+			});
+			
+			// 삭제하기
+			$("#deleteReceive").click(function() {
+				var deleteArr = new Array();
+    			
+	    		$('input:checkbox[name=checkBtn]:checked').each(function() {
+	    			deleteArr.push(this.value);
+	    		});
+	    		
+	    		if(deleteArr.length >= 1) {
+	    			alertify.confirm("삭제된 쪽지는 복구 되지 않습니다. 쪽지를 삭제하시겠습니까?", function() {
+	    				var deleteNo = deleteArr.join(",");
+	    				
+	    				deleteCheck = $('input:checkbox[name=checkBtn]:checked');
+	    				
+	    				url = "delete.nt";
+	    				data = {"no":deleteNo,
+	    						"classStr":"receive"};
+	    				
+	    				deleteNote();
+	    			});
+	    		} else {
+	    			alertify.alert("삭제할 쪽지를 선택해주세요");
+	    		}
+			});
+			
+			$("#deleteSend").click(function() {
+				var deleteArr = new Array();
+    			
+	    		$('input:checkbox[name=rcvCheckBtn]:checked').each(function() {
+	    			deleteArr.push(this.value);
+	    		});
+	    		
+	    		if(deleteArr.length >= 1) {
+	    			alertify.confirm("삭제된 쪽지는 복구 되지 않습니다. 쪽지를 삭제하시겠습니까?", function() {
+	    				var deleteNo = deleteArr.join(",");
+	    				deleteCheck = $('input:checkbox[name=rcvCheckBtn]:checked');
+	    				
+	    				url = "delete.nt";
+	    				data = {"no":deleteNo,
+	    						"classStr":"send"};
+	    				
+	    				deleteNote();
+	    			});
+	    		} else {
+	    			alertify.alert("삭제할 쪽지를 선택해주세요");
+	    		}
+			});
+			
+			function deleteNote() {
+				$.ajax({
+					url:url,
+					type:"post",
+					data:data,
+					success:function() {
+						alertify.alert("삭제되었습니다.");
+						
+						var countFor = 0;
+						deleteCheck.each(function(i) {
+			    			tr = deleteCheck.parent().parent().parent().parent().parent().eq(i);
+			    			tr.addClass("deleted");
+			    			countFor ++;
+			    		}); 
+						
+						for(var i=0; i<countFor; i++) {
+							rTable.row(".deleted").remove().draw(false);
+							sTable.row(".deleted").remove().draw(false);
+						}
+						
+					},error:function() {
+						console.log("ajax 통신 오류");
+					}
+				});
+			}
 		});
 		
 	</script>

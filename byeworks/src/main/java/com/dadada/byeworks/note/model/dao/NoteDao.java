@@ -29,5 +29,21 @@ public class NoteDao {
 	public int updateReadcheck(SqlSessionTemplate sqlSession, Note n) {
 		return sqlSession.update("noteMapper.updateReadcheck", n);
 	}
+	
+	public int cancelNote(SqlSessionTemplate sqlSession, ArrayList<Integer> noteNo) {
+		return sqlSession.update("noteMapper.cancelNote", noteNo);
+	}
+	
+	public ArrayList<Note> selectList(SqlSessionTemplate sqlSession, ArrayList<Integer> noteNo) {
+		return (ArrayList)sqlSession.selectList("noteMapper.selectList", noteNo);	
+	}
+	
+	public int deleteReceive(SqlSessionTemplate sqlSession, ArrayList<Integer> noteNo) {
+		return sqlSession.update("noteMapper.deleteReceive", noteNo);
+	}
+	
+	public int deleteSend(SqlSessionTemplate sqlSession, ArrayList<Integer> noteNo) {
+		return sqlSession.update("noteMapper.deleteSend", noteNo);
+	}
 
 }

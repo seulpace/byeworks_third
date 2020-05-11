@@ -56,4 +56,10 @@ public class NoticeServiceImpl implements NoticeService {
 		return 0;
 	}
 
+	// 이슬희 // 메인에서 공지사항 조회용 서비스
+	@Override
+	public ArrayList<Notice> selectMainList() {
+		return nDao.selectMainList(sqlSession);
+	}
+
 }

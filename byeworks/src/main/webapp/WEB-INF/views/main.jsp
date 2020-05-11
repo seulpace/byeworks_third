@@ -19,6 +19,12 @@
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
  
  	<title>Byeworks</title>
+ 	
+ 	<style>
+ 		table>tbody>tr:hover{
+ 			cursor:pointer;
+ 		}
+ 	</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -43,7 +49,7 @@
                   				<div class="clearfix"></div>
                 			</div>
 	                		<div class="x_content">
-	                  			<table class="table">
+	                  			<table class="table" id="noticeTable">
 	                    			<thead>
 	                      				<tr>
 	                        				<th></th>
@@ -51,18 +57,19 @@
 	                      				</tr>
 	                    			</thead>
 	                    			<tbody>
+	                    				<c:forEach items="${ nList }" var="n" varStatus="status">
 		                      			<tr>
-					                        <th scope="row">1</th>
-					                        <td>로그인 시 반드시 출근 부탁 드립니다</td>
+					                        <th scope="row">
+					                        	<input type="hidden" value="${ n.noticeNo }">
+					                        	${ status.count }
+					                        	
+					                        	<form id="goNotice${ n.noticeNo }" action="detail.not" method="post">
+					                        		<input type="hidden" value="${ n.noticeNo }" name="nno">
+					                        	</form>
+					                        </th>
+					                        <td>${ n.noticeTitle }</td>
 		                      			</tr>
-		                      			<tr>
-					                        <th scope="row">2</th>
-					                        <td>[총무팀] 이번 달 급여명세서 오류 건</td>
-				                      	</tr>
-				                      	<tr>
-					                        <th scope="row">3</th>
-					                        <td>[인사팀] 발령 공지입니다.</td>
-		                      			</tr>
+		                      			</c:forEach>
 		                    		</tbody>
 		                  		</table>
 		                	</div>
@@ -254,6 +261,18 @@
 	        <!-- /footer content -->
 		</div>
     </div>
+    
+    <script>
+    	$(function(){
+    		// 공지사항 상세보기
+		    $("#noticeTable>tbody>tr").click(function() {
+		    	var nno = $(this).children().eq(0).children().eq(0).val();
+		    	
+		    	var formName = "#goNotice" + nno;
+		    	$(formName).submit();
+		    });
+    	});
+    </script>
     
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->

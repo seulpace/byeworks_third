@@ -43,4 +43,23 @@ public class NoteServiceImpl implements NoteService{
 		return ntDao.updateReadcheck(sqlSession, n);
 	}
 
+	@Override
+	public int cancelNote(ArrayList<Integer> noteNo) {
+		return ntDao.cancelNote(sqlSession, noteNo);
+	}
+
+	@Override
+	public ArrayList<Note> selectList(ArrayList<Integer> intList) {
+		return ntDao.selectList(sqlSession, intList);
+	}
+
+	@Override
+	public int deleteNote(ArrayList<Integer> noteNo, String classStr) {
+		if(classStr.equals("receive")) { // 받은 쪽지면
+			return ntDao.deleteReceive(sqlSession, noteNo);
+		} else { // 보낸 쪽지면
+			return ntDao.deleteSend(sqlSession, noteNo);
+		}
+	}
+
 }
