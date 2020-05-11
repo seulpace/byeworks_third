@@ -97,7 +97,16 @@
                       </tr>
                       <tr>
                           <th><label for="upfile">첨부파일</label></th>
-                          <td><a href="" download="">파일명.jpg</a></td>
+                          <td colspan="3">
+                    		<c:choose>	
+			                    <c:when test="${ !empty n.fileName }">
+			                        <a href="${ pageContext.servletContext.contextPath }/resources/upload_files/${n.FRename}" download="${ n.fileName }">${ n.fileName }</a>
+			                    </c:when>
+		                    	<c:otherwise>
+		                        	첨부파일이 없습니다.
+		                        </c:otherwise>
+                    		</c:choose>
+                          </td>
                       </tr>
                       <br>
                       <tr>
@@ -121,13 +130,32 @@
                     
                  
                     <br><br><br><br><br>
+                    <c:if test="${ loginUser.memberNo eq n.memberNo }">
                     <div class="item form-group">
                       <div class="col-md-6 col-sm-6 offset-md-3">
-                        <button class="btn btn-primary" type="button">수정하기</button>
+                        <a class="btn btn-primary" type="button">수정하기</a>
                         <button class="btn btn-success" type="reset">목록으로</button>
-                        <button type="submit" class="btn btn-danger">삭제하기</button>
+                        <button class="btn btn-danger" onclick="postFormSubmit(1);">삭제하기</button>
                       </div>
+                      
+                      <form id="postForm" action="" method="post">
+                      	<input type="hidden" name="nno" value="${ n.noticeNo }">
+                      	<input type="hidden" name="fileName" value="${ n.FRename }">
+                      </form>
+                      
+                      <script>
+                      	function postFormSubmit(num) {
+                      		if(num == 1) { //삭제하기 클릭시
+                      			$("#postForm").attr("action", "delete.not");
+                      			$("#postForm").submit();
+                      		}else{ // 수정하기 클릭시
+                      			
+                      		}
+                      	}
+                      </script>
+                      
                     </div>
+                    </c:if>
                     
                     
                   <!-- </div> -->
