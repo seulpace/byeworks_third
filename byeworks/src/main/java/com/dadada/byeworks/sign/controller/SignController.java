@@ -316,16 +316,30 @@ public class SignController {
 	@RequestMapping("appointmentList.adto")
 	public ModelAndView selectAppointmentList(HttpSession session, ModelAndView mv) {
 		
-		ArrayList<AppointmentDto> appList1 = sService.selectAppointmentList(1);
-		ArrayList<AppointmentDto> appList2 = sService.selectAppointmentList(2);
-		ArrayList<AppointmentDto> appList3 = sService.selectAppointmentList(3);
+		ArrayList<Integer> list1 = new ArrayList();
+		list1.add(2);
+		list1.add(3);
+		 
+		ArrayList<Integer> list2 = new ArrayList();
+		list2.add(4);
+		list2.add(5);
+		
+		ArrayList<Integer> list3 = new ArrayList();
+		list3.add(6);
+		list3.add(7);
+		
+		
+		ArrayList<AppointmentDto> appList1 = sService.selectAppointmentList(list1);
+		ArrayList<AppointmentDto> appList2 = sService.selectAppointmentList(list2);
+		ArrayList<AppointmentDto> appList3 = sService.selectAppointmentList(list3);
 		mv.addObject("appList1", appList1);
 		mv.addObject("appList2", appList2);
 		mv.addObject("appList3", appList3);
-		
-		
 		mv.setViewName("work/appointmentList");
 		
+		System.out.println(appList1);
+		System.out.println(appList2);
+		System.out.println(appList3);
 		return mv;
 		
 	}

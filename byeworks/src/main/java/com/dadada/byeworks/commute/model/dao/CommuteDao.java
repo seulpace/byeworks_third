@@ -21,13 +21,13 @@ public class CommuteDao {
 	
 	// 김다흰
 	// 내 출퇴근 조회
-	public ArrayList<Commute> myCommute(SqlSessionTemplate sqlSession, String commuteDay){
-	//	HashMap<String, Object> map = new HashMap<String, Object>();
+	public ArrayList<Commute> myCommute(SqlSessionTemplate sqlSession, int commuteMember, String commuteDateStr){
+	  HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		//map.put("commuteMember", commuteMember);
-		//map.put("commuteDate", commuteDay);
+		map.put("commuteMember", commuteMember);
+		map.put("commuteDateStr", commuteDateStr);
 		
-		return (ArrayList)sqlSession.selectList("commuteMapper.myCommute", commuteDay);
+		return (ArrayList)sqlSession.selectList("commuteMapper.myCommute", map);
 	}
 
 }

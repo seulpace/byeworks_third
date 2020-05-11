@@ -164,9 +164,9 @@ public class SignServiceImpl implements SignService {
 	// 김다흰
 	// 발령내역 조회
 	@Override
-	public ArrayList<AppointmentDto> selectAppointmentList(int num) {
+	public ArrayList<AppointmentDto> selectAppointmentList(ArrayList<Integer> list) {
 
-		return sDao.selectAppointmentList(sqlSession, num);
+		return sDao.selectAppointmentList(sqlSession, list);
 	}
 
 	

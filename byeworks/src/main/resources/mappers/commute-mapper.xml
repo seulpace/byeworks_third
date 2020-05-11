@@ -11,10 +11,12 @@
 		<result property="commuteWork" column="commute_work" />
 		<result property="commuteLeaved" column="commute_leaved" />
 		<result property="commuteAnnual" column="commute_annual" />
+		<result property="commuteAnn" column="commute_ann"/>
 		<result property="empName" column="member_name"/>
 		<result property="empNos" column="empno" />
 		<result property="empDept" column="department_name"/>
 		<result property="empPos" column="position_name"/>
+		<result property="commuteDateStr" column="commute_date_str"/>
 	</resultMap>
 	
 	
@@ -40,14 +42,15 @@
 
 	<select id="myCommute" resultMap="commuteResultSet">
 	
-		select to_char(commute_date, 'MM/DD') commute_date, NVL(commute_work, ' ') commute_work, NVL(commute_leaved, ' ') commute_leaved, 
+		select to_char(commute_date, 'MM/DD') commute_date_str, NVL(commute_work, ' ') commute_work, NVL(commute_leaved, ' ') commute_leaved, 
 				case when commute_annual = 0 then '연차'
 					 when commute_annual = 1 then '오전반차'
 					 when commute_annual = 2 then '오후반차'
 					 else ' '
-				end commute_annual
+				end commute_ann
 		from tb_commute
-		where to_char(commute_date, 'YYYY/MM') = #{commuteDate}
+		where commute_member = #{commuteMember}
+		 	and to_char(commute_date, 'YYYY/MM') = #{commuteDateStr}
 		order by commute_date
 	
 	</select>

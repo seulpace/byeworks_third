@@ -24,4 +24,5 @@ public class AppointmentDto {
 	private int appEmpno;				// 직원 사번
 	private String appointmentLev;		// 발령 구분 0:부서이동 1:승진  2: 둘다 
 	private String appointmentName;		// 발령 받은 직원 이름
+	
 }

@@ -483,7 +483,7 @@ public class MemberController {
 		
 		if(result>0) {
 			model.addAttribute("mno", m.getMemberNo());
-			// System.out.println(m.getMemberNo());
+			
 			return "redirect:detail.me";
 		}else {
 			model.addAttribute("msg", "작성 실패");

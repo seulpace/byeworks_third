@@ -51,7 +51,7 @@ public interface SignService {
 	ArrayList<SignLine> selectSignLine(int sno);
 
 	// 김다흰 발령내역 조회
-	ArrayList<AppointmentDto> selectAppointmentList(int num);
+	ArrayList<AppointmentDto> selectAppointmentList(ArrayList<Integer> list);
 
 
 }
