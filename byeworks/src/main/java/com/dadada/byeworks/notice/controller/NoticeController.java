@@ -89,6 +89,33 @@ public class NoticeController {
 		return mv;
 		
 	}
+	
+	@RequestMapping("delete.not")
+	public String deleteNotice(int nno, String fileName, HttpServletRequest request) {
+		
+		int result = nService.deleteNotice(nno);
+		//System.out.println(nno);
+		//System.out.println("nno");
+		if(result > 0) {
+			
+			if(!fileName.equals("")) { //기존에 첨부파일이 있었을 경우
+				deleteFile(fileName, request);
+			}
+				
+			return "redirect:list.not";
+		}else {
+			
+			return "common/errorPage";
+		}
+	}
+	
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String resources = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = resources + "\\upload_files\\";
+		
+		File deleteFile = new File(savePath + fileName);
+		deleteFile.delete();
+	}
 
 	// 전달받은 파일을 서버에 업로드 후 수정된 파일명을 리턴 시키는 메소드 (공유해서 쓸수 있게끔 따로 빼줌)
 	public String saveFile(MultipartFile file, HttpServletRequest request) {

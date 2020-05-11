@@ -37,6 +37,7 @@
 		<url-pattern>*.bzad</url-pattern>
 		<url-pattern>*.bzgr</url-pattern>
 		<url-pattern>*.not</url-pattern>
+		<url-pattern>*.no</url-pattern>
 		<url-pattern>*.si</url-pattern>
 		<url-pattern>*.co</url-pattern>
 		<url-pattern>*.ann</url-pattern>		
