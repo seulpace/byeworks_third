@@ -108,7 +108,7 @@
                      			<li><a href="memberList.me">전체 사원 조회 (인)</a></li>
                      			<li><a>발령<span class="fa fa-chevron-down"></span></a>
                        				<ul class="nav child_menu">
-                         				<li class="sub_menu"><a href="businessAddress.html">발령내역</a>
+                         				<li class="sub_menu"><a href="appointmentList.adto">발령내역</a>
 			                         	</li>
 			                         	<li><a href="businessAddressWastebasket.html">발령서</a>
 			                         	</li>

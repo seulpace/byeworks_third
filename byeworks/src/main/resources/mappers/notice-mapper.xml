@@ -59,6 +59,13 @@
 		where notice_no=#{nno} and status='Y'
 	</select>
 	
+	<update id="deleteNotice" parameterType="_int">
+		update tb_Notice
+		set status='N'
+		where notice_no=#{nno}
+	
+	</update>
+	
 	<!-- 이슬희 -->
 	<select id="selectMainList" resultMap="NoticeResultSet">
 		SELECT NN.NOTICE_NO, NN.NOTICE_TITLE 

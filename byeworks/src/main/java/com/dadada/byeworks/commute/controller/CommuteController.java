@@ -66,28 +66,13 @@ public class CommuteController {
 	 * @throws IOException 
 	 * @throws JsonIOException 
 	 */
-//	
-//	@RequestMapping(value="myCommute.co")
-//	public void myCommute(int commuteMember, String commuteDay, HttpSession session, HttpServletResponse response) throws JsonIOException, IOException {
-//		
-//	
-//		
-//		ArrayList<Commute> myCommuteList = cService.myCommute(commuteMember, commuteDay);
-//		
-//	
-//		response.setContentType("application/json; charset=utf-8");
-//		
-//		
-//		new Gson().toJson(myCommuteList, response.getWriter());
-//	
-//	}
 	@ResponseBody
 	@RequestMapping(value="myCommute.co", produces="application/json; charset=utf-8")
-	public String myCommute(int commuteMember, String commuteDay){
+	public String myCommute(int commuteMember, String commuteDateStr){
 		
 	
 		
-		ArrayList<Commute> myCommuteList = cService.myCommute(commuteMember, commuteDay);
+		ArrayList<Commute> myCommuteList = cService.myCommute(commuteMember, commuteDateStr);
 		
 	
 	
@@ -95,9 +80,20 @@ public class CommuteController {
 	
 	}
 	
+	/** 김다흰 : 월별 지각 조회하기 페이지 이동
+	 * @return
+	 */
 	@RequestMapping("lateCommute.co")
 	public String lateCommute() {
 		
 		return "commute/lateCommute";
+	}
+	@ResponseBody
+	@RequestMapping(value= "lateCommuteList.co", produces="application/json; charset=utf-8")
+	public String lateCommuteList(String commuteDateStr) {
+		ArrayList<Commute> lateCommuteList = cService.lateCommuteList(commuteDateStr);
+		
+		return new Gson().toJson(lateCommuteList);
+		
 	}
 }
