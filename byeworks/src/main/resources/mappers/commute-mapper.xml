@@ -69,19 +69,19 @@
         where late_count > 0
 	</select>
 	
-	<select id="lateCommuteDept" resultMap="commuteResultSet">
+	<!-- <select id="lateCommuteDept" resultMap="commuteResultSet">
 	    select * 
         from (select count(case when commute_status='4' then 1 end) as late_count, department_no
              from tb_commute c
              join tb_member m on (m.member_no = c.commute_member)
              join tb_department d on (m.department = d.department_no)
              where EXTRACT(MONTH FROM commute_date) = #{commuteDateStr}
-             group by department_no)
+             group by #{departmentNo})
         where late_count > 0
 	
 	
 	</select>
-	
+	 -->
 
 
 

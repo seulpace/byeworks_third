@@ -126,8 +126,7 @@
 	                 	</li>
                  		<li><a><i class="fa fa-inbox"></i> 연차 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
-                     			<li><a href="general_elements.html">연차 신청</a></li>
-                     			<li><a href="media_gallery.html">연차 현황 조회</a></li>
+                     			<li><a href="annualApp.ann">연차 신청</a></li>
                      			<li><a href="annualList.ann">연차 현황 조회 (인)</a></li>
                    			</ul>
                  		</li>
