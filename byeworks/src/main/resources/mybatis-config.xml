@@ -27,6 +27,7 @@
 		<typeAlias type="com.dadada.byeworks.notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.dadada.byeworks.note.model.vo.Note" alias="Note"/>
 		<typeAlias type="com.dadada.byeworks.work.model.vo.Annual" alias="Annual"/>
+		<typeAlias type="com.dadada.byeworks.schedule.model.vo.Schedule" alias="Schedule"/>
 	</typeAliases>
 	
 	<mappers>
@@ -37,6 +38,7 @@
 		<mapper resource="/mappers/note-mapper.xml"/>
 		<mapper resource="/mappers/commute-mapper.xml"/>
 		<mapper resource="/mappers/annual-mapper.xml"/>
+		<mapper resource="/mappers/schedule-mapper.xml"/>
 	</mappers>
 	
 </configuration>

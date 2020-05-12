@@ -173,7 +173,7 @@
                		<ul class="nav side-menu"> 
                  		<li><a><i class="fa fa-calendar"></i> 일정 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
-                     			<li><a href="index2.html">개인 일정 관리</a></li>
+                     			<li><a href="my.sc">개인 일정 관리</a></li>
                      			<li><a href="index2.html">팀 일정 관리</a></li>
                    			</ul>
                  		</li>
