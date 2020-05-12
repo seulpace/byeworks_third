@@ -42,6 +42,7 @@
 		<url-pattern>*.co</url-pattern>
 		<url-pattern>*.ann</url-pattern>		
 		<url-pattern>*.nt</url-pattern>
+		<url-pattern>*.sc</url-pattern>
 	</servlet-mapping>
 	
 	<!-- encodingFilter 등록!! -->
