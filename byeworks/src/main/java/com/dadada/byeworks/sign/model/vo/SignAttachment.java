@@ -1,6 +1,7 @@
 package com.dadada.byeworks.sign.model.vo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import lombok.ToString;
 @ToString
 public class SignAttachment {
 	
-	
+	private List<SignAttachment> alist;
 	
 	private int fileNo;
 	private String oaName;

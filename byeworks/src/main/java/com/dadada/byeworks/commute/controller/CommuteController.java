@@ -88,6 +88,10 @@ public class CommuteController {
 		
 		return "commute/lateCommute";
 	}
+	/** 김다흰 : 월별 지각 사원 리스트
+	 * @param commuteDateStr
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value= "lateCommuteList.co", produces="application/json; charset=utf-8")
 	public String lateCommuteList(String commuteDateStr) {
@@ -96,4 +100,6 @@ public class CommuteController {
 		return new Gson().toJson(lateCommuteList);
 		
 	}
+	
+	
 }
