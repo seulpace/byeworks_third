@@ -124,4 +124,28 @@ public class ScheduleController {
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(s, response.getWriter());
 	}
+	
+	@RequestMapping("update.sc")
+	public String updateSchedule(Schedule s) {
+		
+		int result = scService.updateSchedule(s);
+		
+		if(result > 0) {
+			return "redirect:/my.sc";
+		}
+		
+		return "common/errorPage";
+	}
+	
+	@RequestMapping("delete.sc")
+	public String deleteSchedule(int schNo) {
+		
+		int result = scService.deleteSchedule(schNo);
+		
+		if(result > 0) {
+			return "redirect:/my.sc";
+		}
+		
+		return "common/errorPage";
+	}
 }

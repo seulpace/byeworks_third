@@ -12,7 +12,6 @@ import com.dadada.byeworks.schedule.model.vo.Schedule;
 @Service("scService")
 public class ScheduleServiceImpl implements ScheduleService{
 
-
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
@@ -35,6 +34,21 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Override
 	public Schedule selectOne(int schNo) {
 		return scDao.selectOne(sqlSession, schNo);
+	}
+
+	@Override
+	public int updateSchedule(Schedule s) {
+		return scDao.updateSchedule(sqlSession, s);
+	}
+
+	@Override
+	public int deleteSchedule(int schNo) {
+		return scDao.deleteSchedule(sqlSession, schNo);
+	}
+
+	@Override
+	public ArrayList<Schedule> selectMainList(int no) {
+		return scDao.selectMainList(sqlSession, no);
 	}
 
 }

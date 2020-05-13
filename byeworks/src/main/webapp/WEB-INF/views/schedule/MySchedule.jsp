@@ -27,6 +27,13 @@
 	<link href='${pageContext.request.contextPath}/resources/fullCalendar/timegrid/main.css' rel='stylesheet' />
 	<link href='${pageContext.request.contextPath}/resources/fullCalendar/list/main.css' rel='stylesheet' /> 	
 	
+	<!-- alertifyJs -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	
+	<!-- 다음 주소 API -->
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
  	<style>
   		#calendar {
     		max-width: 900px;
@@ -74,8 +81,13 @@
 						                    <input type="date" id="endDate" class="form-control date" name="endDate" style="margin-bottom:5%" required />
 						                    
 						                    <label for="endDate">위치</label>
-						                    <input type="text" id="location" class="form-control" name="location" style="margin-bottom:5%" />
-						                    
+						                    <div class="input-group">
+                            				<input type="text" id="location" class="form-control" name="location" placeholder="도로명 주소">
+                            					<span class="input-group-btn">
+                                              		<button type="button" class="btn btn-diy" style="color:white" onclick="sample6_execDaumPostcode(1)">위치</button>
+                                          		</span>
+                          					</div>
+                          					
 						                    <label for="endDate">메모</label>
 						                    <textarea class="form-control" name="note" id="note" style="margin-bottom:5%; resize:none; height:200px"></textarea>
 										
@@ -120,9 +132,8 @@
 	             		<h4 class="modal-title" id="myModalLabel">일정 수정</h4>
 	             		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
 	           		</div>
-	           		<div class="modal-body">
-	           			<input type="hidden" id="modalId" name="schNo"/>
-	           			
+	           		<div class="modal-body">	
+	           			<input type="hidden" id="updateNo" name="schNo"/>           			
 	           			<div class="col-md-12 col-sm-12  form-group has-feedback">
 		           			<label for="modalTitle">일정명 *</label>
 							<input type="text" id="modalTitle" class="form-control " name="title" required />
@@ -137,7 +148,7 @@
 	                    	<input type="date" id="modalEnd" class="form-control date has-feedback-right" name="endDate" required />
                			</div>
                   		
-                  		<div class="col-md-6 col-sm-6  form-group has-feedback">                   			
+                  		<div class="col-md-3 col-sm-3  form-group has-feedback">                   			
                    			<label for="color">색상 *</label>
 							<select class="select2_single form-control" id="modalColor" name="color">
 	                            <option selected value="#17a2b8" style="color:#17a2b8">Blue</option>
@@ -147,9 +158,14 @@
 	                            <option value="#F8F195" style="color:#F8F195">Yellow</option>
 	                        </select>
                   		</div>
-						<div class="col-md-6 col-sm-6  form-group has-feedback">
+						<div class="col-md-9 col-sm-9 form-group has-feedback">
 							<label for="modalLocation">위치</label>
-	                    	<input type="text" id="modalLocation" class="form-control date" name="location" required />
+							<div class="input-group">
+		                    	<input type="text" id="modalLocation" class="form-control" name="location" onclick="sample6_execDaumPostcode(2)" placeholder="도로명 주소"/>
+								<span class="input-group_btn">
+									<button type="button" class="btn btn-diy" style="color:white" onclick="sample6_execDaumPostcode(2)">위치</button>
+								</span>														
+							</div>
                   		</div>
                   		
                   		<div class="col-md-12 col-sm-12 form-group has-feedback">
@@ -162,6 +178,10 @@
 	           			<button type="button" class="btn btn-danger btn-sm"id="deleteBtn">삭제</button>
 	             		<button type="submit" class="btn btn-diy btn-sm" style="color: white;" id="submitBtn">수정</button>
 	           		</div>
+	           	</form>
+	           	
+	           	<form action="delete.sc" method="post" id="deleteForm">
+	           		<input type="hidden" id="modalId" name="schNo"/>
 	           	</form>
          	</div>
        	</div>
@@ -176,6 +196,13 @@
 		calendarEl = document.getElementById('calendar');
 		
     	getEvent();
+    	
+    	// 삭제하기
+    	$("#deleteBtn").click(function() {
+    		alertify.confirm("삭제 시 복원되지 않습니다. 정말 삭제하시겠습니까?", function() {
+	    		$("#deleteForm").submit();			
+    		});
+    	});
 	});
 	
 	// DB에서 가져오기
@@ -220,6 +247,7 @@
       		navLinks: true, // can click day/week names to navigate views
       		editable: true,
       		selectable: true,
+      		displayEventTime: false,
       		/* select: function(arg) {
           		var title = prompt('Event Title:');
           		if (title) {
@@ -244,6 +272,7 @@
         		// 삭제 누르면 모달창 사라지면서 리셋... ㅇㅋㅇㅋ
         		$("#modalTitle").val(info.event.title);
         		$("#modalId").val(info.event.id);
+        		$("#updateNo").val(info.event.id);
         		
         		// ajax로 불러와야겠다
         		var no = info.event.id;
@@ -290,6 +319,61 @@
     	console.log(eventData);
     	calendar.render();
 	}
+	
+	function sample6_execDaumPostcode(classNo) {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                /* // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                } */
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                //document.getElementById('sample6_postcode').value = data.zonecode;
+                //document.getElementById("sample6_address").value = addr;
+                
+                if(classNo == 1) {
+	                document.getElementById("location").value = addr;            	
+                } else if(classNo == 2) {
+	                document.getElementById("modalLocation").value = addr;            	                	
+                }
+                console.log(addr);
+                // 커서를 상세주소 필드로 이동한다.
+                //document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
 
 </script>
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
