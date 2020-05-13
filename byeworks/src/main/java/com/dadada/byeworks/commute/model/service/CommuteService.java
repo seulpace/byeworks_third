@@ -10,5 +10,8 @@ public interface CommuteService {
 	ArrayList<Commute> commuteList(String commuteDateStr);
 	
 	// 내 출퇴근 조회하기
-	ArrayList<Commute> myCommute(int commuteMember, String commuteDay);
+	ArrayList<Commute> myCommute(int commuteMember, String commuteDateStr);
+	
+	// 지각 조회하기
+	ArrayList<Commute> lateCommuteList(String commuteDateStr);
 }

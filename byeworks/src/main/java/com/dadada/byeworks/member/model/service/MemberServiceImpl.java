@@ -105,7 +105,9 @@ public class MemberServiceImpl implements MemberService {
 	public int memberInsert(Member m) {
 		
 		
-		return mDao.memberInsert(sqlSession, m);
+		int memberNo = mDao.memberInsert(sqlSession, m);
+		
+		return memberNo;
 	}
 	// 김다흰
 	@Override

@@ -99,24 +99,22 @@
     	$(function(){
     		
     		$("#commuteMon").change(function(){
-    			var commuteDay = $("select[id='commuteYear']").val() + '/' + $("select[id='commuteMon']").val();
+    			var commuteDateStr = $("select[id='commuteYear']").val() + '/' + $("select[id='commuteMon']").val();
     			
-    			console.log(commuteDay);
     			
     			$.ajax({
     				url:"myCommute.co",
-    				data:{"commuteDay":commuteDay,
-    					  commuteMember:${loginUser.memberNo}},
+    				data:{"commuteDateStr":commuteDateStr,
+    					  "commuteMember" : ${loginUser.memberNo}},
     				type:"get",
     				success:function(list){
     					var value = "";
     					$.each(list, function(i, obj){
     						value += "<tr>" +
-			    	                      "<th scope="row">" + obj.commuteDate + "</th>" + 
+			    	                      "<th scope='row'>" + obj.commuteDateStr + "</th>" + 
 			    	                      "<td>" + obj.commuteWork + "</td>" + 
 			    	                      "<td>" + obj.commuteLeaved + "</td>" + 
-			    	                      "<td>" + obj.commuteLeaved + "</td>" +
-			    	                      "<td>" + obj.commuteAnnual + "</td>" + 
+			    	                      "<td>" + obj.commuteAnn + "</td>" + 
 			    	                    "</tr>";
 			    						
     					});

@@ -26,5 +26,6 @@ public class Annual {
 	private int annualType;			// 연차 사용	0 :연차사용  1:오전반차  2:오후반차annE
 	private String annualUseDay;	// 연차 사용일
 	private String annualSign;		// 연차 상태
+	private String annualContent;	// 연차 사유
 	
 }

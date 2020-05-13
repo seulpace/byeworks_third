@@ -17,7 +17,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 
+ 	
  	<title>Byeworks</title>
 </head>
 <body class="nav-md">
@@ -46,15 +46,15 @@
 		             </select> 
 	                 <select class="form-control-sm" id="commuteLate" name="commuteLate">
 		                 <option class="dropdown-item"  value="">월</option>
-		                 <option class="dropdown-item"  value="01">1월</option>
-		                 <option class="dropdown-item"  value="02">2월</option>
-		                 <option class="dropdown-item"  value="03">3월</option>
-		                 <option class="dropdown-item"  value="04">4월</option>
-		                 <option class="dropdown-item"  value="05">5월</option>
-		                 <option class="dropdown-item"  value="06">6월</option>
-		                 <option class="dropdown-item"  value="07">7월</option>
-		                 <option class="dropdown-item"  value="08">8월</option>
-		                 <option class="dropdown-item"  value="09">9월</option>
+		                 <option class="dropdown-item"  value="1">1월</option>
+		                 <option class="dropdown-item"  value="2">2월</option>
+		                 <option class="dropdown-item"  value="3">3월</option>
+		                 <option class="dropdown-item"  value="4">4월</option>
+		                 <option class="dropdown-item"  value="5">5월</option>
+		                 <option class="dropdown-item"  value="6">6월</option>
+		                 <option class="dropdown-item"  value="7">7월</option>
+		                 <option class="dropdown-item"  value="8">8월</option>
+		                 <option class="dropdown-item"  value="9">9월</option>
 		                 <option class="dropdown-item"  value="10">10월</option>
 		                 <option class="dropdown-item"  value="11">11월</option>
 		                 <option class="dropdown-item"  value="12">12월</option>
@@ -63,7 +63,7 @@
 	              </div>	
                 </div>
 
-                <table class="lateTable">
+                <table class="table" id="lateTable">
                   <thead>
                     <tr>
                       <th>이름</th>
@@ -79,8 +79,12 @@
                   </tbody>
                 </table>
 
-                <canvas id="lineChart"></canvas>
-
+                <canvas id="lateChart" width="100%" height="50"></canvas>
+                
+                
+				<script>
+				
+				</script>
               </div>  
 
           <div class="clearfix"></div>
@@ -97,27 +101,92 @@
     $(function(){
 		
 		$("#commuteLate").change(function(){
-			var commuteLateDay = $("select[id='commuteLateYear']").val() + '/' + $("select[id='commuteLate']").val();
+			/* var commuteDateStr = $("select[id='commuteLateYear']").val() + '/' + $("select[id='commuteLate']").val(); */
+			var commuteLate = $("select[id='commuteLate']").val();
 			
-			console.log(commuteDay);
 			
 			$.ajax({
-				url:"myCommute.co",
-				data:{"commuteLateDay":commuteLateDay},
+				url:"lateCommuteList.co",
+				data:{"commuteDateStr":commuteLate},
 				type:"get",
 				success:function(list){
 					var value = "";
+					
+					var dept1 = 0;
+					var dept2 = 0;
+					var dept3 = 0;
 					$.each(list, function(i, obj){
 						value += "<tr>" +
-		    	                      "<th scope="row">" + obj.empName + "</th>" + 
+		    	                      "<th scope='row'>" + obj.empName + "</th>" + 
 		    	                      "<td>" + obj.empNos + "</td>" + 
 		    	                      "<td>" + obj.empDept + "</td>" + 
 		    	                      "<td>" + obj.empPos + "</td>" +
-		    	                      "<td>" + obj.commuteAnnual + "</td>" + 
+		    	                      "<td>" + obj.lateCount + "</td>" + 
 		    	                    "</tr>";
+		    	                    
+		    	        if(obj.empDept.indexOf("사업팀")>=0){
+		    	        	dept1 += Number(obj.lateCount);
+		    	        }else if(obj.empDept.indexOf("인사팀")>=0){
+		    	        	dept2 += Number(obj.lateCount);
+		    	        }else{
+		    	        	dept3 += Number(obj.lateCount);
+		    	        }
 		    						
 					});
 					$("#lateTable tbody").html(value);
+					
+					var ctx = document.getElementById("lateChart");
+					var lateChart = new Chart(ctx,{
+						type:'bar',
+						data : {
+							title:true,
+							labels:["사업팀", "인사팀", "총무팀"],
+					 		datasets: 
+					 			[{
+					 				label: "지각횟수",
+					 				borderColor: [
+					 					"#ff9f89",
+					 					"#F8F195" ,
+					 					"#20c997" 
+					 					],
+				 					backgroundColor: [
+				 						"#ff9f89",
+				 						"#F8F195",
+				 						"#20c997" 
+					 					],	
+					 				borderWidth:1,
+					 				data:[dept1, dept2, dept3]
+					 			}]
+							
+						},   options: {
+				             scales: {
+				                 xAxes: [{
+				                   time: {
+				                     unit: 'department'
+				                   },
+				                   gridLines: {
+				                     display: false
+				                   },
+				                   ticks: {
+				                     maxTicksLimit: 6
+				                   }
+				                 }],
+				                 yAxes: [{
+				                   ticks: {
+				                     min: 0,
+				                     max: 15,
+				                     maxTicksLimit: 5
+				                   },
+				                   gridLines: {
+				                     display: true
+				                   }
+				                 }],
+				               },
+				               legend: {
+				                 display: false
+				               }
+				             }
+					});
 				}, error:function(){
 					console.log("통신실패");
 				}
@@ -130,6 +199,9 @@
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
-	
+	  <script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
+	  <!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script> -->
 </body>
 </html>

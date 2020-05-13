@@ -18,6 +18,7 @@ public class CommuteServiceImpl implements CommuteService {
 	private CommuteDao cDao;
 	
 	// 김다흰
+	// 직원 출퇴근 조회하기
 	@Override
 	public ArrayList<Commute> commuteList(String commuteDateStr) {
 		
@@ -25,11 +26,21 @@ public class CommuteServiceImpl implements CommuteService {
 		return cDao.commuteList(sqlSession, commuteDateStr);
 	}
 
+	// 김다흰
+	// 내 출퇴근 조회하기
 	@Override
-	public ArrayList<Commute> myCommute(int commuteMember, String commuteDay) {
+	public ArrayList<Commute> myCommute(int commuteMember, String commuteDateStr) {
 
 		
-		return cDao.myCommute(sqlSession, commuteMember, commuteDay);
+		return cDao.myCommute(sqlSession, commuteMember,commuteDateStr);
+	}
+	
+	// 김다흰
+	// 직원 지각 조회하기
+	@Override
+	public ArrayList<Commute> lateCommuteList(String commuteDateStr) {
+
+		return cDao.lateCommuteList(sqlSession, commuteDateStr);
 	}
 	
 	

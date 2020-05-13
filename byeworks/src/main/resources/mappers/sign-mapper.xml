@@ -129,6 +129,21 @@
 		<result property="memberNo" column="MEMBER_NO"/>
 	</resultMap>
 
+
+	<resultMap type="AppointmentDto" id="appointmentListSet">
+		<result property="signNo" column="sign_no"/>
+		<result property="positionAfter" column="position_no"/>
+		<result property="positionBefore" column="position_no"/>
+		<result property="positionName" column="position_name"/>
+		<result property="deptAfter" column="department_no"/>
+		<result property="deptBefore" column="department_no"/>
+		<result property="departmentName" column="department_name"/>
+		<result property="appointmentName" column="member_name"/>
+		<result property="appointmentLev" column="appointment_lev"/>
+		<result property="appEmpno" column="empNo"/>
+		
+	</resultMap> 
+	
 	
 	<select id="selectDepartmentList" resultMap="departmentResultSet">
 	
@@ -404,6 +419,7 @@
 	WHERE S.SIGN_NO = #{sno}
 	</select>
 	
+
 	<select id="selectSignLine" parameterType="_int" resultMap="SignLineResultSet">
 	SELECT MEMBER_NO, MEMBER_NAME, SIGN_NO, APPROVAL_DATE, STATUS,
 	MEMBER_ORDER, POSITION_NAME
@@ -615,12 +631,24 @@
 	</update>
 
 
+	<select id="selectAppointmentList" parameterType="_int" resultMap="appointmentListSet">
 	
-
-
-
-
-
-
+		select empno, member_name, position_name, department_name, 
+                case when appointment_lev = '1' then '승진'
+                    when appointment_lev = '2' then '부서이동' 
+                    when appointment_lev = '3' then '부서이동과 승진'
+                end appointment_lev
+        from tb_appointment a
+        join tb_member m on (m.member_no = a.appoint_mem)
+        join tb_department d on (m.department = d.department_no)
+        join tb_position p on (m.position = p.position_no)
+        join tb_sign s on (s.sign_no = a.sign_no)
+        where d_type='A'
+        and department_no in 
+        	<foreach item="i" index="index" collection="list" open="(" separator="," close=")">
+        		#{i}
+        	</foreach>
+		
+	</select>
 
 </mapper>				 

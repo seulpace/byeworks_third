@@ -3,6 +3,7 @@ package com.dadada.byeworks.sign.model.service;
 import java.util.ArrayList;
 
 import com.dadada.byeworks.member.model.vo.Member;
+import com.dadada.byeworks.sign.model.dto.AppointmentDto;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
@@ -72,7 +73,8 @@ public interface SignService {
 
 
 
-
+	// 김다흰 발령내역 조회
+	ArrayList<AppointmentDto> selectAppointmentList(ArrayList<Integer> list);
 
 
 }

@@ -44,7 +44,7 @@
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">프로필사진</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="file" name="profileModify" id="profileModify" >
+                        <input type="file" name="profilePicture" id="profilePicture" >
                       </div>
                     </div>
                     
@@ -57,7 +57,7 @@
                     <div class="form-group row">
                       <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <select id="department">
+                        <select id="department" name="department">
                           <option value="">--------------------</option>
                           <option value="2">사업팀1</option>
                           <option value="3">사업팀2</option>
@@ -71,7 +71,7 @@
                     <div class="form-group row">
                       <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
                         <div class="col-md-9 col-sm-9 ">
-                          <select id="position">
+                          <select id="position" name="position">
                                 <option value="">--------------------</option>
                                 <option value="1">임원</option>
                                 <option value="2">부장</option>

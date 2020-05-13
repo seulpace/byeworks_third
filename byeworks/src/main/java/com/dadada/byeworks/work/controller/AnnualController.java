@@ -44,4 +44,12 @@ public class AnnualController {
 		
 		
 	}
+	
+	/** 김다흰 : 페이지 이동
+	 * @return
+	 */
+	@RequestMapping("annualApp.ann")
+	public String annualApp() {
+		return "work/annualInsert";
+	}
 }

@@ -22,9 +22,12 @@ public class Commute {
 	private String commuteWork;		// 출근시간
 	private String commuteLeaved;	// 퇴근시간
 	private int commuteAnnual;		// 0:연차 1: 오전반차 2: 오후반차
+	private String commuteAnn;		// 연차 상태 string 값
 	private String empName;			// 직원 이름
 	private String empNos;			// 직원 사번
 	private String empDept;			// 직원 소속
 	private String empPos;			// 직원 직급
 	private String commuteDateStr;	// 출근날짜String용
+	private int lateCount;			// 지각횟수
+	private int departmentNo;		// 부서번호
 }

@@ -170,10 +170,13 @@
 	
 	<!-- 직원등록 -->
 	<insert id="memberInsert" parameterType="Member">
+		<selectKey keyProperty="memberNo" resultType="_int" order="BEFORE">
+			select seq_mno.nextval from dual
+		</selectKey>
 		insert into tb_member
-		values (seq_mno.nextval, 'user'||seq_mno.currval, #{memberName}, #{birth}, #{position}, 
+		values (#{memberNo}, 'user'||seq_mno.currval, #{memberName}, #{memberPwd}, #{position}, 
 				#{department}, #{phone}, #{extension}, #{email}, #{address}, #{birth}, sysdate, 
-				default, default, #{profileModify}, to_char(sysdate, 'yyyymmdd')||seq_mno.currval)
+				default, default, #{profileModify}, to_char(sysdate, 'yyyymmdd')||seq_mno.currval, default, '')
 	</insert>
 	
 	<!-- 내 정보 수정 -->

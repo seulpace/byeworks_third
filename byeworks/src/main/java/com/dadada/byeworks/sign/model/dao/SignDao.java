@@ -10,6 +10,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.dadada.byeworks.member.model.vo.Member;
+import com.dadada.byeworks.sign.model.dto.AppointmentDto;
 import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
@@ -250,6 +251,7 @@ public class SignDao {
 	}
 
 
+
 	public int updateSignAnnual(SqlSessionTemplate sqlSession, SignAndAnnualSign signAndAnnualSign) {
 		
 		return sqlSession.update("signMapper.updateSignAnnual", signAndAnnualSign);
@@ -303,6 +305,10 @@ public class SignDao {
 	public int finalConfirm(SqlSessionTemplate sqlSession, int sno) {
 		
 		return sqlSession.update("signMapper.finalConfirm", sno);
+
+	public ArrayList<AppointmentDto> selectAppointmentList(SqlSessionTemplate sqlSession, ArrayList<Integer> list){
+		return (ArrayList)sqlSession.selectList("signMapper.selectAppointmentList", list);
+
 	}
 
 
