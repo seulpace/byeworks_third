@@ -150,49 +150,55 @@
                  
                   <script>
 
-                  	var type=${type};
-                  	
-                  	if(type=="V"){
-                  		$("docu option:eq(2)").attr("selected", true);
-                  	}
-                  	
-                    $(function(){
-                     $("#docu").change(function(){
-                      var docu = $("#docu option:selected").text();
-
-                      console.log(docu);
-                      if(docu == "사직서"){
-                        $(".quit").show();
-                        $("#enroll").attr("action","insertSignQuit.si");
-                        $(".up").hide();
-                        $(".vacation").hide();
-                        $(".promotion").hide();
+                  var type="${annual.docType}";
                   
-                      }else if(docu =="기안서"){
-                        $(".up").show();
-                        $(".quit").hide();
-                        $(".vacation").hide();
-                        $(".promotion").hide();
-                   
-                      }else if(docu =="휴가/연차"){
-                        $(".vacation").show();
-                        $("#enroll").attr("action","insertSignAnnual.si");
-                        $(".up").hide();
-                        $(".quit").hide();
-                        $(".promotion").hide();
-                        
-                      }else if(docu =="승진/발령"){
-                        $(".promotion").show();
-                        $("#enroll").attr("action","insertSignAppointment.si");
-                        $(".up").hide();
-                        $(".vacation").hide();
-                        $(".quit").hide();
-                        
-                      }
+                  
+                  
 
-                     });
+                  $(function(){
+                 if(type == 'V'){
+                    $("#docu option:eq(2)").attr("selected", "selected");
+                    $(".vacation").show();
+                    $("#enroll").attr("action", "insertSignAnnual.si");
 
-                    });
+                 }
+                 
+                   $("#docu").change(function(){
+                    var docu = $("#docu option:selected").text();
+  
+                    if(docu == "사직서"){
+                      $(".quit").show();
+                      $("#enroll").attr("action","insertSignQuit.si");
+                      $(".up").hide();
+                      $(".vacation").hide();
+                      $(".promotion").hide();
+                
+                    }else if(docu =="기안서"){
+                      $(".up").show();
+                      $(".quit").hide();
+                      $(".vacation").hide();
+                      $(".promotion").hide();
+                 
+                    }else if(docu =="휴가/연차"){
+                      $(".vacation").show();
+                      $("#enroll").attr("action","insertSignAnnual.si");
+                      $(".up").hide();
+                      $(".quit").hide();
+                      $(".promotion").hide();
+                      
+                    }else if(docu =="승진/발령"){
+                      $(".promotion").show();
+                      $("#enroll").attr("action","insertSignAppointment.si");
+                      $(".up").hide();
+                      $(".vacation").hide();
+                      $(".quit").hide();
+                      
+                    }
+
+                   });
+
+                  });
+
 
 
                      </script>
@@ -304,9 +310,24 @@
                                  <th>연차종류</th>
                                  <td>
                                  	<select name="annualType">
-                                 		<option value="0">연차</option>
-                                 		<option value="1">오전반차</option>
-                                 		<option value="2">오후반차</option>
+                                 		<c:choose>
+	                                 		<c:when test="${annual.annualType eq 0}">
+	                                 			<option value="0" selected>연차</option>
+	                                 			<option value="1">오전반차</option>
+                                 				<option value="2">오후반차</option>
+	                                 		</c:when>
+	                                 		<c:when test="${annual.annualType eq 1}">
+	                                 			<option value="0">연차</option>
+	                                 			<option value="1" selected>오전반차</option>
+                                 				<option value="2">오후반차</option>
+	                                 		</c:when>
+	                                 		<c:otherwise>
+	                                 			<option value="0">연차</option>
+	                                 			<option value="1">오전반차</option>
+                                 				<option value="2" selected>오후반차</option>
+	                                 		</c:otherwise>
+	                                 	</c:choose>	
+                                 		
                                  	</select>
                                  </td>
                               </tr>
@@ -314,7 +335,7 @@
                               <tr>
                               	<th>연차사유</th>
                               	<td>
-                              		<textarea name="annualContent" style="width: 100%;resize: none;border:none;"rows="20"></textarea>
+                              		<textarea name="annualContent" style="width: 100%;resize: none;border:none;"rows="20">${annual.annualContent }</textarea>
                               	</td>
                               </tr>
                               
@@ -322,12 +343,12 @@
                               
                               <tr>
                                 <th>날짜</th>
-                                <td><input type="date" name="annualStartDay" style="border:none;"> ~ <input type="date" name="annualEndDay" style="border:none"></td>
+                                <td><input type="date" name="annualStartDay" style="border:none;" value="${annual.annualStartDay }"> ~ <input type="date" value="${annual.annualEndDay }" name="annualEndDay" style="border:none"></td>
                               </tr>
                               
                               <tr>
                               	<th>기간</th>
-								<th><input type="number" name="annualPeriod"></th>                              	
+								<th><input type="number" name="annualPeriod" value="${annual.annualPeriod }"></th>                              	
                               </tr>
 
                             </table><br>
