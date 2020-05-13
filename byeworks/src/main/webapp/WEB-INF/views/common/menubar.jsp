@@ -110,7 +110,7 @@
                        				<ul class="nav child_menu">
                          				<li class="sub_menu"><a href="appointmentList.adto">발령내역</a>
 			                         	</li>
-			                         	<li><a href="businessAddressWastebasket.html">발령서</a>
+			                         	<li><a href="appointmentForm.adto">발령서</a>
 			                         	</li>
                        				</ul>
                      			</li>

@@ -106,9 +106,18 @@
 		<result property="appointmentName" column="member_name"/>
 		<result property="appointmentLev" column="appointment_lev"/>
 		<result property="appEmpno" column="empNo"/>
-		
 	</resultMap> 
 	
+	<resultMap type="Member" id="memberList">
+		<!-- property : vo클래스의 필드명 / column : DB조회된 컬럼명 -->
+		<id property="memberNo" column="member_no" />
+		<result property="memberId" column="member_id" />
+		<result property="memberName" column="member_name" />
+		<result property="position" column="position_name" />
+		<result property="department" column="department_name" />
+		<result property="enrollday" column="enrollday" />
+		<result property="empNo" column="empno" />
+	</resultMap>
 	
 	<select id="selectDepartmentList" resultMap="departmentResultSet">
 	
@@ -335,6 +344,12 @@
         	<foreach item="i" index="index" collection="list" open="(" separator="," close=")">
         		#{i}
         	</foreach>
-		
+	</select>
+	<select id="appointmentList" parameterType="_int" resultMap="memberList">
+		select member_name, empno, enrollday, department_name, position_name
+        from tb_member m
+        join tb_department d on(m.department = d.department_no)
+        join tb_position p on(m.position = p.position_no)
+        where empno=#{appEmpno}
 	</select>
 </mapper>				 

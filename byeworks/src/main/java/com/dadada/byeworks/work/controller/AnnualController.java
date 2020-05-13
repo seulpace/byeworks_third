@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.work.model.service.AnnualService;
 import com.dadada.byeworks.work.model.vo.Annual;
 import com.google.gson.Gson;
@@ -45,11 +48,21 @@ public class AnnualController {
 		
 	}
 	
-	/** 김다흰 : 페이지 이동
+	/** 김다흰 : 페이지 이동과 연차 정보 조회
 	 * @return
 	 */
 	@RequestMapping("annualApp.ann")
-	public String annualApp() {
+	public String annualApp(HttpSession session, Model model) {
+		
+		int mno = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		Annual ann = annService.annualInfo(mno);
+		
+		model.addAttribute("ann", ann);
 		return "work/annualInsert";
 	}
+	
+	
+	
+
 }

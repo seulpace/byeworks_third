@@ -17,10 +17,19 @@ public class AnnualServiceImpl implements AnnualService{
 	@Autowired
 	private AnnualDao annDao;
 	
+	//김다흰
+	//직원 연차 조회
 	@Override
 	public ArrayList<Annual> annualUseList(String annualUseDay) {
-		//System.out.println(annualUseDay);
+		
 		return annDao.annualUseList(sqlSession, annualUseDay);
+	}
+
+	//김다흰
+	@Override
+	public Annual annualInfo(int mno) {
+
+		return annDao.annualInfo(sqlSession, mno);
 	}
 
 	

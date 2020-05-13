@@ -337,10 +337,38 @@ public class SignController {
 		mv.addObject("appList3", appList3);
 		mv.setViewName("work/appointmentList");
 		
-		System.out.println(appList1);
-		System.out.println(appList2);
-		System.out.println(appList3);
 		return mv;
 		
+	}
+	
+	/** 김다흰 : 발령서 작성 페이지 이동
+	 * @return
+	 */
+	@RequestMapping("appointmentForm.adto")
+	public String appointmentForm() {
+		
+		return "work/appointmentForm";
+	}
+	
+	/** 김다흰 : 발령 사번 검색시 사원 조회
+	 * @param appEmpno
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="appointmentList.adto", produces="application/json; charset=utf-8")
+	public String appointmentList(int appEmpno) {
+		
+		Member adto = sService.appointmentList(appEmpno);
+		
+		return new Gson().toJson(adto);
+		
+	}
+	
+	@RequestMapping("annualInsert.ann")
+	public String annualInsertSign() {
+		
+		
+		
+		return "sign/enrollSignForm";
 	}
 }

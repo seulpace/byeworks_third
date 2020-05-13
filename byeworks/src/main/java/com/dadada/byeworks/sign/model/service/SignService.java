@@ -50,8 +50,10 @@ public interface SignService {
 
 	ArrayList<SignLine> selectSignLine(int sno);
 
-	// 김다흰 발령내역 조회
+	// 김다흰 발령 내역 조회
 	ArrayList<AppointmentDto> selectAppointmentList(ArrayList<Integer> list);
 
+	// 김다흰 발령 사원 조회
+	Member appointmentList(int appEmpno);
 
 }

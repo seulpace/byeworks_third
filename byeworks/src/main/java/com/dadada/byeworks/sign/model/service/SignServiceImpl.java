@@ -169,6 +169,16 @@ public class SignServiceImpl implements SignService {
 		return sDao.selectAppointmentList(sqlSession, list);
 	}
 
+	//김다흰
+	//발령사원 조회
+	@Override
+	public Member appointmentList(int appEmpno) {
+		
+		
+		return sDao.appointmentList(sqlSession, appEmpno);
+	}
+
+	
 	
 	
 

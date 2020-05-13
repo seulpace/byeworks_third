@@ -26,9 +26,9 @@
         
         <!-- 메뉴바 -->
         <jsp:include page="../common/menubar.jsp"/>
-<div class="right_col" role="main">
+			<div class="right_col" role="main">
           <!-- top tiles -->
-          <div style="display: inline-block;" >
+         	 <div style="display: inline-block;" >
             <div class="col-md-12 ">
               <div class="x_panel">
                 <div class="x_title">
@@ -39,20 +39,18 @@
                 
                 <div class="x_content">
                   <br />
-                  <form class="form-horizontal form-label-left">
+                  <form id="annualInsert" action="annualInsert.ann" method="post" class="form-horizontal form-label-left">
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">현황</label>
                       <div class="col-md-9 col-sm-9">
-                        <div class="form-kdh">총 휴가일 : 일 / 사용일 : 일 / 잔여일 : 일</div>
+                        <div class="form-kdh">총 휴가일 : <b>${ann.annualCreate}일</b> / 사용일 : <b>${ann.annualUseDay }일 </b> / 잔여일 : <b>${ann.annualRemain }일</b></div>
                       </div>
-                      <div class="col-md-3 col-sm-3">
-                        
-                      </div>
+                   
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">작성자</label>
                       <div class="col-md-9 col-sm-9">
-                        <input type="text" class="form-kdh" readonly="readonly" value=${"loginUser.memberName"}>
+                        <input type="text" class="form-kdh" readonly="readonly" value="${loginUser.memberName}">
                       </div>
                       
                     </div>
@@ -60,20 +58,20 @@
                    
                    
                     <div class="form-group row">
-                      <label class="control-label col-md-2 col-sm-2 ">연차 기간</label>
-                      <div class="col-md-10">
-                        <form id="annualPeriod" action="" method="get">
+                      <label class="control-label col-md-3 col-sm-3 ">연차 기간</label>
+                      <div class="col-md-9">
                           <fieldset>
                             <div class="control-group">
                               <div class="controls">
                                 <div class="input-prepend input-group">
                                   <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                  <input type="text" name="annualPeriod" id="annualPeriod" class="form-control" value="" />
+                                  <input type="text" name="period" id="period" class="form-control" value="" />
+                                  <input type="hidden" name="annualStartDay" id="annualStartDay" value=""/>
+                                  <input type="hidden" name="annualEndDay" id="annualEndDay" value=""/>
                                 </div>
                               </div>
                             </div>
                           </fieldset>
-                      	</form>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -91,7 +89,7 @@
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">연차 사유</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-kdh" name="annualContent" id="annualContent" >
+                        <input type="text" class="form-kdh" name="annualContent" style="resize:none; height:300px; width : 100%;" id="annualContent" >
                       </div>
                     </div>
                   
@@ -112,8 +110,64 @@
         <jsp:include page="../common/footer.jsp"/>
         
       </div>
-    </div>
-    
+			</div>
+		</div>
+	</div>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/moment.min.js"></script>
+	<script>
+	$(function() {
+		
+
+		$('input[name="period"]').daterangepicker({
+		      autoUpdateInput: false,
+		      locale: {
+		        	format: 'YYYY-MM-DD',
+		        	separator: ' ~ ',
+		        	applyLabel: '확인',
+		        	cancelLabel: '취소'                                      
+		      	
+		      }
+		  });
+
+		 /*  $('input[name="annualPeriod"]').on('apply.daterangepicker', function(ev, picker) {
+		      $(this).val(picker.startDate.format('YYYY-MM-DD') + ' ~ ' + picker.endDate.format('YYYY-MM-DD'));
+		     
+		      
+		  });
+		  $('input[name="annualStartDay"]').on('apply.daterangepicker', function(ev, picker) {
+		      $(this).val(picker.startDate.format('YYYY-MM-DD');
+		     
+		      
+		  });  
+		  $('input[name="annualEndDay"]').on('apply.daterangepicker', function(ev, picker) {
+		      $(this).val(picker.endDate.format('YYYY-MM-DD'));
+		     
+		      
+		  }); */
+
+		  $('input[name="period"]').on('apply.daterangepicker', function(ev, picker) { 
+			/*   $(this).val(picker.startDate.format('YYYY-MM-DD') + ' ~ ' + picker.endDate.format('YYYY-MM-DD')); */
+				var startDate = picker.startDate.format('YYYY-MM-DD');
+				var endDate = picker.endDate.format('YYYY-MM-DD');
+				var period = startDate + '~' + endDate;
+		  		$('input[name="annualStartDay"]').val(startDate); 
+		      	$('input[name="annualEndDay"]').val(endDate); 
+		      	$('input[name="period"]').val(period); 
+		   
+			});
+		  	
+		  
+		  
+		  $('input[name="period"]').on('cancel.daterangepicker', function(ev, picker) {
+		      $(this).val('');
+		  });
+		
+		 
+	});
+	
+
+	</script>
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>

@@ -177,10 +177,15 @@ public class SignDao {
 		return (ArrayList)sqlSession.selectList("signMapper.selectSignLine", sno);
 	}
 
-
+// 김다흰
 	public ArrayList<AppointmentDto> selectAppointmentList(SqlSessionTemplate sqlSession, ArrayList<Integer> list){
 		return (ArrayList)sqlSession.selectList("signMapper.selectAppointmentList", list);
 	}
+// 김다흰
+	public Member appointmentList(SqlSessionTemplate sqlSession, int appEmpno) {
+		
+		return sqlSession.selectOne("signMapper.appointmentList", appEmpno);
+	}
 
-
+	
 	}
