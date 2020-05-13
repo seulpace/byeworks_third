@@ -136,7 +136,7 @@
              	<div class="menu_section">
                 	<h3>전자결재</h3>
                 	<ul class="nav side-menu">
-                		<li><a><i class="fa fa-sitemap"></i> 결재관리 <span class="fa fa-chevron-down"></span></a>
+                		<li id="ajaxCall"><a><i class="fa fa-sitemap"></i> 결재관리 <span class="fa fa-chevron-down"></span></a>
                   			<ul class="nav child_menu">
                       
                       			<li><a>내 결재 문서<span class="fa fa-chevron-down"></span></a>
@@ -153,11 +153,11 @@
 			                          	</li>
 			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=6">회수</a> <!-- 회수된결재리스트이동 -->
 			                          	</li>
-			                          	<li><a href="selectReferList.si?mno=${loginUser.memberNo }">참조</a> <!-- 참조된결재리스트이동 -->
+			                          	<li><a href="selectSignList.si?mno=${loginUser.memberNo }&type=7">참조</a> <!-- 참조된결재리스트이동 -->
 			                          	</li>
                         			</ul>
                       			</li>
-                      			<li><a href="doSignList.si?mno=${ loginUser.memberNo }">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
+                      			<li><a href="selectSignList.si?mno=${ loginUser.memberNo }&type=8">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
                       			</li>
 		                      	<li><a href="enrollForm.si">결재 작성하기</a> <!-- 결재 등록화면 이동 -->
 		                      	</li>
@@ -165,6 +165,36 @@
                 		</li>
                 	</ul>
 				</div>
+				
+				<script>
+					$(function(){
+						$("#ajaxCall").on("click", function(){
+							
+							var today = new Date();
+							
+							$.ajax({
+								url:"updateChange.si",
+								type:"post",
+								data: {"today":today},
+								success:function(){
+									
+									console.log("직원정보변경완료");
+								},
+								error: function(){
+									console.log("ajax 통신 실패");
+								}
+
+							});
+							
+							
+							
+							
+						});
+						
+						
+					});
+				
+				</script>
 
 				<!-- 일정 관리 -->
              	<div class="menu_section">

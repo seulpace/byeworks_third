@@ -1,6 +1,7 @@
 package com.dadada.byeworks.sign.model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import lombok.ToString;
 public class SignAndQuit {
 
 	private int signNo;
-	private Date signUpDate;
+	private Timestamp signUpDate;
 	private String docuType;
 	private int memberNo;
 	private String memberName;

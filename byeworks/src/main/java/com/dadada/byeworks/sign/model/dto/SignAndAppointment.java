@@ -1,6 +1,7 @@
 package com.dadada.byeworks.sign.model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,20 +16,22 @@ import lombok.ToString;
 public class SignAndAppointment {
 	
 	private int signNo;
-	private Date signUpDate;
+	private Timestamp signUpDate;
 	private String docuType;
 	private int memberNo;
 	private String memberName;
 	private String signStatus;
 	private String flag;
 	private String title;
-	private int positionBefore;
-	private int positionAfter;
-	private int depBefore;
-	private int depAfter;
+	private String positionBefore;
+	private String positionAfter;
+	private String depBefore;
+	private String depAfter;
 	private int appointmentLev;
 	private int appointmentMem;
+	private String appointmentMemName;
 	private Date appointmentDate;
 	private String department;
+
 
 }

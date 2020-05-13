@@ -9,22 +9,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SignDto {
+public class UpdateQuitDto {
 
-	private int signNo;
-	private Timestamp signUpDate;
-	private String docuType;
+	
 	private int memberNo;
-	private String memberName;
-	private String signStatus;
-	private String flag;
-	private String title;
-	private String signLine;
-
+	private int signNo;
+	private String quitDate;
 }
