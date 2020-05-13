@@ -629,11 +629,12 @@ public class SignController {
 	}
 	
 	@RequestMapping("annualInsert.ann")
-	public String annualInsertSign() {
+	public ModelAndView annualInsertSign(ModelAndView mv) {
+		
+		mv.addObject("type","V").setViewName("work/directEnrollForm");
 		
 		
-		
-		return "sign/enrollSignForm";
+		return mv;
 	}
 
 }

@@ -150,13 +150,6 @@
                  
                   <script>
 
-                    	var type = ${type};
-                    	
-                    	if(type == 'V'){
-                    		$("#docu option:eq(2)").attr("selected",true);
-                    		
-                    	}
-                    		
                     $(function(){
                     	
                     	
