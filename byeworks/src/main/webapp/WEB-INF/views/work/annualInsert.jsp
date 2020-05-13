@@ -65,7 +65,7 @@
                               <div class="controls">
                                 <div class="input-prepend input-group">
                                   <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                  <input type="text" name="period" id="period" class="form-control" value="" />
+                                  <input type="text" name="annPeriod" id="annPeriod" class="form-control" value="" />
                                   <input type="hidden" name="annualStartDay" id="annualStartDay" value=""/>
                                   <input type="hidden" name="annualEndDay" id="annualEndDay" value=""/>
                                 </div>
@@ -92,8 +92,8 @@
                         <input type="text" class="form-kdh" name="annualContent" style="resize:none; height:300px; width : 100%;" id="annualContent" >
                       </div>
                     </div>
-                  
-                   
+                   <input type="hidden" name="annualPeriod" id="annualPeriod" value="">
+                   <input type="hidden" value="V" name="docType">
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9  offset-md-3">
@@ -119,7 +119,7 @@
 	$(function() {
 		
 
-		$('input[name="period"]').daterangepicker({
+		$('input[name="annPeriod"]').daterangepicker({
 		      autoUpdateInput: false,
 		      locale: {
 		        	format: 'YYYY-MM-DD',
@@ -146,24 +146,39 @@
 		      
 		  }); */
 
-		  $('input[name="period"]').on('apply.daterangepicker', function(ev, picker) { 
+		  $('input[name="annPeriod"]').on('apply.daterangepicker', function(ev, picker) { 
 			/*   $(this).val(picker.startDate.format('YYYY-MM-DD') + ' ~ ' + picker.endDate.format('YYYY-MM-DD')); */
 				var startDate = picker.startDate.format('YYYY-MM-DD');
 				var endDate = picker.endDate.format('YYYY-MM-DD');
-				var period = startDate + '~' + endDate;
+				var annPeriod = startDate + '~' + endDate;
 		  		$('input[name="annualStartDay"]').val(startDate); 
 		      	$('input[name="annualEndDay"]').val(endDate); 
-		      	$('input[name="period"]').val(period); 
-		   
+		      	$('input[name="annPeriod"]').val(annPeriod); 
+		      	
+
+        		var dateDiff = "";
+        		
+        		var option = $("#annualType option:selected").val();
+
+        		if(option == 0){
+        		
+	        		var sdt = new Date($("#annualStartDay").val());
+	        		
+	        		var edt = new Date($("#annualEndDay").val());
+	
+	        		 dateDiff = Math.ceil((edt.getTime()-sdt.getTime())/(1000*3600*24)+1);
+	        		
+	        		 $("#annualPeriod").val(dateDiff);
+        		
+        		}else{
+        		 $("#annualPeriod").val(0.5);
+        		}
+		     
+        		
+        		console.log(dateDiff);
 			});
-		  	
+	     
 		  
-		  
-		  $('input[name="period"]').on('cancel.daterangepicker', function(ev, picker) {
-		      $(this).val('');
-		  });
-		
-		 
 	});
 	
 

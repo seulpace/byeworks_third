@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,7 @@ import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
 import com.dadada.byeworks.sign.model.vo.SignRefer;
+import com.dadada.byeworks.work.model.vo.AnnualDto;
 import com.google.gson.Gson;
 
 @Controller
@@ -178,6 +178,7 @@ public class SignController {
 		
 		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
 		
+		System.out.println(signAndAnnualSign);
 		
 		if(!file[0].getOriginalFilename().equals("")) {
 			
@@ -629,11 +630,18 @@ public class SignController {
 	}
 	
 	@RequestMapping("annualInsert.ann")
+
 	public ModelAndView annualInsertSign(ModelAndView mv) {
+
+	public ModelAndView annualInsertSign(ModelAndView mv, AnnualDto annualSign) {
+
 		
 		mv.addObject("type","V").setViewName("work/directEnrollForm");
 		
+		System.out.println(annualSign);
+		mv.addObject("annual", annualSign).setViewName("work/directEnrollForm");
 		
+
 		return mv;
 	}
 

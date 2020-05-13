@@ -1,4 +1,4 @@
-package com.dadada.byeworks.sign.model.vo;
+package com.dadada.byeworks.work.model.vo;
 
 import java.sql.Date;
 
@@ -13,13 +13,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AnnualSign {
+public class AnnualDto {
 
+	
 	private int signNo;
 	private Date signUse;
 	private int annualPeriod;
-	private Date annualStartDay;
-	private Date annualEndDay;
+	private String annualStartDay;
+	private String annualEndDay;
 	private String annualContent;
 	private int annualType;
+	private String docType;
+	
 }
