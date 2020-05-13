@@ -157,8 +157,10 @@
 			                          	</li>
                         			</ul>
                       			</li>
+                      		<c:if test="${loginUser.position ne 4 }">
                       			<li><a href="selectSignList.si?mno=${ loginUser.memberNo }&type=8">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
                       			</li>
+                      		</c:if>
 		                      	<li><a href="enrollForm.si">결재 작성하기</a> <!-- 결재 등록화면 이동 -->
 		                      	</li>
                   			</ul>

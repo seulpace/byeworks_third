@@ -631,8 +631,6 @@ public class SignController {
 	
 	@RequestMapping("annualInsert.ann")
 
-	public ModelAndView annualInsertSign(ModelAndView mv) {
-
 	public ModelAndView annualInsertSign(ModelAndView mv, AnnualDto annualSign) {
 
 		
@@ -645,4 +643,5 @@ public class SignController {
 		return mv;
 	}
 
-}
+	}
+
