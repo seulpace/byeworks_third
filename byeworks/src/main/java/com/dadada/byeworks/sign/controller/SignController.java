@@ -633,7 +633,8 @@ public class SignController {
 		
 		
 		
-		return "sign/enrollSignForm";
+		
+		return "work/directEnrollForm";
 	}
 
 }

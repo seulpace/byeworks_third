@@ -308,7 +308,7 @@ public class SignDao {
 		
 		return sqlSession.update("signMapper.finalConfirm", sno);
 
-
+	}
 	public ArrayList<AppointmentDto> selectAppointmentList(SqlSessionTemplate sqlSession, ArrayList<Integer> list){
 		return (ArrayList)sqlSession.selectList("signMapper.selectAppointmentList", list);
 
