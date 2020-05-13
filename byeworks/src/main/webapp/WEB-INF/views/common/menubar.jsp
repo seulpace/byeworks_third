@@ -137,7 +137,7 @@
              	<div class="menu_section">
                 	<h3>전자결재</h3>
                 	<ul class="nav side-menu">
-                		<li><a><i class="fa fa-sitemap"></i> 결재관리 <span class="fa fa-chevron-down"></span></a>
+                		<li id="ajaxCall"><a><i class="fa fa-sitemap"></i> 결재관리 <span class="fa fa-chevron-down"></span></a>
                   			<ul class="nav child_menu">
                       
                       			<li><a>내 결재 문서<span class="fa fa-chevron-down"></span></a>
@@ -166,6 +166,36 @@
                 		</li>
                 	</ul>
 				</div>
+				
+				<script>
+					$(function(){
+						$("#ajaxCall").on("click", function(){
+							
+							var today = new Date();
+							
+							$.ajax({
+								url:"updateChange.si",
+								type:"post",
+								data: {"today":today},
+								success:function(){
+									
+									console.log("직원정보변경완료");
+								},
+								error: function(){
+									console.log("ajax 통신 실패");
+								}
+
+							});
+							
+							
+							
+							
+						});
+						
+						
+					});
+				
+				</script>
 
 				<!-- 일정 관리 -->
              	<div class="menu_section">

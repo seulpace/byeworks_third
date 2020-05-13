@@ -14,7 +14,9 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
-import com.dadada.byeworks.sign.model.dto.SignDto;
+import com.dadada.byeworks.sign.model.dto.SignLineDto;
+import com.dadada.byeworks.sign.model.dto.SignReferDto;
+import com.dadada.byeworks.sign.model.dto.UpdateQuitDto;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -143,7 +145,7 @@ public class SignDao {
 
 
 	public SignAndAnnualSign selectSignAnnual(SqlSessionTemplate sqlSession, int sno) {
-		System.out.println(sno);
+		
 		return sqlSession.selectOne("signMapper.selectSignAnnual", sno);
 	}
 
@@ -160,13 +162,13 @@ public class SignDao {
 	}
 
 
-	public ArrayList<SignLine> selectSignLine(SqlSessionTemplate sqlSession, int sno) {
+	public ArrayList<SignLineDto> selectSignLine(SqlSessionTemplate sqlSession, int sno) {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectSignLine", sno);
 	}
 
 
-	public ArrayList<SignRefer> selectSignRefer(SqlSessionTemplate sqlSession, int sno) {
+	public ArrayList<SignReferDto> selectSignRefer(SqlSessionTemplate sqlSession, int sno) {
 		
 		return (ArrayList)sqlSession.selectList("signMapper.selectSignRefer", sno);
 	}
@@ -266,10 +268,99 @@ public class SignDao {
 	}
 
 
-
-
-
-
-
-
+	public int signCancel(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.update("signMapper.signCancel", sno);
 	}
+
+
+	public int signConfirm(SqlSessionTemplate sqlSession, int sno, int mno) {
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("sno", sno);
+		map.put("mno", mno);
+		
+		return sqlSession.update("signMapper.signConfirm", map);
+	}
+
+
+	public int signReturn(SqlSessionTemplate sqlSession, int sno, int mno) {
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("sno", sno);
+		map.put("mno", mno);
+		
+		return sqlSession.update("signMapper.signReturn", map);
+	}
+
+	public int totalReturn(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.update("signMapper.totalReturn", sno);
+	}
+
+	public int finalConfirm(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.update("signMapper.finalConfirm", sno);
+	}
+
+
+	public int orderCheck(SqlSessionTemplate sqlSession, int sno, int mno) {
+		
+
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("sno", sno);
+		map.put("mno", mno);
+		int result = sqlSession.selectOne("signMapper.orderCheck", map);
+		
+		return result;
+	}
+
+
+	public int checkRefer(SqlSessionTemplate sqlSession, int sno, int mno) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("sno", sno);
+		map.put("mno", mno);
+		
+		return sqlSession.update("signMapper.checkRefer", map);
+	}
+
+
+	public String checkDocType(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.selectOne("signMapper.checkDocType", sno);
+	}
+
+
+	public double getAnnualPeriod(SqlSessionTemplate sqlSession, int sno) {
+		
+		return sqlSession.selectOne("signMapper.getAnnualPeriod", sno);
+	}
+
+
+	public int changeAnnualRemain(SqlSessionTemplate sqlSession, int updateMno, double period) {
+		HashMap<String, Double> map = new HashMap<String, Double>();
+		map.put("mno", (double) updateMno);
+		map.put("period", period);
+		
+		return sqlSession.update("signMapper.changeAnnualRemain", map);
+	}
+
+
+	public ArrayList<UpdateQuitDto> selectQuitMember(SqlSessionTemplate sqlSession, String day) {
+		
+		ArrayList<UpdateQuitDto> list = (ArrayList) sqlSession.selectList("signMapper.selectQuitMember", day);
+		
+		 return list;
+	}
+
+
+	public int updateMemberStatus(SqlSessionTemplate sqlSession, ArrayList<Integer> memberlist) {
+		
+		return sqlSession.update("signMapper.updateMemberStatus", memberlist);
+		
+	}
+}

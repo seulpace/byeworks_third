@@ -12,7 +12,9 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
-import com.dadada.byeworks.sign.model.dto.SignDto;
+import com.dadada.byeworks.sign.model.dto.SignLineDto;
+import com.dadada.byeworks.sign.model.dto.SignReferDto;
+import com.dadada.byeworks.sign.model.dto.UpdateQuitDto;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -128,7 +130,7 @@ public class SignServiceImpl implements SignService {
 	//결재 상세보기 (문서type별)
 	@Override
 	public SignAndAnnualSign selectSignAnnual(int sno) {
-		System.out.println(sno);
+		
 		return sDao.selectSignAnnual(sqlSession,sno);
 	}
 
@@ -145,13 +147,13 @@ public class SignServiceImpl implements SignService {
 	}
 	//결재선 상세보기
 	@Override
-	public ArrayList<SignLine> selectSignLine(int sno) {
+	public ArrayList<SignLineDto> selectSignLine(int sno) {
 		
 		return sDao.selectSignLine(sqlSession, sno);
 	}
 	//참조자 상세보기
 	@Override
-	public ArrayList<SignRefer> selectSignRefer(int sno) {
+	public ArrayList<SignReferDto> selectSignRefer(int sno) {
 		
 		return sDao.selectSignRefer(sqlSession, sno);
 	}
@@ -265,6 +267,94 @@ public class SignServiceImpl implements SignService {
 		}
 		
 		return  result1*result2*result9;
+	}
+
+	/**
+	 * 결재 회수 처리
+	 */
+	@Override
+	public int signCancel(int sno) {
+		
+		return sDao.signCancel(sqlSession, sno);
+	}
+
+	/**
+	 * 결재 승인 처리
+	 */
+	@Override
+	public int signConfirm(int sno, int mno, int length, int updateMno) {
+		int result1 = sDao.signConfirm(sqlSession, sno, mno);
+		int result2 = sDao.orderCheck(sqlSession, sno, mno);
+		int result3 = 1;
+		System.out.println(updateMno);
+		if(result2 == length) {
+			result3 = sDao.finalConfirm(sqlSession, sno);
+			
+			if(result3>0) {
+				//결재 type 판별
+				String docType = sDao.checkDocType(sqlSession, sno);
+				
+				if(docType.equals("V")){
+					System.out.println("실행됨");
+					
+					double period = sDao.getAnnualPeriod(sqlSession, sno);
+					System.out.println(period);
+					if(period != 0) {
+						int result = sDao.changeAnnualRemain(sqlSession, updateMno, period);
+					}
+					
+					
+				}
+				
+				
+			}
+		}
+		
+		
+		return result1*result2*result3; 
+	}
+
+	/**
+	 * 결재 반려 처리
+	 */
+	@Override
+	public int signReturn(int sno, int mno) {
+		int result1 = sDao.signReturn(sqlSession, sno, mno);
+		int result2 = 1;
+		
+		if(result1>0) {
+		result2 = sDao.totalReturn(sqlSession, sno);
+		}
+		
+		return result1*result2;
+	}
+
+	@Override
+	public int checkRefer(int sno, int mno) {
+		
+		return sDao.checkRefer(sqlSession, sno, mno);
+	}
+
+	@Override
+	public int updateEmpInfo(String day) {
+		
+		ArrayList<UpdateQuitDto> list = sDao.selectQuitMember(sqlSession, day);
+		int result=0;
+		if(!list.isEmpty()) {
+			
+			ArrayList<Integer> memberlist = new ArrayList<Integer>();
+			
+			for(int i=0; i<list.size();i++) {
+				
+				memberlist.add(list.get(i).getMemberNo());
+				
+			}
+			
+			result = sDao.updateMemberStatus(sqlSession, memberlist);
+			
+			
+		}
+		return result;
 	}
 
 	

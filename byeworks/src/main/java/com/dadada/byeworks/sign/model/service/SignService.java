@@ -7,7 +7,8 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
-import com.dadada.byeworks.sign.model.dto.SignDto;
+import com.dadada.byeworks.sign.model.dto.SignLineDto;
+import com.dadada.byeworks.sign.model.dto.SignReferDto;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -43,9 +44,9 @@ public interface SignService {
 
 	SignAndAppointment selectSignAppointment(int sno);
 
-	ArrayList<SignLine> selectSignLine(int sno);
+	ArrayList<SignLineDto> selectSignLine(int sno);
 
-	ArrayList<SignRefer> selectSignRefer(int sno);
+	ArrayList<SignReferDto> selectSignRefer(int sno);
 
 	ArrayList<SignAttachment> selectAttachment(int sno);
 
@@ -58,6 +59,18 @@ public interface SignService {
 
 	int updateSignAnnual(SignAndAppointment signAndAppointment, SignLine slist, SignRefer rlist,
 			ArrayList<SignAttachment> alist);
+
+	int signCancel(int sno);
+
+	int signConfirm(int sno, int mno, int length, int updateMno);
+
+	int signReturn(int sno, int mno);
+
+	int checkRefer(int sno, int mno);
+
+	int updateEmpInfo(String day);
+
+
 
 
 

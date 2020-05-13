@@ -27,6 +27,8 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
+import com.dadada.byeworks.sign.model.dto.SignLineDto;
+import com.dadada.byeworks.sign.model.dto.SignReferDto;
 import com.dadada.byeworks.sign.model.service.SignService;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
@@ -52,7 +54,14 @@ public class SignController {
 	 * 결재문서 상세보기 이동
 	 */
 	@RequestMapping("signDetail.si")
-	public ModelAndView signDetail(ModelAndView mv, int sno, String type) {
+	public ModelAndView signDetail(ModelAndView mv, int sno, String type, int mno) {
+		
+		ArrayList<SignReferDto> checkReferlist = sService.selectSignRefer(sno);
+		for(int i=0;i<checkReferlist.size();i++) {
+			if(checkReferlist.get(i).getMemberNo() == mno ) {
+				int result = sService.checkRefer(sno, mno);
+			}
+		}
 		
 	if(type.equals("V")) {
 		SignAndAnnualSign an = sService.selectSignAnnual(sno);
@@ -67,13 +76,15 @@ public class SignController {
 		
 		mv.addObject("list",sp);
 	}
-		ArrayList<SignLine> slist = sService.selectSignLine(sno);
+		ArrayList<SignLineDto> slist = sService.selectSignLine(sno);
 		
 		mv.addObject("slist",slist);
 		
-		ArrayList<SignRefer> rlist = sService.selectSignRefer(sno);
+		ArrayList<SignReferDto> rlist = sService.selectSignRefer(sno);
 		if(!rlist.isEmpty()) {
+
 			mv.addObject("rlist", rlist);
+
 		}
 		ArrayList<SignAttachment> alist = sService.selectAttachment(sno);
 		if(!alist.isEmpty()) {
@@ -214,6 +225,71 @@ public class SignController {
 		}
 	}
 	
+	/**
+	 * @param sno
+	 * @param mno
+	 * @return
+	 * 결재 회수 처리
+	 */
+	@RequestMapping("signCancel.si")
+	public String signCancel(int sno, int mno) {
+		
+		int result = sService.signCancel(sno);
+		
+		if(result>0) {
+			
+			return "redirect:selectSignList.si?mno=" + mno + "&type=6";
+		}else {
+			
+			return "common/errorPage";
+			
+		}
+		
+	}
+	
+	/**
+	 * @param sno
+	 * @param mno
+	 * @return
+	 * 
+	 * 결재 승인
+	 */
+	@RequestMapping("signConfirm.si")
+	public String signConfirm(int sno, int mno, int length, int updateMno) {
+		
+		int result = sService.signConfirm(sno, mno, length, updateMno);
+		
+		if(result>0) {
+			
+			return "redirect:selectSignList.si?mno="+ mno +"&type=8";
+		}else {
+			
+			return "common/errorPage";
+			
+			
+		}
+		
+	}
+	
+	/**
+	 * @param sno
+	 * @param mno
+	 * @return
+	 * 
+	 * 결재 반려
+	 */
+	@RequestMapping("signReturn.si")
+	public String signReturn(int sno, int mno) {
+		
+		int result = sService.signReturn(sno, mno);
+		
+		if(result>0) {
+			return "redirect:selectSignList.si?mno=" + mno + "&type=8";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
 	
 	/**
 	 * @param mv
@@ -239,11 +315,11 @@ public class SignController {
 			
 			mv.addObject("list",sp);
 		}
-			ArrayList<SignLine> slist = sService.selectSignLine(sno);
+			ArrayList<SignLineDto> slist = sService.selectSignLine(sno);
 			
 			mv.addObject("slist",slist);
 			
-			ArrayList<SignRefer> rlist = sService.selectSignRefer(sno);
+			ArrayList<SignReferDto> rlist = sService.selectSignRefer(sno);
 			
 			if(!rlist.isEmpty()) {
 				mv.addObject("rlist", rlist);
@@ -318,7 +394,7 @@ public class SignController {
 	
 	@RequestMapping("updateSignAppointment.si")
 	public String updateSignAppointment(SignAndAppointment signAndAppointment, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, @ModelAttribute SignAttachment atList, MultipartHttpServletRequest request, @RequestParam(value="reUpLoadFile", required=false) MultipartFile[] file ) {
-		System.out.println(signAndAppointment);
+		
 		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
 
 		if(!file[0].getOriginalFilename().equals("")) {
@@ -341,7 +417,17 @@ public class SignController {
 		
 		return ad;
 	}
-					
+	
+//	@RequestMapping("signLineConfirm.si")
+//	public String signLineConfirm(int mno, int sno) {
+//		
+//		SignLine signLine = new SignLine();
+//		
+//		int result = sService.signLineConfirm();
+//		
+//		return "";		
+//	}
+//					
 					
 	
 	//@RequestMapping("updateSignAnnual.si")
@@ -463,6 +549,21 @@ public class SignController {
 			
 			deleteFile.delete();
 			}
+		}
+		
+	//ajax로 오늘 날짜 가지고와서 QUIT 테이블과 APPOINTMENT 테이블에 있는 날짜 비교후 업데이트 처리	
+		@RequestMapping("updateChange.si")
+		public void updateEmpInfo(Date today) {
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("YY/MM/dd");
+			
+			String day = sdf.format(today);
+			
+		
+			
+		int result = sService.updateEmpInfo(day);
+			
+			
 		}
 	
 }

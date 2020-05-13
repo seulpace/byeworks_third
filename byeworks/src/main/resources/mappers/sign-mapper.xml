@@ -122,6 +122,12 @@
 		<result property="filePath" column="FILE_PATH"/>
 		<result property="signNo" column="SIGN_NO"/>
 	</resultMap>
+	
+	<resultMap type="UpdateQuitDto" id="updateQuitResultSet">
+		<id property="signNo" column="SIGN_NO"/>
+		<result property="quitDate" column="QUITDATE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+	</resultMap>
 
 	
 	<select id="selectDepartmentList" resultMap="departmentResultSet">
@@ -348,7 +354,7 @@
 	JOIN TB_SIGNLINE SL ON(SL.SIGN_NO = S.SIGN_NO)
 	JOIN TB_MEMBER ML ON(ML.MEMBER_NO=SL.MEMBER_NO)
 	JOIN TB_SIGNLINE SL1 ON(SL1.SIGN_NO =S.SIGN_NO)
-	WHERE SL1.MEMBER_NO = #{memberNo} AND S.SIGN_STATUS = 'O' AND FLAG ='Y'
+	WHERE SL1.MEMBER_NO = #{memberNo} AND SL1.STATUS = 'O' AND FLAG ='Y' AND S.SIGN_STATUS = 'O'
 	GROUP BY S.SIGN_NO, SIGNUP_DATE, D_TYPE, SIGN_STATUS, FLAG, TITLE,S.MEMBER_NO, M.MEMBER_NAME
 	ORDER BY SIGNUP_DATE DESC
 	</if>
@@ -428,7 +434,7 @@
 	<update id="signUp" parameterType="_int">
 	UPDATE TB_SIGN 
 	SET FLAG = 'Y',
-		SIGN_STATUS = 'O'
+		SIGN_STATUS = 'O', SIGNUP_DATE = SYSDATE
 	WHERE SIGN_NO = #{sno}
 	
 	</update>
@@ -523,6 +529,90 @@
 	WHERE SIGN_NO = #{signNo}
 	</update>
 	
+	<update id="signCancel" parameterType="_int">
+	UPDATE TB_SIGN
+	SET SIGN_STATUS = 'D', FLAG = 'N'
+	WHERE SIGN_NO = #{sno}
+	</update>
+	
+	<update id="FinalConfirm" parameterType="_int">
+	UPDATE TB_SIGN
+	SET SIGN_STATUS = 'C'
+	WHERE SIGN_NO = #{sno}
+	</update>
+	
+	<update id="signConfirm" parameterType="hashmap">
+	UPDATE TB_SIGNLINE
+	SET STATUS = 'C', APPROVAL_DATE = SYSDATE
+	WHERE SIGN_NO = #{sno} AND MEMBER_NO = #{mno}
+	</update>
+	
+	<update id="signReturn" parameterType="hashmap">
+	UPDATE TB_SIGNLINE
+	SET STATUS = 'R'
+	WHERE SIGN_NO = #{sno} AND MEMBER_NO = #{mno}
+	</update>
+	
+	<update id="totalReturn" parameterType="_int">
+	UPDATE TB_SIGN
+	SET SIGN_STATUS = 'R'
+	WHERE SIGN_NO = #{sno}
+	
+	</update>
+	
+	<update id="finalConfirm" parameterType="_int">
+	UPDATE TB_SIGN
+	SET SIGN_STATUS = 'C'
+	WHERE SIGN_NO = #{sno}
+	</update>
+	
+	<select id="orderCheck" parameterType="hashmap" resultType="_int">
+	SELECT MEMBER_ORDER 
+	FROM TB_SIGNLINE
+	WHERE SIGN_NO = #{sno} AND MEMBER_NO = #{mno}
+	</select>
+	
+	<update id="checkRefer" parameterType="hashmap">
+	UPDATE TB_SIGNREFER
+	SET STATUS = 'C', CHECK_DATE = SYSDATE
+	WHERE SIGN_NO = #{sno} AND MEMBER_NO = #{mno}
+	</update>
+	
+	<select id="checkDocType" parameterType="_int" resultType="string">
+	SELECT D_TYPE
+	FROM TB_SIGN
+	WHERE SIGN_NO = #{sno}
+	</select>
+	
+	<select id="getAnnualPeriod" parameterType="_int" resultType="_double">
+	SELECT ANNUAL_PERIOD
+	FROM TB_ANNUAL_SIGN
+	WHERE SIGN_NO = #{sno}
+	</select>
+	
+	<update id="changeAnnualRemain" parameterType="hashmap">
+	UPDATE TB_ANNUAL
+	SET ANNUAL_REMAIN = ANNUAL_REMAIN - ${period}
+	WHERE MEMBER_NO = #{mno}
+	
+	</update>
+	
+	<select id="selectQuitMember" parameterType="string" resultMap="updateQuitResultSet">
+	SELECT MEMBER_NO, TO_CHAR(QUIT_DATE,'YY/MM/DD') QUITDATE, Q.SIGN_NO
+	FROM TB_QUIT Q
+	JOIN TB_SIGN S ON (S.SIGN_NO = Q.SIGN_NO)
+	WHERE QUIT_DATE = #{day}
+	</select>
+	
+	<update id="updateMemberStatus" parameterType="arraylist">
+	UPDATE TB_MEMBER
+	SET MEMBER_STATUS= 'N'
+	where member_no in
+	<foreach collection="memberlist" item="item" open="(" close=")">
+		#{item}
+	</foreach>
+
+	</update>
 
 
 	

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,11 +23,44 @@
 
 	<!-- menubar include -->
 	<jsp:include page="../common/menubar.jsp"/>
+	
+	
+	<!-- 인쇄 관련 스크립트 -->
+	<script>
+	function print(printArea){
+
+  		win = window.open(); 
+
+  		self.focus(); 
+
+  		win.document.open();
+
+  		win.document.write('<html><'head'><title></title><style>');
+
+  		win.document.write('body, td {font-falmily: Verdana; font-size: 10pt;}');
+
+  		win.document.write('</style></haed><body>');
+
+  		win.document.write(printArea);
+
+  		  win.document.write('</body></html>');
+
+  		win.document.close();
+
+  		win.print();
+
+  		win.close();
+}
+	
+	</script>
 
 	<div class="right_col" role="main">
           <!-- top tiles -->
-         
-            <div style="width: 70%;margin-left: 100px;;" >
+         <c:if test="${ list.signStatus eq 'C' }">
+         <div style="float:right;"><button class="btn btn-primary" onclick="print(document.getElementById('printArea').innerHTML)">인쇄하기</button></div>
+         </c:if>   
+            
+            <div id="printArea"style="width: 70%;margin-left: 100px;;" >
             <div class="panel-body">
                             
                 <table class="table table-bordered">
@@ -73,45 +107,59 @@
                       <tr>
          				  
          				  	
-	                      		<c:forEach items="${ slist }" var="s" varStatus="status">
-	                      		
-	                      		  <c:if test = "${loginUser.memberNo ne s.memberNo }">
+	                      		<c:forEach items="${ slist }" var="s" varStatus="item">
 	                      			<c:choose>
-	                      				<c:when test="${ s.status eq 'C' }">
-	                        				<td>승인</td>
-	                      				</c:when>
+	                      		  		<c:when test = "${loginUser.memberNo ne s.memberNo }">
+	                      					<c:choose>
+			                      				<c:when test="${ s.status eq 'C' }">
+			                        				<td>승인<br>( <fmt:formatDate value="${ s.approvalDate }" type="both" dateStyle="full" timeStyle="short"/>)</td>
+			                      				</c:when>
 	                      		
-	                      				<c:when test="${ s.status eq 'O' }">
-	                      					<td>진행</td>
-	                      				</c:when>
+			                      				<c:when test="${ s.status eq 'O' }">
+			                      					<td>진행</td>
+			                      				</c:when>
 	                      				
-	                      				<c:when test="${ s.status eq 'N' }">
-	                      					<td>대기</td>
-	                      				</c:when>
+			                      				<c:when test="${ s.status eq 'N' }">
+			                      					<td>대기</td>
+			                      				</c:when>
 	                      		
-	                      				<c:otherwise>
-	                      					<td>반려</td>
-	                      				</c:otherwise>			
-	                      			</c:choose>
-	                      		   </c:if> 
+			                      				<c:otherwise>
+			                      					<td>반려</td>
+			                      				</c:otherwise>			
+	                      					</c:choose>
+	                      		   		</c:when> 
 	                      		   
-	                      		   
-	                      		   <c:if test = "${ loginUser.memberNo eq s.memberNo}">
-	                      		   	<c:choose>
-	                      		   		<c:when test = "${ count.first }">
-	                      		   		  <td><button id="signLineConfirm">승인</button><button id="signLineReturn">반려</button></td>
-	          							</c:when>
-	          							
-	          							
-	  
-	          						</c:choose>	
-	                      		   </c:if>
-	                      		   
-	                      	
-	                      		   
-	                      		 
-	                      		
-                      			</c:forEach>
+			                      		<c:otherwise>
+		                      				<c:choose>
+				                      		 	<c:when test = "${item.first}">
+		                      		 		
+				                       		   			<td><button id="signLineConfirm">승인</button><button id="signLineReturn">반려</button></td>
+
+				                      		   	</c:when>
+				                      		   	
+
+			                      		   	
+				                      		   	<c:otherwise>
+				                      		   		 <c:choose>
+				                      		   		 	<c:when test="${ slist[item.index-1].status == 'C' }"> 	
+				                      		   				<td><button id="signLineConfirm">승인</button><button id="signLineReturn">반려</button></td>
+				                      		   					
+				                      		   			</c:when>
+				                      		   			
+				                      		   			<c:when test="${ slist[item.index-1].status == 'R' }">
+				                      		   				<td><button id="signLineConfirm" disabled>승인</button><button id="signLineReturn" disabled>반려</button></td>
+				                      		   			</c:when>
+				                      		   			
+				                      		   			<c:otherwise>
+				                      		   				<td><button id="signLineConfirm" disabled>승인</button><button id="signLineReturn" disabled>반려</button></td>
+				                      		   			</c:otherwise>
+				                      		   		</c:choose>
+				                      		   	</c:otherwise>
+			                      		   	</c:choose>
+			                      		</c:otherwise>
+
+									</c:choose>
+		                  		</c:forEach>
                       		
 							
                       </tr>
@@ -129,7 +177,7 @@
                       	<div><h6>참조자</h6></div>
                       	<div>
                       		<c:forEach items="${ rlist }" var="r">
-                      			<span>${ r.memberName } <c:choose><c:when test="${ r.status eq 'C'}">(확인)</c:when><c:otherwise>(미확인)</c:otherwise></c:choose></span>&nbsp;/&nbsp;                   		
+                      			<span title="${ r.checkDate }">${ r.memberName } <c:choose><c:when test="${ r.status eq 'C'}">(확인)</c:when><c:otherwise>(미확인)</c:otherwise></c:choose></span>&nbsp;/&nbsp;                   		
                       		</c:forEach>
                       		
                       	</div>
@@ -278,11 +326,18 @@
 			
 			<div align="center">
 			
-			<c:if test="${ list.signStatus eq 'N' }">
-			<button id="signUpBtn">결재상신</button>
-			<button id="signUpdateBtn">결재 수정</button>
-			</c:if>
+			<c:choose>
+				<c:when test="${ list.signStatus eq 'N' }">
+					<button id="signUpBtn">결재 상신</button>
+					<button id="signUpdateBtn">결재 수정</button>
+				</c:when>
+				
+				<c:when test="${ list.signStatus eq 'O' and loginUser.memberNo eq list.memberNo}">
+					<button id="cancelSignBtn">결재 회수</button>
+				</c:when>
+			</c:choose>
 			
+	
 			</div>
 
 
@@ -293,12 +348,19 @@
           </div>
           </div>
           
+        
           <script>
-          	$(function(){
+	 
+          	
+          	
+          		
+          		$(function(){
+          		
+          	
+          		
           		$("#signUpBtn").on("click",function(){
           					
-          			location.href = "signUp.si?sno=${ list.signNo }&mno=${ list.memberNo}";
-          			
+          			location.href = "signUp.si?sno=${ list.signNo }&mno=${ list.memberNo }";
           		});
           		
           		$("#signUpdateBtn").on("click",function(){
@@ -306,9 +368,25 @@
           			location.href = "signFormUpdate.si?sno=${ list.signNo}&mno=${ list.memberNo}&type=${list.docuType}";
           		});
           		
+          		$("#cancelSignBtn").on("click",function(){
+          			
+          			location.href= "signCancel.si?sno=${ list.signNo}&mno=${ list.memberNo}";
+          		});
+          		
+          		$("#signLineConfirm").on("click",function(){
+          		
+          			 location.href = "signConfirm.si?sno=${ list.signNo}&mno=${ loginUser.memberNo}&length=${fn:length(slist)}&updateMno=${ list.memberNo }";
+          			
+          		});
+          		
+          		$("#signLineReturn").on("click",function(){
+          			
+          			location.href = "signReturn.si?sno=${ list.signNo}&mno=${ loginUser.memberNo}";
+          		});
           		
           		
           		
+          			 
           		
           	});
           

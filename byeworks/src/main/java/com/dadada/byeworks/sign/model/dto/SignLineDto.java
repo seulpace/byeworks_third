@@ -1,7 +1,6 @@
 package com.dadada.byeworks.sign.model.dto;
 
-import java.sql.Date;
-
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,7 @@ public class SignLineDto {
 	private int memberNo;
 	private String memberName;
 	private int signNo;
-	private Date approvalDate;
+	private Timestamp approvalDate;
 	private String status;
 	private int memberOrder;
 	private String position;

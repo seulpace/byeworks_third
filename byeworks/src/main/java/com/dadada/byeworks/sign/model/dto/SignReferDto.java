@@ -1,8 +1,6 @@
 package com.dadada.byeworks.sign.model.dto;
 
-import java.sql.Date;
-
-
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +17,7 @@ public class SignReferDto {
 	private int signNo;
 	private int memberNo;
 	private String status;
-	private Date checkDate;
+	private Timestamp checkDate;
 	private String memberName;
 	private String position;
 

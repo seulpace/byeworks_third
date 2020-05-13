@@ -150,11 +150,20 @@
                  
                   <script>
 
+                    	var type = ${type};
+                    	
+                    	if(type == 'V'){
+                    		$("#docu option:eq(2)").attr("selected",true);
+                    		
+                    	}
+                    		
                     $(function(){
+                    	
+                    	
                      $("#docu").change(function(){
                       var docu = $("#docu option:selected").text();
 
-                      console.log(docu);
+                      
                       if(docu == "사직서"){
                         $(".quit").show();
                         $("#enroll").attr("action","insertSignQuit.si");
@@ -297,7 +306,7 @@
                               <tr>
                                  <th>연차종류</th>
                                  <td>
-                                 	<select name="annualType">
+                                 	<select id="annualType"name="annualType">
                                  		<option value="0">연차</option>
                                  		<option value="1">오전반차</option>
                                  		<option value="2">오후반차</option>
@@ -316,18 +325,73 @@
                               
                               <tr>
                                 <th>날짜</th>
-                                <td><input type="date" name="annualStartDay" style="border:none;"> ~ <input type="date" name="annualEndDay" style="border:none"></td>
+                                <td><input id="startDay"type="date" name="annualStartDay" style="border:none;"> ~ <input id="endDay" type="date" name="annualEndDay" style="border:none"></td>
                               </tr>
                               
                               <tr>
                               	<th>기간</th>
-								<th><input type="number" name="annualPeriod"></th>                              	
+								<th><input id="period" type="number" name="annualPeriod"></th>                              	
                               </tr>
 
                             </table><br>
 
 
                           </div>
+                          
+                          <!-- 날짜계산 스크립트 -->
+                          <script>
+
+                          $(function(){
+                        	  
+                        	  $("#annualType").change(function(){
+                        		  	  $("#startDay").val("");
+                        		  	  $("#endDay").val("");
+                        		  var option = $("#annualType option:selected").val();
+                        		  	  $("#period").attr("readonly",false);
+                        		  	  $("#period").val("")
+                        		  	  $("#endDay").show();
+                        		  if(option != 0){
+                        			  $("#period").val(0.5);
+	                        		  $("#period").attr("readonly",true); 
+	                        		  $("#endDay").hide();
+	                        		  
+                        		  }
+                        	  });
+                        	  
+                        	$("#startDay").on("change",function(){
+                        		var option = $("#annualType option:selected").val();
+                        		
+                        		if(option !=0){
+                        			$("#endDay").val($(this).val());
+                        			console.log($("#endDay").val());
+                        		}
+                        	});
+                        	  
+                          	$("#endDay").on("change",function(){
+									
+                          		var dateDiff = "";
+                          		
+                          		var option = $("#annualType option:selected").val();
+   
+                          		if(option == 0){
+                          		
+                          		var sdt = new Date($("#startDay").val());
+                          		
+                          		var edt = new Date($("#endDay").val());
+
+                          		 dateDiff = Math.ceil((edt.getTime()-sdt.getTime())/(1000*3600*24)+1);
+                          		
+                          		 $("#period").val(dateDiff);
+                          		
+                          		}else{
+                          		 $("#period").val(0.5);
+                          		}
+                          		
+                          		
+                          	});	
+                          });
+                          
+                          </script>
                         
                           <div class="panel-body quit" style="display: none;">
                             <h2 align="center">사직</h2>
@@ -361,6 +425,8 @@
 
 
                           </div>
+                          
+
 
                           <div class="panel-body up" style="display: none;">
                             
@@ -544,7 +610,7 @@
 									$("#selectedMemPosition").val("");
 
 									var selectedEmpPosition = $("#aEmpList option:selected").attr("class");
-									console.log(selectedEmpPosition);
+									
 									if(selectedEmpPosition == 0){
 										$("#selectedMemPosition").val("대표").attr("class",selectedEmpPosition).siblings().eq(0).val(selectedEmpPosition);
 									}else if(selectedEmpPosition == 1){
@@ -932,7 +998,7 @@
 		
             $("#sign option").each(function(i,item){
               var level = $(this).attr("class");
-              console.log(i);
+              
               switch(level){
               	case "0" : $("#level").append("<th style='width:80px;height:50px;!important'>대표<input type='hidden' name='slist[" + i + "].signLineMemberNo' value='" + $(this).val() + "'></th>"); break;
               	case "1" : $("#level").append("<th style='width:80px;height:50px;!important'>임원<input type='hidden' name='slist[" + i + "].signLineMemberNo' value='" + $(this).val() + "'></th>"); break;
