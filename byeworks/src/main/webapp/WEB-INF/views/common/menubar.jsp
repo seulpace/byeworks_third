@@ -157,7 +157,7 @@
 			                          	</li>
                         			</ul>
                       			</li>
-                      		<c:if test="${loginUser.position ne 4 }">
+                      		<c:if test="${loginUser.positionNo ne 4 }">
                       			<li><a href="selectSignList.si?mno=${ loginUser.memberNo }&type=8">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
                       			</li>
                       		</c:if>
