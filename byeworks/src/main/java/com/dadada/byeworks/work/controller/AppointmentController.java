@@ -15,6 +15,7 @@ import com.dadada.byeworks.member.model.service.MemberService;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.sign.model.dto.AppointmentDto;
 import com.dadada.byeworks.sign.model.service.SignService;
+import com.dadada.byeworks.work.model.vo.AppointmentInfoDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 
@@ -89,23 +90,25 @@ public class AppointmentController {
 	
 	
 	@RequestMapping("appointment.app")
-	public ModelAndView appointmentInsert(ModelAndView mv, AppointmentDto appd) {
+	public ModelAndView appointmentInsert(ModelAndView mv, AppointmentInfoDto appd) {
 		
-	
-		if(appd.getAppointLev() == 0 && appd.getDeptAfter() == 9) {
-			
-		   int num1 = appd.getDeptBefore(); 
-		   appd.setDeptAfter(num1);
-		   
-		}else if(appd.getAppointLev() == 1 && appd.getPositionAfter() == 9) {
-			int num2 = appd.getPositionBefore();
-			appd.setPositionAfter(num2);
-		}
-		mv.addObject("type", "A").setViewName("work/directEnrollForm");
-		mv.addObject("appd", appd).setViewName("work/directEnrollForm");
+	  appd.setDocType("A");
+	  
+	  if(appd.getPositionAfter() == 9) {
+		  appd.setPositionAfter(appd.getPositionBefore());
+	  }
+	  
+	  if(appd.getDepAfter() == 9 ) {
+		  appd.setDepAfter(appd.getDepBefore());
+	  }
+	  
+	  
+	  System.out.println(appd);
+	  mv.addObject("appd", appd).setViewName("work/directEnrollForm");
+	 
 		
 		
-		System.out.println(appd);
+		
 		return mv;
 	}
 

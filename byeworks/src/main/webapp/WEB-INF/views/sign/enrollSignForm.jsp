@@ -445,13 +445,9 @@
                                 </tr>
                       
                               </table><br>
-                      
-                      
-                
-      
-
                           </div>
-
+                          
+                        
                           <div class="panel-body promotion" style="display:none">
                             <br>
                                 <h2 align="center">승진/발령</h2>
