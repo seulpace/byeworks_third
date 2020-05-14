@@ -446,8 +446,8 @@
 								  
 								  <tr>
                                       <th>(승진/발령)종류</th>
-                                      <td>"${annual.annualType eq 1}"
-                                      <c:choose>
+                                      <td>
+                                     <%--  <c:choose>
 	                                 		<c:when test="${appd.appointLev eq 0}">
 		                                      	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev" checkd>&nbsp; 
 		                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
@@ -464,50 +464,88 @@
 		                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev" checkd>&nbsp; 
     										</c:when>
     								
-    								 </c:choose>		
+    								 </c:choose> --%>		
+    								 	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev" >&nbsp; 
+		                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
+		                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev">&nbsp; 
                                       </td>
                                   </tr>
-								  
+								  <script>
+								  var status = ${appd.appointLev};
+								  var positionBefore = ${appd.positionBefore};
+								  var depBefore= ${appd.deptBefore};
+								  	$(function(){
+								  		$("input[name=positionBefore]").val(positionBefore);
+								  		$("input[name=depBefore]").val(depBefore);
+								  	
+								  	  if(status==0){
+								  		  
+								  		  $("#onlyD").attr("checked",true);
+								  		 
+								  	  }
+								  		
+								  		
+								  	})
+								  	
+								  	
+								  </script>
                                   <tr>
                                       <th>성명</th>
                                       <td>
                                       	<select id="aDepartment" name="depBefore" style="border:none;">
-                                      	
+                                      		<option>${appd.departmentName }</option>
                                       	</select>
                                       
-                                      	<select id="aEmpList" name="appointmentMem" style="border:none;">
-                                      		<option>직원을 선택하세요</option>
-                                      	</select>
+                                      	<input type="text" id="aEmpList" name="appointmentName" value="${appd.appointmentName }" style="border:none;">
+                                      	
+                                      	<input type="hidden" name="appointmentMem" value="${appd.appointmentMem }">
                                       </td>
                                   </tr>
                                   
                                   <tr>
                                       <th>직위</th>
                                       <td>
-                                      <input id="selectedMemPosition" type="text" class="" style="border:none;"readonly>
-                                      <input type="hidden" name="positionBefore" value="">
+                                      <input id="selectedMemPosition" type="text" class="" value="${appd.positionName } "style="border:none;"readonly>
+                                      <input type="hidden" name="positionBefore" value="${appd.positionBefore }">
                                       </td>
                                   </tr>
 
                                   <tr>
                                     <th>승진보직</th>
                                     <td>
-                                    	<select id="updatePosition" name="positionAfter" style="border:none;">
-                                    			<option>선택</option>
-                                    			<option value="1">임원</option>
-                                    			<option value="2">팀장</option>
-                                    			<option value="3">대리</option>
-                                    			<option value="4">일반사원</option>
-                                    	</select>
+                                    	<c:choose>
+                                    		<c:when test="${ appd.appointLev ne 1}">
+		                                    	<select id="updatePosition" name="positionAfter" style="border:none;">
+		                                    			<option>${appd.positionName }</option>
+		                                    			
+		                                    	</select>
+		                                    </c:when>
+		                                    <c:otherwise>
+		                                    	<select id="updatePosition" name="positionAfter" style="border:none;">
+		                                    			<option>${appd.positionAfter }</option>
+		                                    			
+		                                    	</select>
+		                                    </c:otherwise>
+		                                 </c:choose>   	
                                     </td>
                                   </tr>
                                   
                                   <tr>
                                   	<th>발령부서</th>
                                   	<td>
-                                  		<select id="updateDepartment" name="depAfter" style="border:none;">
-                                  			<option>선택</option>
-                                  		</select>
+                                  		<c:choose>
+                                    		<c:when test="${ appd.appointLev ne 2}">
+                                  				<select id="updateDepartment" name="depAfter" style="border:none;">
+                                  					<option>${appd.departmentName }</option>
+                                  				</select>
+                                  			</c:when>
+		                                    <c:otherwise>
+		                                    	<select id="updatePosition" name="positionAfter" style="border:none;">
+		                                    			<option>${appd.deptAfter }</option>
+		                                    			
+		                                    	</select>
+		                                    </c:otherwise>
+		                                 </c:choose>   	
                                   	</td>
                                   </tr>
                                   
@@ -525,134 +563,9 @@
                       
                       <script>
                       		//ajax 요청으로 문서 타입이 'A'일경우 셀렉트 박스에  부서출력
-							$(function(){
-								$("#docu").on("change",function(){
-									$("#aDepartment option").remove();
-									$("#updateDepartment option").remove();
-									
-									if($("#docu option:selected").val() == 'A'){
-									
-									$.ajax({
-										 url:"selectDepartmentList.si",
-						    			 type:"post",
-						    			 success:function(list){
-						    				 var value="";
-						    				 
-						    				 $("#aDepartment").append("<option>부서를 선택하세요.</option>");
-						    				 $("#updateDepartment").append("<option>부서를 선택하세요.</option>");
-						    				 $.each(list, function(i,obj){
-						    					if(obj.departmentNo != 0){
-						    					 value +=  "<option value='" + obj.departmentNo + "'>" + obj.departmentName + "</option>";
-						    					}
-						    					 
-						    				 })
-						    				 
-						    				 $("#aDepartment").append(value);
-						    				 $("#updateDepartment").append(value);
-						    				
-						    			 },
-						    			 error:function(){
-						    				 console.log("ajax 통신 실패");
-						    			 }
-										
-									});
-									
-									}else{
-										$("#aDepartment option").remove();
-										$("#aEmpList option").remove();
-										$("#selectedMemPosition").val("");
-									}
-									
-								});
+							
 								
-								//ajax 요청으로 부서 클릭시 오른쪽 직원 명단 출력
-								$("#aDepartment").on("change", function(){
-									$("#selectedMemPosition").val("");
-									$("#aEmpList option").remove();
-									
-									var departmentNo = $("#aDepartment option:selected").val();
-									
-									$.ajax({
-						    			 url:"selectEmpList.si",
-						    			 type:"post",
-						    			 data: {"departmentNo":departmentNo},
-						    			 success:function(list){
-						    				
-						    				 
-						    				 $.each(list, function(i,obj){
-						    					 if(list[i].position != 0){
-						    					 $("#aEmpList").append("<option value='"+ list[i].memberNo +"' class='"+ list[i].position +"'>"+ list[i].memberName+"</option>");
-						    					 }
-						    				 })
-						    				 
-						    					 
-						    			 },
-						    			 error:function(){
-						    				 console.log("ajax 통신 실패");
-						    			 }
-						    			  
-						    		  });
-								});
-								
-								//선택한 직원의 직책정보 출력 및 readonly 처리
-								$("#aEmpList").on("change", function(){
-									
-									$("#selectedMemPosition").val("");
-
-									var selectedEmpPosition = $("#aEmpList option:selected").attr("class");
-									console.log(selectedEmpPosition);
-									if(selectedEmpPosition == 0){
-										$("#selectedMemPosition").val("대표").attr("class",selectedEmpPosition).siblings().eq(0).val(selectedEmpPosition);
-									}else if(selectedEmpPosition == 1){
-										$("#selectedMemPosition").val("임원").attr("class",selectedEmpPosition).siblings().eq(0).val(selectedEmpPosition);
-									}else if(selectedEmpPosition == 2){
-										$("#selectedMemPosition").val("팀장").attr("class",selectedEmpPosition).siblings().eq(0).val(selectedEmpPosition);
-									}else if(selectedEmpPosition == 3){
-										$("#selectedMemPosition").val("대리").attr("class",selectedEmpPosition).siblings().eq(0).val(selectedEmpPosition);
-									}else if(selectedEmpPosition == 4){
-										$("#selectedMemPosition").val("일반사원").attr("class",selectedEmpPosition).siblings().eq(0).val(selectedEmpPosition);
-									}
-								});
-								
-								//승진/발령/두개다 의 목록에 따라서 진행되는 추가적인 JQuery
-								$("#onlyD").on("click", function(){
-									var check = $("#selectedMemPosition").attr("class");
-									console.log(check);
-									$("#updatePosition option").each(function(i,item){								
-										if(item.value == check){
-											$(this).attr("selected",true);
-										}
-									});
-									
-									$("#updatePosition").attr("disabled",true);
-									$("#updateDepartment").attr("disabled",false);
-								});
-								
-								$("#onlyP").on("click", function(){
-									
-									var check = $("#aDepartment option:selected").val();
-									console.log(check);
-									$("#updateDepartment option").each(function(i,item){								
-										if(item.value == check){
-											$(this).attr("selected",true);
-										}
-									});
-									
-									$("#updateDepartment").attr("disabled",true);
-									$("#updatePosition").attr("disabled",false);
-									
-								});
-								
-								$("#both").on("click", function(){
-									$("#updatePosition").attr("disabled",false);
-									$("#updateDepartment").attr("disabled",false);
-								});
-								
-								
-								
-								
-								
-							});                      
+						                
                       </script>
                       
                       <div class="panel">

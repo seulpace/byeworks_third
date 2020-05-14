@@ -86,6 +86,7 @@
                       <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-3 col-sm-3">
                         <input type="text" class="form-kdh" id="departmentName" name="departmentName" readonly="readonly" value="">
+                         <input type="hidden" name="deptBefore" id="deptBefore"/>
                       </div>
                       <div class="com-md-2 col-sm-2"></div>
                       <div class="col-md-3 col-sm-3">
@@ -105,6 +106,7 @@
                       <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
                         <div class="col-md-3 col-sm-3">
                           <input type="text" class="form-kdh" readonly="readonly" id="positionName" name="positionName" value="">
+                          <input type="hidden" name="positionBefore" id="positionBefore"/>
                         </div>
                         <div class="com-md-2 col-sm-2"></div>
                         <div class="col-md-3 col-sm-3">
@@ -119,7 +121,8 @@
                     </div>
                   
                   	<input type="hidden" value="A" name="docType">
-                    <input type="hidden" value="" id="appointLev" name="appointLev">          	
+                    <input type="hidden" value="" id="appointmentLev" name="appointmentLev">     
+                    <input type="hidden" value="" id="appointmentMem" name="appointmentMem">      	
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9  offset-md-3">
@@ -171,11 +174,14 @@
             	        				data:{mno:$('input[name="searchMemberNo"]:checked').val()},
             	        				type:"get",
             	        				success:function(m){
+            	        					$("#appointmentMem").val(m.memberNo);
             	        					$("#appEmpno").val(m.empNo);
             	        					$("#enrollday").val(m.enrollday);
             	        					$("#positionName").val(m.position);
             	        					$("#departmentName").val(m.department);
-                    					
+                    						$("#positionBefore").val(m.positionNo);
+                    						console.log(m.positionNo);
+                    						$("#deptBefore").val(m.departmentNo);
             	        				},error:function(){
             	        					console.log("x");
             	        				}
@@ -187,12 +193,15 @@
                     		
                     		$("#deptAfter").change(function(){
                         		
-                        		$("#appointLev").val(0);
+                        		$("#appointmentLev").val(0);
+                        		
                         	});
                     		$("#positionAfter").change(function(){
                         		
-                        		$("#appointLev").val(1);
+                        		$("#appointmentLev").val(1);
                         	});
+                    		
+                    		
                     		
                     	});
                     

@@ -110,7 +110,7 @@ public class SignController {
 	 */
 	@RequestMapping("insertSignAppointment.si")
 	public String insertSignAp(SignAndAppointment signAndAppointment, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, MultipartHttpServletRequest request, @RequestParam(value="upLoadFile", required=false) MultipartFile[] file) {
-		
+		System.out.println(signAndAppointment);
 		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
 		
 		
