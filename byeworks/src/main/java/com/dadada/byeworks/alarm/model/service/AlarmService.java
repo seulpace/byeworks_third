@@ -17,4 +17,16 @@ public interface AlarmService {
 	
 	// 쪽지 알람 insert
 	int insertAlarm(Alarm a);
+	
+	// 쪽지 확인 여부 업데이트
+	int updateRead(int no);
+	
+	// 쪽지 확인 안 된 거 다 보여주기
+	ArrayList<Alarm> showAlarm(int no);
+	
+	// 쪽지 남은 알람 세기
+	int countAlarm(int no);
+	
+	// 해당 알람 확인 처리
+	int readAlarm(int alarmNo);
 }

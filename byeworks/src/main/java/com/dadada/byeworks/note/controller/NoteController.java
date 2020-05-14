@@ -65,7 +65,7 @@ public class NoteController {
 	// 쪽지 작성하는 폼으로 가는 메서드
 	// 사내 주소록에서 쪽지 작성하기, 받은 쪽지함 등에서 쪽지 보내기, 답장하기 등이 해당 메서드를 거친다
 	@RequestMapping("sendForm.nt")
-	public ModelAndView sendForm(HttpSession session, ModelAndView mv, String receiveNo, String receiveName, String receiveTitle) {
+	public ModelAndView sendForm(HttpSession session, ModelAndView mv, String receiveNo, String receiveName, String receiveId, String receiveTitle) {
 		
 		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		ArrayList<MemberAddress> list = mService.selectAddrList(no);
@@ -78,6 +78,7 @@ public class NoteController {
 			// session에 담아주기
 			session.setAttribute("rNo", rNo);
 			session.setAttribute("rName", receiveName);
+			session.setAttribute("rId", receiveId);
 		}
 		
 		// 답장하기의 경우에만 title이 들어오기 때문에 re 붙여주기
@@ -91,40 +92,20 @@ public class NoteController {
 		return mv;
 	}
 	
+	@ResponseBody
 	@RequestMapping("send.nt")
-	public String sendNote(HttpSession session, Note n) {
+	public String sendNote(HttpSession session, String title, String content, String receiveNo) {
 		
+		Note n = new Note();
+		n.setNoteTitle(title);
+		n.setNoteContent(content);
+		n.setReceiveNo(Integer.parseInt(receiveNo));
+		n.setSendNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+
 		// 쪽지에 insert
 		int result = ntService.sendNote(n);
 		
-		// 쪽지에 넣자마자 쪽지의 가장 큰 시퀀스를 받아오자
-		int noteNo = ntService.returnSequence();
-		
-		// alarm에 insert 해야 한다...
-		Alarm a = new Alarm();
-		
-		// 날짜 받아오기
-		Calendar cal = new GregorianCalendar();
-		Date date = new Date(cal.getTimeInMillis());
-		a.setAlarmDate(date);
-		a.setAlarmGroup(1);
-		a.setGroupNo(noteNo);
-		a.setSendNo(n.getSendNo());
-		a.setReceiveNo(n.getReceiveNo());
-		
-		// alarm에 넣어주기
-		int result2 = alService.insertAlarm(a);
-		
-		String view = "";
-		
-		if(result * result2 > 0) {
-			session.setAttribute("sendMsg", "발송되었습니다");
-			view = "redirect:selectList.nt";
-		} else {
-			view = "common/errorPage";
-		}
-				
-		return view;
+		return String.valueOf(result);
 	}
 	
 	@RequestMapping("detail.nt")
@@ -134,7 +115,7 @@ public class NoteController {
 		
 		if(noteNo != null) {
 			n = ntService.detailNote(Integer.parseInt(noteNo));
-			
+			System.out.println(n);
 			// 만약 쪽지의 정보를 가져왔는데
 			// 그 쪽지의 받는 사람 번호와 내 번호가 동일하면 읽은 거니까 그때 읽음으로 업데이트 처리
 			if(n.getReceiveNo() == ((Member)session.getAttribute("loginUser")).getMemberNo()) {

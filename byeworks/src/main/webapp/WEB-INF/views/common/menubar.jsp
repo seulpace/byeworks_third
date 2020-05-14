@@ -39,6 +39,10 @@
     <link href="${pageContext.request.contextPath}/resources/css/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/datatables/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/datatables/scroller.bootstrap.min.css" rel="stylesheet">
+    
+    <!-- alertifyJs -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -256,23 +260,25 @@
 	                 	</div>
 	               	</li>
 	               	<li role="presentation" class="nav-item dropdown open">
-	                 	<a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+	                 	<a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false" onclick="alertShow()">
 	                   		<i class="fa fa-envelope-o"></i>
-	                   		<span class="badge bg-blue">6</span>
+	                   		<span id="alarmBadge" class="badge bg-blue"></span>
 	                 	</a>
 	                 	<ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-	                   		<li class="nav-item">
-	                     		<a class="dropdown-item" href="go.al">
-	                       			<span class="image"><img src="${pageContext.request.contextPath}/resources/images/img.jpg" alt="Profile Image" /></span>
-	                       			<span>
-	                         			<span>John Smith</span>
-	                         			<span class="time">3 mins ago</span>
-	                       			</span>
-	                       			<span class="message">
-	                        			 쪽지가 도착했습니다.
-	                       			</span>
-	                     		</a>
-	                   		</li>
+	                 		<div id="alarmDiv">
+		                   		<%-- <li class="nav-item">
+		                     		<a class="dropdown-item" href="go.al">
+		                       			<span class="image"><img src="${pageContext.request.contextPath}/resources/images/img.jpg" alt="Profile Image" /></span>
+		                       			<span>
+		                         			<span>John Smith</span>
+		                         			<span class="time">3 mins ago</span>
+		                       			</span>
+		                       			<span class="message">
+		                        			 쪽지가 도착했습니다.
+		                       			</span>
+		                     		</a>
+		                   		</li> --%>
+		                   	</div>
                    			<li class="nav-item">
                      			<div class="text-center">
                        				<a class="dropdown-item" href="go.al">
@@ -288,6 +294,106 @@
 		</div>
 	</div>
 	<!-- /top navigation -->
+	
+	<script>
+		var ws;
+		
+        $(function() {
+        	checkAlarmCount();
+        	
+        	openSocket();
+        });
+        
+        function openSocket(){
+            if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
+                return;
+            }
+            //웹소켓 객체 만드는 코드
+            var id = "${ loginUser.memberId }";
+            ws=new WebSocket("ws://localhost:8888/byeworks/echo?id=" + id);
+            
+            ws.onopen=function(event){
+                if(event.data===undefined) return;
+            };
+            ws.onmessage=function(event){
+            	if(event.data != 'Connection Established') { // 처음 시작하는 문구 안 뜨게
+            		if(event.data.substr(5, 4) != 'note') {
+	            		alertify.alert(event.data);        			
+            		}
+            	}
+                checkAlarmCount();
+            };
+            ws.onclose=function(event){
+            }
+        }
+        
+        function closeSocket(){
+            ws.close();
+        }
+        
+        // 알람을 보여주는 함수
+        function alertShow() {
+        	var value = "";
+        	// 누르는 순간 해당 회원의 확인되지 않은 모든 알람이 조회된다
+        	$.ajax({
+        		url:'show.al',
+        		type:'get',
+        		success:function(list) {
+        			$.each(list, function(i, obj) {
+        				var goHref;
+        				var alMessage;
+        				
+        				if(obj.alarmGroup == 1) { // 쪽지면
+        					//goHref = "detail.nt?noteNo=" + obj.groupNo;
+        					goHref = "#";
+        					alMessage = "쪽지가 도착했습니다.";
+        				}
+        				value += "<li class='nav-item'> "
+        						+ "<a class='dropdown-item' href='" + goHref + "' onclick='readAlarm(" + obj.alarmNo + ", " + obj.alarmGroup + ", " + obj.groupNo + ");'>"
+        						+ "<span class='image'><img src='${pageContext.request.contextPath}/resources/profile_modify/" + obj.profileModify + "' alt='Profile Image'/></span>"
+        						+ "<span> <span>" + obj.sendName + "</span> </span>"
+        						+ "<span class='message'>" + alMessage + "</span> </a>"
+        						+ "</li>";
+        			});	
+        			
+        			$("#alarmDiv").html(value);
+        		},error:function() {
+        			console.log("ajax 통신 에러");
+        		}
+        	});
+        }
+        
+        // 확인 여부 체크하기
+        function readAlarm(alarmNo, alarmGroup, groupNo) {
+        	// 넘어온 alarmNo에 해당하는 거 확인여부 바꿔주고
+        	// 위에 알람도 바꿔줘야 한다
+        	$.ajax({
+        		url:'read.al',
+        		type:'post',
+        		data:{alarmNo:alarmNo},
+        		success:function() {
+        			checkAlarmCount();
+        			
+        			if(alarmGroup == 1) {
+        				location.href = "detail.nt?noteNo=" + groupNo;
+        			}
+        		},error:function() {
+        			console.log("ajax 통신 오류");
+        		}
+        	});
+        }
+        
+        // 알람 개수 체크해서 바꿔주기
+        function checkAlarmCount() {
+        	// ajax로 알람 개수 체크해서 바꿔주기
+        	$.ajax({
+        		url:'count.al',
+        		success:function(data) {
+        			$("#alarmBadge").text(data);
+        		}
+        	});
+        }
+	</script>
 	
 	<!-- 각종 JS들 -->
 	<script src="${pageContext.request.contextPath}/resources/js/build/custom.min.js"></script>

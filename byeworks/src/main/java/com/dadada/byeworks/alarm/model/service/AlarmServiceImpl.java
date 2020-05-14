@@ -38,4 +38,24 @@ public class AlarmServiceImpl implements AlarmService{
 		return alDao.insertAlarm(sqlSession, a);
 	}
 
+	@Override
+	public int updateRead(int no) {
+		return alDao.updateRead(sqlSession, no);
+	}
+
+	@Override
+	public ArrayList<Alarm> showAlarm(int no) {
+		return alDao.showAlarm(sqlSession, no);
+	}
+
+	@Override
+	public int countAlarm(int no) {
+		return alDao.countAlarm(sqlSession, no);
+	}
+
+	@Override
+	public int readAlarm(int alarmNo) {
+		return alDao.readAlarm(sqlSession, alarmNo);
+	}
+
 }

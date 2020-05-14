@@ -32,5 +32,7 @@ public class Note {
 	// ㅎㅎ
 	private String sendName; // 보낸 사람
 	private String receiveName; // 받는 사람
-
+	private String sendId; // 보낸 사람 아이디
+	private String receiveId; // 받는 사람 아이디
+	
 }
