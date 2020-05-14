@@ -18,7 +18,7 @@ public class Annual {
 	private int annualNo;			// 연차번호
 	private int memberNo;			// 직원 번호
 	private String annualCreate;	// 연차 총생성일
-	private int annualRemain;		// 연차 잔여일
+	private double annualRemain;	// 연차 잔여일
 	private String annName;			// 직원 이름
 	private String annDept;			// 직원 부서	
 	private String annPos;			// 직원 직급

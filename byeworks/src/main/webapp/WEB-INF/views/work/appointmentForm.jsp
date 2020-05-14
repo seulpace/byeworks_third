@@ -37,7 +37,7 @@
                 </div>
                 <div class="x_content">
                   <br>
-                  <form class="form-horizontal form-label-left">
+                  <form id="appointmentInsert" action="appointment.app" method="post" class="form-horizontal form-label-left" >
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">이름</label>
                       <div class="col-md-4 col-sm-4">
@@ -61,15 +61,81 @@
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                                <button type="button" id="insertEmpNo" class="btn btn-primary">등록하기</button>
+                                <button type="button" data-dismiss="modal" id="insertEmpNo" class="btn btn-primary">등록하기</button>
                               </div>
       
-                     
                           	</div>
                         	</div>
                      	 </div>
                   	  </div>
-                    <script>
+                    
+                   
+                    <div class="form-group row">
+                      <label class="control-label col-md-3 col-sm-3 ">사번</label>
+                      <div class="col-md-9 col-sm-9 ">
+                        <input type="text" class="form-kdh"  id="appEmpno" name="appEmpno" readonly="readonly" value="">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="control-label col-md-3 col-sm-3 ">입사일</label>
+                      <div class="col-md-9 col-sm-9 ">
+                        <input type="text" class="form-kdh" id="enrollday" name="enrollday" readonly="readonly" value="">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
+                      <div class="col-md-3 col-sm-3">
+                        <input type="text" class="form-kdh" id="departmentName" name="departmentName" readonly="readonly" value="">
+                      </div>
+                      <div class="com-md-2 col-sm-2"></div>
+                      <div class="col-md-3 col-sm-3">
+                        <select id="deptAfter" name="deptAfter">
+                          <option value="">--------------------</option>
+                          <option value="2">사업팀1</option>
+                          <option value="3">사업팀2</option>
+                          <option value="4">인사팀1</option>
+                          <option value="5">인사팀2</option>
+                          <option value="6">총무팀1</option>
+                          <option value="7">총무팀2</option>
+                        </select>
+                      </div>  
+                    </div> 
+                    
+                    <div class="form-group row">
+                      <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
+                        <div class="col-md-3 col-sm-3">
+                          <input type="text" class="form-kdh" readonly="readonly" id="positionName" name="positionName" value="">
+                        </div>
+                        <div class="com-md-2 col-sm-2"></div>
+                        <div class="col-md-3 col-sm-3">
+                          <select id="positionAfter" name="positionAfter">
+                                <option value="9">--------------------</option>
+                                <option value="1">임원</option>
+                                <option value="2">부장</option>
+                                <option value="3">과장</option>
+                                <option value="4">사원</option>
+                          </select>
+                        </div>
+                    </div>
+                  
+                  	<input type="hidden" value="A" name="docType">
+                    <input type="hidden" value="" id="appointLev" name="appointLev">          	
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-9 col-sm-9  offset-md-3">
+                        <button type="submit" class="btn btn-success">전자결재로 이동</button>
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+		<script>
+		 
+					
+		
+		
                     	$(function(){
                     		
                     		$("#searchMemberName").click(function(){
@@ -89,7 +155,7 @@
         					        	
                     					});
                     					$("#empNoList").html(value);
-                    					
+                    				
                     					
                     				},error:function(){
                     					console.log("실패");
@@ -97,80 +163,43 @@
                     				
                     			});
                     		});
-                    		
                     		$("#insertEmpNo").click(function(){
-                    			
-                    			
-                    			
-                    			
-                    			
+                    			if($('input[name="searchMemberNo"]').is(':checked')){
+                    				
+                    				$.ajax({
+                    					url:"retireList.me",
+            	        				data:{mno:$('input[name="searchMemberNo"]:checked').val()},
+            	        				type:"get",
+            	        				success:function(m){
+            	        					$("#appEmpno").val(m.empNo);
+            	        					$("#enrollday").val(m.enrollday);
+            	        					$("#positionName").val(m.position);
+            	        					$("#departmentName").val(m.department);
+                    					
+            	        				},error:function(){
+            	        					console.log("x");
+            	        				}
+                    				});
+                    				
+                    			}
                     		});
+                    				
+                    		
+                    		$("#deptAfter").change(function(){
+                        		
+                        		$("#appointLev").val(0);
+                        	});
+                    		$("#positionAfter").change(function(){
+                        		
+                        		$("#appointLev").val(1);
+                        	});
+                    		
                     	});
                     
+                    	
+                    	
                     
                     </script>
-                   
-                    <div class="form-group row">
-                      <label class="control-label col-md-3 col-sm-3 ">사번</label>
-                      <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-kdh"  id="appEmpno" name="appEmpno" readonly="readonly" value="">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="control-label col-md-3 col-sm-3 ">입사일</label>
-                      <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-kdh" id="enrollday" name="enrollday" readonly="readonly" value="">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
-                      <div class="col-md-3 col-sm-3">
-                        <input type="text" class="form-kdh" id="department" name="department" readonly="readonly" value="">
-                      </div>
-                      <div class="com-md-2 col-sm-2"></div>
-                      <div class="col-md-3 col-sm-3">
-                        <select id="deptAfter" name="deptAfter">
-                          <option value="">--------------------</option>
-                          <option value="2">사업팀1</option>
-                          <option value="3">사업팀2</option>
-                          <option value="4">인사팀1</option>
-                          <option value="5">인사팀2</option>
-                          <option value="6">총무팀1</option>
-                          <option value="7">총무팀2</option>
-                        </select>
-                      </div>  
-                    </div> 
-                    
-                    <div class="form-group row">
-                      <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
-                        <div class="col-md-3 col-sm-3">
-                          <input type="text" class="form-kdh" readonly="readonly" id="position" name="position" value="">
-                        </div>
-                        <div class="com-md-2 col-sm-2"></div>
-                        <div class="col-md-3 col-sm-3">
-                          <select id="positionAfter" name="positionAfter">
-                                <option value="">--------------------</option>
-                                <option value="">임원</option>
-                                <option value="2">부장</option>
-                                <option value="3">과장</option>
-                                <option value="4">사원</option>
-                          </select>
-                        </div>
-                    </div>
-                  
-                   
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                      <div class="col-md-9 col-sm-9  offset-md-3">
-                        <button type="submit" class="btn btn-success">전자결재로 이동</button>
-                      </div>
-                    </div>
-
-                  </form>
-                </div>
-              </div>
-            </div>
-		
         <!-- footer content -->
         <jsp:include page="../common/footer.jsp"/>
         

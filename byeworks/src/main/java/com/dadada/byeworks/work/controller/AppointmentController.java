@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dadada.byeworks.member.model.service.MemberService;
@@ -87,18 +86,26 @@ public class AppointmentController {
 	
 		new Gson().toJson(list, response.getWriter());
 	}
-	/** 김다흰 : 발령 사번 검색시 사원 조회
-	 * @param appEmpno
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="appointmentList.adto", produces="application/json; charset=utf-8")
-	public String appointmentList(int appEmpno) {
+	
+	
+	@RequestMapping("appointment.app")
+	public ModelAndView appointmentInsert(ModelAndView mv, AppointmentDto appd) {
 		
-		Member adto = sService.appointmentList(appEmpno);
+	
+		if(appd.getAppointLev() == 0) {
+		   int num1 = appd.getDeptBefore(); 
+		   appd.setDeptAfter(num1);
+		   
+		}else if(appd.getAppointLev() == 1) {
+			int num2 = appd.getPositionBefore();
+			appd.setPositionAfter(num2);
+		}
+		mv.addObject("type", "A").setViewName("work/directEnrollForm");
+		mv.addObject("appd", appd).setViewName("work/directEnrollForm");
 		
-		return new Gson().toJson(adto);
 		
+		System.out.println(appd);
+		return mv;
 	}
 
 }

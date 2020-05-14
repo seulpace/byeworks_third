@@ -150,13 +150,14 @@
                  
                   <script>
 
-                  var type="${annual.docType}";
+                  var type1="${annual.docType}";
                   
+                  var type2="${appd.docType}";
                   
-                  
+                  console.log(type2);
 
                   $(function(){
-                 if(type == 'V'){
+                 if(type1 == 'V'){
                     $("#docu option:eq(2)").attr("selected", "selected");
                     $(".vacation").show();
                     $("#enroll").attr("action", "insertSignAnnual.si");
@@ -165,6 +166,16 @@
                     $(".promotion").hide();
 
                  }
+                 
+                 if(type2 == 'A'){
+                     $("#docu option:eq(3)").attr("selected", "selected");
+                     $(".promotion").show();
+                     $("#enroll").attr("action","insertSignAppointment.si");
+                     $(".up").hide();
+                     $(".vacation").hide();
+                     $(".quit").hide();
+
+                  }
                  
                    $("#docu").change(function(){
                     var docu = $("#docu option:selected").text();
@@ -435,10 +446,25 @@
 								  
 								  <tr>
                                       <th>(승진/발령)종류</th>
-                                      <td>
-                                      	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev">&nbsp; 
-                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
-                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev">&nbsp; 
+                                      <td>"${annual.annualType eq 1}"
+                                      <c:choose>
+	                                 		<c:when test="${appd.appointLev eq 0}">
+		                                      	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev" checkd>&nbsp; 
+		                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
+		                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev">&nbsp; 
+    										</c:when>
+    										 <c:when test="${appd.appointLev eq 1}">
+		                                      	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev" >&nbsp; 
+		                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev" checkd>&nbsp;
+		                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev">&nbsp; 
+    										</c:when>
+    										 <c:when test="${appd.appointLev eq 2}">
+		                                      	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev" >&nbsp; 
+		                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
+		                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev" checkd>&nbsp; 
+    										</c:when>
+    								
+    								 </c:choose>		
                                       </td>
                                   </tr>
 								  

@@ -44,6 +44,7 @@
 		<url-pattern>*.nt</url-pattern>
 		<url-pattern>*.sc</url-pattern>
 		<url-pattern>*.al</url-pattern>
+		<url-pattern>*.app</url-pattern>
 	</servlet-mapping>
 	
 	<!-- encodingFilter 등록!! -->

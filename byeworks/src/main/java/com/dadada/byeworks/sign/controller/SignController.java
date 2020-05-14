@@ -585,7 +585,7 @@ public class SignController {
 
 		mv.addObject("type","V").setViewName("work/directEnrollForm");
 		
-		System.out.println(annualSign);
+	
 
 		mv.addObject("annual", annualSign).setViewName("work/directEnrollForm");
 		
