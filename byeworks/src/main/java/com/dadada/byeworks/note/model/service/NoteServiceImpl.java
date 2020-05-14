@@ -62,4 +62,9 @@ public class NoteServiceImpl implements NoteService{
 		}
 	}
 
+	@Override
+	public int returnSequence() {
+		return ntDao.returnSequence(sqlSession);
+	}
+
 }

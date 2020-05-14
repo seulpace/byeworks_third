@@ -29,4 +29,7 @@ public interface NoteService {
 	
 	// 쪽지 삭제
 	int deleteNote(ArrayList<Integer> noteNo, String classStr);
+	
+	// 쪽지의 가장 큰 번호를 리턴하는 메서드
+	int returnSequence();
 }
