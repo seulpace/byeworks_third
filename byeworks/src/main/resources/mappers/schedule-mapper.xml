@@ -51,7 +51,7 @@
 		  FROM (SELECT ROWNUM, SCH_NO, TITLE, BEGIN, END, LOCATION, NOTE, COLOR
 		          FROM TB_INDIVIDUAL
 		         WHERE DELETED = 'N'
-		           AND MEMBER_NO = 1
+		           AND MEMBER_NO = #{no}
 		           AND ((TO_CHAR(SYSDATE, 'MON') = TO_CHAR(BEGIN, 'MON')) OR (TO_CHAR(SYSDATE, 'MON') = TO_CHAR(END, 'MON')))
 		           AND END <![CDATA[> ]]> SYSDATE)
 		 WHERE ROWNUM <![CDATA[<= ]]> 5

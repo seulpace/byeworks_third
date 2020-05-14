@@ -127,35 +127,40 @@
 	                		<div class="x_content">
                     		<!-- start accordion -->
                     			<div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-                    				<c:forEach items="${ sList }" var="s">
-                      				<div class="panel">
-                        				<a class="panel-heading" style="" role="tab" id="heading${ s.schNo }" data-toggle="collapse" data-parent="#accordion" href="#collapse${ s.schNo }" aria-expanded="true" aria-controls="collapse${ s.schNo }">
-                          					<h4 class="panel-title">${ s.title }</h4>
-                        				</a>
-                        				<div id="collapse${ s.schNo }" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading${ s.schNo }">
-                        					<div style="margin-left:3%; margin-right:3%; margin-top:3%">
-	                          					<div class="form-group row">
-						                        	<label class="col-form-label col-md-2 col-sm-2">일자</label>
-						                        	<div class="col-md-10 col-sm-10 ">
-						                          		<input type="text" class="form-control" placeholder="일자 없음" value="${ s.beginDate } ~ ${ s.endDate }">
-						                        	</div>
+                    				<c:if test="${ ! empty sList }">
+	                    				<c:forEach items="${ sList }" var="s">
+	                      				<div class="panel">
+	                        				<a class="panel-heading" style="" role="tab" id="heading${ s.schNo }" data-toggle="collapse" data-parent="#accordion" href="#collapse${ s.schNo }" aria-expanded="true" aria-controls="collapse${ s.schNo }">
+	                          					<h4 class="panel-title">${ s.title }</h4>
+	                        				</a>
+	                        				<div id="collapse${ s.schNo }" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading${ s.schNo }">
+	                        					<div style="margin-left:3%; margin-right:3%; margin-top:3%">
+		                          					<div class="form-group row">
+							                        	<label class="col-form-label col-md-2 col-sm-2">일자</label>
+							                        	<div class="col-md-10 col-sm-10 ">
+							                          		<input type="text" class="form-control" placeholder="일자 없음" value="${ s.beginDate } ~ ${ s.endDate }">
+							                        	</div>
+							                      	</div>
+							                      	<div class="form-group row">
+							                        	<label class="col-form-label col-md-2 col-sm-2 ">위치</label>
+							                        	<div class="col-md-10 col-sm-10 ">
+							                          		<input type="text" class="form-control" placeholder="위치 없음" value="${ s.location }">
+							                        	</div>
+							                      	</div>
+							                      	<div class="form-group row">
+							                        	<label class="col-form-label col-md-2 col-sm-2 ">메모</label>
+							                        	<div class="col-md-10 col-sm-10 ">
+							                          		<input type="text" class="form-control" placeholder="메모 없음" value="${ s.note }">
+							                        	</div>
+							                      	</div>
 						                      	</div>
-						                      	<div class="form-group row">
-						                        	<label class="col-form-label col-md-2 col-sm-2 ">위치</label>
-						                        	<div class="col-md-10 col-sm-10 ">
-						                          		<input type="text" class="form-control" placeholder="위치 없음" value="${ s.location }">
-						                        	</div>
-						                      	</div>
-						                      	<div class="form-group row">
-						                        	<label class="col-form-label col-md-2 col-sm-2 ">메모</label>
-						                        	<div class="col-md-10 col-sm-10 ">
-						                          		<input type="text" class="form-control" placeholder="메모 없음" value="${ s.note }">
-						                        	</div>
-						                      	</div>
-					                      	</div>
-                        				</div>
-                      				</div>
-                      				</c:forEach>
+	                        				</div>
+	                      				</div>
+	                      				</c:forEach>
+                      				</c:if>
+                      				<c:if test="${ empty sList }">
+                      					등록된 일정이 없습니다.
+                      				</c:if>
                     			</div>
                     			<!-- end of accordion -->
                   			</div>

@@ -150,8 +150,7 @@
                  
                   <script>
 
-                    
-                    		
+
                     $(function(){
                     	
                     	

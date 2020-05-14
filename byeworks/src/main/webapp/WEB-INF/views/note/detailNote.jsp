@@ -76,7 +76,7 @@
                                 							<br>
                                 							<div style="padding-left: 15px; padding-right: 15px;">
                                   								<div style="float:right;">
-                                    								<button class="btn btn-diy" type="button" style="color:white;" onclick="location.href='selectList.nt'"><small>뒤로 가기</small></button>
+                                    								<button class="btn btn-diy" type="button" style="color:white;" onclick="location.href='selectList.nt'"><small>목록으로</small></button>
                                     								<c:if test="${ loginUser.memberNo ne n.sendNo }">
                                     									<button class="btn btn-warning" type="button" onclick="$('#replyForm').submit();"><small>답장 하기</small></button>
                                     								</c:if>

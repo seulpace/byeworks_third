@@ -579,14 +579,19 @@ public class SignController {
 	 * @return
 	 */
 	@RequestMapping("annualInsert.ann")
+
 	public ModelAndView annualInsertSign(ModelAndView mv, AnnualDto annualSign) {
+
+
+		mv.addObject("type","V").setViewName("work/directEnrollForm");
 		
-	
+		System.out.println(annualSign);
+
 		mv.addObject("annual", annualSign).setViewName("work/directEnrollForm");
 		
-	
-		
+
 		return mv;
 	}
 
-}
+	}
+

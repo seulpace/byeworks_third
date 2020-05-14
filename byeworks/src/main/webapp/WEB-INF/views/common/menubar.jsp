@@ -157,8 +157,10 @@
 			                          	</li>
                         			</ul>
                       			</li>
+                      		<c:if test="${loginUser.positionNo ne 4 }">
                       			<li><a href="selectSignList.si?mno=${ loginUser.memberNo }&type=8">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
                       			</li>
+                      		</c:if>
 		                      	<li><a href="enrollForm.si">결재 작성하기</a> <!-- 결재 등록화면 이동 -->
 		                      	</li>
                   			</ul>
@@ -256,11 +258,11 @@
 	               	<li role="presentation" class="nav-item dropdown open">
 	                 	<a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
 	                   		<i class="fa fa-envelope-o"></i>
-	                   		<span class="badge bg-green">6</span>
+	                   		<span class="badge bg-blue">6</span>
 	                 	</a>
 	                 	<ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
 	                   		<li class="nav-item">
-	                     		<a class="dropdown-item">
+	                     		<a class="dropdown-item" href="go.al">
 	                       			<span class="image"><img src="${pageContext.request.contextPath}/resources/images/img.jpg" alt="Profile Image" /></span>
 	                       			<span>
 	                         			<span>John Smith</span>
@@ -273,7 +275,7 @@
 	                   		</li>
                    			<li class="nav-item">
                      			<div class="text-center">
-                       				<a class="dropdown-item">
+                       				<a class="dropdown-item" href="go.al">
 	                         			<strong>모든 알람 보러가기</strong>
 	                         			<i class="fa fa-angle-right"></i>
                        				</a>
