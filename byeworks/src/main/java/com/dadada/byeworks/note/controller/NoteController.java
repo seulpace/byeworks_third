@@ -1,8 +1,11 @@
 package com.dadada.byeworks.note.controller;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dadada.byeworks.alarm.model.service.AlarmService;
+import com.dadada.byeworks.alarm.model.vo.Alarm;
 import com.dadada.byeworks.member.model.dto.MemberAddress;
 import com.dadada.byeworks.member.model.service.MemberService;
 import com.dadada.byeworks.member.model.vo.Member;
@@ -28,6 +33,9 @@ public class NoteController {
 	
 	@Autowired
 	private MemberService mService;
+	
+	@Autowired
+	private AlarmService alService;
 	
 	@RequestMapping("selectList.nt")
 	public ModelAndView selectNoteList(ModelAndView mv, HttpSession session) {
@@ -86,11 +94,30 @@ public class NoteController {
 	@RequestMapping("send.nt")
 	public String sendNote(HttpSession session, Note n) {
 		
+		// 쪽지에 insert
 		int result = ntService.sendNote(n);
+		
+		// 쪽지에 넣자마자 쪽지의 가장 큰 시퀀스를 받아오자
+		int noteNo = ntService.returnSequence();
+		
+		// alarm에 insert 해야 한다...
+		Alarm a = new Alarm();
+		
+		// 날짜 받아오기
+		Calendar cal = new GregorianCalendar();
+		Date date = new Date(cal.getTimeInMillis());
+		a.setAlarmDate(date);
+		a.setAlarmGroup(1);
+		a.setGroupNo(noteNo);
+		a.setSendNo(n.getSendNo());
+		a.setReceiveNo(n.getReceiveNo());
+		
+		// alarm에 넣어주기
+		int result2 = alService.insertAlarm(a);
 		
 		String view = "";
 		
-		if(result > 0) {
+		if(result * result2 > 0) {
 			session.setAttribute("sendMsg", "발송되었습니다");
 			view = "redirect:selectList.nt";
 		} else {

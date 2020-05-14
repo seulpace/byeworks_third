@@ -160,6 +160,9 @@
                     $("#docu option:eq(2)").attr("selected", "selected");
                     $(".vacation").show();
                     $("#enroll").attr("action", "insertSignAnnual.si");
+                    $(".up").hide();
+                    $(".quit").hide();
+                    $(".promotion").hide();
 
                  }
                  
@@ -239,7 +242,7 @@
                         </div>
                       </div>
                       <div class="panel">
-                        <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                           <h4 class="panel-title">결재선</h4>
                         </a>
                         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
@@ -275,7 +278,7 @@
                       </div>
                       </div>
                       <div class="panel">
-                        <a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                           <h4 class="panel-title">상세입력</h4>
                         </a>
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">

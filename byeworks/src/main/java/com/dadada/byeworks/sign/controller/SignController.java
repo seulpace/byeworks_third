@@ -580,71 +580,21 @@ public class SignController {
 		}
 	
 
-	/** 김다흰 : 발령 내역 조회
-	 * @param session
+	
+	/** 김다흰 : 연차 작성 후 전자결재로 이동
 	 * @param mv
+	 * @param annualSign
 	 * @return
 	 */
-	@RequestMapping("appointmentList.adto")
-	public ModelAndView selectAppointmentList(HttpSession session, ModelAndView mv) {
-		
-		ArrayList<Integer> list1 = new ArrayList();
-		list1.add(2);
-		list1.add(3);
-		 
-		ArrayList<Integer> list2 = new ArrayList();
-		list2.add(4);
-		list2.add(5);
-		
-		ArrayList<Integer> list3 = new ArrayList();
-		list3.add(6);
-		list3.add(7);
-		
-		
-		ArrayList<AppointmentDto> appList1 = sService.selectAppointmentList(list1);
-		ArrayList<AppointmentDto> appList2 = sService.selectAppointmentList(list2);
-		ArrayList<AppointmentDto> appList3 = sService.selectAppointmentList(list3);
-		mv.addObject("appList1", appList1);
-		mv.addObject("appList2", appList2);
-		mv.addObject("appList3", appList3);
-		mv.setViewName("work/appointmentList");
-		
-		return mv;
-		
-	}
-
-	
-	/** 김다흰 : 발령서 작성 페이지 이동
-	 * @return
-	 */
-	@RequestMapping("appointmentForm.adto")
-	public String appointmentForm() {
-		
-		return "work/appointmentForm";
-	}
-	
-	/** 김다흰 : 발령 사번 검색시 사원 조회
-	 * @param appEmpno
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="appointmentList.adto", produces="application/json; charset=utf-8")
-	public String appointmentList(int appEmpno) {
-		
-		Member adto = sService.appointmentList(appEmpno);
-		
-		return new Gson().toJson(adto);
-		
-	}
-	
 	@RequestMapping("annualInsert.ann")
 
 	public ModelAndView annualInsertSign(ModelAndView mv, AnnualDto annualSign) {
 
-		
+
 		mv.addObject("type","V").setViewName("work/directEnrollForm");
 		
 		System.out.println(annualSign);
+
 		mv.addObject("annual", annualSign).setViewName("work/directEnrollForm");
 		
 

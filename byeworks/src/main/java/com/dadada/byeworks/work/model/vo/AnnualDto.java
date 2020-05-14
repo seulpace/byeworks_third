@@ -18,7 +18,7 @@ public class AnnualDto {
 	
 	private int signNo;
 	private Date signUse;
-	private int annualPeriod;
+	private double annualPeriod;
 	private String annualStartDay;
 	private String annualEndDay;
 	private String annualContent;
