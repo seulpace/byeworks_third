@@ -472,7 +472,7 @@
                                       <th>성명</th>
                                       <td>
                                       	<select id="aDepartment" name="depBefore" style="border:none;">
-                                      		<option>부서를 선택하세요</option>
+                                      	
                                       	</select>
                                       
                                       	<select id="aEmpList" name="appointmentMem" style="border:none;">

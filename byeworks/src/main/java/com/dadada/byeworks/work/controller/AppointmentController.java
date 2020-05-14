@@ -92,11 +92,12 @@ public class AppointmentController {
 	public ModelAndView appointmentInsert(ModelAndView mv, AppointmentDto appd) {
 		
 	
-		if(appd.getAppointLev() == 0) {
+		if(appd.getAppointLev() == 0 && appd.getDeptAfter() == 9) {
+			
 		   int num1 = appd.getDeptBefore(); 
 		   appd.setDeptAfter(num1);
 		   
-		}else if(appd.getAppointLev() == 1) {
+		}else if(appd.getAppointLev() == 1 && appd.getPositionAfter() == 9) {
 			int num2 = appd.getPositionBefore();
 			appd.setPositionAfter(num2);
 		}

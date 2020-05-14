@@ -90,7 +90,7 @@
                       <div class="com-md-2 col-sm-2"></div>
                       <div class="col-md-3 col-sm-3">
                         <select id="deptAfter" name="deptAfter">
-                          <option value="">--------------------</option>
+                          <option value="9">--------------------</option>
                           <option value="2">사업팀1</option>
                           <option value="3">사업팀2</option>
                           <option value="4">인사팀1</option>
