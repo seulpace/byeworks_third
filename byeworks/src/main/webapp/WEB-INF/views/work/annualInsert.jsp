@@ -156,12 +156,19 @@
 		      	$('input[name="annPeriod"]').val(annPeriod); 
 		      	
 
-        		var dateDiff = "";
-        		
-        		var option = $("#annualType option:selected").val();
+        	
+			});
+		  
+		  $("#annualType").change(function(){
 
-        		if(option == 0){
-        		
+      		var dateDiff = "";
+      		
+      		//var option = $("#annualType option:selected").val();
+				var option = $('#annualType option:selected').val();
+      		
+      		console.log(option);
+      		if(option == 0){
+      		
 	        		var sdt = new Date($("#annualStartDay").val());
 	        		
 	        		var edt = new Date($("#annualEndDay").val());
@@ -169,14 +176,13 @@
 	        		 dateDiff = Math.ceil((edt.getTime()-sdt.getTime())/(1000*3600*24)+1);
 	        		
 	        		 $("#annualPeriod").val(dateDiff);
-        		
-        		}else{
-        		 $("#annualPeriod").val(0.5);
-        		}
-		     
-        		
-        		console.log(dateDiff);
-			});
+      		
+      		}else{
+      		 $("#annualPeriod").val(0.5);
+      		 
+      		
+      		}
+		  });
 	     
 		  
 	});

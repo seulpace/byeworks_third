@@ -56,15 +56,12 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                                 </button>
                               </div>
-                              <div class="modal-body">
-	                        	<c:forEach items="${list}" var="m">      
-	                                <label for="empno">* 사번:</label>
-					                <input type="text" class="form-control" id="empno" name="empno" value="${m.empno }" readonly><br>
-					        	</c:forEach>
+                              <div class="modal-body" id="empNoList">
+	                        	  
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                                <button type="button"  onclick="appointmentBtn();" class="btn btn-primary">등록하기</button>
+                                <button type="button" id="insertEmpNo" class="btn btn-primary">등록하기</button>
                               </div>
       
                      
@@ -75,17 +72,36 @@
                     <script>
                     	$(function(){
                     		
-                    		$("searchMemberName").click(function(){
+                    		$("#searchMemberName").click(function(){
                     			$.ajax({
                     				url:"searchMemberName.me",
-                    				data:{memberName:$("#appointmentName").val()},
+                    				data:{"memberName":$("#appointmentName").val()},
                     				type:"get",
-                    				success:function(m){
-                    					$("")
+                    				success:function(list){
+                    					
+                    					var value="";
+                    					$.each(list, function(i, m){
+                    						
+
+        	                                value += '<input type="radio" id="searchMemberNo" name="searchMemberNo" value='+ m.memberNo +'>' +
+        	                                		 '<label for="empno">* 사번:</label>' +
+        					                		 '<input type="text" class="form-control" id="empno" name="empno" value='+ m.empNo +' readonly><br>';
+        					        	
+                    					});
+                    					$("#empNoList").html(value);
+                    					
+                    					
+                    				},error:function(){
+                    					console.log("실패");
                     				}
                     				
-                    				
-                    			})
+                    			});
+                    		});
+                    		
+                    		$("#insertEmpNo").click(function(){
+                    			
+                    			
+                    			
                     			
                     			
                     		});

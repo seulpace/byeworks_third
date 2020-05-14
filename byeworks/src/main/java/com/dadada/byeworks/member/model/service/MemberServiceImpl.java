@@ -123,4 +123,11 @@ public class MemberServiceImpl implements MemberService {
 
 		return mDao.retireMember(sqlSession, memberNo);
 	}
+
+	// 김다흰
+	@Override
+	public ArrayList<Member> searchMemberName(String memberName) {
+
+		return mDao.searchMemberName(sqlSession, memberName);
+	}
 }
