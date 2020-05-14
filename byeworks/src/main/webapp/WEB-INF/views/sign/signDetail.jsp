@@ -28,7 +28,7 @@
 	<!-- 인쇄 관련 스크립트 -->
 	<script>
 	function print(printArea){
-
+		
   		win = window.open(); 
 
   		self.focus(); 
@@ -57,10 +57,10 @@
 	<div class="right_col" role="main">
           <!-- top tiles -->
          <c:if test="${ list.signStatus eq 'C' }">
-         <div style="float:right;"><button class="btn btn-primary" onclick="print(document.getElementById('printArea').innerHTML)">인쇄하기</button></div>
+         <div id="printBtn" style="float:right;"><button class="btn btn-primary" onclick="print(document.getElementById('printArea').innerHTML)">인쇄하기</button></div>
          </c:if>   
             
-            <div id="printArea"style="width: 70%;margin-left: 100px;;" >
+            <div id="printArea" style="width: 70%; margin-left: 100px;;" >
             <div class="panel-body">
                             
                 <table class="table table-bordered">
@@ -133,7 +133,7 @@
 		                      				<c:choose>
 				                      		 	<c:when test = "${item.first}">
 		                      		 		
-				                       		   			<td><button id="signLineConfirm">승인</button><button id="signLineReturn">반려</button></td>
+				                       		   			<td><button class="btn btn-primary" id="signLineConfirm">승인</button><button class="btn btn-danger" id="signLineReturn">반려</button></td>
 
 				                      		   	</c:when>
 				                      		   	
@@ -142,16 +142,16 @@
 				                      		   	<c:otherwise>
 				                      		   		 <c:choose>
 				                      		   		 	<c:when test="${ slist[item.index-1].status == 'C' }"> 	
-				                      		   				<td><button id="signLineConfirm">승인</button><button id="signLineReturn">반려</button></td>
+				                      		   				<td><button class="btn btn-primary" id="signLineConfirm">승인</button><button class="btn btn-danger" id="signLineReturn">반려</button></td>
 				                      		   					
 				                      		   			</c:when>
 				                      		   			
 				                      		   			<c:when test="${ slist[item.index-1].status == 'R' }">
-				                      		   				<td><button id="signLineConfirm" disabled>승인</button><button id="signLineReturn" disabled>반려</button></td>
+				                      		   				<td><button class="btn btn-primary" id="signLineConfirm" disabled>승인</button><button class="btn btn-danger" id="signLineReturn" disabled>반려</button></td>
 				                      		   			</c:when>
 				                      		   			
 				                      		   			<c:otherwise>
-				                      		   				<td><button id="signLineConfirm" disabled>승인</button><button id="signLineReturn" disabled>반려</button></td>
+				                      		   				<td><button class="btn btn-primary" id="signLineConfirm" disabled>승인</button><button class="btn btn-danger" id="signLineReturn" disabled>반려</button></td>
 				                      		   			</c:otherwise>
 				                      		   		</c:choose>
 				                      		   	</c:otherwise>
@@ -328,12 +328,12 @@
 			
 			<c:choose>
 				<c:when test="${ list.signStatus eq 'N' }">
-					<button id="signUpBtn">결재 상신</button>
-					<button id="signUpdateBtn">결재 수정</button>
+					<button class="btn btn-primary" id="signUpBtn">결재 상신</button>
+					<button class="btn btn-warning" id="signUpdateBtn">결재 수정</button>
 				</c:when>
 				
 				<c:when test="${ list.signStatus eq 'O' and loginUser.memberNo eq list.memberNo}">
-					<button id="cancelSignBtn">결재 회수</button>
+					<button class="btn btn-danger" id="cancelSignBtn">결재 회수</button>
 				</c:when>
 			</c:choose>
 			

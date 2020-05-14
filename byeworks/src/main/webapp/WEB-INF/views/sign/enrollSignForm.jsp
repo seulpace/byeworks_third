@@ -206,7 +206,6 @@
                         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                           
                           <div class="panel-body">
-                            
                               	
                             <table class="table table-bordered">
                                 <tr>
@@ -216,7 +215,9 @@
                                         <option>선택</option>
                                         <option value="">기안서</option>
                                         <option value="V">휴가/연차</option>
+                                       <c:if test="${loginUser.department eq '인사팀1' or loginUser.department eq '인사팀2' }">
                                         <option value="A">승진/발령</option>
+                                       </c:if>
                                         <option value="Q">사직서</option>
                                       </select>
                                   </td>
@@ -444,13 +445,9 @@
                                 </tr>
                       
                               </table><br>
-                      
-                      
-                
-      
-
                           </div>
-
+                          
+                        
                           <div class="panel-body promotion" style="display:none">
                             <br>
                                 <h2 align="center">승진/발령</h2>
@@ -672,7 +669,7 @@
                       </div>
                       <br>
                       <div id="buttonArea" style="text-align:center;">
-                      <button type="submit">결재등록</button> <button type="reset">초기화</button>
+                      <button class="btn btn-primary" type="submit">결재등록</button> <button class="btn btn-secondary" type="reset">초기화</button>
                       </div>
                       </form>
                     </div>
@@ -768,7 +765,6 @@
           
           
           
-              </div>
 
               </div>
               <div class="modal-footer">

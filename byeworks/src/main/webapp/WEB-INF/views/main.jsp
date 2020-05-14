@@ -42,8 +42,9 @@
           	
 	          	<!-- top tiles -->
 	          	<div class="well" style="overflow: auto">
-	            	<button class="btn btn-danger"style="display: none;"><small>출근하기</small></button>
-	            	<button class="btn btn-danger" ><small>퇴근하기</small></button>
+	         
+	            	<button class="btn btn-danger"><small>출근하기</small></button>
+	            	<button class="btn btn-danger"><small>퇴근하기</small></button>
 	          	</div>
 				
           		<div class="row" style="display: block;">

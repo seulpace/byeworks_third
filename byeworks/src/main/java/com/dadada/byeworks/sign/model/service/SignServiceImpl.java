@@ -16,6 +16,7 @@ import com.dadada.byeworks.sign.model.dto.SignAndQuit;
 import com.dadada.byeworks.sign.model.dto.SignLineDto;
 import com.dadada.byeworks.sign.model.dto.SignReferDto;
 import com.dadada.byeworks.sign.model.dto.UpdateQuitDto;
+import com.dadada.byeworks.sign.model.vo.Appointment;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -330,6 +331,9 @@ public class SignServiceImpl implements SignService {
 		return result1*result2;
 	}
 
+	/**
+	 * 참조확인
+	 */
 	@Override
 	public int checkRefer(int sno, int mno) {
 		
@@ -353,11 +357,28 @@ public class SignServiceImpl implements SignService {
 			
 			result = sDao.updateMemberStatus(sqlSession, memberlist);
 			
-			
 		}
 		return result;
 	}
 
+	@Override
+	public int updateEmpInfo2(String day) {
+		
+		ArrayList<Appointment> list = sDao.selectList(sqlSession, day);
+		
+		int result = 0;
+		
+		if(!list.isEmpty()) {
+			System.out.println(list);
+			
+			result = sDao.updateMemberStatus2(sqlSession, list);
+			
+		}
+		return result;
+	}
+	
+	
+	
 	// 김다흰
 	// 발령내역 조회
 	@Override
@@ -375,7 +396,6 @@ public class SignServiceImpl implements SignService {
 		return sDao.appointmentList(sqlSession, appEmpno);
 	}
 
-	
 	
 	
 

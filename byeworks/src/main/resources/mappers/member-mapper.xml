@@ -36,6 +36,7 @@
 		<result property="memberId" column="member_id"/>
 	</resultMap>
 
+
 	<!-- 로그인 -->
 	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
 		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT,
@@ -154,7 +155,7 @@
 	
 	<!-- 직원 상세조회용 -->
 	<select id="memberDetailList" resultMap="memberResultSet">
-		SELECT MEMBER_NO, PROFILE_MODIFY, MEMBER_NAME, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT, EMPNO, EXTENSION, ENROLLDAY, EMAIL, PHONE, ADDRESS, BIRTH, RETIREDAY
+		SELECT MEMBER_NO, PROFILE_MODIFY, MEMBER_NAME, POSITION_NAME AS POSITION, DEPARTMENT_NAME AS DEPARTMENT, EMPNO, EXTENSION, ENROLLDAY, EMAIL, PHONE, ADDRESS, BIRTH, RETIREDAY, P.POSITION_NO, D.DEPARTMENT_NO
 		FROM TB_MEMBER M
         JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)
        	JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
@@ -193,4 +194,13 @@
 		set member_status='N'
 		where member_no=#{memberNo}
 	</update>
+	
+	<!-- 직원 이름으로 찾기 -->
+	<select id="searchMemberName" parameterType="string" resultMap="memberResultSet">
+		select empno, member_name, member_no, member_id, position_name as position, department_name as department, position_no, department_no
+		from tb_member m
+		join tb_department d on(d.department_no = m.department)
+		join tb_position p on(p.position_no = m.position)
+		where member_name = #{memberName}
+</select>
 </mapper>

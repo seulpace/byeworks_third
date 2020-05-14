@@ -150,18 +150,32 @@
                  
                   <script>
 
-                  var type="${annual.docType}";
+                  var type1="${annual.docType}";
                   
+                  var type2="${appd.docType}";
                   
-                  
+                  console.log(type2);
 
                   $(function(){
-                 if(type == 'V'){
+                 if(type1 == 'V'){
                     $("#docu option:eq(2)").attr("selected", "selected");
                     $(".vacation").show();
                     $("#enroll").attr("action", "insertSignAnnual.si");
+                    $(".up").hide();
+                    $(".quit").hide();
+                    $(".promotion").hide();
 
                  }
+                 
+                 if(type2 == 'A'){
+                     $("#docu option:eq(3)").attr("selected", "selected");
+                     $(".promotion").show();
+                     $("#enroll").attr("action","insertSignAppointment.si");
+                     $(".up").hide();
+                     $(".vacation").hide();
+                     $(".quit").hide();
+
+                  }
                  
                    $("#docu").change(function(){
                     var docu = $("#docu option:selected").text();
@@ -239,7 +253,7 @@
                         </div>
                       </div>
                       <div class="panel">
-                        <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                           <h4 class="panel-title">결재선</h4>
                         </a>
                         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
@@ -275,7 +289,7 @@
                       </div>
                       </div>
                       <div class="panel">
-                        <a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                           <h4 class="panel-title">상세입력</h4>
                         </a>
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
@@ -411,12 +425,34 @@
                                 </tr>
                       
                               </table><br>
-                      
-                      
-                
-      
 
                           </div>
+                          
+                            <script>
+                          var appointmentLev = ${ appd.appointLev }
+                          var depBefore = ${ appd.depBefore }
+                          var depAfter = ${ appd.depAfter}
+                          var positionBefore = ${ appd.positionBefore }
+                          var positionAfter = ${ appd.positionAfter }
+                		  var appointmentMemNo = ${ appd.memberNo}
+                          var appointmentMemName = ${ appd.appointmentMemName }
+                          
+                          $(function(){
+                        	 
+                        	  if(appointmentLev == 0){
+                        		  $("#onlyD").attr("checked",true);
+                        	  }else if(appointmentLev == 1){
+                        		  $("#onlyP").attr("checked",true);
+                        	  }else{
+                        		  $("#both").attr("checked",true);
+                        		  
+                        	  }
+                        	  
+                        	  
+                          });
+                          
+                          </script>
+                          
 
                           <div class="panel-body promotion" style="display:none">
                             <br>
@@ -433,21 +469,55 @@
 								  <tr>
                                       <th>(승진/발령)종류</th>
                                       <td>
-                                      	  부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev">&nbsp; 
-                                      	  직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
-                                      	  부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev">&nbsp; 
+		                                     	부서이동 <input id="onlyD" type="radio" value="0" name="appointmentLev" checked>&nbsp; 
+		                                      	직위승진 <input id="onlyP" type="radio" value="1" name="appointmentLev">&nbsp;
+		                                      	부서이동+직위승진 <input id="both" type="radio" value="2" name="appointmentLev">&nbsp; 
                                       </td>
                                   </tr>
 								  
                                   <tr>
                                       <th>성명</th>
                                       <td>
-                                      	<select id="aDepartment" name="depBefore" style="border:none;">
-                                      		<option>부서를 선택하세요</option>
-                                      	</select>
+                                      	<c:choose>
+                                      	
+                                      	
+										<c:when test="${ appd.depBefore eq 1 }">                                      	
+                                      	<input type="text" style="border:none;" value="임원">
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.depBefore eq 2 }">                                      	
+                                      	<input type="text" style="border:none;" value="사업팀1">
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.depBefore eq 3 }">                                      	
+                                      	<input type="text" style="border:none;" value="사업팀2">
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.depBefore eq 4 }">                                      	
+                                      	<input type="text" style="border:none;" value="인사팀1">
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.depBefore eq 5 }">                                      	
+                                      	<input type="text" style="border:none;" value="인사팀2">
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.depBefore eq 6 }">                                      	
+                                      	<input type="text" style="border:none;" value="총무팀1">
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.depBefore eq 7 }">                                      	
+                                      	<input type="text" style="border:none;" value="총무팀2">
+                                      	</c:when>
+                                      	
+                                      	
+                                      	</c:choose>
+                                      	
+                                      	<input type="hidden" id="aDepartment" name="depBefore" value="${ appd.depBefore }">
+                                      	
+                                      	
                                       
                                       	<select id="aEmpList" name="appointmentMem" style="border:none;">
-                                      		<option>직원을 선택하세요</option>
+                                      		<option value="${ appd.memberNo }"> ${ appd.appointmentMemName }</option>
                                       	</select>
                                       </td>
                                   </tr>
@@ -455,30 +525,96 @@
                                   <tr>
                                       <th>직위</th>
                                       <td>
-                                      <input id="selectedMemPosition" type="text" class="" style="border:none;"readonly>
-                                      <input type="hidden" name="positionBefore" value="">
+                                      <c:choose>
+                                      	<c:when test="${ appd.positionBefore eq 4 }">
+	                                      <input id="selectedMemPosition" type="text" value="사원" class="" style="border:none;"readonly>                                  	
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.positionBefore eq 3 }">
+	                                      <input id="selectedMemPosition" type="text" value="대리" class="" style="border:none;"readonly>                                  	
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.positionBefore eq 2 }">
+	                                      <input id="selectedMemPosition" type="text" value="팀장" class="" style="border:none;"readonly>                                  	
+                                      	</c:when>
+                                      	
+                                      	<c:when test="${ appd.positionBefore eq 1 }">
+	                                      <input id="selectedMemPosition" type="text" value="임원" class="" style="border:none;"readonly>                                  	
+                                      	</c:when>
+                                      
+                                      </c:choose>
+                                      <input type="hidden" name="positionBefore" value="${ appd.positionBefore }" >
                                       </td>
                                   </tr>
-
+								
+								<script>
+					
+						
+								
+								</script>
+                                
                                   <tr>
                                     <th>승진보직</th>
                                     <td>
-                                    	<select id="updatePosition" name="positionAfter" style="border:none;">
-                                    			<option>선택</option>
-                                    			<option value="1">임원</option>
-                                    			<option value="2">팀장</option>
-                                    			<option value="3">대리</option>
-                                    			<option value="4">일반사원</option>
-                                    	</select>
+                                    <c:choose>
+                                    	<c:when test="${ appd.positionAfter eq 4 }">
+                                    	<input type="text" id="updatePosition" style="border:none;" value="사원">
+                                    	</c:when>
+                                    	
+                                    	<c:when test="${ appd.positionAfter eq 3 }">
+                                    	<input type="text" id="updatePosition" style="border:none;" value="대리">
+                                    	</c:when>
+                                    	
+                                    	<c:when test="${ appd.positionAfter eq 2 }">
+                                    	<input type="text" id="updatePosition" style="border:none;" value="팀장">
+                                    	</c:when>
+                                    	
+                                    	<c:when test="${ appd.positionAfter eq 1 }">
+                                    	<input type="text" id="updatePosition" style="border:none;" value="임원">
+                                    	</c:when>
+                                    </c:choose>
+                                    	<input type="hidden" name="positionAfter" value="${ appd.positionAfter }">	
+                                    	
                                     </td>
                                   </tr>
                                   
                                   <tr>
                                   	<th>발령부서</th>
                                   	<td>
-                                  		<select id="updateDepartment" name="depAfter" style="border:none;">
-                                  			<option>선택</option>
-                                  		</select>
+                                  		<c:choose>
+                                  			<c:when test="${ appd.depAfter eq 1 }">
+                                  		<input type="text" id="updateDepartment" style="border:none;" value="임원">                                  			
+                                  			</c:when>
+                                  			
+                                  			<c:when test="${ appd.depAfter eq 2 }">
+                                  		<input type="text" id="updateDepartment" style="border:none;" value="사업팀1">                                  			
+                                  			</c:when>
+                                  			
+                                  			<c:when test="${ appd.depAfter eq 3 }">
+                                  		<input type="text" id="updateDepartment" style="border:none;" value="사업팀2">                                  			
+                                  			</c:when>
+                                  			
+                                  			<c:when test="${ appd.depAfter eq 4 }">
+                                  		<input type="text" id="updateDepartment" style="border:none;" value="인사팀1">                                  			
+                                  			</c:when>
+                                  			
+                                  			<c:when test="${ appd.depAfter eq 5 }">
+                                  		<input type="text" id="updateDepartment" style="border:none;" value="인사팀2">                                  			
+                                  			</c:when>
+                                  			
+                                  			<c:when test="${ appd.depAfter eq 6 }">
+                                  		<input type="text" id="updateDepartment" style="border:none;" value="총무팀1">                                  			
+                                  			</c:when>
+                                  			
+                                  			<c:when test="${ appd.depAfter eq 7 }">
+                                  		<input type="text" id="updateDepartment" style="border:none;" value="총무팀2">                                  			
+                                  			</c:when>
+                                  		
+                                  		</c:choose>
+                                  		
+                                  		
+                                  		<input type="hidden" name="depAfter" value="${ appd.depAfter }">
+                                  	
                                   	</td>
                                   </tr>
                                   

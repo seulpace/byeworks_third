@@ -125,4 +125,10 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.retireMember", memberNo);
 	}
 	
+	// 김다흰
+	// 직원 이름 검색
+	public ArrayList<Member> searchMemberName(SqlSessionTemplate sqlSession, String memberName){
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.searchMemberName", memberName);
+	}
 }

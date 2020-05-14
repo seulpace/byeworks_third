@@ -37,11 +37,11 @@
                 </div>
                 <div class="x_content">
                   <br>
-                  <form class="form-horizontal form-label-left">
+                  <form id="appointmentInsert" action="appointment.app" method="post" class="form-horizontal form-label-left" >
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">이름</label>
                       <div class="col-md-4 col-sm-4">
-                        <input type="text" class="form-kdh" id="appointmentName" name="appointmentName" style="border-bottom: 1px solid #425b80;">
+                        <input type="text" class="form-kdh" id="appointmentName" name="appointmentMemName" style="border-bottom: 1px solid #425b80;">
                       </div>
                       <div class="com-md-2 col-sm-2"></div>
                       <div class="col-md-3 col-sm-3">
@@ -56,65 +56,45 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                                 </button>
                               </div>
-                              <div class="modal-body">
-	                        	<c:forEach items="${list}" var="m">      
-	                                <label for="empno">* 사번:</label>
-					                <input type="text" class="form-control" id="empno" name="empno" value="${m.empno }" readonly><br>
-					        	</c:forEach>
+                              <div class="modal-body" id="empNoList">
+	                        	  
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                                <button type="button"  onclick="appointmentBtn();" class="btn btn-primary">등록하기</button>
+                                <button type="button" data-dismiss="modal" id="insertEmpNo" class="btn btn-primary">등록하기</button>
                               </div>
-      
-                     
+       
                           	</div>
                         	</div>
                      	 </div>
                   	  </div>
-                    <script>
-                    	$(function(){
-                    		
-                    		$("searchMemberName").click(function(){
-                    			$.ajax({
-                    				url:"searchMemberName.me",
-                    				data:{memberName:$("#appointmentName").val()},
-                    				type:"get",
-                    				success:function(m){
-                    					$("")
-                    				}
-                    				
-                    				
-                    			})
-                    			
-                    			
-                    		});
-                    	});
                     
-                    
-                    </script>
                    
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">사번</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-kdh"  id="appEmpno" name="appEmpno" readonly="readonly" value="">
+                        <input type="text" class="form-kdh"  id="appEmpno" readonly="readonly" value="">
+                        <input type="hidden" id="appMno" name="memberNo" value="">
+                        
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">입사일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-kdh" id="enrollday" name="enrollday" readonly="readonly" value="">
+                        <input type="text" class="form-kdh" id="enrollday" readonly="readonly" value="">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-3 col-sm-3">
-                        <input type="text" class="form-kdh" id="department" name="department" readonly="readonly" value="">
+                        <input type="text" class="form-kdh" id="departmentName" name="dbName" readonly="readonly" value="">
+                        <input type="hidden" name="depBefore" id="depBefore" value="">
                       </div>
                       <div class="com-md-2 col-sm-2"></div>
                       <div class="col-md-3 col-sm-3">
-                        <select id="deptAfter" name="deptAfter">
-                          <option value="">--------------------</option>
+                    
+                        <select id="depAfter" name="depAfter">
+                          <option value="9">--------------------</option>
                           <option value="2">사업팀1</option>
                           <option value="3">사업팀2</option>
                           <option value="4">인사팀1</option>
@@ -128,21 +108,24 @@
                     <div class="form-group row">
                       <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
                         <div class="col-md-3 col-sm-3">
-                          <input type="text" class="form-kdh" readonly="readonly" id="position" name="position" value="">
+                          <input type="text" class="form-kdh" readonly="readonly" id="positionName" name="pbName" value="">
+                          <input type="hidden" id="positionBefore" name="positionBefore" value="">
                         </div>
                         <div class="com-md-2 col-sm-2"></div>
                         <div class="col-md-3 col-sm-3">
                           <select id="positionAfter" name="positionAfter">
-                                <option value="">--------------------</option>
-                                <option value="">임원</option>
-                                <option value="2">부장</option>
-                                <option value="3">과장</option>
+                                <option value="9">--------------------</option>
+                                <option value="1">임원</option>
+                                <option value="2">팀장</option>
+                                <option value="3">대리</option>
                                 <option value="4">사원</option>
                           </select>
                         </div>
                     </div>
                   
-                   
+                  	<input type="hidden" value="A" name="docType">
+                    <input type="hidden" value="2" id="appointLev" name="appointLev">
+                    <button type="button" id="confirmBtn">확정</button>          	
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9  offset-md-3">
@@ -154,7 +137,92 @@
                 </div>
               </div>
             </div>
+		<script>
+		 
+					
 		
+		
+                    	$(function(){
+                    		
+                    		$("#searchMemberName").click(function(){
+                    			$.ajax({
+                    				url:"searchMemberName.me",
+                    				data:{"memberName":$("#appointmentName").val()},
+                    				type:"get",
+                    				success:function(list){
+                    					
+                    					var value="";
+                    					$.each(list, function(i, m){
+                    						
+
+        	                                value += '<input type="radio" id="searchMemberNo" name="searchMemberNo" value='+ m.memberNo +'>' +
+        	                                		 '<label for="empno">* 사번:</label>' +
+        					                		 '<input type="text" class="form-control" id="empno" name="empno" value='+ m.empNo +' readonly><br>';
+        					        	
+                    					});
+                    					$("#empNoList").html(value);
+                    				
+                    					
+                    				},error:function(){
+                    					console.log("실패");
+                    				}
+                    				
+                    			});
+                    		});
+                    		$("#insertEmpNo").click(function(){
+                    			if($('input[name="searchMemberNo"]').is(':checked')){
+                    				
+                    				$.ajax({
+                    					url:"retireList.me",
+            	        				data:{mno:$('input[name="searchMemberNo"]:checked').val()},
+            	        				type:"get",
+            	        				success:function(m){
+            	        					$("#appMno").val(m.memberNo);
+            	        					$("#appEmpno").val(m.empNo);
+            	        					$("#enrollday").val(m.enrollday);
+            	        					$("#positionName").val(m.position);
+            	        					$("#departmentName").val(m.department);
+            	        					$("#depBefore").val(m.departmentNo);
+            	        					$("#positionBefore").val(m.positionNo);
+            	        					
+            	        				
+                    					
+            	        				},error:function(){
+            	        					console.log("x");
+            	        				}
+                    				});
+                    				
+                    			}
+                    		});
+                    		
+                    		$("#confirmBtn").click(function(){
+                    			
+                    			if($("#depAfter").val() == 9 && $("#positionAfter").val() !=9  ){
+                    				
+                    				$("#appointLev").val(1);
+                    				$("#depAfter").val($("#depBefore").val());
+                    			}else if($("#positionAfter").val()==9 && $("#depAfter").val() != 9){
+                    				
+                    				$("#appointLev").val(0);
+                    			}else{
+                    				
+                    				$("#appointLev").val(2);
+                    			}
+                    				
+                    			
+                    			
+                    			
+                    			
+                    		});
+                    				
+                    		
+                    		
+                    	});
+                    
+                    	
+                    	
+                    
+                    </script>
         <!-- footer content -->
         <jsp:include page="../common/footer.jsp"/>
         

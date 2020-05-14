@@ -13,16 +13,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AnnualDto {
-
+public class AppointmentInfoDto {
 	
-	private int signNo;
-	private Date signUse;
-	private double annualPeriod;
-	private String annualStartDay;
-	private String annualEndDay;
-	private String annualContent;
-	private int annualType;
+	private int memberNo;
+	private int depBefore;
+	private int depAfter;
+	private int positionBefore;
+	private int positionAfter;
+	private int appointLev;
 	private String docType;
-	
+	private String appointmentMemName;
+
 }

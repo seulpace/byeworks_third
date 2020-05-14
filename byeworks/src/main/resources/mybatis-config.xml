@@ -45,6 +45,7 @@
 		<mapper resource="/mappers/annual-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
 		<mapper resource="/mappers/alarm-mapper.xml"/>
+		<mapper resource="/mappers/appointment-mapper.xml"/>
 	</mappers>
 	
 </configuration>
