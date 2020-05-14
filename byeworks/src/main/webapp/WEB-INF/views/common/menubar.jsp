@@ -157,7 +157,7 @@
 			                          	</li>
                         			</ul>
                       			</li>
-                      		<c:if test="${loginUser.position ne 4 }">
+                      		<c:if test="${loginUser.positionNo ne 4 }">
                       			<li><a href="selectSignList.si?mno=${ loginUser.memberNo }&type=8">결재할 문서</a> <!-- 해야할결재리스트 이동 -->
                       			</li>
                       		</c:if>
@@ -186,6 +186,18 @@
 									console.log("ajax 통신 실패");
 								}
 
+							});
+							
+							$.ajax({
+								url:"updateChange2.si",
+								type:"post",
+								data: {"today":today},
+								success:function(){
+									console.log("직원정보변경완료");	
+								},
+								error: function(){
+									console.log("ajax 통신 실패");
+								}
 							});
 							
 							

@@ -18,6 +18,7 @@ import com.dadada.byeworks.sign.model.dto.SignAndQuit;
 import com.dadada.byeworks.sign.model.dto.SignLineDto;
 import com.dadada.byeworks.sign.model.dto.SignReferDto;
 import com.dadada.byeworks.sign.model.dto.UpdateQuitDto;
+import com.dadada.byeworks.sign.model.vo.Appointment;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -374,9 +375,27 @@ public class SignDao {
 
 
 	public int updateMemberStatus(SqlSessionTemplate sqlSession, ArrayList<Integer> memberlist) {
+		int result = 0;
 		
-		return sqlSession.update("signMapper.updateMemberStatus", memberlist);
+		for(Integer mno : memberlist) {
+		 result = sqlSession.update("signMapper.updateMemberStatus", mno);
+		}
 		
+		return result;
 
+	}
+
+
+	public ArrayList<Appointment> selectList(SqlSessionTemplate sqlSession, String day) {
+		
+		return (ArrayList) sqlSession.selectList("signMapper.selectAppointmentMember", day);
+	}
+
+
+	public int updateMemberStatus2(SqlSessionTemplate sqlSession, ArrayList<Appointment> list) {
+		HashMap<String, ArrayList<Appointment>> map = new HashMap<String, ArrayList<Appointment>>();
+		
+		map.put("AppointmentList", list);
+		return sqlSession.update("signMapper.updateMemberStatus2", map);
 	}
 }
