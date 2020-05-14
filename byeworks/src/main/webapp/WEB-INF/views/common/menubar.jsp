@@ -188,6 +188,18 @@
 
 							});
 							
+							$.ajax({
+								url:"updateChange2.si",
+								type:"post",
+								data: {"today":today},
+								success:function(){
+									console.log("직원정보변경완료");	
+								},
+								error: function(){
+									console.log("ajax 통신 실패");
+								}
+							});
+							
 							
 							
 							

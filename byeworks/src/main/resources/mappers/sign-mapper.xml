@@ -626,18 +626,52 @@
 	SELECT MEMBER_NO, TO_CHAR(QUIT_DATE,'YY/MM/DD') QUITDATE, Q.SIGN_NO
 	FROM TB_QUIT Q
 	JOIN TB_SIGN S ON (S.SIGN_NO = Q.SIGN_NO)
-	WHERE QUIT_DATE = #{day}
+	WHERE S.SIGN_STATUS = 'C' AND QUIT_DATE = #{day}
 	</select>
 	
-	<update id="updateMemberStatus" parameterType="arraylist">
+	<update id="updateMemberStatus" parameterType="_int">
 	UPDATE TB_MEMBER
 	SET MEMBER_STATUS= 'N'
-	where member_no in
-	<foreach collection="memberlist" item="item" open="(" close=")">
-		#{item}
-	</foreach>
-
+	WHERE MEMBER_NO = #{mno}
 	</update>
+	
+	<select id="selectAppointmentMember" parameterType="string" resultMap="SAAPResultSet">
+	SELECT POSITION_BEFORE, POSITION_AFTER, DEP_BEFORE, DEP_AFTER,
+	APPOINTMENT_LEV, APPOINT_MEM, APPOINTMENT_DATE
+	FROM TB_APPOINTMENT
+	JOIN TB_SIGN S USING(SIGN_NO)
+	WHERE S.SIGN_STATUS = 'C' AND APPOINTMENT_DATE = #{day}
+	</select>
+	
+	<update id="updateMemberStatus2" parameterType="map">
+	UPDATE TB_MEMBER 
+	SET
+	
+	<foreach collection="AppointmentList" item="list" index="i" >
+	
+	<choose>
+		<when test = "list.appointmentLev == 0">
+			DEPARTMENT = #{list.depAfter}
+			WHERE MEMBER_NO = #{list.appointmentMem}
+		</when>
+		
+		<when test = "list.appointmentLev == 1">
+			POSITION = #{list.positionAfter}
+			WHERE MEMBER_NO = #{list.appointmentMem}
+		</when>
+	
+		<otherwise>
+			DEPARTMENT = #{list.depAfter},
+			POSITION = #{list.positionAfter}
+			WHERE MEMBER_NO = #{list.appointmentMem}
+		
+		</otherwise>
+	</choose>
+	
+	</foreach>
+	
+	</update>
+	
 
 
 	<select id="selectAppointmentList" parameterType="_int" resultMap="appointmentListSet">

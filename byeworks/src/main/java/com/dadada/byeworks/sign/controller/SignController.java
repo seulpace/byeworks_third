@@ -563,12 +563,20 @@ public class SignController {
 			SimpleDateFormat sdf = new SimpleDateFormat("YY/MM/dd");
 			
 			String day = sdf.format(today);
-			
-		
-			
-		int result = sService.updateEmpInfo(day);
+
+			int result = sService.updateEmpInfo(day);
 			
 			
+		}
+	//ajax로 오늘 날짜 가지고와서 QUIT 테이블과 APPOINTMENT 테이블에 있는 날짜 비교후 업데이트 처리		
+		@RequestMapping("updateChange2.si")
+		public void updateChange2(Date today) {
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("YY/MM/dd");
+
+			String day = sdf.format(today);
+			
+			int result = sService.updateEmpInfo2(day);
 		}
 	
 

@@ -71,6 +71,7 @@ public interface SignService {
 
 	int updateEmpInfo(String day);
 
+	int updateEmpInfo2(String day);
 
 
 	// 김다흰 발령 내역 조회
@@ -78,5 +79,6 @@ public interface SignService {
 
 	// 김다흰 발령 사원 조회
 	Member appointmentList(int appEmpno);
+
 
 }
