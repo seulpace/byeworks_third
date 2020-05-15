@@ -35,4 +35,8 @@ public class NoticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectMainList");
 	}
 	
+	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.update("noticeMapper.updateNotice", n);
+	}
+	
 }

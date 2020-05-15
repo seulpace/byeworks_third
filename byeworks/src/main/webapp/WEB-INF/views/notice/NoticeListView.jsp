@@ -19,6 +19,12 @@
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
  
  	<title>Byeworks</title>
+<style>
+	.table-bordered>tbody>tr:hover{
+	cursor:pointer;
+	background:#3e91b5;
+	}
+</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
