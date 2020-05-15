@@ -82,7 +82,22 @@
 	
 	</select>
 	 -->
+	 
+	 <insert id="commuteWorkTime" parameterType="hashMap">
+	 	insert into tb_commute
+	 	values (#{commuteDate}, #{commuteMember}, #{commuteStatus}, #{commuteWork}, null, null)
+	 </insert>
 
-
+	<select id="wheterCommute" resultMap="commuteResultSet">
+		select commute_work
+		from tb_commute
+		where commute_member=#{commuteMember} and commute_date=#{commuteDate}
+	</select>
+	
+	<update id="commuteLeavedTime" parameterType="hashMap">
+		UPDATE TB_COMMUTE
+		SET COMMUTE_LEAVED=#{commuteLeaved}
+		WHERE COMMUTE_DATE=#{commuteDate} AND COMMUTE_MEMBER=#{commuteMember}
+	</update>
 
 </mapper>				 

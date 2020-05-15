@@ -43,9 +43,91 @@
 	          	<!-- top tiles -->
 	          	<div class="well" style="overflow: auto">
 	         
-	            	<button class="btn btn-danger"><small>출근하기</small></button>
-	            	<button class="btn btn-danger"><small>퇴근하기</small></button>
+	    
+	            	<button class="btn btn-danger" type="button" id="commuteWorkBtn" onclick=""><small>출근하기</small></button>
+	            
+	       
 	          	</div>
+	          <script>
+	          
+	          		function test(checkCommute){
+	          			var sysdate= new Date(); 
+	          			
+	          			var url='';
+          				var type='get';
+          				var data={
+          						"sysdate" : sysdate,
+          						"commuteMember" : ${loginUser.memberNo}
+          				}
+          				var str='';
+          				
+          				if(checkCommute==0){
+          					url="commuteWorkTime.do";
+          					str="퇴근하기";
+          				}else{
+          					url="commuteLeavedTime.do";
+          					str="출근하기"
+          				}
+          	
+          			
+          				$.ajax({
+								url:url,
+								type:type,
+								data: data,
+								success:function(){
+								
+								    $("#commuteWorkBtn").html(str);
+								
+								    
+								},
+								error: function(){
+									console.log("ajax 통신 실패");
+								}
+
+    					});
+	          		}
+	          	
+	          		$(function(){
+	          		
+	          			
+         				
+	          		// 출근하기 넣는 에이작스 
+	          			
+	          		
+	          			$("#commuteWorkBtn").click(function(){
+	          				$.ajax({
+	          					url:"wheterCommute.co",
+	          					success:function(result){
+	          						
+			          				//checkCommute = result;
+			          				console.log(result);
+			          				
+			          				test(result);
+			          				
+			          				
+	          					}
+	          					
+	          				}); 
+	          				
+	    							
+	    				});
+	          			
+	          			
+	          		
+	          			// 출근여부 확인후 버튼 클릭시 퇴근하는 값 update
+	          			
+	          			/* 
+	          			if(${! empty c.commuteWork}){
+	          				
+	          				$("#commuteWorkBtn").click(function{
+	          					console.log("될까");
+	          				});
+	          			} */
+	          		});
+	          			
+	          		
+	          
+	          </script>
 				
           		<div class="row" style="display: block;">
 					<!-- 왼쪽 영역 -->
