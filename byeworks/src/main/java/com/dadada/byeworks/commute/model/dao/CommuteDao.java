@@ -42,8 +42,7 @@ public class CommuteDao {
 	// 김다흰
 	// 출근시간 넣기
 	public int commuteWorkTime(SqlSessionTemplate sqlSession, HashMap map) {
-		System.out.println("실행됨");
-		System.out.println(map);
+	
 		return sqlSession.insert("commuteMapper.commuteWorkTime", map);
 	}
 	
@@ -54,7 +53,15 @@ public class CommuteDao {
 		return sqlSession.selectOne("commuteMapper.wheterCommute", map);
 	}
 
+	// 김다흰
+	// 퇴근 시간넣기
 	public int commuteLeavedTime(SqlSessionTemplate sqlSession, HashMap map) {
 		return sqlSession.update("commuteMapper.commuteLeavedTime", map);
+	}
+	
+	// 김다흰
+	// 출근여부 확인
+	public Commute checkTime(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.selectOne("commuteMapper.checkTime", map);
 	}
 }

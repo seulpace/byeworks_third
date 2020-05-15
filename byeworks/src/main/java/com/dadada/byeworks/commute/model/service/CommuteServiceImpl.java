@@ -64,11 +64,12 @@ public class CommuteServiceImpl implements CommuteService {
 		return cDao.wheterCommute(sqlSession, map);
 	}
 	
-	
+	// 김다흰
+	// 출근 여부 확인
 	@Override
 	public int commuteLeavedTime(HashMap map) {
 		return cDao.commuteLeavedTime(sqlSession, map);
 	}
 	
-	
+
 }

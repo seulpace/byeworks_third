@@ -445,7 +445,7 @@ public class MemberController {
 		int result = mService.updateMember(m);
 		
 		if(result >0) {
-			session.setAttribute("mno", m.getMemberNo());
+			session.setAttribute("memberNo", m.getMemberNo());
 			return "member/memberDetailList";
 		}else {
 			

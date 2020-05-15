@@ -96,25 +96,27 @@
         
       </div>
     </div>
+    
     <script>
     
     $(function(){
-		
+ 
+
 		$("#commuteLate").change(function(){
 			/* var commuteDateStr = $("select[id='commuteLateYear']").val() + '/' + $("select[id='commuteLate']").val(); */
 			var commuteLate = $("select[id='commuteLate']").val();
-			
+			var value = "";
+			var dept1 = 0;
+			var dept2 = 0;
+			var dept3 = 0;
 			
 			$.ajax({
 				url:"lateCommuteList.co",
 				data:{"commuteDateStr":commuteLate},
 				type:"get",
+			    async: false,
 				success:function(list){
-					var value = "";
 					
-					var dept1 = 0;
-					var dept2 = 0;
-					var dept3 = 0;
 					$.each(list, function(i, obj){
 						value += "<tr>" +
 		    	                      "<th scope='row'>" + obj.empName + "</th>" + 
@@ -132,10 +134,13 @@
 		    	        	dept3 += Number(obj.lateCount);
 		    	        }
 		    						
+		    	       
 					});
 					$("#lateTable tbody").html(value);
 					
+			
 					var ctx = document.getElementById("lateChart");
+				
 					var lateChart = new Chart(ctx,{
 						type:'bar',
 						data : {
@@ -186,12 +191,27 @@
 				                 display: false
 				               }
 				             }
+						
 					});
+					
 				}, error:function(){
 					console.log("통신실패");
 				}
+				
 			});
+			
 		});
+		
+		
+		/* function chartClear(){
+			for(i=0;i<20<i++){
+				x[i]=null;
+				y[i]=null;
+				
+			}
+			ctx.update();
+		
+		} */
 	});
     </script>
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
