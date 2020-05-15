@@ -28,6 +28,8 @@
 		<typeAlias type="com.dadada.byeworks.note.model.vo.Note" alias="Note"/>
 		<typeAlias type="com.dadada.byeworks.work.model.vo.Annual" alias="Annual"/>
 		<typeAlias type="com.dadada.byeworks.sign.model.dto.AppointmentDto" alias="AppointmentDto"/>
+		<typeAlias type="com.dadada.byeworks.reservation.model.vo.Reservation" alias="Reservation"/>
+		<typeAlias type="com.dadada.byeworks.reservation.model.vo.ReservationDTO" alias="ReservationDTO"/>
 	</typeAliases>
 	
 	<mappers>
@@ -38,6 +40,7 @@
 		<mapper resource="/mappers/note-mapper.xml"/>
 		<mapper resource="/mappers/commute-mapper.xml"/>
 		<mapper resource="/mappers/annual-mapper.xml"/>
+		<mapper resource="/mappers/reservation-mapper.xml"/>
 	</mappers>
 	
 </configuration>

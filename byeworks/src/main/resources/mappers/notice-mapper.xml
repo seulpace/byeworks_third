@@ -54,9 +54,15 @@
 	</update>
 
 	<select id="selectNotice" parameterType="_int" resultMap="NoticeResultSet">
-		select *
-		from tb_Notice
-		where notice_no=#{nno} and status='Y'
+		SELECT NOTICE_NO, NOTICE_TITLE, 
+		    NOTICE_CONTENT, NOTICE_DATE, 
+		    NOTICE_MODIFY_DATE, N.STATUS, 
+		    NOTICE_READCNT, FILE_NAME, 
+		    FRENAME, N.MEMBER_NO, 
+		    M.MEMBER_NAME
+		FROM TB_NOTICE N
+		JOIN TB_MEMBER M ON (N.MEMBER_NO = M.MEMBER_NO)
+		WHERE NOTICE_NO=#{nno} AND STATUS='Y'
 	</select>
 	
 	<update id="deleteNotice" parameterType="_int">
@@ -75,4 +81,13 @@
 				 WHERE ROWNUM <![CDATA[<= ]]>3
 	</select>
 
+	<update id="updateNotice" parameterType="Notice">
+		update tb_Notice
+		set NOTICE_TITLE=#{noticeTitle},
+			NOTICE_CONTENT=#{noticeContent},
+			FILE_NAME=#{fileName},
+			FRENAME=#{fRename}
+		where notice_no=#{noticeNo}		
+	</update>
+	
 </mapper>
