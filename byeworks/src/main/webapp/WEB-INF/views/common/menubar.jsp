@@ -322,6 +322,7 @@
             }
             //웹소켓 객체 만드는 코드
             var id = "${ loginUser.memberId }";
+            //ws=new WebSocket("ws://192.168.30.231:8888/byeworks/echo?id=" + id); // 시연할 때 주소
             ws=new WebSocket("ws://localhost:8888/byeworks/echo?id=" + id);
             
             ws.onopen=function(event){
