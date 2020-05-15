@@ -41,6 +41,22 @@
         .btn-primary {
           margin-left: 130px;
         }
+        
+        .notice_panel {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 17px;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #E6E9ED;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+    opacity: 1;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
     </style>
 </head>
 <body class="nav-md">
@@ -86,6 +102,7 @@
                       nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
                       mollit anim id est laborum.
                     </p> -->
+                    <div class="notice_panel">
                     <table align="center">
                       <tr>
                           <th><label for="title" style="margin-right:60px ;">제목</label></th>
@@ -93,7 +110,8 @@
                       </tr>
                       <tr>
                           <th><label for="writer">작성자</label></th>
-                          <td><p>${ n.memberNo }</p></td>
+                          <td><p>${ n.memberName }</p></td>
+                          <!-- n.memberName으로 수정해줘야함  -->
                       </tr>
                       <tr>
                           <th><label for="upfile">첨부파일</label></th>
@@ -116,7 +134,8 @@
                           <th colspan="5">
                             <!-- <textarea class="form-control" required name="" id="content" rows="10" style="resize:none;"></textarea> -->
                             <br>
-                            <p>${ n.noticeContent }</p>
+                            
+                <textarea class="form-control" required name="noticeContent" id="content" rows="10" style="resize:none; background:white;" readonly>${ n.noticeContent }</textarea>
 
 
 
@@ -133,11 +152,11 @@
                     <c:if test="${ loginUser.memberNo eq n.memberNo }">
                     <div class="item form-group">
                       <div class="col-md-6 col-sm-6 offset-md-3">
-                        <a class="btn btn-primary" type="button">수정하기</a>
-                        <button class="btn btn-success" type="reset">목록으로</button>
+                        <button class="btn btn-primary" onclick="postFormSubmit(2);">수정하기</button>
+                        <button class="btn btn-success" type="button" onclick="goBackMy()">목록으로</button>
                         <button class="btn btn-danger" onclick="postFormSubmit(1);">삭제하기</button>
                       </div>
-                      
+                      </div> <!-- 노티스 패널 -->
                       <form id="postForm" action="" method="post">
                       	<input type="hidden" name="nno" value="${ n.noticeNo }">
                       	<input type="hidden" name="fileName" value="${ n.FRename }">
@@ -147,10 +166,10 @@
                       	function postFormSubmit(num) {
                       		if(num == 1) { //삭제하기 클릭시
                       			$("#postForm").attr("action", "delete.not");
-                      			$("#postForm").submit();
                       		}else{ // 수정하기 클릭시
-                      			
+                      			$("#postForm").attr("action", "updateForm.not");
                       		}
+                      			$("#postForm").submit();
                       	}
                       </script>
                       
@@ -173,6 +192,12 @@
         
       </div>
     </div>
+    <script>
+    	function goBackMy() {
+    		window.history.back();
+    	}
+    
+    </script>
     
         <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->

@@ -27,6 +27,9 @@
  		textarea:focus {
  			outline:none;
  		}
+ 		table>tbody>tr:hover{
+ 			cursor:pointer;
+ 		}
  	</style>
 </head>
 <body class="nav-md">

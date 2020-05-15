@@ -38,7 +38,8 @@ public class NoticeServiceImpl implements NoticeService {
 	public int increaseCount(int nno) {
 		return nDao.increaseCount(sqlSession, nno);
 	}
-
+	
+	//상세조회
 	@Override
 	public Notice selectNotice(int nno) {
 		return nDao.selectNotice(sqlSession, nno);
@@ -51,8 +52,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int updateNotice(Notice n) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return nDao.updateNotice(sqlSession, n);
 	}
 
 	// 이슬희 // 메인에서 공지사항 조회용 서비스
