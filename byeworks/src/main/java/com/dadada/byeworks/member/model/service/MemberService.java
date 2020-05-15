@@ -56,4 +56,7 @@ public interface MemberService {
 	
 	// 직원 퇴사처리
 	int retireMember(int memberNo);
+	
+	// 직원 이름으로 검색하기
+	ArrayList<Member> searchMemberName(String memberName);
 }

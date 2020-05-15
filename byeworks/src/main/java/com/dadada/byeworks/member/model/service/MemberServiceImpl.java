@@ -105,7 +105,9 @@ public class MemberServiceImpl implements MemberService {
 	public int memberInsert(Member m) {
 		
 		
-		return mDao.memberInsert(sqlSession, m);
+		int memberNo = mDao.memberInsert(sqlSession, m);
+		
+		return memberNo;
 	}
 	// 김다흰
 	@Override
@@ -120,5 +122,12 @@ public class MemberServiceImpl implements MemberService {
 	public int retireMember(int memberNo) {
 
 		return mDao.retireMember(sqlSession, memberNo);
+	}
+
+	// 김다흰
+	@Override
+	public ArrayList<Member> searchMemberName(String memberName) {
+
+		return mDao.searchMemberName(sqlSession, memberName);
 	}
 }

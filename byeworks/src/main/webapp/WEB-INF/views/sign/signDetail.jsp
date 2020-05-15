@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,11 +23,44 @@
 
 	<!-- menubar include -->
 	<jsp:include page="../common/menubar.jsp"/>
+	
+	
+	<!-- 인쇄 관련 스크립트 -->
+	<script>
+	function print(printArea){
+		
+  		win = window.open(); 
+
+  		self.focus(); 
+
+  		win.document.open();
+
+  		win.document.write('<html><'head'><title></title><style>');
+
+  		win.document.write('body, td {font-falmily: Verdana; font-size: 10pt;}');
+
+  		win.document.write('</style></haed><body>');
+
+  		win.document.write(printArea);
+
+  		  win.document.write('</body></html>');
+
+  		win.document.close();
+
+  		win.print();
+
+  		win.close();
+}
+	
+	</script>
 
 	<div class="right_col" role="main">
           <!-- top tiles -->
-         
-            <div style="width: 70%;margin-left: 100px;;" >
+         <c:if test="${ list.signStatus eq 'C' }">
+         <div id="printBtn" style="float:right;"><button class="btn btn-primary" onclick="print(document.getElementById('printArea').innerHTML)">인쇄하기</button></div>
+         </c:if>   
+            
+            <div id="printArea" style="width: 70%; margin-left: 100px;;" >
             <div class="panel-body">
                             
                 <table class="table table-bordered">
@@ -61,34 +96,90 @@
               <div class="panel">
                   <div class="panel-body">
                     <table class="table table-bordered"  style="text-align: center;">
-                          <tr>
-                            <th rowspan="4" style="vertical-align: middle;">결재</th>
-                            <th>과장</th>
-                            <th>부장</th>
-                            <th>이사</th>
-                          </tr>
+                        
+                      <tr>
+                        <th rowspan="3" style="vertical-align: middle;">결재선</th>
+                        <c:forEach items="${ slist }" var="s">
+                        	<th>${ s.position }</th>
+                       	</c:forEach>
+                      </tr>
+                      
+                      <tr>
+         				  
+         				  	
+	                      		<c:forEach items="${ slist }" var="s" varStatus="item">
+	                      			<c:choose>
+	                      		  		<c:when test = "${loginUser.memberNo ne s.memberNo }">
+	                      					<c:choose>
+			                      				<c:when test="${ s.status eq 'C' }">
+			                        				<td>승인<br>( <fmt:formatDate value="${ s.approvalDate }" type="both" dateStyle="full" timeStyle="short"/>)</td>
+			                      				</c:when>
+	                      		
+			                      				<c:when test="${ s.status eq 'O' }">
+			                      					<td>진행</td>
+			                      				</c:when>
+	                      				
+			                      				<c:when test="${ s.status eq 'N' }">
+			                      					<td>대기</td>
+			                      				</c:when>
+	                      		
+			                      				<c:otherwise>
+			                      					<td>반려</td>
+			                      				</c:otherwise>			
+	                      					</c:choose>
+	                      		   		</c:when> 
+	                      		   
+			                      		<c:otherwise>
+		                      				<c:choose>
+				                      		 	<c:when test = "${item.first}">
+		                      		 		
+				                       		   			<td><button class="btn btn-primary" id="signLineConfirm">승인</button><button class="btn btn-danger" id="signLineReturn">반려</button></td>
 
-                          <tr>
-                              <td rowspan="2">ㅇ</td>
-                              <td rowspan="2">ㅇ</td>
-                              <td rowspan="2">ㅇ</td>
-                          </tr>
+				                      		   	</c:when>
+				                      		   	
 
-                          <tr></tr>
+			                      		   	
+				                      		   	<c:otherwise>
+				                      		   		 <c:choose>
+				                      		   		 	<c:when test="${ slist[item.index-1].status == 'C' }"> 	
+				                      		   				<td><button class="btn btn-primary" id="signLineConfirm">승인</button><button class="btn btn-danger" id="signLineReturn">반려</button></td>
+				                      		   					
+				                      		   			</c:when>
+				                      		   			
+				                      		   			<c:when test="${ slist[item.index-1].status == 'R' }">
+				                      		   				<td><button class="btn btn-primary" id="signLineConfirm" disabled>승인</button><button class="btn btn-danger" id="signLineReturn" disabled>반려</button></td>
+				                      		   			</c:when>
+				                      		   			
+				                      		   			<c:otherwise>
+				                      		   				<td><button class="btn btn-primary" id="signLineConfirm" disabled>승인</button><button class="btn btn-danger" id="signLineReturn" disabled>반려</button></td>
+				                      		   			</c:otherwise>
+				                      		   		</c:choose>
+				                      		   	</c:otherwise>
+			                      		   	</c:choose>
+			                      		</c:otherwise>
 
-                          <tr>
-                              <td>김가네</td>
-                              <td>김밥은</td>
-                              <td>비싸요</td>
-                          </tr>
+									</c:choose>
+		                  		</c:forEach>
+                      		
+							
+                      </tr>
+					  
+					  
+					  
+                      <tr>
+                      <c:forEach items="${ slist }" var="s">
+                        <td>${ s.memberName }</td>
+                      </c:forEach>
+                      </tr>
 
                       </table>
-                      	<div>참조자</div>
+                      	
+                      	<div><h6>참조자</h6></div>
                       	<div>
-                      		<span>누구</span>
-                      		<span>누구</span>
-                      		<span>누구</span>
-                      		<span>누구</span>
+                      		<c:forEach items="${ rlist }" var="r">
+                      			<span title="${ r.checkDate }">${ r.memberName } <c:choose><c:when test="${ r.status eq 'C'}">(확인)</c:when><c:otherwise>(미확인)</c:otherwise></c:choose></span>&nbsp;/&nbsp;                   		
+                      		</c:forEach>
+                      		
                       	</div>
                       	<br><br>
                       
@@ -107,12 +198,12 @@
                               		</c:when>
                               		
                               		<c:when test = "${ list.annualType eq 1 }">
-                              			<td>오전반차<td>
+                              			<td>오전반차</td>
                               		</c:when>
                               		
-                              		<c:otherwise>
+                              		<c:when test= "${ list.annualType eq 2 }">
                               			<td>오후반차</td>
-                              		</c:otherwise>
+                              		</c:when>
 
                                </c:choose>
                         </tr>
@@ -187,6 +278,9 @@
                                       	</c:otherwise>
                                       </c:choose>
                                   </tr>
+                                  <tr>
+                                  	
+                                  </tr>
 								  
                                   <tr>
                                       <th>기존부서</th>
@@ -217,11 +311,34 @@
 				  		</div>
 				  </c:otherwise>
           	</c:choose>
-						
+          	
+          	<c:if test = "${!empty alist  }">
+          	<div>
+          		<h6>첨부파일 :</h6> 
+          		<c:forEach items="${ alist }" var="a">
+          			<a href="${pageContext.servletContext.contextPath }/resources/sign_files/${ a.maName }" download="${ a.oaName }">${ a.oaName}</a>&nbsp;&nbsp; // &nbsp;&nbsp;
+          		</c:forEach>
+          		
+          	</div>
+			</c:if>	
 						
 						
 			
-			<div align="center"><button>결재 수정</button></div>
+			<div align="center">
+			
+			<c:choose>
+				<c:when test="${ list.signStatus eq 'N' }">
+					<button class="btn btn-primary" id="signUpBtn">결재 상신</button>
+					<button class="btn btn-warning" id="signUpdateBtn">결재 수정</button>
+				</c:when>
+				
+				<c:when test="${ list.signStatus eq 'O' and loginUser.memberNo eq list.memberNo}">
+					<button class="btn btn-danger" id="cancelSignBtn">결재 회수</button>
+				</c:when>
+			</c:choose>
+			
+	
+			</div>
 
 
             	</div>
@@ -230,6 +347,50 @@
           
           </div>
           </div>
+          
+        
+          <script>
+	 
+          	
+          	
+          		
+          		$(function(){
+          		
+          	
+          		
+          		$("#signUpBtn").on("click",function(){
+          					
+          			location.href = "signUp.si?sno=${ list.signNo }&mno=${ list.memberNo }";
+          		});
+          		
+          		$("#signUpdateBtn").on("click",function(){
+          			
+          			location.href = "signFormUpdate.si?sno=${ list.signNo}&mno=${ list.memberNo}&type=${list.docuType}";
+          		});
+          		
+          		$("#cancelSignBtn").on("click",function(){
+          			
+          			location.href= "signCancel.si?sno=${ list.signNo}&mno=${ list.memberNo}";
+          		});
+          		
+          		$("#signLineConfirm").on("click",function(){
+          		
+          			 location.href = "signConfirm.si?sno=${ list.signNo}&mno=${ loginUser.memberNo}&length=${fn:length(slist)}&updateMno=${ list.memberNo }";
+          			
+          		});
+          		
+          		$("#signLineReturn").on("click",function(){
+          			
+          			location.href = "signReturn.si?sno=${ list.signNo}&mno=${ loginUser.memberNo}";
+          		});
+          		
+          		
+          		
+          			 
+          		
+          	});
+          
+          </script>
           
 
 	<!-- footer include -->

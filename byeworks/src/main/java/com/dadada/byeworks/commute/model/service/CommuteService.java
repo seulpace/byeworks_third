@@ -1,6 +1,7 @@
 package com.dadada.byeworks.commute.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.dadada.byeworks.commute.model.vo.Commute;
 
@@ -10,5 +11,16 @@ public interface CommuteService {
 	ArrayList<Commute> commuteList(String commuteDateStr);
 	
 	// 내 출퇴근 조회하기
-	ArrayList<Commute> myCommute(String commuteDay);
+	ArrayList<Commute> myCommute(int commuteMember, String commuteDateStr);
+	
+	// 지각 조회하기
+	ArrayList<Commute> lateCommuteList(String commuteDateStr);
+	
+	// 내출퇴근 입력하기
+	int commuteWorkTime(HashMap map);
+	
+	// 출근여부 확인하기
+	Commute wheterCommute(HashMap map);
+	
+	int commuteLeavedTime(HashMap map);
 }

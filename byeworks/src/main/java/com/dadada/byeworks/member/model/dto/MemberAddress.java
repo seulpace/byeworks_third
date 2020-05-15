@@ -23,4 +23,5 @@ public class MemberAddress {
 	private String email;			// 직원 이메일
 	
 	private String bookmark;		// 즐겨찾기 여부
+	private String memberId;		// 직원 아이디
 }

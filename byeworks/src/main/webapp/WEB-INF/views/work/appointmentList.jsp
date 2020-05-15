@@ -38,13 +38,13 @@
 
           <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="businessTeam" data-toggle="tab" href="#businessTeam" role="tab" aria-controls="home" aria-selected="true">사업팀</a>
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#businessTeam" role="tab" aria-controls="home" aria-selected="true">사업팀</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="hrTeam" data-toggle="tab" href="#hrTeam" role="tab" aria-controls="profile" aria-selected="false">인사팀</a>
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#hrTeam" role="tab" aria-controls="profile" aria-selected="false">인사팀</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="generalTeam" data-toggle="tab" href="#generalTeam" role="tab" aria-controls="contact" aria-selected="false">총무팀</a>
+              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#generalTeam" role="tab" aria-controls="contact" aria-selected="false">총무팀</a>
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
@@ -72,7 +72,7 @@
 				                          <c:forEach items="${ appList1 }" var="adto">
 					                            <tr>
 					                              <th scope="row">${adto.appEmpno}</th>
-					                              <td>${adto.appointmentMem}</td>
+					                              <td>${adto.appointmentName}</td>
 					                              <td>${adto.departmentName}</td>
 					                              <td>${adto.positionName}</td>
 					                              <td>${adto.appointmentLev}</td>
@@ -80,7 +80,10 @@
 				              			 </c:forEach>   
 				              		</c:when>
 				              		<c:otherwise>
-				              			발령 내역이 없습니다.
+				              			<tr>
+				              				<th colspan='4'>발령 내역이 없습니다.</th>
+				              			</tr>
+				              			
 				              		</c:otherwise>	
 				              	</c:choose>	 
 	                          </tbody>
@@ -109,11 +112,11 @@
                           </thead>
                           <tbody>
                             <c:choose>
-	                          		<c:when test="${ !empty list2 }">
-				                          <c:forEach items="${ list2 }" var="adto">
+	                          		<c:when test="${ !empty appList2 }">
+				                          <c:forEach items="${ appList2 }" var="adto">
 					                            <tr>
 					                              <th scope="row">${adto.appEmpno}</th>
-					                              <td>${adto.appointmentMem}</td>
+					                              <td>${adto.appointmentName}</td>
 					                              <td>${adto.departmentName}</td>
 					                              <td>${adto.positionName}</td>
 					                              <td>${adto.appointmentLev}</td>
@@ -121,7 +124,10 @@
 				              			 </c:forEach>   
 				              		</c:when>
 				              		<c:otherwise>
-				              			발령 내역이 없습니다.
+				              			<tr>
+				              				<th colspan='4' style="text-align:center;">발령 내역이 없습니다.</th>
+				              			</tr>
+				              			
 				              		</c:otherwise>	
 				              	</c:choose>	 
                             
@@ -150,11 +156,11 @@
                           </thead>
                           <tbody>
                              <c:choose>
-	                          		<c:when test="${ !empty list3 }">
-				                          <c:forEach items="${ list3 }" var="adto">
+	                          		<c:when test="${ !empty appList3 }">
+				                          <c:forEach items="${ appList3 }" var="adto">
 					                            <tr>
 					                              <th scope="row">${adto.appEmpno}</th>
-					                              <td>${adto.appointmentMem}</td>
+					                              <td>${adto.appointmentName}</td>
 					                              <td>${adto.departmentName}</td>
 					                              <td>${adto.positionName}</td>
 					                              <td>${adto.appointmentLev}</td>
@@ -162,7 +168,10 @@
 				              			 </c:forEach>   
 				              		</c:when>
 				              		<c:otherwise>
-				              			발령 내역이 없습니다.
+				              			<tr>
+				              				<th colspan='4' style="text-align:center;">발령 내역이 없습니다.</th>
+				              			</tr>
+				              			
 				              		</c:otherwise>	
 				              	</c:choose>	 
                             

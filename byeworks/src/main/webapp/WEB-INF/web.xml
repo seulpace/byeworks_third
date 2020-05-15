@@ -26,6 +26,7 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 	</servlet>
 		
 	<servlet-mapping>
@@ -43,7 +44,9 @@
 		<url-pattern>*.ann</url-pattern>		
 		<url-pattern>*.nt</url-pattern>
 		<url-pattern>*.res</url-pattern>
-		
+		<url-pattern>*.sc</url-pattern>
+		<url-pattern>*.al</url-pattern>
+		<url-pattern>*.app</url-pattern>
 	</servlet-mapping>
 	
 	<!-- encodingFilter 등록!! -->

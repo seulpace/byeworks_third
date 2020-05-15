@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/LogoExample.png" type="image/png" />
+
 <title>ByeWorks</title>
 <style>
 	#datatable tbody tr:hover{
@@ -27,11 +29,10 @@
 	<!-- menubar include -->
 	<jsp:include page="../common/menubar.jsp"/>
 	
-	 <div class="right_col" role="main">
+	 <div class="right_col" role="main" id="printMe">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-              
               <c:choose>
               	<c:when test="${ type == 1}">
                 	<h3>내 결재 전체 조회</h3>
@@ -56,6 +57,14 @@
                 <c:when test="${ type == 6 }">
                 	<h3>결재 회수 문서 조회</h3>
                 </c:when>
+                
+                <c:when test="${ type ==7 }">
+                	<h3>참조 결재 문서 조회</h3>
+                </c:when>
+                
+                <c:otherwise>
+                	<h3>결재 할 문서 조회</h3>
+                </c:otherwise>
               </c:choose>
               </div>
             </div>
@@ -71,15 +80,34 @@
                             <div class="card-box table-responsive">
                             <c:choose>
                             	<c:when test="${ type == 1}">
-	                                <button disabled style="width: 100px;height: 30px; border: none;">반 려 (${ rcount })</button>
-	                                <button disabled style="width: 100px;height: 30px; border: none;">결재 진행 (${ ocount })</button>
-	                                <button disabled style="width: 100px;height: 30px; border: none;">결재완료 (<c:out value="${ ccount }"/>)</button>
+                            					<c:set var="ccount" value="0"/>
+                            					<c:set var="ocount" value="0"/>
+                            					<c:set var="rcount" value="0"/>
+                            		<c:forEach items="${list}" var="l">
+                            			<c:choose>
+                            				<c:when test="${l.signStatus eq 'C' }">
+												<c:set var="ccount" value="${ ccount + 1 }"/>
+                            				</c:when>
+                            				
+                            				<c:when test="${l.signStatus eq 'O' }">
+												<c:set var="ocount" value="${ ocount + 1 }"/>
+                            				</c:when>
+                            				
+                            				<c:otherwise>
+												<c:set var="rcount" value="${ rcount + 1 }"/>
+                            				</c:otherwise>
+                            			
+                            			</c:choose>                           			
+                            		</c:forEach>
+                            		
+                            		
+                            		
+	                                <button disabled style="width: 100px;height: 30px; border: none;">결재 반려 (<c:out value="${ rcount }"/>)</button>
+	                                <button disabled style="width: 100px;height: 30px; border: none;">결재 진행 (<c:out value="${ ocount }"/>)</button>
+	                                <button disabled style="width: 100px;height: 30px; border: none;">결재 완료 (<c:out value="${ ccount }"/>)</button>
 	                                <br><br>
 	                            </c:when>
-	                            
-	                            <c:when test="${ type == 2 }">
-	                            	<button style="width: 100px;height: 30px;border-radius: 5px;">상 신</button>
-	                            </c:when>
+
                     		</c:choose>
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%;text-align: center;" data-order="">
                       <thead>
@@ -100,8 +128,8 @@
                           <td>${ l.signNo }<input type="hidden" value="${l.docuType }"></td>
                           <td>${ l.title }</td> 
                           <td>${ l.signLine }</td>
-                          <td>${ loginUser.memberName }</td>
-                          <td>${ l.signUpDate }</td>
+                          <td>${ l.memberName }</td>
+                          <td><fmt:formatDate value="${ l.signUpDate }" type="both" dateStyle="full" timeStyle="short"/></td>
                           
                         
                           		<c:choose>                       		
@@ -110,15 +138,16 @@
                           				<td>완료</td>
                           			</c:when>
                           			
-                          			<c:when test="${ l.signStatus eq 'R' && flag eq 'R' }">
-                          				<td>반려</td>
-                          			</c:when>
-                          			
-                          			<c:when test="${ l.signStatus eq 'O' && flag eq 'O' }">
+                          			<c:when test="${ l.signStatus eq 'O' && l.flag eq 'Y' }">
                           				<td>진행</td>
                           			</c:when>
                           			
-                          			<c:when test="${ l.signStatus eq 'D' && flag eq 'N' }">
+                          			<c:when test="${ l.signStatus eq 'R' && l.flag eq 'Y' }">
+                          				<td>반려</td>
+                          			</c:when>
+                          			
+                          			
+                          			<c:when test="${ l.signStatus eq 'D' && l.flag eq 'N' }">
                           				<td>회수</td>
                           			</c:when>
                           			
@@ -148,12 +177,15 @@
         
         <script>
         	$(function(){
+        		
         		$("#datatable tbody tr").click(function(){
         			console.log($(this).children().eq(0).children().eq(0));
-        			location.href = "signDetail.si?sno=" + $(this).children().eq(0).text() + "&type=" + $(this).children().eq(0).children("input").val();
-        		
+        			location.href = "signDetail.si?sno=" + $(this).children().eq(0).text() +"&mno=${loginUser.memberNo}" +"&type=" + $(this).children().eq(0).children("input").val();
+        			
         		});
-        	});
+
+        		});
+        
         </script>
         
    <!-- footer include -->
@@ -163,6 +195,9 @@
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
+
+
+
         
 	
 </body>

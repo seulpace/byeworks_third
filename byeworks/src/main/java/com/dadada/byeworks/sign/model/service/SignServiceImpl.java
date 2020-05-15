@@ -13,7 +13,10 @@ import com.dadada.byeworks.sign.model.dto.DepartmentDto;
 import com.dadada.byeworks.sign.model.dto.SignAndAnnualSign;
 import com.dadada.byeworks.sign.model.dto.SignAndAppointment;
 import com.dadada.byeworks.sign.model.dto.SignAndQuit;
-import com.dadada.byeworks.sign.model.dto.SignDto;
+import com.dadada.byeworks.sign.model.dto.SignLineDto;
+import com.dadada.byeworks.sign.model.dto.SignReferDto;
+import com.dadada.byeworks.sign.model.dto.UpdateQuitDto;
+import com.dadada.byeworks.sign.model.vo.Appointment;
 import com.dadada.byeworks.sign.model.vo.Sign;
 import com.dadada.byeworks.sign.model.vo.SignAttachment;
 import com.dadada.byeworks.sign.model.vo.SignLine;
@@ -108,7 +111,9 @@ public class SignServiceImpl implements SignService {
 		int result6 = 0;
 		if(result1>0) {
 			int result3 = sDao.insertSignLineList(sqlSession, slist);
+			
 			int result4 = sDao.insertReferList(sqlSession, rlist);
+		
 			int result5 = sDao.insertAttachmentList(sqlSession, alist);
 			
 			result6 = result3*result4*result5;
@@ -124,22 +129,10 @@ public class SignServiceImpl implements SignService {
 		return sDao.selectSignList(sqlSession, mno, type);
 	}
 
-	//참조된 결재 리스트 조회
-	@Override
-	public ArrayList<SignDto> selectReferList(int mno) {
-		
-		return sDao.selectReferList(sqlSession, mno);
-	}
-	//결재해야할 결재 리스트 조회
-	@Override
-	public ArrayList<SignDto> selectDoSignList(int mno) {
-		
-		return sDao.selectDoSignList(sqlSession, mno);
-	}
 	//결재 상세보기 (문서type별)
 	@Override
 	public SignAndAnnualSign selectSignAnnual(int sno) {
-		System.out.println(sno);
+		
 		return sDao.selectSignAnnual(sqlSession,sno);
 	}
 
@@ -156,17 +149,251 @@ public class SignServiceImpl implements SignService {
 	}
 	//결재선 상세보기
 	@Override
-	public ArrayList<SignLine> selectSignLine(int sno) {
+	public ArrayList<SignLineDto> selectSignLine(int sno) {
 		
 		return sDao.selectSignLine(sqlSession, sno);
 	}
+	//참조자 상세보기
+	@Override
+	public ArrayList<SignReferDto> selectSignRefer(int sno) {
+		
+		return sDao.selectSignRefer(sqlSession, sno);
+	}
+	//첨부파일 상세보기
+	@Override
+	public ArrayList<SignAttachment> selectAttachment(int sno) {
+		
+		return sDao.selectAttachment(sqlSession, sno);
+	}
+	
+	//결재 상신 올리기
+	@Override
+	public int signUp(int sno) {
+		int result1 = sDao.signUp(sqlSession,sno);
+		int result2 = sDao.signLineUp(sqlSession,sno);
+		return result1*result2;
+	}
 
+	
+	@Override
+	public int updateSignQuit(SignAndQuit signAndQuit, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist) {
+
+		int result1 = sDao.updateSignQ(sqlSession, signAndQuit);
+		int result2 = sDao.updateSignQuit(sqlSession, signAndQuit);
+		int result9 = 1;
+		if(result1>0 && result2>0) {
+			
+			int result3 = sDao.deleteSignLineList(sqlSession,slist.getSlist().get(0).getSignNo());
+			int result6 = sDao.updateSignLineList(sqlSession, slist.getSlist());
+			
+			int result4=1;
+			int result5=1;
+			int result7=1;
+			int result8=1;
+			
+			if(rlist.getRlist()!=null) {
+			result4 = sDao.deleteSignReferList(sqlSession, rlist.getRlist().get(0).getSignNo());
+			result7 = sDao.updateReferList(sqlSession, rlist.getRlist());
+			}
+			if(!alist.isEmpty()) {
+			 result5 = sDao.deleteSignAttachmentList(sqlSession, alist.get(0).getSignNo());
+			 result8 = sDao.updateAttachmentList(sqlSession, alist);
+			}
+			result9 = result3*result4*result5*result6*result7*result8;
+			
+		}
+		
+		return  result1*result2*result9;
+	}
+
+	@Override
+	public int updateSignAnnual(SignAndAnnualSign signAndAnnualSign, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist) {
+		
+		int result1 = sDao.updateSignAN(sqlSession, signAndAnnualSign);
+		int result2 = sDao.updateSignAnnual(sqlSession, signAndAnnualSign);
+		int result9 = 1;
+		if(result1>0 && result2>0) {
+			
+			int result3 = sDao.deleteSignLineList(sqlSession,slist.getSlist().get(0).getSignNo());
+			int result6 = sDao.updateSignLineList(sqlSession, slist.getSlist());
+			
+			int result4=1;
+			int result5=1;
+			int result7=1;
+			int result8=1;
+			
+			if(rlist.getRlist()!=null) {
+			result4 = sDao.deleteSignReferList(sqlSession, rlist.getRlist().get(0).getSignNo());
+			result7 = sDao.updateReferList(sqlSession, rlist.getRlist());
+			}
+			if(!alist.isEmpty()) {
+			 result5 = sDao.deleteSignAttachmentList(sqlSession, alist.get(0).getSignNo());
+			 result8 = sDao.updateAttachmentList(sqlSession, alist);
+			}
+			result9 = result3*result4*result5*result6*result7*result8;
+			
+		}
+		
+		return  result1*result2*result9;
+	}
+
+	@Override
+	public int updateSignAnnual(SignAndAppointment signAndAppointment, SignLine slist, SignRefer rlist,
+			ArrayList<SignAttachment> alist) {
+		
+		int result1 = sDao.updateSignAP(sqlSession, signAndAppointment);
+		int result2 = sDao.updateSignAppointment(sqlSession, signAndAppointment);
+		int result9 = 1;
+		if(result1>0 && result2>0) {
+			
+			int result3 = sDao.deleteSignLineList(sqlSession,slist.getSlist().get(0).getSignNo());
+			int result6 = sDao.updateSignLineList(sqlSession, slist.getSlist());
+			
+			int result4=1;
+			int result5=1;
+			int result7=1;
+			int result8=1;
+			
+			if(rlist.getRlist()!=null) {
+			result4 = sDao.deleteSignReferList(sqlSession, rlist.getRlist().get(0).getSignNo());
+			result7 = sDao.updateReferList(sqlSession, rlist.getRlist());
+			}
+			if(!alist.isEmpty()) {
+			 result5 = sDao.deleteSignAttachmentList(sqlSession, alist.get(0).getSignNo());
+			 result8 = sDao.updateAttachmentList(sqlSession, alist);
+			}
+			result9 = result3*result4*result5*result6*result7*result8;
+			
+		}
+		
+		return  result1*result2*result9;
+	}
+
+	/**
+	 * 결재 회수 처리
+	 */
+	@Override
+	public int signCancel(int sno) {
+		
+		return sDao.signCancel(sqlSession, sno);
+	}
+
+	/**
+	 * 결재 승인 처리
+	 */
+	@Override
+	public int signConfirm(int sno, int mno, int length, int updateMno) {
+		int result1 = sDao.signConfirm(sqlSession, sno, mno);
+		int result2 = sDao.orderCheck(sqlSession, sno, mno);
+		int result3 = 1;
+		System.out.println(updateMno);
+		if(result2 == length) {
+			result3 = sDao.finalConfirm(sqlSession, sno);
+			
+			if(result3>0) {
+				//결재 type 판별
+				String docType = sDao.checkDocType(sqlSession, sno);
+				
+				if(docType.equals("V")){
+					System.out.println("실행됨");
+					
+					double period = sDao.getAnnualPeriod(sqlSession, sno);
+					System.out.println(period);
+					if(period != 0) {
+						int result = sDao.changeAnnualRemain(sqlSession, updateMno, period);
+					}
+					
+					
+				}
+				
+				
+			}
+		}
+		
+		
+		return result1*result2*result3; 
+	}
+
+	/**
+	 * 결재 반려 처리
+	 */
+	@Override
+	public int signReturn(int sno, int mno) {
+		int result1 = sDao.signReturn(sqlSession, sno, mno);
+		int result2 = 1;
+		
+		if(result1>0) {
+		result2 = sDao.totalReturn(sqlSession, sno);
+		}
+		
+		return result1*result2;
+	}
+
+	/**
+	 * 참조확인
+	 */
+	@Override
+	public int checkRefer(int sno, int mno) {
+		
+		return sDao.checkRefer(sqlSession, sno, mno);
+	}
+
+	@Override
+	public int updateEmpInfo(String day) {
+		
+		ArrayList<UpdateQuitDto> list = sDao.selectQuitMember(sqlSession, day);
+		int result=0;
+		if(!list.isEmpty()) {
+			
+			ArrayList<Integer> memberlist = new ArrayList<Integer>();
+			
+			for(int i=0; i<list.size();i++) {
+				
+				memberlist.add(list.get(i).getMemberNo());
+				
+			}
+			
+			result = sDao.updateMemberStatus(sqlSession, memberlist);
+			
+		}
+		return result;
+	}
+
+	@Override
+	public int updateEmpInfo2(String day) {
+		
+		ArrayList<Appointment> list = sDao.selectList(sqlSession, day);
+		
+		int result = 0;
+		
+		if(!list.isEmpty()) {
+			System.out.println(list);
+			
+			result = sDao.updateMemberStatus2(sqlSession, list);
+			
+		}
+		return result;
+	}
+	
+	
+	
 	// 김다흰
 	// 발령내역 조회
 	@Override
-	public ArrayList<AppointmentDto> selectAppointmentList(int num) {
+	public ArrayList<AppointmentDto> selectAppointmentList(ArrayList<Integer> list) {
 
-		return sDao.selectAppointmentList(sqlSession, num);
+		return sDao.selectAppointmentList(sqlSession, list);
+	}
+
+	//김다흰
+	//발령사원 조회
+	@Override
+	public Member appointmentList(int appEmpno) {
+		
+		
+		return sDao.appointmentList(sqlSession, appEmpno);
 	}
 
 	

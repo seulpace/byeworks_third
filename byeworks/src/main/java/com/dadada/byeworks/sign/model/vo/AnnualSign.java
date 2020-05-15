@@ -18,7 +18,7 @@ public class AnnualSign {
 	private int signNo;
 	private Date signUse;
 	private int annualPeriod;
-	private Date annualStratDay;
+	private Date annualStartDay;
 	private Date annualEndDay;
 	private String annualContent;
 	private int annualType;

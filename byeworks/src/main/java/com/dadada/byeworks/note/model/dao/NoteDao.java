@@ -45,5 +45,9 @@ public class NoteDao {
 	public int deleteSend(SqlSessionTemplate sqlSession, ArrayList<Integer> noteNo) {
 		return sqlSession.update("noteMapper.deleteSend", noteNo);
 	}
+	
+	public int returnSequence(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("noteMapper.returnSequence");
+	}
 
 }

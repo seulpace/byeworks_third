@@ -1,6 +1,7 @@
 package com.dadada.byeworks.sign.model.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import lombok.ToString;
 public class SignAndAnnualSign {
 	
 	private int signNo;
-	private Date signUpDate;
+	private Timestamp signUpDate;
 	private String docuType;
 	private int memberNo;
 	private String memberName;
@@ -23,7 +24,7 @@ public class SignAndAnnualSign {
 	private String flag;
 	private String title;
 	private Date signUse;
-	private int annualPeriod;
+	private double annualPeriod;
 	private Date annualStartDay;
 	private Date annualEndDay;
 	private String annualContent;

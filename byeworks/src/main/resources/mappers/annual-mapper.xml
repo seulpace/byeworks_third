@@ -15,6 +15,13 @@
 		<result property="annualType" column="annual_type"/>
 		<result property="annualSign" column="sign_status"/>
 	</resultMap>
+	
+	<resultMap type="Annual" id="annualInfoSet">
+		<result property="memberNo" column="member_no"/>
+		<result property="annualCreate" column="annual_create"/>
+		<result property="annualRemain" column="annual_remain"/>
+		<result property="annualUseDay" column="annual_use_day"/>
+	</resultMap>
 
 	<select id="annualUseList" parameterType="String" resultMap="annualListSet">
 		   select m.member_name, d.department_name, p.position_name, m.enrollday, a.annual_create||'일' as annual_create, 
@@ -33,7 +40,13 @@
 			order by member_no	
 	
 	</select>
-
+	<select id="annualInfo" parameterType="_int" resultMap="annualInfoSet">
+		select annual_create, (annual_create - annual_remain) as annual_use_day, annual_remain
+		from tb_annual
+		where member_no =#{mno}
+	</select>
+	
+	
 
 
 

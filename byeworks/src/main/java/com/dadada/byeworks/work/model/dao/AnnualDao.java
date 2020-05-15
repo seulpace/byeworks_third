@@ -15,8 +15,13 @@ public class AnnualDao {
 	public ArrayList<Annual> annualUseList(SqlSessionTemplate sqlSession, String annualUseDay){
 		
 		ArrayList<Annual> arr = (ArrayList)sqlSession.selectList("annualMapper.annualUseList", annualUseDay);
-//		System.out.println(arr);
-//		System.out.println(annualUseDay);
+
 		return arr;
+	}
+	
+	// 김다흰
+	// 내 연차 정보
+	public Annual annualInfo(SqlSessionTemplate sqlSession, int mno) {
+		return sqlSession.selectOne("annualMapper.annualInfo", mno);
 	}
 }

@@ -1,6 +1,6 @@
 package com.dadada.byeworks.sign.model.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import lombok.ToString;
 public class Sign {
 	
 	private int signNo;
-	private Date signUpDate;
+	private Timestamp signUpDate;
 	private String docuType;
 	private int memberNo;
 	private String signStatus;

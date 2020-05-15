@@ -89,6 +89,7 @@
 			                                        			<form id="noteForm${ a.memberNo }" action="sendForm.nt" method="post">
 			                                        				<input type="hidden" name="receiveNo" value="${ a.memberNo }">
 			                                        				<input type="hidden" name="receiveName" value="${ a.memberName }">
+			                                        				<input type="hidden" name="receiveId" value="${ a.memberId }">
 			                                        			</form>
 			                                      			</div>
 			                                    		</td>
