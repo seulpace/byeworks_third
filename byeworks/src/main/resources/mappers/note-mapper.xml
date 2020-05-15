@@ -15,10 +15,12 @@
 		<result property="receiveNo" column="receive_no"/>
 		<result property="sendName" column="send_name" />
 		<result property="receiveName" column="receive_name"/>
+		<result property="sendId" column="send_id"/>
+		<result property="receiveId" column="receive_id"/>
 	</resultMap>
 	
 	<select id="receiveList" parameterType="_int" resultMap="noteResultSet">
-		SELECT NOTE_NO, NOTE_TITLE, NOTE_CONTENT, SEND_DATE, READ_CHECK, SEND_STATUS, RECEIVE_STATUS, SEND_NO, RECEIVE_NO, SM.MEMBER_NAME SEND_NAME
+		SELECT NOTE_NO, NOTE_TITLE, NOTE_CONTENT, SEND_DATE, READ_CHECK, SEND_STATUS, RECEIVE_STATUS, SEND_NO, RECEIVE_NO, SM.MEMBER_NAME SEND_NAME, SM.MEMBER_ID SEND_ID
 		  FROM TB_NOTE N
           JOIN TB_MEMBER SM ON (N.SEND_NO = SM.MEMBER_NO)
 		 WHERE RECEIVE_NO = #{no}
@@ -42,8 +44,8 @@
 	
 	<select id="detailNote" parameterType="_int" resultMap="noteResultSet">
 		SELECT NOTE_NO, NOTE_TITLE, NOTE_CONTENT, SEND_DATE, READ_CHECK, SEND_STATUS, RECEIVE_STATUS
-              ,SEND_NO, S.MEMBER_NAME SEND_NAME
-              ,RECEIVE_NO, M.MEMBER_NAME RECEIVE_NAME
+              ,SEND_NO, S.MEMBER_NAME SEND_NAME, S.MEMBER_ID SEND_ID
+              ,RECEIVE_NO, M.MEMBER_NAME RECEIVE_NAME, M.MEMBER_ID RECEIVE_ID
 		  FROM TB_NOTE N
           JOIN TB_MEMBER M ON (N.RECEIVE_NO = M.MEMBER_NO)
           JOIN TB_MEMBER S ON (N.SEND_NO = S.MEMBER_NO)

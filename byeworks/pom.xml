@@ -241,6 +241,22 @@
 		    <version>2.4</version>
 		</dependency>
 		
+		<!-- 이슬희: 웹 소켓 사용 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- 웹 소켓: 아마 위 버전을 쓰는 거 같은데 일단 가져다 둠 -->
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		
 	</dependencies>
     <build>
         <plugins>

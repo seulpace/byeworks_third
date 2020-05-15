@@ -137,7 +137,7 @@ byeworks/target/classes/com/dadada/byeworks/alarm/model/service/AlarmServiceImpl
 byeworks/target/classes/com/dadada/byeworks/alarm/model/service/AlarmService.class
 byeworks/target/classes/com/dadada/byeworks/alarm/model/dao/AlarmDao.class
 byeworks/target/classes/com/dadada/byeworks/alarm/controller/AlarmController.class
-
+byeworks/target/classes/com/dadada/byeworks/common/controller/WebSocketChat.class
 byeworks/target/classes/com/dadada/byeworks/work/controller/AppointmentController.class
 byeworks/target/classes/mappers/appointment-mapper.xml
 byeworks/target/classes/com/dadada/byeworks/commute/controller/CommuteController.class

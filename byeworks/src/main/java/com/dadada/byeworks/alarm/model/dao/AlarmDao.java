@@ -25,4 +25,20 @@ public class AlarmDao {
 	public int insertAlarm(SqlSessionTemplate sqlSession, Alarm a) {
 		return sqlSession.insert("alarmMapper.insertAlarm", a);
 	}
+	
+	public int updateRead(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.update("alarmMapper.updateRead", no);
+	}
+	
+	public ArrayList<Alarm> showAlarm(SqlSessionTemplate sqlSession, int no) {
+		return (ArrayList)sqlSession.selectList("alarmMapper.showAlarm", no);
+	}
+	
+	public int countAlarm(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.selectOne("alarmMapper.countAlarm", no);
+	}
+	
+	public int readAlarm(SqlSessionTemplate sqlSession, int alarmNo) {
+		return sqlSession.update("alarmMapper.readAlarm", alarmNo);
+	}
 }

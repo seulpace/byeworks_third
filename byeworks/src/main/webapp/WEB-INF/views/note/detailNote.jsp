@@ -91,6 +91,7 @@
            										<input type="hidden" name="receiveNo" value="${ n.sendNo }">
            										<input type="hidden" name="receiveName" value="${ n.sendName }">
            										<input type="hidden" name="receiveTitle" value="${ n.noteTitle }">
+           										<input type="hidden" name="receiveId" value="${ n.sendId }">
            									</form>
                       					</div>                      
                     				</div>                    

@@ -33,6 +33,7 @@
 		<result property="extension" column="extension"/>
 		<result property="email" column="email"/>
 		<result property="bookmark" column="bookmark"/>	
+		<result property="memberId" column="member_id"/>
 	</resultMap>
 
 
@@ -107,7 +108,7 @@
 	<select id="selectAddrList" parameterType="_int" resultMap="memberAddressSet">
 		SELECT M.MEMBER_NO, M.MEMBER_NAME, D.DEPARTMENT_NAME AS DEPARTMENT, P.POSITION_NAME AS POSITION,
 		       CASE WHEN M.MEMBER_NO IN (SELECT A.MEMBER_NO FROM TB_ADDRESSFAV A WHERE FAV_MEMBER_NO = #{no}) THEN 'Y' ELSE 'N' END AS BOOKMARK,
-		       M.EXTENSION, M.EMAIL
+		       M.EXTENSION, M.EMAIL, M.MEMBER_ID
 		  FROM TB_MEMBER M
 		  JOIN TB_DEPARTMENT D ON (M.DEPARTMENT = D.DEPARTMENT_NO)
 		  JOIN TB_POSITION P ON (M.POSITION = P.POSITION_NO)

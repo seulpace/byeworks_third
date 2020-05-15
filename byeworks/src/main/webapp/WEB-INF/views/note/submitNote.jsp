@@ -18,6 +18,10 @@
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
     
+    <!-- alertifyJs -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    
  	<title>Byeworks</title>
  	<style>
  		textarea:focus {
@@ -52,8 +56,9 @@
                   				<div class="x_content">
                     				<div class="row">
                       					<div class="col-sm-12">
-                        					<form id="demo-form2" action="send.nt" method="post" data-parsley-validate class="form-horizontal form-label-left" onsubmit="return checkTextarea();">
+                        					<form id="demo-form2" action="insert.al" method="post" data-parsley-validate class="form-horizontal form-label-left" onsubmit="return noteSubmit();">
 												<input type="hidden" name="sendNo" value="${ loginUser.memberNo }">
+												<input type="hidden" name="alarmGroupNo" value="1">
                           						<div class="item form-group">
                             						<label class="col-form-label col-md-2 col-sm-2 label-align" for="first-name">제목 <span class="required">*</span></label>
                             						<div class="col-md-6 col-sm-6 ">
@@ -66,6 +71,7 @@
                             						<div class="col-md-6 col-sm-6">
                                 						<input type="text" id="receiveName" name="receiveName" required="required" class="form-control" readonly value="${ sessionScope.rName }">
                                 						<input type="hidden" id="receiveNo" name="receiveNo" value="${ sessionScope.rNo }">
+                                						<input type="hidden" id="receiveId" name="receiveId" value="${ sessionScope.rId }">
                                 						<c:remove var="rName"/>
                                 						<c:remove var="rNo"/> 
                             						</div>
@@ -136,6 +142,7 @@
 						                    <td>
 						                    	<input type="hidden" value="${ l.memberNo }">
 						                    	<input type="hidden" value="${ l.memberName }">
+						                    	<input type="hidden" value="${ l.memberId }">
 						                    	${ l.memberName }
 						                    </td>
 						                    <td>${ l.department }</td>
@@ -175,10 +182,13 @@
 				var no = $(this).children().eq(0).children().eq(0).val();
 				// 받는 사람 이름
 				var name = $(this).children().eq(0).children().eq(1).val();
+				// 받는 사람 아이디 (웹소켓)
+				var mId = $(this).children().eq(0).children().eq(2).val();
 				
 				// 이름 설정해주기
 				$("#receiveName").val(name);
 				$("#receiveNo").val(no);
+				$("#receiveId").val(mId);
 				$(".searchAddress").modal('hide');
 			});
 			
@@ -186,6 +196,40 @@
 		
 		function goList() {
 			location.href = "selectList.nt";
+		}
+		
+		function noteSubmit() {
+			var title = $("#noteTitle").val();
+			var content = $("#noteContent").val();
+			var receiveNo = $("#receiveNo").val();
+			
+			// 보낸 사람 이름
+			var caller = "${ loginUser.memberName }";
+			// 받는 사람 아이디
+			var receiverId = $("#receiveId").val();
+			
+			// 쪽지 보내기
+			$.ajax({
+				url:'send.nt',
+				data:{title:title,
+					  content:content,
+					  receiveNo:receiveNo},
+				type:'post',
+				success:function() {
+					alertify.alert("발송되었습니다");
+					// 성공하면 웹소켓으로 보내줘야 한다
+					if(ws) {
+						// note,보낸사람이름,받는사람아이디
+						let wsMsg = "note," + caller + "," + receiverId;
+						console.log("msg: " + wsMsg);
+						ws.send(wsMsg);
+					}
+				},error:function() {
+					console.log("ajax 통신 실패");
+				}
+			});
+			
+			return true;
 		}
 		
 	</script>

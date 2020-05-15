@@ -26,6 +26,7 @@
 		 WHERE A.RECEIVE_NO = #{no}
 		   AND A.STATUS = 'Y'
 		   AND ALARM_GROUP = 1
+		 ORDER BY ALARM_NO DESC
 	</select>
 	
 	<update id="deleteAllNote" parameterType="_int">
@@ -43,4 +44,35 @@
 	<insert id="insertAlarm" parameterType="Alarm">
 		INSERT INTO TB_ALARM VALUES (SEQ_AR.NEXTVAL, DEFAULT, DEFAULT, #{alarmDate}, #{alarmGroup}, #{groupNo}, #{sendNo}, #{receiveNo})
 	</insert>
+	
+ 	<update id="updateRead" parameterType="_int">
+ 		UPDATE TB_ALARM
+ 		   SET READ_FLAG = 'Y'
+ 		 WHERE READ_FLAG = 'N'
+ 		   AND RECEIVE_NO = #{no}
+ 	</update>
+ 	
+ 	<select id="showAlarm" parameterType="_int" resultMap="alarmResultSet">
+ 		SELECT ALARM_NO, ALARM_GROUP, GROUP_NO, M.MEMBER_NAME AS SEND_NAME, M.PROFILE_MODIFY
+ 		  FROM TB_ALARM A
+          JOIN TB_MEMBER M ON (A.SEND_NO = M.MEMBER_NO)
+ 		 WHERE READ_FLAG = 'N'
+ 		   AND A.STATUS = 'Y'
+ 		   AND RECEIVE_NO = #{no}
+ 		 ORDER BY ALARM_NO DESC
+ 	</select>
+ 	
+ 	<select id="countAlarm" parameterType="_int" resultType="_int">
+ 		SELECT COUNT(*)
+		  FROM TB_ALARM
+		 WHERE RECEIVE_NO = #{no}
+		   AND READ_FLAG = 'N'
+		   AND STATUS = 'Y'
+ 	</select>
+ 	
+ 	<update id="readAlarm" parameterType="_int">
+ 		UPDATE TB_ALARM
+ 		   SET READ_FLAG = 'Y'
+ 		 WHERE ALARM_NO = #{alarmNo}
+ 	</update>
 </mapper>
