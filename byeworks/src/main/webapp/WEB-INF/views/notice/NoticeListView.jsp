@@ -50,7 +50,9 @@
                     <h2><small>공지사항</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                     <!-- 5월 6일 공지사항 작성하기 추가1번 -->
-                    <a class="btn btn-primary" href="enrollForm.no">작성하기</a>
+                    <c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 6 or loginUser.departmentNo eq 7 }">
+                    	<a class="btn btn-primary" href="enrollForm.no" value="${ loginUser.memberNo }" >작성하기</a>
+                    </c:if>
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
 

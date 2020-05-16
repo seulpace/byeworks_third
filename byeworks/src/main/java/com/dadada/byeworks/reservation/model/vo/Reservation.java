@@ -19,7 +19,7 @@ public class Reservation {
 	private int peopleCount;
 	private String conferenceTitle;
 	private String conferenceContent;
-	private Date createDate;
+	private String createDate;
 	private String startDate;
 	private String endDate;
 	private String status;
