@@ -226,11 +226,15 @@ public class SignServiceImpl implements SignService {
 			
 			if(rlist.getRlist()!=null) {
 			result4 = sDao.deleteSignReferList(sqlSession, rlist.getRlist().get(0).getSignNo());
+			
 			result7 = sDao.updateReferList(sqlSession, rlist.getRlist());
+		
 			}
 			if(!alist.isEmpty()) {
 			 result5 = sDao.deleteSignAttachmentList(sqlSession, alist.get(0).getSignNo());
+		
 			 result8 = sDao.updateAttachmentList(sqlSession, alist);
+		
 			}
 			result9 = result3*result4*result5*result6*result7*result8;
 			
