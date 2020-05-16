@@ -28,21 +28,22 @@
         <jsp:include page="../common/menubar.jsp"/>
 		<!-- page content -->
         <div class="right_col" role="main">   
-          
-         
-          <h2>전사원 출퇴근 조회</h2>
-            <div class="x_title">
-              <div class="clearfix"></div>
-              
-            </div>
+          <div class="page-title">
+             		<div class="title_left">
+               		<h3>근태 관리 <small style="color:lightgray">출퇴근 현황 조회(인)</small></h3>
+             		</div>
+           	</div>
+
+           	<div class="clearfix"></div>
+           	<br>
             <div class="x_content">
               <div class="calendar-exibit">
                 <div class="col-md-3">
                   <fieldset>
                     <div class="control-group">
                       <div class="controls">
-                        <div class="col-md-11 xdisplay_inputx form-group row has-feedback">
-                          <input type="text" class="form-control has-feedback-left" id="commuteDateStr" value="" name="commuteDateStr" aria-describedby="inputSuccess2Status">
+                        <div style="padding-left:0px" class="col-md-11 xdisplay_inputx form-group row has-feedback">
+                          <input type="text" class="form-control" style="padding-left:55px;" id="commuteDateStr" value="" name="commuteDateStr" aria-describedby="inputSuccess2Status">
                           <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                           <span id="inputSuccess2Status" class="sr-only">(success)</span>
                         </div>

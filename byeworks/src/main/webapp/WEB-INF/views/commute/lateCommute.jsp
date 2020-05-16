@@ -17,7 +17,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 	
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
  	<title>Byeworks</title>
 </head>
 <body class="nav-md">
@@ -29,15 +30,15 @@
 <!-- page content -->
         <div class="right_col" role="main">   
           
-          <div class="col-md-6 col-sm-6  ">
-            <h2>지각 월별 조회</h2>
-              <div class="x_title">
+          <div class="page-title">
+             		<div class="title_left">
+               		<h3>근태 관리 <small style="color:lightgray">지각 월별 조회(인)</small></h3>
+             		</div>
+           	</div>
 
-                <div class="clearfix"></div>
-                
-              </div>
+           	<div class="clearfix"></div>
+           	<br>
               <div class="x_content">
-                <div class="col-md-7 col-sm-7" style="float:right">
                  <div>
 	                <select class="form-control-sm" id="commuteLateYear" name="commuteLateYear">
 	                     <option class="dropdown-item"  value="">년도</option>
@@ -61,9 +62,8 @@
 	                </select> 
 		                           
 	              </div>	
-                </div>
-
-                <table class="table" id="lateTable">
+				<br><br>
+                <table class="table center" id="lateTable">
                   <thead>
                     <tr>
                       <th>이름</th>
@@ -78,14 +78,11 @@
                     
                   </tbody>
                 </table>
-
-                <canvas id="lateChart" width="100%" height="50"></canvas>
-                
-                
-				<script>
 				
-				</script>
               </div>  
+              <div class="col-md-8 col-sm-8">
+                	<canvas id="lateChart" width="60%" height="25%"></canvas>
+                </div>
 
           <div class="clearfix"></div>
 
@@ -100,26 +97,28 @@
     <script>
     
     $(function(){
- 
+    	var dept1 = 0;
+		var dept2 = 0;
+		var dept3 = 0;
 
 		$("#commuteLate").change(function(){
+			
 			/* var commuteDateStr = $("select[id='commuteLateYear']").val() + '/' + $("select[id='commuteLate']").val(); */
 			var commuteLate = $("select[id='commuteLate']").val();
 			var value = "";
-			var dept1 = 0;
-			var dept2 = 0;
-			var dept3 = 0;
-			
+			dept1 = 0;
+			dept2 = 0;
+			dept3 = 0;
+
 			$.ajax({
 				url:"lateCommuteList.co",
 				data:{"commuteDateStr":commuteLate},
 				type:"get",
-			    async: false,
 				success:function(list){
 					
 					$.each(list, function(i, obj){
 						value += "<tr>" +
-		    	                      "<th scope='row'>" + obj.empName + "</th>" + 
+		    	                      "<td scope='row'>" + obj.empName + "</td>" + 
 		    	                      "<td>" + obj.empNos + "</td>" + 
 		    	                      "<td>" + obj.empDept + "</td>" + 
 		    	                      "<td>" + obj.empPos + "</td>" +
@@ -139,6 +138,7 @@
 					$("#lateTable tbody").html(value);
 					
 			
+					
 					var ctx = document.getElementById("lateChart");
 				
 					var lateChart = new Chart(ctx,{
@@ -180,7 +180,8 @@
 				                   ticks: {
 				                     min: 0,
 				                     max: 15,
-				                     maxTicksLimit: 5
+				                     maxTicksLimit: 5,
+				                     display:true
 				                   },
 				                   gridLines: {
 				                     display: true
@@ -190,9 +191,36 @@
 				               legend: {
 				                 display: false
 				               }
-				             }
+				               /* tooltips: {
+				                   enabled: false
+				               },
+				               hover: {
+				                   animationDuration: 0
+				               },
+				               animation: {
+				                   duration: 1,
+				                   onComplete: function () {
+				                       var chartInstance = this.chart,
+				                           ct = chartInstance.ctx;
+				                       ct.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+				                       ct.textAlign = 'center';
+				                       ct.textBaseline = 'bottom';
+
+				                       this.data.datasets.forEach(function (dataset, i) {
+				                           var meta = chartInstance.controller.getDatasetMeta(i);
+				                           meta.data.forEach(function (bar, index) {
+				                               var data = dataset.data[index];                            
+				                               ct.fillText(data, bar._model.x, bar._model.y - 5);
+				                           });
+				                       });
+				                   } */
+				               
+				              
+				            }
+					
 						
 					});
+					
 					
 				}, error:function(){
 					console.log("통신실패");
@@ -219,7 +247,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
-	  <script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
+	 <script src="${pageContext.request.contextPath}/resources/js/Chart.min.js"></script>
 	  <!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script> -->
