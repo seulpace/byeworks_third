@@ -37,7 +37,7 @@
           		<div class="">
             		<div class="page-title">
               			<div class="title_left">
-                			<h3>공지사항 <small>전체목록</small></h3>
+                			<h3>공지사항 <small style="color:lightgray">전체목록</small></h3>
               			</div>
 					</div>
 
@@ -46,21 +46,12 @@
             		<div class="row">
               			<div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
-                  <div class="x_title">
-                    <h2><small>공지사항</small></h2>
+                  
+                   
                     <ul class="nav navbar-right panel_toolbox">
-                    <!-- 5월 6일 공지사항 작성하기 추가1번 -->
-                    <c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 6 or loginUser.departmentNo eq 7 }">
-                    	<a class="btn btn-primary" href="enrollForm.no" value="${ loginUser.memberNo }" >작성하기</a>
-                    </c:if>
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
                     </ul>
                     <div class="clearfix"></div>
-                  </div>
+                  
                   <div class="x_content">
                       <div class="row">
                           <div class="col-sm-12">
@@ -94,11 +85,19 @@
                       </tbody>
                     </table>
                   </div>
+		              	  <br>
+			              <div class="item form-group" style="float:right;">
+			              	<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 6 or loginUser.departmentNo eq 7 }">
+			                	<a class="btn btn-diy" href="enrollForm.no" value="${ loginUser.memberNo }" >작성하기</a>
+			                </c:if>
+			              </div>
                   </div>
               </div>
             </div>
                 </div>
               </div>
+              
+
 
 	<jsp:include page="../common/footer.jsp"/>
 </div>

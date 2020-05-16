@@ -39,7 +39,7 @@
 
             <div class="page-title">
               <div class="title_left">
-                <h3>공지사항 <small>|작성하기</small></h3>
+                <h3>공지사항 <small style="color:lightgray">작성하기</small></h3>
               </div>
 
 
