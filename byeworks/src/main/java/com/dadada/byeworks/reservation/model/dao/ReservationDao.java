@@ -11,7 +11,7 @@ import com.dadada.byeworks.reservation.model.vo.Reservation;
 import com.dadada.byeworks.reservation.model.vo.ReservationDTO;
 
 @Repository("rDao")
-public class ReservationDao {
+public class ReservationDao { 
 	
 	//내가  회의실 예약한거 조회
 	public ArrayList<Reservation> selectList(SqlSession sqlSession, int mno) {

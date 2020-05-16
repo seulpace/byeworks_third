@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Reservation {
+public class Reservation { 
 
 	private int reservationNo;
 	private int roomNo;

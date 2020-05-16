@@ -165,33 +165,29 @@
 		                		</div>
 							</div>
 							<div class="x_panel">
-                				<div class="x_title">
-                  					<h2>프로젝트 들어갈 자리</h2>
+                				<div class="x_title" style="margin:0">
+                  					<h2>진행 중인 프로젝트</h2>
                   					<div class="clearfix"></div>
                 				</div>
 	                			<div class="x_content">
-	                  				<table class="table" id="noticeTable">
-	                    				<thead>
-	                      					<tr>
-	                        					<th></th>
-	                        					<th>제목</th>
-	                      					</tr>
-	                    				</thead>
-	                    				<tbody>
-	                    					<c:forEach items="${ nList }" var="n" varStatus="status">
-		                      				<tr>
-					                        	<th scope="row">
-					                        		<input type="hidden" value="${ n.noticeNo }">
-					                        			${ status.count }
-					                        		<form id="goNotice${ n.noticeNo }" action="detail.not" method="post">
-					                        			<input type="hidden" value="${ n.noticeNo }" name="nno">
-					                        		</form>
-					                        	</th>
-					                        	<td>${ n.noticeTitle }</td>
-		                      				</tr>
-		                      				</c:forEach>
-		                    			</tbody>
-		                  			</table>
+                    				<div class="dashboard-widget-content">
+                      					<ul class="quick-list">
+					                        <li><i class="fa fa-bars"></i><a href="#">Subscription</a></li>
+					                        <li><i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a> </li>
+					                        <li><i class="fa fa-support"></i><a href="#">Help Desk</a> </li>
+					                        <li><i class="fa fa-heart"></i><a href="#">Donations</a> </li>
+                      					</ul>
+
+                      					<div class="sidebar-widget">
+                        					<h4>Goal</h4>
+                        					<canvas width="150" height="80" id="chart_gauge_02" class="" style="width: 160px; height: 100px;"></canvas>
+                        					<div class="goal-wrapper">
+					                        	<span class="gauge-value pull-left">$</span>
+					                        	<span id="gauge-text2" class="gauge-value pull-left">3,200</span>
+					                        	<span id="goal-text2" class="goal-value pull-right">$5,000</span>
+                        					</div>
+                      					</div>
+                    				</div>
 		                		</div>
 							</div>
             			</div>

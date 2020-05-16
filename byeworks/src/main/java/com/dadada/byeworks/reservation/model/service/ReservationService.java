@@ -9,7 +9,7 @@ import com.dadada.byeworks.reservation.model.vo.ReservationDTO;
 public interface ReservationService {
 	
 	//내가  회의실 예약한거 조회
-	ArrayList<Reservation> selectList(int mno);
+	ArrayList<Reservation> selectList(int mno); 
 
 	//회의실 로그인 한 사람꺼 삭제
 	int deleteResevation(int reservationNo, int mno);
