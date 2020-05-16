@@ -69,7 +69,7 @@
               </div>
             </div>
 
-            <div class="clearfix"></div>
+            <div class="clearfix"></div><br>
 
             <div class="row">
               <div class="col-md-12 col-sm-12 ">
@@ -176,14 +176,21 @@
         </div>
         
         <script>
-        	$(function(){
+        $(function(){
+        
+        	$("#datatable tbody tr").click(function(){
+    			console.log($(this).children().eq(0).children().eq(0));
+    			location.href = "signDetail.si?sno=" + $(this).children().eq(0).text() +"&mno=${loginUser.memberNo}" +"&type=" + $(this).children().eq(0).children("input").val();
+    			
+    		});
+        	
+        	
+        });
+        
         		
-        		$("#datatable tbody tr").click(function(){
-        			console.log($(this).children().eq(0).children().eq(0));
-        			location.href = "signDetail.si?sno=" + $(this).children().eq(0).text() +"&mno=${loginUser.memberNo}" +"&type=" + $(this).children().eq(0).children("input").val();
-        			
-        		});
         		
+        		
+        	
 
         
         </script>
