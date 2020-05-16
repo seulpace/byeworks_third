@@ -40,17 +40,20 @@ public class WebSocketChat {
     public WebSocketChat() {
         // TODO Auto-generated constructor stub
     	    
+       
     }
     
     // 서버 접속
     @OnOpen
     public void onOpen(Session session) {
+    	
         logger.info("Open session id:"+session.getId());
         try {
             final Basic basic=session.getBasicRemote();
             basic.sendText("Connection Established");
         }catch (Exception e) {
             // TODO: handle exception
+           
         }
         sessionList.add(session);
         
@@ -81,6 +84,8 @@ public class WebSocketChat {
         		String cmd = strs[0];
         		String caller = strs[1];
         		String receiverId = strs[2];
+        	
+        	
         		// 알람을 받을 사람이 로그인 해서 있다면
         		Session loginSession = userSessionsMap.get(receiverId);
         		
@@ -93,6 +98,7 @@ public class WebSocketChat {
         	}
         }catch (Exception e) {
             // TODO: handle exception
+          
         }
     }
     
@@ -106,6 +112,7 @@ public class WebSocketChat {
             basic.sendText("to : "+message);
         }catch (Exception e) {
             // TODO: handle exception
+       
         }
         
         // 여기서 메시지 보내나봐
@@ -114,11 +121,13 @@ public class WebSocketChat {
     
     @OnError
     public void onError(Throwable e,Session session) {
+  
     }
     
     @OnClose
     public void onClose(Session session) {
         logger.info("Session "+session.getId()+" has ended");
+  
         
     	// 이렇게 삭제하는 게 맞는진 모르겠는데.. 넣어준 값에 맞춰서 삭제해야 하니까
     	//if(loginUser == null) {
