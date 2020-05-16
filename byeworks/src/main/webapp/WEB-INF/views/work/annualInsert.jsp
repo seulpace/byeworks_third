@@ -19,6 +19,19 @@
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
  
  	<title>Byeworks</title>
+ 	<style>
+    	.form-kdh{
+        border: 1px solid white;   
+        font-family :'FontAwesome';
+        font-size: inherit; 
+        padding-top:2.5%;
+       background:#e9ecef;
+        }
+        .form-kdh[readonly]{
+        background:white;
+        }
+    
+    </style>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -26,24 +39,26 @@
         
         <!-- 메뉴바 -->
         <jsp:include page="../common/menubar.jsp"/>
-			<div class="right_col" role="main">
+		<div class="right_col" role="main">
           <!-- top tiles -->
-         	 <div style="display: inline-block;" >
-            <div class="col-md-12 ">
+          <div class="page-title">
+	   		<div class="title_left">
+	     		<h3>연차 관리 <small style="color:lightgray">연차 신청</small></h3>
+	   		</div>
+       	</div> 
+	        <div class="clearfix"></div>
+	         <br>
+	    
+            <div class="col-md-6 ">
               <div class="x_panel">
-                <div class="x_title">
-                  <h2>연차신청</h2> 
-                  <div class="clearfix"></div>
-                  
-                </div>
-                
+               <br>
                 <div class="x_content">
-                  <br />
+                  <br>
                   <form id="annualInsert" action="annualInsert.ann" method="post" class="form-horizontal form-label-left">
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">현황</label>
                       <div class="col-md-9 col-sm-9">
-                        <div class="form-kdh">총 휴가일 : <b>${ann.annualCreate}일</b> / 사용일 : <b>${ann.annualUseDay }일 </b> / 잔여일 : <b>${ann.annualRemain }일</b></div>
+                        <div >총 휴가일 : <b>${ann.annualCreate}일</b> / 사용일 : <b>${ann.annualUseDay }일 </b> / 잔여일 : <b>${ann.annualRemain }일</b></div>
                       </div>
                    
                     </div>
@@ -55,7 +70,17 @@
                       
                     </div>
                     
-                   
+                   <div class="form-group row">
+                      <label for="annual" class="control-label col-md-3 col-sm-3 ">연차 종류</label>
+                      <div class="col-md-9 col-sm-9">
+                        <select class="select2_single form-control" tabindex="-1" id="annualType" name="annualType">
+                          <option value="">--------------------</option>
+                          <option value="0">연차</option>
+                          <option value="1">오전 반차</option>
+                          <option value="2">오후 반차</option>
+                        </select>
+                      </div>  
+                    </div> 
                    
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">연차 기간</label>
@@ -74,17 +99,7 @@
                           </fieldset>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label for="annual" class="control-label col-md-3 col-sm-3 ">연차 종류</label>
-                      <div class="col-md-3 col-sm-3">
-                        <select id="annualType" name="annualType">
-                          <option value="">--------------------</option>
-                          <option value="0">연차</option>
-                          <option value="1">오전 반차</option>
-                          <option value="2">오후 반차</option>
-                        </select>
-                      </div>  
-                    </div> 
+                    
                     
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">연차 사유</label>
@@ -96,8 +111,8 @@
                    <input type="hidden" value="V" name="docType">
                     <div class="ln_solid"></div>
                     <div class="form-group">
-                      <div class="col-md-9 col-sm-9  offset-md-3">
-                        <button type="submit" class="btn btn-success">전자결재로 이동</button>
+                      <div class="col-md-9 col-sm-9  offset-md-4">
+                        <button type="submit" class="btn btn-diy" style="color:white;">전자결재로 이동</button>
                       </div>
                     </div>
 
@@ -105,14 +120,14 @@
                 </div>
               </div>
             </div>
+   	 </div>
 
+	
         <!-- footer content -->
         <jsp:include page="../common/footer.jsp"/>
-        
-      </div>
-			</div>
-		</div>
-	</div>
+       </div> 
+  
+</div>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap-daterangepicker/moment.min.js"></script>
 	<script>

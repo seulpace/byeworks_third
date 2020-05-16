@@ -21,6 +21,18 @@
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <title>Byeworks</title>
+    
+ 	<style>
+    	.form-kdh{
+        border: 1px solid white;   
+        font-family :'FontAwesome';
+        font-size: inherit; 
+        padding-top:2.5%;
+       background:#e9ecef;
+        }
+       
+    
+    </style>
 </head>
 <body class="nav-md">
    <div class="container body">
@@ -40,12 +52,15 @@
           <!-- top tiles -->
           <div class="row">
             <div class="col-md-12 col-sm-12">
+              <div class="page-title">
+	   				<div class="title_left">
+	     				<h3>인사 관리 <small style="color:lightgray">전체 사원 관리</small></h3>
+	   				</div>
+       			 </div>  
+        		<div class="clearfix"></div>
+         		<br>
               <div class="x_panel">
-                <div class="x_title">
-                  <h2>전체 직원 조회</h2>
-                  
-                  <div class="clearfix"></div>
-                </div>
+               
                 <div class="x_content">
                     <div class="row">
                         <div class="col-sm-12">
@@ -54,7 +69,7 @@
                             <table id="datatable" class="table table-bordered table-hover">
                               <thead>
                                 <tr>
-                                  <th>No.</th>
+                                  <th></th>
                                   <th>이름</th>
                                   <th>부서</th>
                                   <th>직책</th>
@@ -67,7 +82,7 @@
                                 <c:forEach items="${ list }" var="m">
 	                                <tr>
 	                              	  <input type="hidden" name="memberNo" value="${ m.memberNo }">
-	                                  <td onclick="event.cancelBubble=true"><input type="checkbox" id="retireday" name="retireday" value="${ m.memberNo }" ></td>
+	                                  <td onclick="event.cancelBubble=true"><input type="checkbox" class="flat" id="retireday" name="retireday" value="${ m.memberNo }" ></td>
 	                                  <td>${ m.memberName }</td>
 	                                  <td>${ m.department }</td>
 	                                  <td>${ m.position }</td>
@@ -77,7 +92,10 @@
                                 </c:forEach>
                               </tbody>
                             </table>
-                            <button id="retireBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">사원퇴사</button>
+                          
+                          </div>
+                          <div class="col-md-12">
+                            <button id="retireBtn" type="button" class="btn btn-diy" style="color:white" data-toggle="modal" data-target=".bs-example-modal-sm">사원퇴사</button>
 
                             <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog modal-sm">
@@ -94,20 +112,20 @@
                                   	</form>
                                   
                                      <label for="memberName">* 이름 :</label>
-				                    <input type="text" class="form-control" id="memberName" name="memberName" value="" readonly><br>
+				                    <input type="text" class="form-control form-kdh" id="memberName" name="memberName" value="" readonly><br>
 				                    
 				                    <label for="empNo">* 사번 :</label>
-				                    <input type="text" class="form-control" id="empNo" name="empNo" value="" readonly><br>
+				                    <input type="text" class="form-control form-kdh" id="empNo" name="empNo" value="" readonly><br>
 				                    
 				                    <label for="position">* 직급 :</label>
-				                    <input type="text" class="form-control" id="position" name="position" value="" readonly><br>
+				                    <input type="text" class="form-control form-kdh" id="position" name="position" value="" readonly><br>
 				                    
 				                    <label for="소속">* 소속 :</label>
-				                    <input type="text" class="form-control" id="department" name="department" value="" readonly><br>
+				                    <input type="text" class="form-control form-kdh" id="department" name="department" value="" readonly><br>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
-                                    <button type="button" onclick="deleteMem()" class="btn btn-primary">네</button>
+                                    <button type="button" onclick="deleteMem()" class="btn btn-danger">네</button>
                                   </div>
 
                                 </div>
@@ -115,8 +133,8 @@
                             </div>
                           
 		                            
-                            <button type="button" class="btn btn-primary" onclick="location.href='memberInsertForm.me'">사원등록</button>
-                          </div>
+                            <button type="button" class="btn btn-diy" style="color:white" onclick="location.href='memberInsertForm.me'">사원등록</button>
+                        	</div>
                         </div>
                     </div>
                 </div>

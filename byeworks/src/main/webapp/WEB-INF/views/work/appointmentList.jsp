@@ -27,13 +27,16 @@
         <!-- 메뉴바 -->
         <jsp:include page="../common/menubar.jsp"/>
 <div class="right_col" role="main">   
+	<div class="page-title">
+	   		<div class="title_left">
+	     		<h3>인사 관리 <small style="color:lightgray">발령 내역</small></h3>
+	   		</div>
+       	</div> 
+	        <div class="clearfix"></div>
+	         <br>
     <div class="col-md-12 col-sm-12  ">
-      <div class="x_panel">
-        <div class="x_title">
-          <h2><i class="fa fa-bars"></i> 발령 내역 </h2>
-          
-          <div class="clearfix"></div>
-        </div>
+ 
+        
         <div class="x_content">
 
           <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
@@ -71,7 +74,7 @@
 	                          		<c:when test="${ !empty appList1 }">
 				                          <c:forEach items="${ appList1 }" var="adto">
 					                            <tr>
-					                              <th scope="row">${adto.appEmpno}</th>
+					                              <td scope="row">${adto.appEmpno}</td>
 					                              <td>${adto.appointmentName}</td>
 					                              <td>${adto.departmentName}</td>
 					                              <td>${adto.positionName}</td>
@@ -115,7 +118,7 @@
 	                          		<c:when test="${ !empty appList2 }">
 				                          <c:forEach items="${ appList2 }" var="adto">
 					                            <tr>
-					                              <th scope="row">${adto.appEmpno}</th>
+					                              <td scope="row">${adto.appEmpno}</td>
 					                              <td>${adto.appointmentName}</td>
 					                              <td>${adto.departmentName}</td>
 					                              <td>${adto.positionName}</td>

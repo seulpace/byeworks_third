@@ -36,19 +36,20 @@
         <jsp:include page="../common/menubar.jsp"/>
 		 <div class="right_col" role="main">   
           
-          <div class="col-md-6 col-sm-6  ">
-            <h2>내 출퇴근 이력</h2>
-              <div class="x_title">
-                <div class="clearfix"></div>
-                
-              </div>
+           <div class="page-title">
+             		<div class="title_left">
+               		<h3>근태 관리 <small style="color:lightgray">출퇴근 이력 조회</small></h3>
+             		</div>
+           	</div>
+
+           	<div class="clearfix"></div>
+           	<br>
               <div class="x_content">
-                <div class="col-md-7 col-sm-7" style="float:right">
                  <div>
 	                <select class="form-control-sm" id="commuteYear" name="commuteYear">
 	                     <option class="dropdown-item"  value="">년도</option>
 		                 <option class="dropdown-item"  value="2020">2020</option>
-		                 
+		              
 		             </select> 
 	                 <select class="form-control-sm" id="commuteMon" name="commuteMon">
 		                 <option class="dropdown-item"  value="">월</option>
@@ -64,10 +65,9 @@
 		                 <option class="dropdown-item"  value="10">10월</option>
 		                 <option class="dropdown-item"  value="11">11월</option>
 		                 <option class="dropdown-item"  value="12">12월</option>
-	                </select> 
-		                           
+	                </select>  
 	              </div>	
-                </div>
+	              <br><br>
                 <table id="myCommuteTable" class="table table-bordered">
                   <thead>
                     <tr>
@@ -87,14 +87,14 @@
           
           </div>
 
-          <div class="clearfix"></div>
+         
 
         </div>
         <!-- footer content -->
         <jsp:include page="../common/footer.jsp"/>
         
       </div>
-    </div>
+  
     <script>
     	$(function(){
     		

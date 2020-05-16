@@ -19,6 +19,9 @@
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
  
  	<title>Byeworks</title>
+ 	<style>
+ 	
+ 	</style>
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -30,16 +33,20 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
+          <div class="page-title">
+	   		<div class="title_left">
+	     		<h3>인사 관리 <small style="color:lightgray">직원 등록</small></h3>
+	   		</div>
+        </div>  
+        <div class="clearfix"></div>
+         <br>
           <!-- top tiles -->
-          <div class="row" style="display: inline-block;" >
-            <div class="col-md-12 ">
+          <div class="row"  >
+            <div class="col-md-6">
               <div class="x_panel">
-                <div class="x_title">
-                  <h2>사원 등록</h2>
-                  <div class="clearfix"></div>
-                </div>
+              <br>
                 <div class="x_content">
-                  <br />
+                  
                   <form class="form-horizontal form-label-left" id="updateMember" method="post" enctype="multipart/form-data" action="memberInsert.me"> 
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">프로필사진</label>
@@ -57,7 +64,7 @@
                     <div class="form-group row">
                       <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <select id="department" name="department">
+                        <select id="department" class="select2_single form-control" tabindex="-1"  name="department">
                           <option value="">--------------------</option>
                           <option value="2">사업팀1</option>
                           <option value="3">사업팀2</option>
@@ -71,7 +78,7 @@
                     <div class="form-group row">
                       <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
                         <div class="col-md-9 col-sm-9 ">
-                          <select id="position" name="position">
+                          <select id="position" class="select2_single form-control" tabindex="-1" name="position">
                                 <option value="">--------------------</option>
                                 <option value="1">임원</option>
                                 <option value="2">부장</option>
@@ -115,8 +122,8 @@
                     </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
-                      <div class="col-md-9 col-sm-9  offset-md-3">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">사원등록</button>
+                      <div class="col-md-12 col-sm-12  offset-md-5">
+                        <button type="button" class="btn btn-diy" style="color:white;" data-toggle="modal" data-target=".bs-example-modal-sm">사원등록</button>
 
                             <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog modal-sm">
@@ -132,7 +139,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">아니오</button>
-                                    <button type="submit" class="btn btn-primary">네</button>
+                                    <button type="submit" class="btn  btn-diy" style="color:white;" >네</button>
                                   </div>
 
                                 </div>
@@ -144,7 +151,8 @@
                 </div>
               </div>
             </div>
-
+ 		</div>
+      </div>
         <!-- /page content -->
 
      <!-- footer content -->
