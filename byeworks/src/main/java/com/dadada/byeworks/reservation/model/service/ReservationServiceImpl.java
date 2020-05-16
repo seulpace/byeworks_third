@@ -15,7 +15,7 @@ import com.dadada.byeworks.reservation.model.vo.ReservationDTO;
 public class ReservationServiceImpl implements ReservationService {
 	
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSession; 
 	@Autowired
 	private ReservationDao rDao;
 	

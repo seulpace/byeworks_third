@@ -44,13 +44,15 @@
 	          	<div class="well" style="overflow: auto">
 	         
 	    
-	            	<button class="btn btn-danger" type="button" id="commuteWorkBtn" onclick=""><small>출근하기</small></button>
+	            	<button class="btn btn-danger" type="button" id="commuteWorkBtn" onclick="">출근하기</button>
 	            
 	       
 	          	</div>
 	          <script>
+	          var checkResult = 0;
 	          
-	          		function test(checkCommute){
+	          	// 변수 담아주는 함수
+	          	function test(checkCommute){
 	          			var sysdate= new Date(); 
 	          			
 	          			var url='';
@@ -69,7 +71,7 @@
           					str="출근하기"
           				}
           	
-          			
+          		// 출퇴근 result 값에 따른 에이작스 실행		
           				$.ajax({
 								url:url,
 								type:type,
@@ -87,43 +89,60 @@
     					});
 	          		}
 	          	
-	          		$(function(){
+	          	$(function(){
 	          		
-	          			
-         				
-	          		// 출근하기 넣는 에이작스 
-	          			
-	          		
-	          			$("#commuteWorkBtn").click(function(){
-	          				$.ajax({
-	          					url:"wheterCommute.co",
-	          					success:function(result){
+			  		// 존재여부 확인하는거 함수 실행
+			  		checkTime();
+			  		function checkTime(){
+			  			$.ajax({
+          					url:"wheterCommute.co",
+          				   	async: false, // 동기화 방식으로 바꿔주는 것
+          					success:function(result){
+		          			
+		          				
+		          				checkResult = result;
+		          				
+		          				
+		          				if(result == 1){
+			          				$("#commuteWorkBtn").html("퇴근하기");
+		          				}else if(result == 0){
+		          					$("#commuteWorkBtn").html("출근하기");
+		          				}
+		          			
+          					}
+          					
+          				}); 
+			  			
+			  		};
+	          		// 버튼 클릭시 출근 여부 확인하는 값
+          			$("#commuteWorkBtn").click(function(){
+	          				checkTime();
+	          				console.log("button : " + checkResult);
+	          				test(checkResult); // test 함수에 result 값을 보내서 값 삽입
+    				});
+          			
+			  		// 메인 확인시 출퇴근 보여지는거
+			  	
+          			/*
+	          		function checkTime(){
+	          			// 에이작스로 값 존재여부확인하는값 을 가여고 
+	          			$.ajax({
+	          				url:"checkTime.co",
+	          				success:function(result){
+	          					if(result > 0){
+			          			 $("#commuteWorkBtn").html("퇴근하기");
 	          						
-			          				//checkCommute = result;
-			          				console.log(result);
-			          				
-			          				test(result);
-			          				
-			          				
 	          					}
 	          					
-	          				}); 
+	          				}
 	          				
-	    							
-	    				});
+	          			});
 	          			
-	          			
-	          		
-	          			// 출근여부 확인후 버튼 클릭시 퇴근하는 값 update
-	          			
-	          			/* 
-	          			if(${! empty c.commuteWork}){
-	          				
-	          				$("#commuteWorkBtn").click(function{
-	          					console.log("될까");
-	          				});
-	          			} */
-	          		});
+	          			// 값이 있을 경우 퇴근하기7 
+	          			// 값이 없을 경우 출석 하기
+	          		}
+          			*/	
+	          	});
 	          			
 	          		
 	          
@@ -165,33 +184,29 @@
 		                		</div>
 							</div>
 							<div class="x_panel">
-                				<div class="x_title">
-                  					<h2>프로젝트 들어갈 자리</h2>
+                				<div class="x_title" style="margin:0">
+                  					<h2>진행 중인 프로젝트</h2>
                   					<div class="clearfix"></div>
                 				</div>
 	                			<div class="x_content">
-	                  				<table class="table" id="noticeTable">
-	                    				<thead>
-	                      					<tr>
-	                        					<th></th>
-	                        					<th>제목</th>
-	                      					</tr>
-	                    				</thead>
-	                    				<tbody>
-	                    					<c:forEach items="${ nList }" var="n" varStatus="status">
-		                      				<tr>
-					                        	<th scope="row">
-					                        		<input type="hidden" value="${ n.noticeNo }">
-					                        			${ status.count }
-					                        		<form id="goNotice${ n.noticeNo }" action="detail.not" method="post">
-					                        			<input type="hidden" value="${ n.noticeNo }" name="nno">
-					                        		</form>
-					                        	</th>
-					                        	<td>${ n.noticeTitle }</td>
-		                      				</tr>
-		                      				</c:forEach>
-		                    			</tbody>
-		                  			</table>
+                    				<div class="dashboard-widget-content">
+                      					<ul class="quick-list">
+					                        <li><i class="fa fa-bars"></i><a href="#">Subscription</a></li>
+					                        <li><i class="fa fa-bar-chart"></i><a href="#">Auto Renewal</a> </li>
+					                        <li><i class="fa fa-support"></i><a href="#">Help Desk</a> </li>
+					                        <li><i class="fa fa-heart"></i><a href="#">Donations</a> </li>
+                      					</ul>
+
+                      					<div class="sidebar-widget">
+                        					<h4>Goal</h4>
+                        					<canvas width="150" height="80" id="chart_gauge_02" class="" style="width: 160px; height: 100px;"></canvas>
+                        					<div class="goal-wrapper">
+					                        	<span class="gauge-value pull-left">$</span>
+					                        	<span id="gauge-text2" class="gauge-value pull-left">3,200</span>
+					                        	<span id="goal-text2" class="goal-value pull-right">$5,000</span>
+                        					</div>
+                      					</div>
+                    				</div>
 		                		</div>
 							</div>
             			</div>

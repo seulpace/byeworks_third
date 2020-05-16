@@ -56,6 +56,8 @@ public class MainController {
 		ArrayList<Schedule> sList = sService.selectMainList(no);
 		mv.addObject("sList", sList);
 		
+		
+		
 		// 알람 개수 조회
 		int alarmCount = alService.countAlarm(no);
 		session.setAttribute("alarmCount", alarmCount);

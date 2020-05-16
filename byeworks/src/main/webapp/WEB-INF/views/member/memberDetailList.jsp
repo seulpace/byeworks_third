@@ -21,6 +21,19 @@
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <title>Byeworks</title>
+    <style>
+    	.form-kdh{
+        border: 1px solid white;   
+        font-family :'FontAwesome';
+        font-size: inherit; 
+        padding-top:2.5%;
+       background:#e9ecef;
+        }
+        .form-kdh[readonly]{
+        background:white;
+        }
+    
+    </style>
 </head>
 <body class="nav-md">
    <div class="container body">
@@ -47,7 +60,7 @@
                 <div class="x_content">
                   <br />
                   <form class="form-horizontal form-label-left" method="post" action="">
-                  <input type="hidden" value="${m.memberNo }">
+                  <input type="hidden" class="form-kdh" value="${m.memberNo }">
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">프로필사진</label>
                       <div class="col-md-9 col-sm-9 ">
@@ -58,49 +71,49 @@
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">이름</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${ m.memberName }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.memberName }">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${ m.department }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.department }">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">직위</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${ m.position }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.position }">
                       </div>
                     </div>
                      <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">사번</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${ m.empNo }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.empNo }">
                       </div>
                     </div>
                      <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">사내 전화</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control"  id="extension" value="${ m.extension }">
+                        <input type="text" class="form-control form-kdh"  id="extension" value="${ m.extension }">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">입사일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${ m.enrollday }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.enrollday }">
                       </div>
                     </div>
                      <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">개인이메일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${ m.email }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.email }">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">휴대전화</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${ m.phone }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.phone }">
                       </div>
                     </div>
                    
@@ -108,27 +121,25 @@
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">주소</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control"  readonly="readonly" value="${ m.address }">
+                        <input type="text" class="form-control form-kdh"  readonly="readonly" value="${ m.address }">
                       </div>
                     </div>
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">생년월일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control"  readonly="readonly" value="${ m.birth }">
+                        <input type="text" class="form-control form-kdh"  readonly="readonly" value="${ m.birth }">
                       </div>
                     </div>
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">퇴사일</label>
-                      <div class="checkbox">
-                        <label>
-                          <input type="text" readonly class="form-control" value="${ m.retireday }"> 
-                        </label>
+                      <div class="col-md-9 col-sm-9">
+                          <input type="text" readonly class="form-control form-kdh" value="${ m.retireday }"> 
                       </div>
                     </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9  offset-md-3">
-                        <button id="updateBtn" class="btn btn-success">확인</button>
+                        <button id="updateBtn" class="btn btn-success">수정</button>
                         <button type="button" class="btn btn-success" onclick="location.href='memberList.me'">목록</button>
                       </div>
                     </div>
@@ -146,22 +157,22 @@
 				
 				$(function(){
 					$("#updateBtn").click(function(){
-						if($("#extension").val().trim().length != 0){
+						
 							$.ajax({
 								url:"update.me",
 								data:{extension:$("#extension").val(),
-									  mno : ${m.memberNo}},
+									  memberNo : ${m.memberNo}},
 								type:"post",
-								success : function(result){
+								success:function(result){
 									console.log("ajax 실패");
 									if(result > 0){
-										$("#extension").val();
+										$("#extension").val(m.extension);
 									}
 								}, error:function(){
 									console.log("ajax 실패");
 								}
 							});
-						}
+						
 					});
 				});
 				
