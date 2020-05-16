@@ -173,6 +173,9 @@
 				</div>
 				
 				<script>
+				
+				console.log(rlist);
+				
 					$(function(){
 						$("#ajaxCall").on("click", function(){
 							

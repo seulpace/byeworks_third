@@ -183,10 +183,16 @@
         			location.href = "signDetail.si?sno=" + $(this).children().eq(0).text() +"&mno=${loginUser.memberNo}" +"&type=" + $(this).children().eq(0).children("input").val();
         			
         		});
+        		
 
-        		});
         
         </script>
+        
+     
+  
+	
+  
+ 
         
    <!-- footer include -->
 	<jsp:include page="../common/footer.jsp"/>

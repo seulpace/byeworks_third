@@ -105,7 +105,7 @@ public class CommuteController {
 		
 	}
 	
-	/** 김다흰 : 출근여부 확인하기 위한 메소드
+	/** 김다흰 : 출근여부 확인후 result 값에 따른 실행되는 메소드 위한 메소드
 	 * @param session
 	 * @param model
 	 * @return
@@ -138,6 +138,8 @@ public class CommuteController {
 		}
 		
 	}
+	
+	
 	
 	
 }

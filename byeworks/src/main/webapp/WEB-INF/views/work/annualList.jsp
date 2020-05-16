@@ -90,9 +90,6 @@
 				    }
 				  });
 				  
-				 
-				  
-				 
 			});
 			
 			function selectAnnualList(){
@@ -103,22 +100,25 @@
 						data:{annualUseDay:$("input[name='annualUseDay']").val()},
 						type:"get",
 						success:function(list){
-							console.log(list);
+							
 							var value = "";
 							var num = 1;
-							$.each(list, function(i, obj){
-								value += "<tr>" +
-			                        			"<td>" + num++ + "</td>" +
-						                        "<td>" + obj.annName + "</td>" +
-						                        "<td>" + obj.annDept + "</td>" +
-						                        "<td>" + obj.annPos +  "</td>" +
-						                        "<td>" + obj.annEnrollday + "</td>" + 
-						                        "<td>" + obj.annualCreate + "</td>" +
-						                        "<td>" + obj.annualSign + "</td>" +
-						                 "</tr>";
 								
-							});
-	                    	 $("#annualTable tbody").html(value);
+								$.each(list, function(i, obj){
+									value += "<tr>" +
+				                        			"<td>" + num++ + "</td>" +
+							                        "<td>" + obj.annName + "</td>" +
+							                        "<td>" + obj.annDept + "</td>" +
+							                        "<td>" + obj.annPos +  "</td>" +
+							                        "<td>" + obj.annEnrollday + "</td>" + 
+							                        "<td>" + obj.annualCreate + "</td>" +
+							                        "<td>" + obj.annualSign + "</td>" +
+							                 "</tr>";
+									
+								
+								}
+							
+								 $("#annualTable tbody").html(value);
 						},error:function(){
 							console.log('통신x');
 						}
