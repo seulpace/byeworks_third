@@ -1,20 +1,24 @@
 package com.dadada.byeworks.commute.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dadada.byeworks.commute.model.service.CommuteService;
 import com.dadada.byeworks.commute.model.vo.Commute;
+import com.dadada.byeworks.member.model.vo.Member;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 
 @Controller
@@ -100,6 +104,42 @@ public class CommuteController {
 		return new Gson().toJson(lateCommuteList);
 		
 	}
+	
+	/** 김다흰 : 출근여부 확인후 result 값에 따른 실행되는 메소드 위한 메소드
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("wheterCommute.co")
+	public String wheterCommute(HttpSession session, Model model) {
+		
+		int commuteMember = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		Date sysdate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("YY/MM/dd");
+		String commuteDate = sdf.format(sysdate);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("commuteDate", commuteDate);
+		map.put("commuteMember", commuteMember);
+		
+		
+		Commute c = cService.wheterCommute(map);
+		
+		int result = 0;
+		
+		if(c == null) {	// 출근 안했을 경우 --> 0 리턴
+			return String.valueOf(result);
+			
+		}else {	// 출근 했을 경우
+			result = 1;
+			return String.valueOf(result);
+		}
+		
+	}
+	
+	
 	
 	
 }

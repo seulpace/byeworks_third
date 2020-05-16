@@ -43,9 +43,110 @@
 	          	<!-- top tiles -->
 	          	<div class="well" style="overflow: auto">
 	         
-	            	<button class="btn btn-danger"><small>출근하기</small></button>
-	            	<button class="btn btn-danger"><small>퇴근하기</small></button>
+	    
+	            	<button class="btn btn-danger" type="button" id="commuteWorkBtn" onclick="">출근하기</button>
+	            
+	       
 	          	</div>
+	          <script>
+	          var checkResult = 0;
+	          
+	          	// 변수 담아주는 함수
+	          	function test(checkCommute){
+	          			var sysdate= new Date(); 
+	          			
+	          			var url='';
+          				var type='get';
+          				var data={
+          						"sysdate" : sysdate,
+          						"commuteMember" : ${loginUser.memberNo}
+          				}
+          				var str='';
+          				
+          				if(checkCommute==0){
+          					url="commuteWorkTime.do";
+          					str="퇴근하기";
+          				}else{
+          					url="commuteLeavedTime.do";
+          					str="출근하기"
+          				}
+          	
+          		// 출퇴근 result 값에 따른 에이작스 실행		
+          				$.ajax({
+								url:url,
+								type:type,
+								data: data,
+								success:function(){
+								
+								    $("#commuteWorkBtn").html(str);
+								
+								    
+								},
+								error: function(){
+									console.log("ajax 통신 실패");
+								}
+
+    					});
+	          		}
+	          	
+	          	$(function(){
+	          		
+			  		// 존재여부 확인하는거 함수 실행
+			  		checkTime();
+			  		function checkTime(){
+			  			$.ajax({
+          					url:"wheterCommute.co",
+          				   	async: false, // 동기화 방식으로 바꿔주는 것
+          					success:function(result){
+		          			
+		          				
+		          				checkResult = result;
+		          				
+		          				
+		          				if(result == 1){
+			          				$("#commuteWorkBtn").html("퇴근하기");
+		          				}else if(result == 0){
+		          					$("#commuteWorkBtn").html("출근하기");
+		          				}
+		          			
+          					}
+          					
+          				}); 
+			  			
+			  		};
+	          		// 버튼 클릭시 출근 여부 확인하는 값
+          			$("#commuteWorkBtn").click(function(){
+	          				checkTime();
+	          				console.log("button : " + checkResult);
+	          				test(checkResult); // test 함수에 result 값을 보내서 값 삽입
+    				});
+          			
+			  		// 메인 확인시 출퇴근 보여지는거
+			  	
+          			/*
+	          		function checkTime(){
+	          			// 에이작스로 값 존재여부확인하는값 을 가여고 
+	          			$.ajax({
+	          				url:"checkTime.co",
+	          				success:function(result){
+	          					if(result > 0){
+			          			 $("#commuteWorkBtn").html("퇴근하기");
+	          						
+	          					}
+	          					
+	          				}
+	          				
+	          			});
+	          			
+	          			// 값이 있을 경우 퇴근하기7 
+	          			// 값이 없을 경우 출석 하기
+	          		}
+          			*/	
+	          	});
+	          			
+	          		
+	          
+	          </script>
 				
           		<div class="row" style="display: block;">
 					<!-- 왼쪽 영역 -->

@@ -246,8 +246,8 @@
                  		</li>
                  		<li><a><i class="fa fa-unlock-alt"></i> 예약 관리 <span class="fa fa-chevron-down"></span></a>
 	                   		<ul class="nav child_menu">
-	                     		<li><a href="index2.html">회의실 예약</a></li>
-	                     		<li><a href="index2.html">내가 예약한 현황 조회</a></li>
+	                     		<li><a href="makeView.res">회의실 예약</a></li>
+	                     		<li><a href="list.res?mno=${ loginUser.memberNo }">내가 예약한 현황 조회</a></li>
 	                   		</ul>
 	                 	</li>
                		</ul>
@@ -325,6 +325,7 @@
             }
             //웹소켓 객체 만드는 코드
             var id = "${ loginUser.memberId }";
+            //ws=new WebSocket("ws://192.168.30.231:8888/byeworks/echo?id=" + id); // 시연할 때 주소
             ws=new WebSocket("ws://localhost:8888/byeworks/echo?id=" + id);
             
             ws.onopen=function(event){

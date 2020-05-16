@@ -349,6 +349,10 @@ public class MemberController {
 		ArrayList<MemberAddress> addrList = mService.selectAddrList(no);
 		mv.addObject("addrList", addrList);
 		
+		// 즐겨찾기 주소록 조회
+		ArrayList<MemberAddress> markList = mService.selectMarkList(no);
+		mv.addObject("markList", markList);
+		
 		mv.setViewName("bizAddress/compAddress");
 		return mv;
 	}
@@ -445,7 +449,7 @@ public class MemberController {
 		int result = mService.updateMember(m);
 		
 		if(result >0) {
-			session.setAttribute("mno", m.getMemberNo());
+			session.setAttribute("memberNo", m.getMemberNo());
 			return "member/memberDetailList";
 		}else {
 			
@@ -625,5 +629,34 @@ public class MemberController {
 			return "redirct:memberList.me";
 		}
 		
+	}
+	
+	/**
+	 * 이슬희: 주소록 ajax로 조회
+	 * @param session
+	 * @param response
+	 * @throws JsonIOException
+	 * @throws IOException
+	 */
+	@RequestMapping("readBM.ad")
+	public void readAddrBookmark(HttpSession session, HttpServletResponse response) throws JsonIOException, IOException {
+		
+		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		ArrayList<MemberAddress> markList = mService.selectMarkList(no);
+				
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(markList, response.getWriter());
+	}
+	
+	@RequestMapping("read.ad")
+	public void readAddr(HttpSession session, HttpServletResponse response) throws JsonIOException, IOException {
+		
+		int no = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		ArrayList<MemberAddress> list = mService.selectAddrList(no);
+				
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(list, response.getWriter());
 	}
 }

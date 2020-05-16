@@ -29,8 +29,8 @@ public class NoticeController {
 	// @RequestParam(value="", required=false, defaultValue="")
 	@RequestMapping("list.not")
 	public String selectList(Model model) {
-		
 		ArrayList<Notice> list = nService.selectList();
+
 		
 		model.addAttribute("list",list);
 		
@@ -74,8 +74,11 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("detail.not")
-	public ModelAndView selectNotice(int nno, ModelAndView mv) {
+	public ModelAndView selectNotice(int nno, ModelAndView mv, Model model) {
 		
+		ArrayList<Notice> list = nService.selectList();
+		model.addAttribute("list",list);
+
 		int result = nService.increaseCount(nno);
 		
 		if(result > 0) { //조회수 증가 성공 --> 조회
@@ -109,6 +112,16 @@ public class NoticeController {
 		}
 	}
 	
+	@RequestMapping("updateForm.not")
+	public ModelAndView updateForm(int nno, ModelAndView mv) {
+		
+		Notice n = nService.selectNotice(nno);
+		
+		mv.addObject("n",n).setViewName("notice/NoticeUpdateForm");
+		
+		return mv;
+	}
+	
 	public void deleteFile(String fileName, HttpServletRequest request) {
 		String resources = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = resources + "\\upload_files\\";
@@ -116,8 +129,37 @@ public class NoticeController {
 		File deleteFile = new File(savePath + fileName);
 		deleteFile.delete();
 	}
-
-	// 전달받은 파일을 서버에 업로드 후 수정된 파일명을 리턴 시키는 메소드 (공유해서 쓸수 있게끔 따로 빼줌)
+	
+	@RequestMapping("update.not")
+	public ModelAndView updateNotice(Notice n, HttpServletRequest request, 	ModelAndView mv,
+										@RequestParam(value="reUploadFile", required=false) MultipartFile file) {
+		//n : 게시글 번호, 수정된제목, 작성자, 수정된낸용 [기존의 첨부파일의 원본명, 수정명]
+		
+		if(!file.getOriginalFilename().equals("")) {
+			
+			 if(n.getFileName() != null) {
+				 deleteFile(n.getFRename(), request);
+			 }
+			 
+			 //새로 넘어온 파일 서버에 업로드 처리해야됨
+			String changeName = saveFile(file, request);
+			String originName = file.getOriginalFilename();
+			n.setFRename(changeName);//changeName
+			n.setFileName(originName);// originName
+		}
+		
+		int result = nService.updateNotice(n);
+		
+		if(result > 0) {
+			mv.addObject("nno",n.getNoticeNo())
+				.setViewName("redirect:detail.not");
+		}else {
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 전달받은 파일을 서버에 업로드 후 수정된 파일명을 리턴 시키는 메소드 (공유해서 쓸수 있게끔 따로 빼줌)이라고 강사님 강의
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		
 		// 1.전달받은 파일을 업로드할 폴더 경로
