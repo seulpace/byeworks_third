@@ -134,16 +134,20 @@
 	
 			 <div class="right_col" role="main">
           <div class="">
-           
+           <div class="page-title">
+              <div class="title_left">
+              <h3>전자결재 <small style="color:lightgray">결재 수정</small></h3>
+              </div>
+              </div>
 
-            <div class="clearfix"></div>
+            <div class="clearfix"></div><br>
 
             <div class="">
 
               <div class="col-md-6 col-sm-6  ">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2><i class="fa fa-align-left"></i> 전자결재</h2>
+                    <h2><i class="fa fa-align-left"></i> 결재 양식</h2>
                     <div class="clearfix"></div>
                   </div>
                   
@@ -724,7 +728,7 @@
                       </div>
                       <br>
                       <div id="buttonArea" style="text-align:center;">
-                      <button type="submit">결재수정</button> <button type="reset">초기화</button>
+                      <button class="btn btn-diy" style="color:white;" type="submit">결재수정</button> <button class="btn btn-diy" style="color:white;"type="reset">초기화</button>
                       </div>
                       </form>
                     </div>
@@ -1068,7 +1072,7 @@
 
               if($("#refer option").length != 0){
 
-                $("#referList").prepend("<h5 id='referTitle'>참조자</h5>")
+                
 
                 $("#refer option").each(function(i,item){
                 var emp = $(this);

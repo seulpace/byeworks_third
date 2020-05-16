@@ -104,15 +104,16 @@
 .fc-content {
     cursor: pointer;
 }
+        .btn-diy {
+          margin-left: 1px;
+        }
 </style>
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
-
-
-
+	  
     var calendarEl = document.getElementById('calendar');
-
+    
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
       //라이센스따온거 이거는 근데 어쩔수없음 ㅠ
@@ -137,7 +138,6 @@
            buttonText: '2 days',
         }
       },
-
       //// uncomment this line to hide the all-day slot
       //allDaySlot: false,
       eventClick:  function(calEvent) {
@@ -145,7 +145,6 @@
             $('#modalBody').html(event.description);
             $('#eventUrl').attr('href',event.url); */
 			
-           
             var rno = calEvent.event._def.publicId
                 console.log(rno);        
             $.ajax({
@@ -160,21 +159,13 @@
             		$("#etime").val(obj.endDate);
             		$("#office").val(obj.conferenceTitle);
             		$("#content").val(obj.conferenceContent);
-            		
-            		
                     $('#calendarModal').modal();
             	},
             	error: function(){
-            		
             		console.log("ajax 실패");
             	}
-            });
-            
-            
+            }); 
         },
-
-     
-      
       resources: [
         { id: '1', title: 'A 회의실' },
         { id: '2', title: 'B 회의실', eventColor: 'green' },
@@ -224,237 +215,204 @@
 
 </script>
 </head>
-<body class="nav-md">
-	<div class="container body">
-    	<div class="main_container">
-        
-        <!-- 메뉴바 -->
-        <jsp:include page="../common/menubar.jsp"/>
-
-<!-- page content -->
-        <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row" style="display: inline-block;" >
-            <div id='calendar'></div>
-            
-          </div>
-<!-- ㅊㅊ -->
-
-<div class="x_panel">
-  <div class="x_title">
-    <h2>회의실 예약하기</h2>
-    <ul class="nav navbar-right panel_toolbox">
-      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-      </li>
-      <li><a class="close-link"><i class="fa fa-close"></i></a>
-      </li>
-    </ul>
-    <div class="clearfix"></div>
-  </div>
-  <div class="x_content">
-  
-
-    <form action="./createView.res" method="post">
-
-      <p>회의실 예약 시간은<code> 꼭! 시간 단위로</code> 예약해주세요</p>
-
-		<span class="section"></span>
-			<div class="field item form-group">
-			  <label class="col-form-label col-md-3 col-sm-3  label-align">예약자 이름<span class="required">*</span></label>
-				  <div class="col-md-6 col-sm-6">
-				  	<p style="margin-top:8px;">${ loginUser.memberName }</p>
-				    <input type="hidden" class="form-control" data-validate-length-range="6" data-validate-words="2" name="memberNo" value="${ loginUser.memberNo }">
-				  </div>
+	<body class="nav-md">
+		<div class="container body">
+	    	<div class="main_container">
+		        <!-- 메뉴바 -->
+		        <jsp:include page="../common/menubar.jsp"/>
+		
+					<!-- page content -->
+			        <div class="right_col" role="main">
+			        <!-- top tiles -->
+				        <div class="row" style="display: inline-block;" >
+				        	<div id='calendar'></div>
+				        </div>
+					<!-- ㅊㅊ -->
+							<div class="x_panel">
+								<div class="x_title">
+							    	<h2>회의실 예약하기</h2>
+							    <div class="clearfix"></div>
+							  	</div>
+							  		<div class="x_content">
+									    <form action="./createView.res" method="post">
+									      <p>회의실 예약 시간은<code> 30분 단위로만</code> 가능합니다.</p>
+											<span class="section"></span>
+											<div class="field item form-group">
+											  <label class="col-form-label col-md-3 col-sm-3  label-align">예약자 이름<span class="required">*</span></label>
+												  <div class="col-md-6 col-sm-6">
+												  	<p style="margin-top:8px;">${ loginUser.memberName }</p>
+												    <input type="hidden" class="form-control" data-validate-length-range="6" data-validate-words="2" name="memberNo" value="${ loginUser.memberNo }">
+												  </div>
+											</div>
+											<div class="field item form-group">
+											  <label class="col-form-label col-md-3 col-sm-3  label-align">회의실 명 및 위치*</label>
+											  <div class="col-md-6 col-sm-6 ">
+											      <div class="checkbox-container">
+											        <input type="radio" id="1" name="roomNo" value="1"/>
+											        <label for="1"><span></span>A회의실</label>
+											        <input type="radio" id="2" name="roomNo" value="2"/>
+											        <label for="2"><span></span>B회의실</label>
+											      </div>
+											  </div>
+											</div>
+									
+											<div class="field item form-group">
+											  <label class="col-form-label col-md-3 col-sm-3  label-align">인원수 <span class="required">*</span></label>
+											  <div class="col-md-6 col-sm-6">
+											    <input class="form-control" type="text" name="peopleCount" required="required"></div>
+											</div> <!-- 인원수 닫는거 -->
+									
+											<div class="field item form-group">
+											  <label class="col-form-label col-md-3 col-sm-3  label-align">날짜<span class="required">*</span></label>
+											  <div class="col-md-6 col-sm-6">
+											    <input class="form-control" type="text" placeholder="YYYY-MM-DD" name="dateTime" required="required"></div>
+											</div> <!-- 날짜 닫는거 -->
+									
+											<!-- 시간 추가 된거 -->
+											<div class="field item form-group">
+											  <label class="col-form-label col-md-3 col-sm-3  label-align">시간<span class="required">*</span></label>
+											  	<div class="col-md-6 col-sm-6">
+											
+											        <div class="fl">
+											          <select id="start" name="startTime" class="select-box" style="width:125px;">
+													     <option value="07:00">오전 07:00</option>
+													     <option value="07:30">오전 07:30</option>
+													     <option value="08:00">오전 08:00</option>
+													     <option value="08:30">오전 08:30</option>
+													     <option value="09:00">오전 09:00</option>
+													     <option value="09:30">오전 09:30</option>
+													     <option value="10:00">오전 10:00</option>
+													     <option value="10:30">오전 10:30</option>
+													     <option value="11:00">오전 11:00</option>
+													     <option value="11:30">오전 11:30</option>
+													     <option value="12:00">오후 12:00</option>
+													     <option value="12:30">오후 12:30</option>
+													     <option value="13:00">오후 01:00</option>
+													     <option value="13:30">오후 01:30</option>
+													     <option value="14:00">오후 02:00</option>
+													     <option value="14:30">오후 02:30</option>
+													     <option value="15:00">오후 03:00</option>
+													     <option value="15:30">오후 03:30</option>
+													     <option value="16:00">오후 04:00</option>
+													     <option value="16:30">오후 04:30</option>
+													     <option value="17:00">오후 05:00</option>
+													     <option value="17:30">오후 05:30</option>
+													     <option value="18:00">오후 06:00</option>
+													   </select>
+											               ~
+											   		   <select id="end" name="endTime" class="select-box" style="width:125px;">
+											            <option value="07:30">오전 07:30</option>
+											            <option value="08:00">오전 08:00</option>
+											            <option value="08:30">오전 08:30</option>
+											            <option value="09:00">오전 09:00</option>
+											            <option value="09:30">오전 09:30</option>
+											            <option value="10:00">오전 10:00</option>
+											            <option value="10:30">오전 10:30</option>
+											            <option value="11:00">오전 11:00</option>
+											            <option value="11:30">오전 11:30</option>
+											            <option value="12:00">오후 12:00</option>
+											            <option value="12:30">오후 12:30</option>
+											            <option value="13:00">오후 01:00</option>
+											            <option value="13:30">오후 01:30</option>
+											            <option value="14:00">오후 02:00</option>
+											            <option value="14:30">오후 02:30</option>
+											            <option value="15:00">오후 03:00</option>
+											            <option value="15:30">오후 03:30</option>
+											            <option value="16:00">오후 04:00</option>
+											            <option value="16:30">오후 04:30</option>
+											            <option value="17:00">오후 05:00</option>
+											            <option value="17:30">오후 05:30</option>
+											            <option value="18:00">오후 06:00</option>
+											            <option value="18:30">오후 06:30</option>
+											          </select>
+											        </div>
+											  </div>
+											</div>
+											<!-- 시간 추가 된거 -->
+											<div class="field item form-group"> <!-- 제목 -->
+											  <label class="col-form-label col-md-3 col-sm-3  label-align">회의 제목*</label>
+											  <div class="col-md-6 col-sm-6 ">
+											    <input type="text" class="form-control" name="conferenceTitle" placeholder="회의 제목">
+											    
+											  </div>
+											</div><!-- 제목 -->
+											<div class="field item form-group">
+											  <label class="col-form-label col-md-3 col-sm-3  label-align">회의 내용<span class="required">*</span></label>
+											  <!-- 숫자9면 더 커짐  -->
+												<div class="col-md-6 col-sm-6 ">
+											  		<textarea class="form-control" rows="3" placeholder="회의내용" name="conferenceContent" style="margin-top: 0px; margin-bottom: 0px; height: 106px;"></textarea>
+											    </div>
+											</div>
+											<div class="ln_solid">
+											  <div class="form-group">
+											    <div class="col-md-6 offset-md-3">
+											      <br>
+													<button type="submit" style="color:white;" class="btn btn-diy">등록하기</button>
+											    </div>
+											  </div>
+											</div>   
+									    </form>
+							  		</div>
+							</div>
+					 <!-- ㅊㅊ -->
+		        	 </div>
+		        <!-- /page content -->
+		        <!-- footer content -->
+		        <jsp:include page="../common/footer.jsp"/>
 			</div>
-
-			<div class="field item form-group">
-			  <label class="col-form-label col-md-3 col-sm-3  label-align">회의실 명 및 위치*</label>
-			  <div class="col-md-6 col-sm-6 ">
-			      <div class="checkbox-container">
-			        <input type="radio" id="1" name="roomNo" value="1"/>
-			        <label for="1"><span></span>A회의실</label>
-			        <input type="radio" id="2" name="roomNo" value="2"/>
-			        <label for="2"><span></span>B회의실</label>
-			      </div>
-			  </div>
-			</div>
-
-			<div class="field item form-group">
-			  <label class="col-form-label col-md-3 col-sm-3  label-align">인원수 <span class="required">*</span></label>
-			  <div class="col-md-6 col-sm-6">
-			    <input class="form-control" type="text" name="peopleCount" required="required"></div>
-			</div> <!-- 인원수 닫는거 -->
-
-			<div class="field item form-group">
-			  <label class="col-form-label col-md-3 col-sm-3  label-align">날짜<span class="required">*</span></label>
-			  <div class="col-md-6 col-sm-6">
-			    <input class="form-control" type="text" placeholder="YYYY-MM-DD" name="dateTime" required="required"></div>
-			</div> <!-- 날짜 닫는거 -->
-
-			<!-- 시간 추가 된거 -->
-			<div class="field item form-group">
-			  <label class="col-form-label col-md-3 col-sm-3  label-align">시간<span class="required">*</span></label>
-			  <div class="col-md-6 col-sm-6">
+		</div>
+		    
+      <div id="calendarModal" class="modal fade">
+	      <div class="modal-dialog">
+	      	<div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+	                <h4 id="modalTitle" class="modal-title">회의실 예약 상세조회</h4>
+	            </div>
+	            
+	            	<div id="modalBody" class="modal-body">
+	                
+		                <form id="antoform" class="form-horizontal calender" role="form">
+			                  <div class="form-group">
+			                    <label class="col-sm-3 control-label">예약자 이름</label>
+			                    <div class="col-sm-9">
+			                      <input type="text" class="form-control" id="rName">
+			                    </div>
 			
-			        <div class="fl">
-			          <select id="start" name="startTime" class="select-box" style="width:125px;">
-					     <option value="07:00">오전 07:00</option>
-					     <option value="07:30">오전 07:30</option>
-					     <option value="08:00">오전 08:00</option>
-					     <option value="08:30">오전 08:30</option>
-					     <option value="09:00">오전 09:00</option>
-					     <option value="09:30">오전 09:30</option>
-					     <option value="10:00">오전 10:00</option>
-					     <option value="10:30">오전 10:30</option>
-					     <option value="11:00">오전 11:00</option>
-					     <option value="11:30">오전 11:30</option>
-					     <option value="12:00">오후 12:00</option>
-					     <option value="12:30">오후 12:30</option>
-					     <option value="13:00">오후 01:00</option>
-					     <option value="13:30">오후 01:30</option>
-					     <option value="14:00">오후 02:00</option>
-					     <option value="14:30">오후 02:30</option>
-					     <option value="15:00">오후 03:00</option>
-					     <option value="15:30">오후 03:30</option>
-					     <option value="16:00">오후 04:00</option>
-					     <option value="16:30">오후 04:30</option>
-					     <option value="17:00">오후 05:00</option>
-					     <option value="17:30">오후 05:30</option>
-					     <option value="18:00">오후 06:00</option>
-					   </select>
-			               ~
-			   		   <select id="end" name="endTime" class="select-box" style="width:125px;">
-			            <option value="07:30">오전 07:30</option>
-			            <option value="08:00">오전 08:00</option>
-			            <option value="08:30">오전 08:30</option>
-			            <option value="09:00">오전 09:00</option>
-			            <option value="09:30">오전 09:30</option>
-			            <option value="10:00">오전 10:00</option>
-			            <option value="10:30">오전 10:30</option>
-			            <option value="11:00">오전 11:00</option>
-			            <option value="11:30">오전 11:30</option>
-			            <option value="12:00">오후 12:00</option>
-			            <option value="12:30">오후 12:30</option>
-			            <option value="13:00">오후 01:00</option>
-			            <option value="13:30">오후 01:30</option>
-			            <option value="14:00">오후 02:00</option>
-			            <option value="14:30">오후 02:30</option>
-			            <option value="15:00">오후 03:00</option>
-			            <option value="15:30">오후 03:30</option>
-			            <option value="16:00">오후 04:00</option>
-			            <option value="16:30">오후 04:30</option>
-			            <option value="17:00">오후 05:00</option>
-			            <option value="17:30">오후 05:30</option>
-			            <option value="18:00">오후 06:00</option>
-			            <option value="18:30">오후 06:30</option>
-			          </select>
-			        </div>
-			  </div>
-			</div>
-			<!-- 시간 추가 된거 -->
-
-			<div class="field item form-group"> <!-- 제목 -->
-			  <label class="col-form-label col-md-3 col-sm-3  label-align">회의 제목*</label>
-			  <div class="col-md-6 col-sm-6 ">
-			    <input type="text" class="form-control" name="conferenceTitle" placeholder="회의 제목">
-			    
-			  </div>
-			</div>                             <!-- 제목 -->
-
-			<div class="field item form-group">
-			  <label class="col-form-label col-md-3 col-sm-3  label-align">회의 내용<span class="required">*</span></label>
-			  <!-- 숫자9면 더 커짐  -->
-				<div class="col-md-6 col-sm-6 ">
-			  		<textarea class="form-control" rows="3" placeholder="회의내용" name="conferenceContent" style="margin-top: 0px; margin-bottom: 0px; height: 106px;"></textarea>
-			    </div>
-			</div>
-
-    
-	      <div class="ln_solid">
-	        <div class="form-group">
-	          <div class="col-md-6 offset-md-3">
-	            <br><br>
-	      <button type="submit" class="btn btn-primary">등록하기</button>
-	      <button type="reset" class="btn btn-success">취소하기</button>
-	          </div>
-	        </div>
-	      </div>
-	      
-    </form>
-    
-  </div>
-</div>
-
-
-
-<!-- ㅊㅊ -->
-        </div>
-
-        
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <jsp:include page="../common/footer.jsp"/>
-      </div>
-    </div>
-    
-    
-    
-        <div id="calendarModal" class="modal fade">
-      <div class="modal-dialog">
-          <div class="modal-content">
-
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-                  <h4 id="modalTitle" class="modal-title">회의실 예약 상세조회</h4>
-              </div>
-              <div id="modalBody" class="modal-body">
-                
-                <form id="antoform" class="form-horizontal calender" role="form">
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">예약자 이름</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="rName" value>
-                    </div>
-
-                    <label class="col-sm-3 control-label">인원 수</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="count" >
-                    </div>
-
-                    <label class="col-sm-3 control-label">시작 시간</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="stime" >
-                    </div>
-                    
-                    <label class="col-sm-3 control-label">끝나는 시간</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="etime" >
-                    </div>
-
-                    <label class="col-sm-3 control-label">회의 제목</label>
-                    <div class="col-sm-9">
-                      <input type="text" class="form-control" id="office" >
-                    </div>
-
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label">회의 내용</label>
-                    <div class="col-sm-9">
-                      <textarea class="form-control" style="height:55px;" id="content" ></textarea>
-                    </div>
-                  </div>
-                </form>
-
-              </div>
-
-
-
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-          </div>
-      </div>
+			                    <label class="col-sm-3 control-label">인원 수</label>
+			                    <div class="col-sm-9">
+			                      <input type="text" class="form-control" id="count" >
+			                    </div>
+			
+			                    <label class="col-sm-3 control-label">시작 시간</label>
+			                    <div class="col-sm-9">
+			                      <input type="text" class="form-control" id="stime" >
+			                    </div>
+			                    
+			                    <label class="col-sm-3 control-label">끝나는 시간</label>
+			                    <div class="col-sm-9">
+			                      <input type="text" class="form-control" id="etime" >
+			                    </div>
+			
+			                    <label class="col-sm-3 control-label">회의 제목</label>
+			                    <div class="col-sm-9">
+			                      <input type="text" class="form-control" id="office" >
+			                    </div>
+			
+			                  </div>
+			                  <div class="form-group">
+			                    <label class="col-sm-3 control-label">회의 내용</label>
+			                    <div class="col-sm-9">
+			                      <textarea class="form-control" style="height:55px;" id="content" ></textarea>
+			                    </div>
+			                  </div>
+		                </form>
+	                </div>
+	              <div class="modal-footer">
+	                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	              </div>
+	     	</div>
+	  	 </div>
       </div>    
     
     
@@ -466,5 +424,5 @@
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
 	
-</body>
+	</body>
 </html>

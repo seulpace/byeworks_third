@@ -56,7 +56,7 @@
 
             <div class="page-title">
               <div class="title_left">
-                <h3>공지사항 <small>상세조회|수정하기</small></h3>
+                <h3>공지사항 <small style="color:lightgray">수정하기</small></h3>
               </div>
 
 
@@ -125,17 +125,11 @@
                         </tr>
                       </table>
 
-
-
-
-
-                    
-                    
                     <br>
-                    <div class="item form-group">
-                      <div class="col-md-6 col-sm-6 offset-md-3">
-                        <button type="submit" class="btn btn-success" type="button">수정하기</button>
-                      </div>
+                    <div class="item form-group" style="float:right;">
+                     <!-- <div class="col-md-6 col-sm-6 offset-md-3">   -->
+                        <button type="submit" class="btn btn-diy" style="color:white;"  type="button"><small>수정하기</small></button>
+                     <!-- </div>   -->
                     </div>
 </form>                  
                     

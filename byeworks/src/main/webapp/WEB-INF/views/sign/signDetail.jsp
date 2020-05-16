@@ -133,7 +133,7 @@
 		                      				<c:choose>
 				                      		 	<c:when test = "${item.first}">
 		                      		 		
-				                       		   			<td><button class="btn btn-primary" id="signLineConfirm">승인</button><button class="btn btn-danger" id="signLineReturn">반려</button></td>
+				                       		   			<td><button  class="btn btn-diy" style="color:white;" id="signLineConfirm">승인</button><button class="btn btn-danger" id="signLineReturn">반려</button></td>
 
 				                      		   	</c:when>
 				                      		   	
@@ -142,16 +142,16 @@
 				                      		   	<c:otherwise>
 				                      		   		 <c:choose>
 				                      		   		 	<c:when test="${ slist[item.index-1].status == 'C' }"> 	
-				                      		   				<td><button class="btn btn-primary" id="signLineConfirm">승인</button><button class="btn btn-danger" id="signLineReturn">반려</button></td>
+				                      		   				<td><button class="btn btn-diy" style="color:white;" id="signLineConfirm">승인</button><button class="btn btn-danger" id="signLineReturn">반려</button></td>
 				                      		   					
 				                      		   			</c:when>
 				                      		   			
 				                      		   			<c:when test="${ slist[item.index-1].status == 'R' }">
-				                      		   				<td><button class="btn btn-primary" id="signLineConfirm" disabled>승인</button><button class="btn btn-danger" id="signLineReturn" disabled>반려</button></td>
+				                      		   				<td><button class="btn btn-diy" style="color:white;" id="signLineConfirm" disabled>승인</button><button class="btn btn-danger" id="signLineReturn" disabled>반려</button></td>
 				                      		   			</c:when>
 				                      		   			
 				                      		   			<c:otherwise>
-				                      		   				<td><button class="btn btn-primary" id="signLineConfirm" disabled>승인</button><button class="btn btn-danger" id="signLineReturn" disabled>반려</button></td>
+				                      		   				<td><button class="btn btn-diy" style="color:white;" id="signLineConfirm" disabled>승인</button><button class="btn btn-danger" id="signLineReturn" disabled>반려</button></td>
 				                      		   			</c:otherwise>
 				                      		   		</c:choose>
 				                      		   	</c:otherwise>
@@ -328,8 +328,8 @@
 			
 			<c:choose>
 				<c:when test="${ list.signStatus eq 'N' }">
-					<button class="btn btn-primary" id="signUpBtn">결재 상신</button>
-					<button class="btn btn-warning" id="signUpdateBtn">결재 수정</button>
+					<button class="btn btn-diy" style="color:white;" id="signUpBtn">결재 상신</button>
+					<button class="btn btn-diy" style="color:white;" id="signUpdateBtn">결재 수정</button>
 				</c:when>
 				
 				<c:when test="${ list.signStatus eq 'O' and loginUser.memberNo eq list.memberNo}">
