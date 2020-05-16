@@ -20,6 +20,20 @@
  	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
  	<title>Byeworks</title>
+ 	
+ 	<style>
+    	.form-kdh{
+        border: 1px solid white;   
+        font-family :'FontAwesome';
+        font-size: inherit; 
+        padding-top:2.5%;
+       background:#e9ecef;
+        }
+        .form-kdh[readonly]{
+        background:white;
+        }
+    
+    </style>
 </head>
 <body class="nav-md">
 	 <c:if test="${ !empty sessionScope.myMsg }">
@@ -34,19 +48,25 @@
         
         <!-- 메뉴바 -->
         <jsp:include page="../common/menubar.jsp"/>
-
+		
 		  <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
-          <div class="row" style="display: inline-block;" >
+          
+        <div class="page-title">
+	   		<div class="title_left">
+	     		<h3>인사 관리 <small style="color:lightgray">내 정보 관리</small></h3>
+	   		</div>
+        </div>  
+        <div class="clearfix"></div>
+         <br>
+       	<div class="row" style="display: inline-block;" >
             <div class="col-md-12 ">
               <div class="x_panel">
-                <div class="x_title">
-                  <h2>내 정보 조회</h2>
-                  <div class="clearfix"></div>
-                </div>
+        
+           	<br>
                 <div class="x_content">
-                  <br />
+                  <br>
                   <form class="form-horizontal form-label-left" action="myUpdate.me" method="post">
                   	<input type="hidden" value="${loginUser.memberId }" name="memberId">
                   
@@ -60,63 +80,63 @@
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">이름</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${ loginUser.memberName }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ loginUser.memberName }">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.department }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${loginUser.department }">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">직위</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.position }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${loginUser.position }">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">사번</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.empNo }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${loginUser.empNo }">
                       </div>
                     </div>
                     
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">사내 전화</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.extension }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${loginUser.extension }">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">휴대전화</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" value="${loginUser.phone }" id="phone" name="phone">
+                        <input type="text" class="form-control form-kdh" value="${loginUser.phone }" id="phone" name="phone">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">개인이메일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" value="${loginUser.email }" id="email" name="email">
+                        <input type="text" class="form-control form-kdh" value="${loginUser.email }" id="email" name="email">
                       </div>
                     </div>
                     
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">입사일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control" readonly="readonly" value="${loginUser.enrollday }">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${loginUser.enrollday }">
                       </div>
                     </div>
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">생년월일</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control"  readonly="readonly" value="${loginUser.birth }">
+                        <input type="text" class="form-control form-kdh"  readonly="readonly" value="${loginUser.birth }">
                       </div>
                     </div>
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">주소</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control"  value="${loginUser.address }" id="address" name="address">
+                        <input type="text" class="form-control form-kdh"  value="${loginUser.address }" id="address" name="address">
                       </div>
                     </div>
                    
@@ -124,8 +144,8 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9  offset-md-3">
-                        <button type="submit" class="btn btn-success">수정</button>
-                        <button type="button" onclick="location.href='resetForm.me'" class="btn btn-success">비밀번호  재설정</button>
+                        <button type="submit" class="btn btn-diy" style="color:white;">수정</button>
+                        <button type="button" onclick="location.href='resetForm.me'" class="btn btn-diy" style="color:white;">비밀번호  재설정</button>
                       </div>
                     </div>
                   </form>
@@ -139,7 +159,8 @@
         
       </div>
     </div>
-    
+      </div>
+    </div>
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>

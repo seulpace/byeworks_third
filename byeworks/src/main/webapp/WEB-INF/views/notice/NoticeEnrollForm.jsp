@@ -56,7 +56,7 @@
 
             <div class="page-title">
               <div class="title_left">
-                <h3>공지사항 <small> | 작성하기</small></h3>
+                <h3>공지사항 <small style="color:lightgray">작성하기</small></h3>
               </div>
 
 
@@ -118,10 +118,8 @@
                     
                     
                     <br>
-                    <div class="item form-group">
-                      <div class="col-md-6 col-sm-6 offset-md-3">
-                        <button type="submit" class="btn btn-primary">등록하기</button>
-                      </div>
+                    <div class="item form-group" style="float:right;">
+                        <button type="submit" style="color:white;" class="btn btn-diy">등록하기</button>
                     </div>
  </form>                   
                     

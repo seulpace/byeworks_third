@@ -49,14 +49,18 @@
 
 <!-- page content -->
         <div class="right_col" role="main">
+        <div class="page-title">
+	   		<div class="title_left">
+	     		<h3>인사 관리 <small style="color:lightgray">사원 정보</small></h3>
+	   		</div>
+        </div>  
+        <div class="clearfix"></div>
+         <br>
           <!-- top tiles -->
           <div class="row" style="display: inline-block;" >
             <div class="col-md-12 ">
               <div class="x_panel">
-                <div class="x_title">
-                  <h2>사원 상세 조회<small>${ m.memberName }</small></h2>
-                  <div class="clearfix"></div>
-                </div>
+             
                 <div class="x_content">
                   <br />
                   <form class="form-horizontal form-label-left" method="post" action="">
@@ -139,8 +143,8 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-9 col-sm-9  offset-md-3">
-                        <button id="updateBtn" class="btn btn-success">수정</button>
-                        <button type="button" class="btn btn-success" onclick="location.href='memberList.me'">목록</button>
+                        <button id="updateBtn" class="btn btn-diy" style="color:white;">수정</button>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='memberList.me'">목록</button>
                       </div>
                     </div>
                   </form>

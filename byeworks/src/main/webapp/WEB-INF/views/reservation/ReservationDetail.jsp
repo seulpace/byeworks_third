@@ -32,32 +32,23 @@
 					<div class="">
 				    	<div class="page-title">
 				        	<div class="title_left">
-				            	<h3>내가 예약한 현황 조회 <small></small></h3>
+				            	<h3>내 예약 현황 <small></small></h3>
 				           	</div>
 						</div> <!-- page-title -->
-				
+					
 				        <div class="clearfix"></div>
 				
 					        <div class="row">
 					        	<div class="col-md-12 col-sm-12 ">
 					        		<div class="x_panel">
-					        			<div class="x_title">
-				                 			<h2><small>내가 예약한 회의실 목록</small></h2>
+					        		<br>	
+				                 			
 				                 				<ul class="nav navbar-right panel_toolbox">
 				                 				<!-- 5월 6일 공지사항 작성하기 추가1번 -->
-				    								<li>
-				    									<a class="collapse-link">
-					    									<i class="fa fa-chevron-up"></i>
-				    									</a>
-				   								 	</li>
-				    								<li>
-				    									<a class="close-link">
-				    										<i class="fa fa-close"></i>
-				    									</a>
-				    								</li>
+
 				  								</ul>
 				  							<div class="clearfix"></div>
-										</div> <!-- x_title  -->
+										
 										<div class="x_content">
 											<div class="row">
 												<div class="col-sm-12">
@@ -67,7 +58,7 @@
 													  			<tr class="tableheader">
 															        <th>회의제목</th>
 															        <th>신청한 날짜</th>
-															        <th>취소하기</th>
+															        <th>취소버튼</th>
 													 		 	</tr>
 																</thead>	
 														    		<tbody>
@@ -78,8 +69,9 @@
 																				    <td>
 																				  		<form id="postForm" action="delteRe.res" method="post">
 																				    	<input type="hidden" name="reservationNo" value="${ r.reservationNo }">
-																				    	<input type="hidden" name="mno" value="${ r.memberNo }"> 
-																				    	<button class="btn btn-success">취소하기</button>
+																				    	<input type="hidden" name="mno" value="${ r.memberNo }">
+																				    	 
+																				    	<button style="color:white;" class="btn btn-diy">취소하기</button>
 																				  		</form>  
 																				    </td>		
 														  						</tr>

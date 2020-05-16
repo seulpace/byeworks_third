@@ -37,10 +37,6 @@
             border-radius: .25rem;
             transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
-
-        .btn-primary {
-          margin-left: 130px;
-        }
         
         .notice_panel {
     position: relative;
@@ -61,145 +57,111 @@
 </head>
 <body class="nav-md">
 	<div class="container body">
-    	<div class="main_container">
-        
-        <!-- 메뉴바 -->
-        <jsp:include page="../common/menubar.jsp"/>
+		<div class="main_container">
+	        <!-- 메뉴바 -->
+	    	<jsp:include page="../common/menubar.jsp"/>
 	
-
-        <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="">
-
-            <div class="page-title">
-              <div class="title_left">
-                <h3>공지사항 <small>상세조회</small></h3>
-              </div>
-
-
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="x_panel">
-                  <!-- <div class="x_title"> -->
-                    <!-- <h2>(공지사항제목입력되는곳)<small>작성자 : </small></h2> -->
-                    <!-- <div class="clearfix"></div> -->
-                  <!-- </div> -->
-                  
-                  <!-- <div class="btn-group">
-                    <a class="btn" title="Insert picture (or just drag &amp; drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
-                    <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage">
-                  </div> -->
-
-                  <!-- <div class="x_content"> -->
-                    <br>
-
-
-                    <!-- <p>Riusmod tempor incididunt ut labor erem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                      mollit anim id est laborum.
-                    </p> -->
-                    <div class="notice_panel">
-                    <table align="center">
-                      <tr>
-                          <th><label for="title" style="margin-right:60px ;">제목</label></th>
-                          <td><p style="width: 600px;">${ n.noticeTitle }</p></td>
-                      </tr>
-                      <tr>
-                          <th><label for="writer">작성자</label></th>
-                          <td><p>${ n.memberName }</p></td>
-                          <!-- n.memberName으로 수정해줘야함  -->
-                      </tr>
-                      <tr>
-                          <th><label for="upfile">첨부파일</label></th>
-                          <td colspan="3">
-                    		<c:choose>	
-			                    <c:when test="${ !empty n.fileName }">
-			                        <a href="${ pageContext.servletContext.contextPath }/resources/upload_files/${n.FRename}" download="${ n.fileName }">${ n.fileName }</a>
-			                    </c:when>
-		                    	<c:otherwise>
-		                        	첨부파일이 없습니다.
-		                        </c:otherwise>
-                    		</c:choose>
-                          </td>
-                      </tr>
-                      <br>
-                      <tr>
-                          <th colspan="5"><label for="content">내용</label></th>
-                      </tr>
-                      <tr>
-                          <th colspan="5">
-                            <!-- <textarea class="form-control" required name="" id="content" rows="10" style="resize:none;"></textarea> -->
-                            <br>
-                            
-                <textarea class="form-control" required name="noticeContent" id="content" rows="10" style="resize:none; background:white;" readonly>${ n.noticeContent }</textarea>
-
-
-
-
-
-
-                            
-                          </th>
-                      </tr>
-                    </table>
-                    
-                 
-                    <br><br><br><br><br>
-                    <c:if test="${ loginUser.memberNo eq n.memberNo }">
-                    <div class="item form-group">
-                      <div class="col-md-6 col-sm-6 offset-md-3">
-                        <button class="btn btn-primary" onclick="postFormSubmit(2);">수정하기</button>
-                        <button class="btn btn-success" type="button" onclick="goBackMy()">목록으로</button>
-                        <button class="btn btn-danger" onclick="postFormSubmit(1);">삭제하기</button>
-                      </div>
-                      </div> <!-- 노티스 패널 -->
-                      <form id="postForm" action="" method="post">
-                      	<input type="hidden" name="nno" value="${ n.noticeNo }">
-                      	<input type="hidden" name="fileName" value="${ n.FRename }">
-                      </form>
-                      
-                      <script>
-                      	function postFormSubmit(num) {
-                      		if(num == 1) { //삭제하기 클릭시
-                      			$("#postForm").attr("action", "delete.not");
-                      		}else{ // 수정하기 클릭시
-                      			$("#postForm").attr("action", "updateForm.not");
-                      		}
-                      			$("#postForm").submit();
-                      	}
-                      </script>
-                      
-                    </div>
-                    </c:if>
-                    
-                    
-                  <!-- </div> -->
-
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /page content -->
-        
-        <!-- footer content -->
-        <jsp:include page="../common/footer.jsp"/>
-        
-      </div>
-    </div>
+	        <!-- page content -->
+	        	<div class="right_col" role="main">
+	         		<div class="">
+	
+		            <div class="page-title">
+			            <div class="title_left">
+			            	<h3>공지사항 <small style="color:lightgray">상세조회</small></h3>
+			            </div>
+		            </div>
+	
+	           		<div class="clearfix"></div>
+	
+			            <div class="row">
+				            <div class="col-md-12">
+				            	<div class="x_panel">
+	                    		<br>
+	                   				<div class="notice_panel">
+				                    	<table align="center">
+						                     <tr>
+						                         <th><label for="title" style="margin-right:60px ;">제목</label></th>
+						                         <td><p style="width: 600px;">${ n.noticeTitle }</p></td>
+						                     </tr>
+						                     <tr>
+						                         <th><label for="writer">작성자</label></th>
+						                         <td><p>${ n.memberName }</p></td>
+						                         <!-- n.memberName으로 수정해줘야함  -->
+						                     </tr>
+						                     <tr>
+						                         <th><label for="upfile">첨부파일</label></th>
+						                         <td colspan="3">
+						                   		<c:choose>	
+								                    <c:when test="${ !empty n.fileName }">
+								                        <a href="${ pageContext.servletContext.contextPath }/resources/upload_files/${n.FRename}" download="${ n.fileName }">${ n.fileName }</a>
+								                    </c:when>
+							                    	<c:otherwise>
+							                        	첨부파일이 없습니다.
+							                        </c:otherwise>
+						                   		</c:choose>
+						                         </td>
+						                     </tr>
+						                     <br>
+						                     <tr>
+						                         <th colspan="5"><label for="content">내용</label></th>
+						                     </tr>
+				                     		 <tr>
+						                         <th colspan="5">
+						                         	<!-- <textarea class="form-control" required name="" id="content" rows="10" style="resize:none;"></textarea> -->
+						                         	<br>
+						               			 	<textarea class="form-control" required name="noticeContent" id="content" rows="10" style="resize:none; background:white;" readonly>${ n.noticeContent }</textarea>
+						                         </th>
+						                     </tr>
+				                    	</table>
+					                   		<br>
+								                
+									                <div class="item form-group" style="float:right;">
+									                	<c:if test="${ loginUser.memberNo eq n.memberNo }">
+										                	<button class="btn btn-diy" style="color:white;" onclick="postFormSubmit(2);"><small>수정하기</small></button>
+										                	<button class="btn btn-danger" onclick="postFormSubmit(1);"><small>삭제하기</small></button>
+										                </c:if>
+										                	<button class="btn btn-success" type="button" onclick="goBackMy()"><small>목록으로</small></button>
+									                </div> <!-- item form-group -->
+									                
+									                	<form id="postForm" action="" method="post">
+									                		<input type="hidden" name="nno" value="${ n.noticeNo }">
+									                		<input type="hidden" name="fileName" value="${ n.FRename }">
+									                	</form>
+									                     
+										                <script>
+										                     	function postFormSubmit(num) {
+										                     		if(num == 1) { //삭제하기 클릭시
+										                     			$("#postForm").attr("action", "delete.not");
+										                     		}else{ // 수정하기 클릭시
+										                     			$("#postForm").attr("action", "updateForm.not");
+										                     		}
+										                     			$("#postForm").submit();
+										                     	}
+										                </script>
+								                
+								                <div class="item form-group" style="float:right;">
+								                		
+								                </div>
+									</div> <!-- "notice_panel" -->
+	                 			<!-- </div> -->
+			               		</div> <!-- x_panel -->
+			             	</div> <!-- "col-md-12" -->
+		           		</div> <!-- row -->
+	         		</div> <!-- "" -->
+	        	</div> <!-- "right_col" -->
+	       	<!-- /page content -->
+	       
+	       <!-- footer content -->
+	    	<jsp:include page="../common/footer.jsp"/>
+		</div>
+	</div>
+    
     <script>
     	function goBackMy() {
     		window.history.back();
     	}
-    
     </script>
-    
-        <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
+    <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
