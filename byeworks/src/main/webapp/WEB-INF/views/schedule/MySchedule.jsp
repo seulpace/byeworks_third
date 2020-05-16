@@ -101,7 +101,7 @@
 				                          	</select>
 											
 											<span class="section"></span>
-											<button type="submit" style="float:right" class="btn btn-warning btn-sm">등록하기</button>	
+											<button type="submit" style="float:right" class="btn btn-danger btn-sm">등록하기</button>	
            								</form>
            							</div>
            						</div>
@@ -175,8 +175,8 @@
 	           		</div>
 	           
 	           		<div class="modal-footer">
-	           			<button type="button" class="btn btn-danger btn-sm"id="deleteBtn">삭제</button>
-	             		<button type="submit" class="btn btn-diy btn-sm" style="color: white;" id="submitBtn">수정</button>
+	           			<button type="button" class="btn btn-danger"id="deleteBtn">삭제</button>
+	             		<button type="submit" class="btn btn-diy" style="color: white;" id="submitBtn">수정</button>
 	           		</div>
 	           	</form>
 	           	

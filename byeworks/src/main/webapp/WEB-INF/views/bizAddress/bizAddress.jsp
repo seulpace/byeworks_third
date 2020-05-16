@@ -236,6 +236,13 @@
     		$("#myModalLabel").text("주소록 추가");
     		$("#submitBtn").text("추가");
     		
+    		$("#name").removeAttr("readonly");
+			$("#bizName").removeAttr("readonly");
+			$("#position").removeAttr("readonly");
+			$("#group").removeAttr("readonly");
+			$("#email").removeAttr("readonly");
+			$("#phone").removeAttr("readonly");
+    		
     		// 안에 내용 빈 칸으로 세팅
     		$("#name").val("");
     		$("#bizName").val("");

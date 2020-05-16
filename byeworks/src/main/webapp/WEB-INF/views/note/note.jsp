@@ -122,8 +122,8 @@
 	                              					
 	                              					<!-- 버튼들 -->
 	                              					<div style="padding-left: 15px; padding-right: 15px;">
-						                                <button class="btn btn-dark" style="float: left;" id="sendBtn"><small>쪽지 보내기</small></button>
-						                                <button class="btn btn-dark" style="float: left;" id="replyBtn"><small>답장하기</small></button>
+						                                <button class="btn btn-diy" style="float: left;color:white;" id="sendBtn"><small>쪽지 보내기</small></button>
+						                                <button class="btn btn-diy" style="float: left;color:white;" id="replyBtn"><small>답장하기</small></button>
 	                                					<div style="float:right;">
 	                                  						<button class="btn btn-diy" style="color:white;" id="deleteReceive"><small>삭제하기</small></button>
 	                                					</div>  
