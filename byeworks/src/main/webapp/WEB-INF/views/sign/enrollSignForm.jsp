@@ -773,8 +773,8 @@
 
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary check" data-dismiss="modal">확인</button>
+                <button type="button"  class="btn btn-diy cancel" style="color:white;" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-diy check" style="color:white;" data-dismiss="modal">확인</button>
               </div>
 
             </div>
