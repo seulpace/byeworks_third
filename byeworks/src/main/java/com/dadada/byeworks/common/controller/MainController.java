@@ -123,7 +123,9 @@ public class MainController {
 			commuteStatus=5;
 			map.put("commuteStatus", commuteStatus);
 		}else if(commuteWorkFormat.getTime() >= lateTime.getTime()){	// 9:00 이후 출근 지각
-			//if()	// 오전반차 사용했을경우 지각아니고 
+//			if(commuteMember) { // commuteMember의  tb_sign dType=V 이고  tb_annual_sign startday sysdate이고 annualType=1번일때
+//				// 오전반차 사용했을경우 지각아니고 
+//			}
 			commuteStatus = 4;
 			map.put("commuteStatus", commuteStatus);
 		}else {	// 정상출근

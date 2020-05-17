@@ -26,7 +26,7 @@ public class Member {
 	private String email;			// 직원 이메일
 	private String address;			// 직원 주소
 	private String birth;			// 직원 생년월일
-	private Date enrollday;			// 입사일
+	private String enrollday;			// 입사일
 	private String memberStatus;	// 직원 상태
 	private Date retireday;			// 퇴사일
 	private String profileModify;	// 프로필 수정명

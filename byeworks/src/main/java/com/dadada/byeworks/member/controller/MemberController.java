@@ -601,7 +601,6 @@ public class MemberController {
 	public void retireList(int mno, HttpServletResponse response) throws JsonIOException, IOException {
 		
 		Member m = mService.memberDetailList(mno);
-		
 	
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(m, response.getWriter());
