@@ -116,9 +116,8 @@
                          				<li class="sub_menu"><a href="appointmentList.adto">발령내역</a>
 			                         	</li>
 			                         	<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 1 or loginUser.departmentNo eq 0 }">
-			                         		<li><a href="appointmentForm.adto">발령서</a>
+			                         		<li><a href="appointmentForm.adto">발령서</a></li>
 			                         	</c:if>	
-			                         	</li>
                        				</ul>
                      			</li>
                    			</ul>

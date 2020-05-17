@@ -78,7 +78,7 @@ public class ReservationContoller {
 		int resultNum = rService.insertView(reservation);
 
 		model.addAttribute("showSchedule" , list );
-		return "reservation/ReservationView";
+		return "redirect:/makeView.res";
 	}
 	
 	
