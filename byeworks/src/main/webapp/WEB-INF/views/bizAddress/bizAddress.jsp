@@ -252,6 +252,9 @@
     		$("#group").val(0);
     		$("#checkSubmit").html("&nbsp;&nbsp;&nbsp;&nbsp;이름, 회사명, 그룹은 필수 입력 사항입니다.");
     		
+    		// 상세 클릭 후 작성이라면 버튼 활성화 필요
+    		$("#submitBtn").removeAttr("disabled");
+    		
     		// 모달 띄워주기
     		$("#addrModal").modal();
     	});
