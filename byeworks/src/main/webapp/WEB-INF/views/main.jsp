@@ -22,7 +22,9 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
-    
+    <!-- alertifyJS 스크립트 -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
  	<title>Byeworks</title>
  	
  	<style>
@@ -64,11 +66,15 @@
           				var str='';
           				
           				if(checkCommute==0){
+          					
           					url="commuteWorkTime.do";
           					str="퇴근하기";
+          					alertify.alert("출근 완료");
           				}else{
+          				
           					url="commuteLeavedTime.do";
           					str="출근하기"
+          					alertify.alert("퇴근 완료");
           				}
           	
           		// 출퇴근 result 값에 따른 에이작스 실행		
@@ -123,25 +129,7 @@
           			
 			  		// 메인 확인시 출퇴근 보여지는거
 			  	
-          			/*
-	          		function checkTime(){
-	          			// 에이작스로 값 존재여부확인하는값 을 가여고 
-	          			$.ajax({
-	          				url:"checkTime.co",
-	          				success:function(result){
-	          					if(result > 0){
-			          			 $("#commuteWorkBtn").html("퇴근하기");
-	          						
-	          					}
-	          					
-	          				}
-	          				
-	          			});
-	          			
-	          			// 값이 있을 경우 퇴근하기7 
-	          			// 값이 없을 경우 출석 하기
-	          		}
-          			*/	
+          		
 	          	});
 	          			
 	          		

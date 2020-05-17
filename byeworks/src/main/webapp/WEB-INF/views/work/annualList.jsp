@@ -119,8 +119,20 @@
 									
 								
 								});
-							
+								
+								
+							if(!value){
+								
+								value = "<td colspan='5' style='text-aligin:center;'> 연차 내역이 없습니다.</td>"; 
 								 $("#annualTable tbody").html(value);
+								
+							}else{
+								
+								 $("#annualTable tbody").html(value);
+								 
+							}
+							
+								
 						},error:function(){
 							console.log('통신x');
 						}

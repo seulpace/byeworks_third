@@ -66,7 +66,7 @@
                         <div class="col-sm-12">
                           <div class="card-box table-responsive">
       
-                            <table id="datatable" class="table table-bordered table-hover">
+                            <table id="datatable" style="cursor:pointer" class="table table-bordered table-hover">
                               <thead>
                                 <tr>
                                   <th></th>
@@ -94,7 +94,8 @@
                             </table>
                           
                           </div>
-                          <div class="col-md-12">
+                          <br>
+                          <div style="float:right; padding-right:1%;">
                             <button id="retireBtn" type="button" class="btn btn-diy" style="color:white" data-toggle="modal" data-target=".bs-example-modal-sm">사원퇴사</button>
 
                             <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">

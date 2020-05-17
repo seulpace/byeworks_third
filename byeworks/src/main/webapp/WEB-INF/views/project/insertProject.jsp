@@ -107,7 +107,7 @@
                                             </form>
                                         </div>
                                         <div id="step-2" style="height: 550px;">
-                                            <form action="postTasks" class="form-horizontal form-label-left">
+                                            <form action="postTasks" class="form-horizontal form-label-left" method="post">
                                                 <div class="row" style="display: block;">
                                                     <div class="col-md-12 col-sm-12">
                                                         <div class="x_content">
