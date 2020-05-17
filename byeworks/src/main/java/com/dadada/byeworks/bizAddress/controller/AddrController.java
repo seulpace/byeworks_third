@@ -287,13 +287,11 @@ public class AddrController {
 		}
 		
 		// 우선 참조하고 있는 즐겨찾기부터 삭제
-		int result1 = bService.removeBookmarkMany(intList);
+		bService.removeBookmarkMany(intList);
 		int result = 0;
 		
-		// 삭제 성공했으면 
-		if(result1 > 0) {
-			result = bService.purgeBizAddr(intList);
-		} 
+		result = bService.purgeBizAddr(intList);
+		
 		
 		return String.valueOf(result);
 	}
