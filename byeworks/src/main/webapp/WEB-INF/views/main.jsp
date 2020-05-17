@@ -195,14 +195,14 @@
                     							<td>팀원 작업 합치기</td>
                     						</tr>
                     					</table> -->
-                      					 <ul class="quick-list">
-					                        <li><i class="fa fa-bars"></i>프로젝트명: 프로젝트 어쩌구</li>
-					                        <li><i class="fa fa-bar-chart"></i>프로젝트 전체 기간 </li>
-					                        <li><i class="fa fa-support"></i><a href="#">진행 중인 작업:</a> </li>
-					                        <li><i class="fa fa-heart"></i><a href="#">작업 기간:</a></li>
+                      					 <ul class="quick-list" style="width:60%">
+					                        <li><i class="fa fa-bars"></i>프로젝트명: ${ projectMain.proTitle }</li>
+					                        <li><i class="fa fa-bar-chart"></i>프로젝트 전체 기간 : ${ projectMain.proStart } ~ ${ projectMain.proEnd }</li>
+					                        <li><i class="fa fa-support"></i><a href="#">진행 중인 작업: ${ projectMain.taskTitle }</a> </li>
+					                        <li><i class="fa fa-heart"></i><a href="#">작업 기간: ${ projectMain.taskStart } ~ ${ projectMain.taskEnd }</a></li>
                       					</ul>
 										
-                      					<div class="sidebar-widget">
+                      					<div class="sidebar-widget" style="width:40%">
                         					<h4>진행률</h4>
                         					<canvas width="150" height="80" id="chart_gauge_02" class="" style="width: 160px; height: 100px;"></canvas>
                         					<div class="goal-wrapper">
@@ -210,7 +210,7 @@
 					                        	<span id="gauge-text2" class=" pull-left">80</span>
 					                        	<span id="goal-text2" class="goal-value pull-right">%100</span>
                         					</div>
-                      					</div>
+                      					</div> 
                     				</div>
 		                		</div>
 							</div>
