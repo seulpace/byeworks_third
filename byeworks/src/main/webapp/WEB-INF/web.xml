@@ -47,6 +47,7 @@
 		<url-pattern>*.sc</url-pattern>
 		<url-pattern>*.al</url-pattern>
 		<url-pattern>*.app</url-pattern>
+		<url-pattern>*.pro</url-pattern>		
 	</servlet-mapping>
 	
 	<!-- encodingFilter 등록!! -->

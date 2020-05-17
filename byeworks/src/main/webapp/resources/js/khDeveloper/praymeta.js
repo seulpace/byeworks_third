@@ -4,8 +4,9 @@ function addTask(obj) {
     var row = tbody.insertRow(-1);
     for (var i = 0; i <= 6; i++) {
         var cell = row.insertCell(i);
+        taskCount++;
         switch (i) {
-            case 0: cell.innerHTML = ++taskCount; break;
+            case 0: cell.innerHTML = "<input type='hidden' value='"+taskCount+"'>"+taskCount; break;
             case 1: cell.innerHTML = "<input type='text'>"; break;
             case 2: cell.innerHTML = "<input type='date'>"; break;
             case 3: cell.innerHTML = "<input type='number'>"; break;
@@ -29,12 +30,12 @@ function removeTask(obj) {
 }
 
 function updateTaskNumbers() {
-    var tmpTaskCount = 1;
+    var tmpTaskCount = 0;
     var tmpLength = document.getElementById("tasks").getElementsByTagName("table").length;
     for (i = 0; i < tmpLength; i++) {
         var table = document.getElementById("tasks").getElementsByTagName("table")[i];
         for (j = 2; j < table.getElementsByTagName("tr").length; j++) {
-            table.getElementsByTagName("tr")[j].childNodes[0].innerHTML = tmpTaskCount++;
+        	table.getElementsByTagName("tr")[j].childNodes[0].innerHTML = "<input type='hidden' value='"+tmpTaskCount+"' name='tasksCategory["+i+"].tasks["+(j-2)+"].taskNo'>"+tmpTaskCount;
             table.getElementsByTagName("tr")[j].getElementsByTagName("td")[1].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].title");
             table.getElementsByTagName("tr")[j].getElementsByTagName("td")[2].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].start");
             table.getElementsByTagName("tr")[0].getElementsByTagName("th")[1].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].category");
