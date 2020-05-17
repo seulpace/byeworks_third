@@ -68,6 +68,7 @@ public class MainController {
 		// 프로젝트 조회
 		ProjectMain pm = pService.selectProject(no);
 		session.setAttribute("projectMain", pm);
+		System.out.println(pm);
 		
 		mv.setViewName("main");
 		

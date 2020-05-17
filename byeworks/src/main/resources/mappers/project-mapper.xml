@@ -16,7 +16,7 @@
 	</resultMap>
 	
 	<select id="selectProject" parameterType="_int" resultMap="projectMainResultSet">
-		SELECT *
+		 SELECT *
 		  FROM (SELECT ROWNUM, SUB2.PRO_NO AS PRO_NO, SUB2.TITLE AS PRO_TITLE, SUB2.START_DATE AS PRO_START, SUB2.FINISH_DATE AS PRO_END, SUB2.MEMBER_NO AS PRO_MEM,
 		               T.TITLE AS T_TITLE, T.START_DATE AS T_START, T.START_DATE + (DURATION-1) AS T_END
 		          FROM (SELECT * 
@@ -25,13 +25,13 @@
 		                        JOIN TB_PROJECT_MEMBER PM ON (P.PRO_NO = PM.PRO_NO)
 		                       WHERE PM.MEMBER_NO = #{memberNo}
 		                         AND P.DELETED = 'N'
-		                         AND (SYSDATE <![CDATA[>= ]]> P.START_DATE AND SYSDATE <![CDATA[<= ]]> FINISH_DATE)
+		                         AND (SYSDATE >= P.START_DATE AND SYSDATE <![CDATA[<= ]]> FINISH_DATE+1)
 		                       ORDER BY P.PRO_NO) SUB1 
 		                WHERE ROWNUM <![CDATA[<= ]]> 1) SUB2 
 		          JOIN TB_TASK T ON (SUB2.PRO_NO = T.PRO_NO) 
 		          JOIN TB_TASK_MEMBER TM ON (T.IDE_NO = TM.IDE_NO AND SUB2.PRO_NO = TM.PRO_NO AND SUB2.MEMBER_NO = TM.MEMBER_NO) 
 		         WHERE T.START_DATE <![CDATA[<= ]]> SYSDATE 
-		           AND T.START_DATE + (DURATION-1) <![CDATA[>= ]]> SYSDATE
+		           AND T.START_DATE + DURATION >= SYSDATE
 		         ORDER BY T.START_DATE) SUB3
 		 WHERE ROWNUM <![CDATA[<= ]]> 1
 	</select>

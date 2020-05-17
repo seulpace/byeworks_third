@@ -47,13 +47,13 @@
 	</update>
 	
 	<select id="selectMainList" parameterType="_int" resultMap="scheduleResultSet">
-		SELECT SCH_NO, TITLE, BEGIN, END, LOCATION, NOTE, COLOR
+		 SELECT SCH_NO, TITLE, BEGIN, END, LOCATION, NOTE, COLOR
 		  FROM (SELECT ROWNUM, SCH_NO, TITLE, BEGIN, END, LOCATION, NOTE, COLOR
 		          FROM TB_INDIVIDUAL
 		         WHERE DELETED = 'N'
-		           AND MEMBER_NO = #{no}
+		           AND MEMBER_NO = 68
 		           AND ((TO_CHAR(SYSDATE, 'MON') = TO_CHAR(BEGIN, 'MON')) OR (TO_CHAR(SYSDATE, 'MON') = TO_CHAR(END, 'MON')))
-		           AND END <![CDATA[> ]]> SYSDATE)
+		           AND END+1 <![CDATA[>= ]]> SYSDATE)
 		 WHERE ROWNUM <![CDATA[<= ]]> 5
 	</select>
 </mapper>

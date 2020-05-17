@@ -178,39 +178,22 @@
                 				</div>
 	                			<div class="x_content">
                     				<div class="dashboard-widget-content">
-                    					<!-- <table style="display:inline-block;">
-                    						<tr>
-                    							<td><i class="fa fa-bars"></i></td>
-                    							<td>프로젝트 명</td>
-                    							<td>파이널 프로젝트</td>
-                    						</tr>
-                    						<tr>
-                    							<td><i class="fa fa-bars"></i></td>
-                    							<td>프로젝트 전체 기간</td>
-                    							<td>2020-04-01 ~ 2020-05-18</td>
-                    						</tr>
-                    						<tr>
-                    							<td><i class="fa fa-bars"></i></td>
-                    							<td>진행 중인 작업명</td>
-                    							<td>팀원 작업 합치기</td>
-                    						</tr>
-                    					</table> -->
                       					 <ul class="quick-list" style="width:60%">
 					                        <li><i class="fa fa-bars"></i>프로젝트명: ${ projectMain.proTitle }</li>
-					                        <li><i class="fa fa-bar-chart"></i>프로젝트 전체 기간 : ${ projectMain.proStart } ~ ${ projectMain.proEnd }</li>
-					                        <li><i class="fa fa-support"></i><a href="#">진행 중인 작업: ${ projectMain.taskTitle }</a> </li>
-					                        <li><i class="fa fa-heart"></i><a href="#">작업 기간: ${ projectMain.taskStart } ~ ${ projectMain.taskEnd }</a></li>
+					                        <li><i class="fa fa-calendar"></i>프로젝트 전체 기간 : ${ projectMain.proStart } ~ ${ projectMain.proEnd }</li>
+					                        <li><i class="fa fa-desktop"></i>진행 중인 작업: ${ projectMain.taskTitle }</li>
+					                        <li><i class="fa fa-line-chart"></i>작업 기간: ${ projectMain.taskStart } ~ ${ projectMain.taskEnd }</li>
                       					</ul>
 										
-                      					<div class="sidebar-widget" style="width:40%">
+                      					<%-- <div class="sidebar-widget" style="width:40%">
                         					<h4>진행률</h4>
-                        					<canvas width="150" height="80" id="chart_gauge_02" class="" style="width: 160px; height: 100px;"></canvas>
+                        					<canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
                         					<div class="goal-wrapper">
-					                        	<span class="gauge-value pull-left">%</span>
-					                        	<span id="gauge-text2" class=" pull-left">80</span>
-					                        	<span id="goal-text2" class="goal-value pull-right">%100</span>
-                        					</div>
-                      					</div> 
+					                          <span id="gauge-text" class="gauge-value gauge-chart pull-left" value="100">0</span>
+					                          <span class="gauge-value pull-left">%</span>
+					                          <span id="goal-text" class="goal-value pull-right">100%</span>
+					                        </div>
+                      					</div>  --%>
                     				</div>
 		                		</div>
 							</div>
@@ -297,6 +280,9 @@
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/resources/js/custom.min.js"></script>
+    
+    <!-- gauge.js -->
+    <script src="${pageContext.request.contextPath}/resources/js/gauge/gauge.min.js"></script>
     
   </body>
 </html>
