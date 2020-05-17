@@ -67,6 +67,7 @@
         join tb_department d on(d.department_no = me.department)
         join tb_position p on(p.position_no = me.position)
         where late_count > 0
+        order by department_no
 	</select>
 	
 	<!-- <select id="lateCommuteDept" resultMap="commuteResultSet">

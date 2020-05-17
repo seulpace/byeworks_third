@@ -95,8 +95,6 @@ public class MainController {
 	@ResponseBody
 	@RequestMapping("commuteWorkTime.do")
 	public void commuteWorkTime(Date sysdate, int commuteMember) throws ParseException{
-		System.out.println("실행됨");
-		System.out.println(sysdate);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("YY/MM/dd");
 		SimpleDateFormat time = new SimpleDateFormat("HH:mm");
@@ -106,7 +104,7 @@ public class MainController {
 		Date lateTime = time.parse("09:01");
 		Date lateTimeAfter = time.parse("18:00");
 		Date commuteWorkFormat = time.parse(commuteWork);
-	
+		Date annualLateTime = time.parse("14:01");
 		
 		int commuteStatus = 0;
 		HashMap<String, Object> map = new HashMap<String, Object>();

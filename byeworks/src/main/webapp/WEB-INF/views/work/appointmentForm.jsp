@@ -17,6 +17,10 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
+      <!-- alertifyJs -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+ 
  	<style>
     	.form-kdh{
         border: 1px solid white;   
@@ -61,9 +65,9 @@
                       </div>
                       <div class="com-md-2 col-sm-2"></div>
                       <div class="col-md-3 col-sm-3">
-                        <button type="button" class="btn btn-secondary" id="searchMemberName" data-toggle="modal" data-target=".bs-example-modal-sm">검색</button>
+                        <button type="button" class="btn btn-secondary" id="searchMemberName" data-toggle="modal">검색</button>
 					  </div>
-                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="selectEmp">
                           <div class="modal-dialog modal-sm">
                             <div class="modal-content">
       
@@ -152,9 +156,9 @@
                   </div>
                    
                     <div class="form-group">
-                      <div class="col-md-9 col-sm-9  offset-md-4" style="margin-top:8%;">
+                      <div class="col-md-9 col-sm-9  offset-md-3" style="margin-top:8%;">
                        <button type="button" class="btn btn-secondary" id="confirmBtn">확정</button>      
-                        <button type="submit" class="btn btn-diy" style="color:white;">전자결재로 이동</button>
+                        <button type="submit" id="signPass" class="btn btn-diy" style="color:white;" disabled>전자결재로 이동</button>
                       </div>
                     </div>
 
@@ -163,84 +167,86 @@
               </div>
             </div>
 		<script>
-		 
-					
-		
-		
-                    	$(function(){
-                    		
-                    		$("#searchMemberName").click(function(){
-                    			
-                    			$.ajax({
-                    				url:"searchMemberName.me",
-                    				data:{"memberName":$("#appointmentName").val()},
-                    				type:"get",
-                    				success:function(list){
-                    					
-                    					var value="";
-                    					$.each(list, function(i, m){
-        	                                value += '<input type="radio" class="radioflat" id="searchMemberNo" name="searchMemberNo" style="margin-top:5%" value='+ m.memberNo +'>' +
-        					                		 '<input type="text" class="form-kdh" id="empno" name="empno" style="margin-left:5%" value='+ m.empNo +' readonly><br>';
-        					        	
-                    					});
-                    					$("#empNoList").html(value);
-                    				
-                    					
-                    				},error:function(){
-                    					console.log("실패");
-                    				}
-                    				
-                    			});
-                    		});
-                    		$("#insertEmpNo").click(function(){
-                    			if($('input[name="searchMemberNo"]').is(':checked')){
-                    				
-                    				$.ajax({
-                    					url:"retireList.me",
-            	        				data:{mno:$('input[name="searchMemberNo"]:checked').val()},
-            	        				type:"get",
-            	        				success:function(m){
-            	        					$("#appMno").val(m.memberNo);
-            	        					$("#appEmpno").val(m.empNo);
-            	        					$("#enrollday").val(m.enrollday);
-            	        					$("#positionName").val(m.position);
-            	        					$("#departmentName").val(m.department);
-            	        					$("#depBefore").val(m.departmentNo);
-            	        					$("#positionBefore").val(m.positionNo);
-            	        					
-            	        				
-                    					
-            	        				},error:function(){
-            	        					console.log("x");
-            	        				}
-                    				});
-                    				
-                    			}
-                    		});
-                    		
-                    		$("#confirmBtn").click(function(){
-                    			
-                    			if($("#depAfter").val() == 9 && $("#positionAfter").val() !=9  ){
-                    				
-                    				$("#appointLev").val(1);
-                    				$("#depAfter").val($("#depBefore").val());
-                    			}else if($("#positionAfter").val()==9 && $("#depAfter").val() != 9){
-                    				
-                    				$("#appointLev").val(0);
-                    			}else{
-                    				
-                    				$("#appointLev").val(2);
-                    			}
-                    				
-                    		});
-                    				
-                    	});
+           	$(function(){
+           		
+           		$("#searchMemberName").click(function(){
+           			if($("#appointmentName").val().trim().length == 0) {
+            			alertify.alert("이름을 입력해주세요");
+            			return;
+            		}
+           			$("#selectEmp").modal();
+           			$.ajax({
+           				url:"searchMemberName.me",
+           				data:{"memberName":$("#appointmentName").val()},
+           				type:"get",
+           				success:function(list){
+           					
+           					var value="";
+           					$.each(list, function(i, m){
+                                value += '<input type="radio" class="radioflat" id="searchMemberNo" name="searchMemberNo" style="margin-top:5%" value='+ m.memberNo +'>' +
+				                		 '<input type="text" class="form-kdh" id="empno" name="empno" style="margin-left:5%" value='+ m.empNo +' readonly><br>';
+				        	
+           					});
+           					$("#empNoList").html(value);
+           				
+           					
+           				},error:function(){
+           					console.log("실패");
+           				}
+           				
+           			});
+           		});
+           		$("#insertEmpNo").click(function(){
+           			if($('input[name="searchMemberNo"]').is(':checked')){
+           				
+           				$.ajax({
+           					url:"retireList.me",
+   	        				data:{mno:$('input[name="searchMemberNo"]:checked').val()},
+   	        				type:"get",
+   	        				success:function(m){
+   	        					$("#appMno").val(m.memberNo);
+   	        					$("#appEmpno").val(m.empNo);
+   	        					$("#enrollday").val(m.enrollday);
+   	        					$("#positionName").val(m.position);
+   	        					$("#departmentName").val(m.department);
+   	        					$("#depBefore").val(m.departmentNo);
+   	        					$("#positionBefore").val(m.positionNo);
+   	        					
+   	        				
+           					
+   	        				},error:function(){
+   	        					console.log("x");
+   	        				}
+           				});
+           				
+           			}
+           		});
+           		
+           		$("#confirmBtn").click(function(){
+           			
+           			if($("#depAfter").val() == 9 && $("#positionAfter").val() !=9  ){
+           				
+           				$("#appointLev").val(1);
+           				$("#depAfter").val($("#depBefore").val());
+           			}else if($("#positionAfter").val()==9 && $("#depAfter").val() != 9){
+           				
+           				$("#appointLev").val(0);
+           			}else{
+           				
+           				$("#appointLev").val(2);
+           			}
+           			
+           			$("#signPass").removeAttr("disabled");
+           				
+           		});
+           				
+           	});
+           
+           	
+           	
                     
-                    	
-                    	
-                    
-                    </script>
-     		 </div>
+        </script>
+     </div>
             <!-- footer content -->
         <jsp:include page="../common/footer.jsp"/>
     </div>

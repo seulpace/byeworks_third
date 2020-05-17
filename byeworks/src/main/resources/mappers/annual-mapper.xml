@@ -24,7 +24,7 @@
 	</resultMap>
 
 	<select id="annualUseList" parameterType="String" resultMap="annualListSet">
-		   select m.member_name, d.department_name, p.position_name, m.enrollday, a.annual_create||'일' as annual_create, 
+		   select m.member_name, d.department_name, p.position_name, to_char(m.enrollday,'YYYY/MM/DD') enrollday, a.annual_create||'일' as annual_create, 
 	            case when s.sign_status = 'C' then '승인'
 	            	 when s.sign_status = 'O' then '진행'
 	            	 when s.sign_status = 'R' then '반려'

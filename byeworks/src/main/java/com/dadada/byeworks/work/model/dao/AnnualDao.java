@@ -15,7 +15,7 @@ public class AnnualDao {
 	public ArrayList<Annual> annualUseList(SqlSessionTemplate sqlSession, String annualUseDay){
 		
 		ArrayList<Annual> arr = (ArrayList)sqlSession.selectList("annualMapper.annualUseList", annualUseDay);
-
+		System.out.println(arr);
 		return arr;
 	}
 	

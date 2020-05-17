@@ -73,12 +73,7 @@ public class CommuteController {
 	@ResponseBody
 	@RequestMapping(value="myCommute.co", produces="application/json; charset=utf-8")
 	public String myCommute(int commuteMember, String commuteDateStr){
-		
-	
-		
 		ArrayList<Commute> myCommuteList = cService.myCommute(commuteMember, commuteDateStr);
-		
-	
 	
 		return new Gson().toJson(myCommuteList);
 	

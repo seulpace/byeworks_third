@@ -142,7 +142,7 @@
                     </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
-                      <div class="col-md-9 col-sm-9  offset-md-3">
+                      <div class="col-md-9 col-sm-9  offset-md-4">
                         <button id="updateBtn" class="btn btn-diy" style="color:white;">수정</button>
                         <button type="button" class="btn btn-secondary" onclick="location.href='memberList.me'">목록</button>
                       </div>
@@ -183,15 +183,16 @@
 				
 			
 			</script>
-
+  		</div>
+    </div>
         <!-- /page content -->
           <!-- footer content -->
           <!-- footer content -->
         <jsp:include page="../common/footer.jsp"/>
         
-      </div>
-    </div>
     
+  </div>
+ </div>   
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
    <!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>
