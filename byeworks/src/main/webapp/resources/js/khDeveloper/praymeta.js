@@ -35,6 +35,7 @@ function updateTaskNumbers() {
     for (i = 0; i < tmpLength; i++) {
         var table = document.getElementById("tasks").getElementsByTagName("table")[i];
         for (j = 2; j < table.getElementsByTagName("tr").length; j++) {
+            tmpTaskCount++;
         	table.getElementsByTagName("tr")[j].childNodes[0].innerHTML = "<input type='hidden' value='"+tmpTaskCount+"' name='tasksCategory["+i+"].tasks["+(j-2)+"].taskNo'>"+tmpTaskCount;
             table.getElementsByTagName("tr")[j].getElementsByTagName("td")[1].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].title");
             table.getElementsByTagName("tr")[j].getElementsByTagName("td")[2].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].start");
