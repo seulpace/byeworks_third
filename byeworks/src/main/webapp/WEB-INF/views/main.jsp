@@ -22,7 +22,9 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
-    
+    <!-- alertifyJS 스크립트 -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
  	<title>Byeworks</title>
  	
  	<style>
@@ -64,11 +66,15 @@
           				var str='';
           				
           				if(checkCommute==0){
+          					
           					url="commuteWorkTime.do";
           					str="퇴근하기";
+          					alertify.alert("출근 완료");
           				}else{
+          				
           					url="commuteLeavedTime.do";
           					str="출근하기"
+          					alertify.alert("퇴근 완료");
           				}
           	
           		// 출퇴근 result 값에 따른 에이작스 실행		
@@ -123,25 +129,7 @@
           			
 			  		// 메인 확인시 출퇴근 보여지는거
 			  	
-          			/*
-	          		function checkTime(){
-	          			// 에이작스로 값 존재여부확인하는값 을 가여고 
-	          			$.ajax({
-	          				url:"checkTime.co",
-	          				success:function(result){
-	          					if(result > 0){
-			          			 $("#commuteWorkBtn").html("퇴근하기");
-	          						
-	          					}
-	          					
-	          				}
-	          				
-	          			});
-	          			
-	          			// 값이 있을 경우 퇴근하기7 
-	          			// 값이 없을 경우 출석 하기
-	          		}
-          			*/	
+          		
 	          	});
 	          			
 	          		
@@ -207,14 +195,14 @@
                     							<td>팀원 작업 합치기</td>
                     						</tr>
                     					</table> -->
-                      					 <ul class="quick-list">
-					                        <li><i class="fa fa-bars"></i>프로젝트명: 프로젝트 어쩌구</li>
-					                        <li><i class="fa fa-bar-chart"></i>프로젝트 전체 기간 </li>
-					                        <li><i class="fa fa-support"></i><a href="#">진행 중인 작업:</a> </li>
-					                        <li><i class="fa fa-heart"></i><a href="#">작업 기간:</a></li>
+                      					 <ul class="quick-list" style="width:60%">
+					                        <li><i class="fa fa-bars"></i>프로젝트명: ${ projectMain.proTitle }</li>
+					                        <li><i class="fa fa-bar-chart"></i>프로젝트 전체 기간 : ${ projectMain.proStart } ~ ${ projectMain.proEnd }</li>
+					                        <li><i class="fa fa-support"></i><a href="#">진행 중인 작업: ${ projectMain.taskTitle }</a> </li>
+					                        <li><i class="fa fa-heart"></i><a href="#">작업 기간: ${ projectMain.taskStart } ~ ${ projectMain.taskEnd }</a></li>
                       					</ul>
 										
-                      					<div class="sidebar-widget">
+                      					<div class="sidebar-widget" style="width:40%">
                         					<h4>진행률</h4>
                         					<canvas width="150" height="80" id="chart_gauge_02" class="" style="width: 160px; height: 100px;"></canvas>
                         					<div class="goal-wrapper">
@@ -222,7 +210,7 @@
 					                        	<span id="gauge-text2" class=" pull-left">80</span>
 					                        	<span id="goal-text2" class="goal-value pull-right">%100</span>
                         					</div>
-                      					</div>
+                      					</div> 
                     				</div>
 		                		</div>
 							</div>

@@ -20,8 +20,8 @@ public class ProjectController {
 	
 	@RequestMapping("postTasks")
 	public String postTasks(@ModelAttribute TasksCategories allTasks) {
-		System.out.println(allTasks.toString());
 		projectService.saveTasks(allTasks);
+		System.out.println(allTasks.toString());
 		return null;
 	}
 }

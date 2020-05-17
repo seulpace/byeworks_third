@@ -65,7 +65,7 @@
                       <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-9 col-sm-9 ">
                         <select id="department" class="select2_single form-control" tabindex="-1"  name="department">
-                          <option value="">--------------------</option>
+                          <option value="9">선택 해주세요.</option>
                           <option value="2">사업팀1</option>
                           <option value="3">사업팀2</option>
                           <option value="4">인사팀1</option>
@@ -79,7 +79,7 @@
                       <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
                         <div class="col-md-9 col-sm-9 ">
                           <select id="position" class="select2_single form-control" tabindex="-1" name="position">
-                                <option value="">--------------------</option>
+                                <option value="9">선택 해주세요.</option>
                                 <option value="1">임원</option>
                                 <option value="2">부장</option>
                                 <option value="3">과장</option>
@@ -123,14 +123,14 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-12 col-sm-12  offset-md-5">
-                        <button type="button" class="btn btn-diy" style="color:white;" data-toggle="modal" data-target=".bs-example-modal-sm">사원등록</button>
+                        <button type="button" class="btn btn-diy" id="employeeInsert" style="color:white;" data-toggle="modal">사원등록</button>
 
-                            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="insertBtn">
                               <div class="modal-dialog modal-sm">
                                 <div class="modal-content">
 
                                   <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel2">사원 등록</h4>
+                                    <h4 class="modal-title" >사원 등록</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
                                   </div>
@@ -160,7 +160,39 @@
         
       </div>
     </div>
-    
+    <script>
+    $("#employeeInsert").click(function(){
+		if($("#profilePicture").val().trim().length == 0) {
+			alertify.alert("프로필 사진을 등록해주세요");
+			return;
+		}
+		if($("#memberName").val().trim().length == 0) {
+			alertify.alert("이름을 등록해주세요");
+			return;
+		}
+		if($("#extension").val().trim().length == 0) {
+			alertify.alert("사내 전화를 등록해주세요");
+			return;
+		}
+		if($("#phone").val().trim().length == 0) {
+			alertify.alert("휴대전화를 등록해주세요");
+			return;
+		}
+		if($("#email").val().trim().length == 0) {
+			alertify.alert("이메일을 등록해주세요");
+			return;
+		}
+		if($("#address").val().trim().length == 0) {
+			alertify.alert("주소를 등록해주세요");
+			return;
+		}
+		if($("#birth").val().trim().length == 0) {
+			alertify.alert("생년월일을 등록해주세요");
+			return;
+		}
+		$("#insertBtn").modal();
+    });
+    </script>
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/resources/js/basic/bootstrap.bundle.min.js"></script>

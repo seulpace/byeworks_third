@@ -22,7 +22,7 @@ public class Annual {
 	private String annName;			// 직원 이름
 	private String annDept;			// 직원 부서	
 	private String annPos;			// 직원 직급
-	private Date annEnrollday;		// 직원 입사일
+	private String annEnrollday;	// 직원 입사일
 	private int annualType;			// 연차 사용	0 :연차사용  1:오전반차  2:오후반차annE
 	private String annualUseDay;	// 연차 사용일
 	private String annualSign;		// 연차 상태
