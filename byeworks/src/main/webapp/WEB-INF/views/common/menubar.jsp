@@ -108,30 +108,36 @@
                  		<li><a><i class="fa fa-user"></i> 인사 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
                      			<li><a href="myPage.me">내 정보 관리</a></li>
-                     			
-                     			<li><a href="memberList.me">전체 사원 조회 (인)</a></li>
-                     			<li><a>발령<span class="fa fa-chevron-down"></span></a>
-                       				<ul class="nav child_menu">
-                         				<li class="sub_menu"><a href="appointmentList.adto">발령내역</a>
-			                         	</li>
-			                         	<li><a href="appointmentForm.adto">발령서</a>
-			                         	</li>
-                       				</ul>
-                     			</li>
+                     			<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 1 or loginUser.departmentNo eq 0 }">
+                     				<li><a href="memberList.me">전체 사원 조회 (인)</a></li>
+                     			</c:if>	
+                     			<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 1 or loginUser.departmentNo eq 0 }">
+	                     			<li><a>발령<span class="fa fa-chevron-down"></span></a>
+	                       				<ul class="nav child_menu">
+	                         				<li class="sub_menu"><a href="appointmentList.adto">발령내역</a>
+				                         	</li>
+				                         		<li><a href="appointmentForm.adto">발령서</a></li>
+	                       				</ul>
+	                     			</li>
+                     			</c:if>
                    			</ul>
                  		</li>
 	                 	<li><a><i class="fa fa-briefcase"></i> 근태 관리 <span class="fa fa-chevron-down"></span></a>
 	                   		<ul class="nav child_menu">
 	                     		<li><a href="myCommuteList.co">출퇴근 이력 조회</a></li>
-	                     		<li><a href="commuteList.co">출퇴근 현황 조회 (인)</a></li>
-	                     		<li><a href="lateCommute.co">지각 초과 직원 조회 (인)</a></li>
+	                     		<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 1 or loginUser.departmentNo eq 0 }">
+		                     		<li><a href="commuteList.co">출퇴근 현황 조회 (인)</a></li>
+		                     		<li><a href="lateCommute.co">지각 초과 직원 조회 (인)</a></li>
+		                     	</c:if>	
 	                   
 	                   		</ul>
 	                 	</li>
                  		<li><a><i class="fa fa-inbox"></i> 연차 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
                      			<li><a href="annualApp.ann">연차 신청</a></li>
-                     			<li><a href="annualList.ann">연차 현황 조회 (인)</a></li>
+                     			<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 1 or loginUser.departmentNo eq 0 }">
+                     				<li><a href="annualList.ann">연차 현황 조회 (인)</a></li>
+                     			</c:if>	
                    			</ul>
                  		</li>
                		</ul>
@@ -228,7 +234,7 @@
                  		</li>
                  		<li><a><i class="fa fa-bar-chart"></i> 프로젝트 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
-                     			<li><a href="form.html">프로젝트 생성</a></li>
+                     			<li><a href="insertProForm.pro">프로젝트 생성</a></li>
                      			<li><a href="form.html">프로젝트 조회</a></li>
                    			</ul>
                  		</li>

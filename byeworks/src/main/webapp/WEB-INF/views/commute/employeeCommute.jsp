@@ -54,10 +54,10 @@
 
                 </div>
               </div>
-              <div class="col-md-12"></div>
+            
               <div class="row" style="display: block;">
-                <div class="col-md-12 col-sm-12">
-                  <table id="commuteTable" class="table table-bordered" style="width:100%">
+                <div class="col-md-8 col-sm-8">
+                  <table id="commuteTable" class="table " style="width:100%">
                     <thead>
                       <tr>
                         <th>사원</th>
@@ -124,7 +124,19 @@
 						                 "</tr>";
 								
 							});
-	                    	 $("#commuteTable tbody").html(value);
+							
+							if(!value){
+								
+								value = "<td colspan='6' style='text-aligin:center;'> 출근 내역이 없습니다.</td>"; 
+								 $("#commuteTable tbody").html(value);
+								
+							}else{
+								
+								 $("#commuteTable tbody").html(value);
+								 
+							}
+							
+	                    	
 						},error:function(){
 							
 						}

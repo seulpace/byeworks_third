@@ -120,7 +120,7 @@
 										                	<button class="btn btn-diy" style="color:white;" onclick="postFormSubmit(2);"><small>수정하기</small></button>
 										                	<button class="btn btn-danger" onclick="postFormSubmit(1);"><small>삭제하기</small></button>
 										                </c:if>
-										                	<button class="btn btn-success" type="button" onclick="goBackMy()"><small>목록으로</small></button>
+										                	<a class="btn btn-secondary" type="button" href="list.not"><small>목록으로</small></a>
 									                </div> <!-- item form-group -->
 									                
 									                	<form id="postForm" action="" method="post">

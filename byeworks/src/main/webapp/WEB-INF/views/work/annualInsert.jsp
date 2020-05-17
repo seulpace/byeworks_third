@@ -69,19 +69,6 @@
                       </div>
                       
                     </div>
-                    
-                   <div class="form-group row">
-                      <label for="annual" class="control-label col-md-3 col-sm-3 ">연차 종류</label>
-                      <div class="col-md-9 col-sm-9">
-                        <select class="select2_single form-control" tabindex="-1" id="annualType" name="annualType">
-                          <option value="">--------------------</option>
-                          <option value="0">연차</option>
-                          <option value="1">오전 반차</option>
-                          <option value="2">오후 반차</option>
-                        </select>
-                      </div>  
-                    </div> 
-                   
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">연차 기간</label>
                       <div class="col-md-9">
@@ -99,8 +86,17 @@
                           </fieldset>
                       </div>
                     </div>
-                    
-                    
+                   <div class="form-group row">
+                      <label for="annual" class="control-label col-md-3 col-sm-3 ">연차 종류</label>
+                      <div class="col-md-9 col-sm-9">
+                        <select class="select2_single form-control" tabindex="-1" id="annualType" name="annualType">
+                          <option value="">선택 해주세요.</option>
+                          <option value="0">연차</option>
+                          <option value="1">오전 반차</option>
+                          <option value="2">오후 반차</option>
+                        </select>
+                      </div>  
+                    </div> 
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">연차 사유</label>
                       <div class="col-md-9 col-sm-9 ">
@@ -145,22 +141,7 @@
 		      }
 		  });
 
-		 /*  $('input[name="annualPeriod"]').on('apply.daterangepicker', function(ev, picker) {
-		      $(this).val(picker.startDate.format('YYYY-MM-DD') + ' ~ ' + picker.endDate.format('YYYY-MM-DD'));
-		     
-		      
-		  });
-		  $('input[name="annualStartDay"]').on('apply.daterangepicker', function(ev, picker) {
-		      $(this).val(picker.startDate.format('YYYY-MM-DD');
-		     
-		      
-		  });  
-		  $('input[name="annualEndDay"]').on('apply.daterangepicker', function(ev, picker) {
-		      $(this).val(picker.endDate.format('YYYY-MM-DD'));
-		     
-		      
-		  }); */
-
+		
 		  $('input[name="annPeriod"]').on('apply.daterangepicker', function(ev, picker) { 
 			/*   $(this).val(picker.startDate.format('YYYY-MM-DD') + ' ~ ' + picker.endDate.format('YYYY-MM-DD')); */
 				var startDate = picker.startDate.format('YYYY-MM-DD');
@@ -170,9 +151,18 @@
 		      	$('input[name="annualEndDay"]').val(endDate); 
 		      	$('input[name="annPeriod"]').val(annPeriod); 
 		      	
-
-        	
+		      	if(startDate != endDate){
+		      		$("select option[value*='1']").css('display','none');
+		      		$("select option[value*='2']").css('display','none');
+		      	}else{
+		      		$("select option[value*='1']").css('display','');
+		      		$("select option[value*='2']").css('display','');
+		      	}
+		      	
 			});
+		  
+		  
+		
 		  
 		  $("#annualType").change(function(){
 
@@ -180,8 +170,7 @@
       		
       		//var option = $("#annualType option:selected").val();
 				var option = $('#annualType option:selected').val();
-      		
-      		console.log(option);
+      	
       		if(option == 0){
       		
 	        		var sdt = new Date($("#annualStartDay").val());
@@ -197,7 +186,7 @@
       		 
       		
       		}
-		  });
+		  })
 	     
 		  
 	});
