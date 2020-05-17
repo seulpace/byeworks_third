@@ -86,11 +86,11 @@
                     </table>
                   </div>
 		              	  <br>
-			              <div class="item form-group" style="float:right;">
 			              	<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 6 or loginUser.departmentNo eq 7 }">
+			              <div class="item form-group" style="float:right;">
 			                	<a class="btn btn-diy" href="enrollForm.no" value="${ loginUser.memberNo }" >작성하기</a>
-			                </c:if>
 			              </div>
+			                </c:if>
                   </div>
               </div>
             </div>
