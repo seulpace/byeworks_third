@@ -489,7 +489,7 @@
 								  
 								  <tr>
 								  	  <th>제목</th>
-								  	  <td><input type="text" name="title" style="border:none;"value="${list.title }"></td>
+								  	  <td><input type="text" name="title" style="border:none;"value="${list.title }"required></td>
 								  </tr>
 								  
 								  <tr>
@@ -520,7 +520,7 @@
                                   <tr>
                                       <th>직위</th>
                                       <td>
-                                      <input id="selectedMemPosition" type="text" class="" style="border:none;"readonly>
+                                      <input id="selectedMemPosition" type="text" class="" style="border:none;"readonly required>
                                       <input type="hidden" name="positionBefore" value="">
                                       </td>
                                   </tr>
@@ -528,7 +528,7 @@
                                   <tr>
                                     <th>승진보직</th>
                                     <td>
-                                    	<select id="updatePosition" name="positionAfter" style="border:none;">
+                                    	<select id="updatePosition" name="positionAfter" style="border:none;" required>
                                     			<option>선택</option>
                                     			<option value="1">임원</option>
                                     			<option value="2">팀장</option>
@@ -541,7 +541,7 @@
                                   <tr>
                                   	<th>발령부서</th>
                                   	<td>
-                                  		<select id="updateDepartment" name="depAfter" style="border:none;">
+                                  		<select id="updateDepartment" name="depAfter" style="border:none;"required>
                                   			<option>선택</option>
                                   		</select>
                                   	</td>
@@ -549,7 +549,7 @@
                                   
                                   <tr>
                                     <th>시행일시</th>
-                                    <td><input type="date" name="appointmentDate" style="border:none;"></td>
+                                    <td><input type="date" name="appointmentDate" style="border:none;"required></td>
                                   </tr>
                                 </table><br>
 

@@ -108,7 +108,7 @@ public class SignServiceImpl implements SignService {
 		
 		int result1 = sDao.insertSignAp(sqlSession, signAndAppointment);
 		int result2 = sDao.insertAppointment(sqlSession, signAndAppointment);
-		int result6 = 0;
+		int result6 = 1;
 		if(result1>0) {
 			int result3 = sDao.insertSignLineList(sqlSession, slist);
 			
@@ -292,7 +292,7 @@ public class SignServiceImpl implements SignService {
 		int result1 = sDao.signConfirm(sqlSession, sno, mno);
 		int result2 = sDao.orderCheck(sqlSession, sno, mno);
 		int result3 = 1;
-		System.out.println(updateMno);
+		
 		if(result2 == length) {
 			result3 = sDao.finalConfirm(sqlSession, sno);
 			
@@ -301,10 +301,10 @@ public class SignServiceImpl implements SignService {
 				String docType = sDao.checkDocType(sqlSession, sno);
 				
 				if(docType.equals("V")){
-					System.out.println("실행됨");
+					
 					
 					double period = sDao.getAnnualPeriod(sqlSession, sno);
-					System.out.println(period);
+					
 					if(period != 0) {
 						int result = sDao.changeAnnualRemain(sqlSession, updateMno, period);
 					}
@@ -373,7 +373,7 @@ public class SignServiceImpl implements SignService {
 		int result = 0;
 		
 		if(!list.isEmpty()) {
-			System.out.println(list);
+			
 			
 			result = sDao.updateMemberStatus2(sqlSession, list);
 			
