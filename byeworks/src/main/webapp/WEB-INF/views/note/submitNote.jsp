@@ -93,8 +93,8 @@
                                								<br>
                                								<div style="padding-left: 15px; padding-right: 15px;">
                                  								<div style="float:right;">
-                                   									<button class="btn btn-diy" style="color:white;" onclick="goList();"><small>뒤로 가기</small></button>
-                                   									<button class="btn btn-warning" type="submit"><small>보내기</small></button>
+                                   									<button class="btn btn-secondary" onclick="goList();"><small>뒤로 가기</small></button>
+                                   									<button class="btn btn-diy" style="color:white;" type="submit"><small>보내기</small></button>
                                  								</div>
                                								</div>
                                							</div>

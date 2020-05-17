@@ -183,6 +183,7 @@ public class SignController {
 		if(!file[0].getOriginalFilename().equals("")) {
 			
 			alist = saveFile(file, request);	
+			System.out.println(alist);
 		}	
 		int result = sService.insertSignAnnual(signAndAnnualSign, slist, rlist, alist);
 		
@@ -343,7 +344,7 @@ public class SignController {
 	@RequestMapping("updateSignQuit.si")
 	public String updateSignQuit(SignAndQuit signAndQuit, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, @ModelAttribute SignAttachment atList, MultipartHttpServletRequest request, @RequestParam(value="reUpLoadFile", required=false) MultipartFile[] file) {
 		
-		
+			int signNo=signAndQuit.getSignNo();
 			ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
 					
 					
@@ -353,6 +354,10 @@ public class SignController {
 						
 							deleteFile(atList.getAlist(),request);
 							alist = saveFile(file, request);
+							for(int i=0; i<alist.size();i++) {
+								alist.get(i).setSignNo(signNo);
+
+							}
 						}
 			
 						}
@@ -371,15 +376,23 @@ public class SignController {
 	@RequestMapping("updateSignAnnual.si")
 	public String updateSignAnnual(SignAndAnnualSign signAndAnnualSign, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, @ModelAttribute SignAttachment atList, MultipartHttpServletRequest request, @RequestParam(value="reUpLoadFile", required=false) MultipartFile[] file ) {
 		
+		int signNo=signAndAnnualSign.getSignNo();
+		
+		
 		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
-		
-		
+	
 		if(!file[0].getOriginalFilename().equals("")) {
 			
 			if(atList.getAlist()!=null) {
 			
 				deleteFile(atList.getAlist(),request);
 				alist = saveFile(file, request);
+				for(int i=0; i<alist.size();i++) {
+					alist.get(i).setSignNo(signNo);
+
+				}
+				
+				
 			}
 
 			}
@@ -399,6 +412,8 @@ public class SignController {
 	@RequestMapping("updateSignAppointment.si")
 	public String updateSignAppointment(SignAndAppointment signAndAppointment, @ModelAttribute SignLine slist, @ModelAttribute SignRefer rlist, @ModelAttribute SignAttachment atList, MultipartHttpServletRequest request, @RequestParam(value="reUpLoadFile", required=false) MultipartFile[] file ) {
 		
+		int signNo=signAndAppointment.getSignNo();
+		
 		ArrayList<SignAttachment> alist = new ArrayList<SignAttachment>();
 
 		if(!file[0].getOriginalFilename().equals("")) {
@@ -407,6 +422,10 @@ public class SignController {
 			
 				deleteFile(atList.getAlist(),request);
 				alist = saveFile(file, request);
+				for(int i=0; i<alist.size();i++) {
+					alist.get(i).setSignNo(signNo);
+
+				}
 			}
 
 			}

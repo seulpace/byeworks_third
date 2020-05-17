@@ -235,7 +235,7 @@
                  		</li>
                  		<li><a><i class="fa fa-bar-chart"></i> 프로젝트 관리 <span class="fa fa-chevron-down"></span></a>
                    			<ul class="nav child_menu">
-                     			<li><a href="form.html">프로젝트 생성</a></li>
+                     			<li><a href="insertProForm.pro">프로젝트 생성</a></li>
                      			<li><a href="form.html">프로젝트 조회</a></li>
                    			</ul>
                  		</li>

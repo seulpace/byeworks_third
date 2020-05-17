@@ -67,8 +67,8 @@
 						                                    <td>
 						                                    	<c:if test="${ loginUser.memberName eq g.memberName }">
 						                                    	<div class="btn-group btn-group-sm">
-						                                    		<button name="modify" value="${ g.groupNo }" class="btn btn-xs btn-warning"><small>수정</small></button>
-						                                    		<button name="delete" value="${ g.groupNo }" class="btn btn-xs btn-danger"><small>삭제</small></button>
+						                                    		<button name="modify" value="${ g.groupNo }" class="btn btn-xs btn-outline-danger"><small>수정</small></button>
+						                                    		<button name="delete" value="${ g.groupNo }" class="btn btn-xs btn-outline-danger"><small>삭제</small></button>
 						                                    	</div>
 						                                    	</c:if>
 						                                    </td>
@@ -82,7 +82,7 @@
 	                              				<!-- 버튼들 -->
 	                              				<div style="padding-left: 15px; padding-right: 15px;">
 	                                				<div style="float:right;">
-	                                  					<button class="btn btn-dark" id="groupInsert" style="float: left;" data-toggle="modal"><small>그룹 추가</small></button>
+	                                  					<button class="btn btn-diy" style="color:white;" id="groupInsert" style="float: left;" data-toggle="modal"><small>그룹 추가</small></button>
 	                                				</div>
 	                              				</div>
 	                            			</div>

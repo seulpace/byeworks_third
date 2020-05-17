@@ -21,7 +21,6 @@ public class SignAttachment {
 	private int fileNo;
 	private String oaName;
 	private String maName;
-	private String filePath;
 	private int signNo;
 
 }

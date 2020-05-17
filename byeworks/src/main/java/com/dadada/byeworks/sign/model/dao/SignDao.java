@@ -242,7 +242,8 @@ public class SignDao {
 		
 		int result = 0;
 		for(SignAttachment sa : alist) {
-			sqlSession.insert("signMapper.updateAttachmentList", sa);
+			
+			result = sqlSession.insert("signMapper.updateAttachmentList", sa);
 		}
 		return result;
 	}

@@ -18,6 +18,8 @@ import com.dadada.byeworks.alarm.model.service.AlarmService;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.notice.model.service.NoticeService;
 import com.dadada.byeworks.notice.model.vo.Notice;
+import com.dadada.byeworks.project.model.service.ProjectService;
+import com.dadada.byeworks.project.model.vo.ProjectMain;
 import com.dadada.byeworks.schedule.model.service.ScheduleService;
 import com.dadada.byeworks.schedule.model.vo.Schedule;
 
@@ -31,14 +33,16 @@ public class MainController {
 	@Autowired
 	private ScheduleService sService;
 	
-
 	// 출퇴근 위해
 	@Autowired
 	private CommuteService cService;
 	@Autowired
 	private AlarmService alService;
 	
-
+	// 프로젝트를 조회하기 위해
+	@Autowired
+	private ProjectService pService;
+	
 	/**
 	 * 이슬희: 메인 가는 메서드
 	 * @return
@@ -56,11 +60,12 @@ public class MainController {
 		ArrayList<Schedule> sList = sService.selectMainList(no);
 		mv.addObject("sList", sList);
 		
-		
-		
 		// 알람 개수 조회
 		int alarmCount = alService.countAlarm(no);
 		session.setAttribute("alarmCount", alarmCount);
+		
+		// 프로젝트 조회
+		ProjectMain pm = pService.selectProject(no);
 		
 		mv.setViewName("main");
 		

@@ -46,7 +46,7 @@
                 			<div id="myTabContent" class="tab-content">
                   				<div role="tabpanel" class="tab-pane active " id="tab_content1" aria-labelledby="home-tab">
                     				<div class="well" style="overflow: auto; padding:0.5%">
-                    					<button style="float: right; margin:0" class="btn btn-danger btn-sm" id="deleteAll">전체 삭제하기</button>
+                    					<button style="float: right; margin:0" class="btn btn-danger" id="deleteAll">전체 삭제하기</button>
                     				</div>
 
                     				<!-- start recent activity -->

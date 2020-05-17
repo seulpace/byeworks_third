@@ -123,6 +123,10 @@
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
     
+     <!-- alertifyJs -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    
 
  
   <body class="nav-md">
@@ -929,14 +933,14 @@
                       if($("#sign option").last().attr("class") > emp.attr("class")){
                           $("#sign").append("<option value='" + emp.val() + "' class='" +emp.attr("class") + "'>" + emp.text() + "</option>");
                       }else{
-                          alert("결재 순서가 잘못되었습니다.");
+                    	  alertify.alert("결재 순서가 잘못되었습니다.");
                       }
                       
                   }else{
-                      alert("이미 결재자에 등록된 사원입니다.");
+                	  alertify.alert("이미 결재자에 등록된 사원입니다.");
                   }
               }else{
-                  alert("일반사원은 결재권한이 없습니다.");
+            	  alertify.alert("일반사원은 결재권한이 없습니다.");
               }
           });
       
@@ -963,7 +967,7 @@
               if(count==0){
                   $("#refer").append("<option value='" + emp.val() + "'>" + emp.text()+"</option>");
               }else{
-                  alert("이미 참조자에 등록된 사원입니다.");
+            	  alertify.alert("이미 참조자에 등록된 사원입니다.");
               }
 
           });
