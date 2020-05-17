@@ -35,6 +35,7 @@
 		<typeAlias type="com.dadada.byeworks.reservation.model.vo.Reservation" alias="Reservation"/>
 		<typeAlias type="com.dadada.byeworks.reservation.model.vo.ReservationDTO" alias="ReservationDTO"/>
 		<typeAlias type="com.dadada.byeworks.alarm.model.vo.Alarm" alias="Alarm"/>
+		<typeAlias type="com.dadada.byeworks.project.model.vo.ProjectMain" alias="ProjectMain"/>
 	</typeAliases>
 	
 	<mappers>
@@ -49,6 +50,7 @@
 		<mapper resource="/mappers/schedule-mapper.xml"/>
 		<mapper resource="/mappers/alarm-mapper.xml"/>
 		<mapper resource="/mappers/appointment-mapper.xml"/>
+		<mapper resource="/mappers/project-mapper.xml"/>
 	</mappers>
 	
 </configuration>

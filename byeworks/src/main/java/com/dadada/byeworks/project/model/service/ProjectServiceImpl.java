@@ -37,7 +37,6 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public ProjectMain selectProject(int memberNo) {
-		ProjectMain pm = null;
-		return pm;
+		return proDao.selectProject(sqlSession, memberNo);
 	}
 }
