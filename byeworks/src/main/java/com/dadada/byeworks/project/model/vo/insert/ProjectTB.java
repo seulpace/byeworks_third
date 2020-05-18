@@ -1,7 +1,6 @@
-package com.dadada.byeworks.project.model.vo;
+package com.dadada.byeworks.project.model.vo.insert;
 
 import java.sql.Date;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,12 +12,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class TasksCategories {
-	private List<TasksCategory> tasksCategory;
+public class ProjectTB {
+	private int proNo;
 	private String title;
 	private Date startDate;
 	private Date finishDate;
-	private Integer memberNo;
-	private String memberName;
 	private String note;
+	private String deleted;
 }

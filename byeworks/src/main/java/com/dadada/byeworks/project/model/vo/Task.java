@@ -1,7 +1,6 @@
 package com.dadada.byeworks.project.model.vo;
 
 import java.sql.Date;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,4 +23,5 @@ public class Task {
 	private Integer memberNo; // 직원번호 task_member
 	private Integer dependNo; // 종속성 번호 task_dependency
 	private Integer reqNo; // 요구작업 번호 task_dependency
+	private String memberName; // 직원이름
 }

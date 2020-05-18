@@ -1,24 +1,24 @@
-package com.dadada.byeworks.project.model.vo;
+package com.dadada.byeworks.project.model.vo.insert;
 
 import java.sql.Date;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class TasksCategories {
-	private List<TasksCategory> tasksCategory;
+public class TaskTB {
+	private int ideNo;
+	private int taskNo;
+	private String category;
 	private String title;
 	private Date startDate;
-	private Date finishDate;
-	private Integer memberNo;
-	private String memberName;
-	private String note;
+	private int duration;
+	private int proNo;
 }

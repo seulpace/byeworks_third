@@ -21,7 +21,6 @@ public class ProjectController {
 	@RequestMapping("postTasks")
 	public String postTasks(@ModelAttribute TasksCategories allTasks) {
 		projectService.saveTasks(allTasks);
-		System.out.println(allTasks.toString());
-		return null;
+		return "project/insertProject";
 	}
 }

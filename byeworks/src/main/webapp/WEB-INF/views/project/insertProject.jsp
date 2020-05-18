@@ -49,65 +49,47 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                        <div id="step-1" style="height: 550px;">
-                                            <form class="form-horizontal form-label-left">
+                                        <form action="postTasks" class="form-horizontal form-label-left" method="post">
+                                            <div id="step-1" style="height: 550px;">
                                                 <div class="form-group row">
-                                                    <label class="col-form-label col-md-3 col-sm-3 label-align"
-                                                        for="pro-title">프로젝트명
-                                                    </label>
+                                                    <label class="col-form-label col-md-3 col-sm-3 label-align">프로젝트명</label>
                                                     <div class="col-md-6 col-sm-6">
-                                                        <input type="text" id="pro-title" required="required"
-                                                            class="form-control" name="title">
+                                                        <input type="text" required="required" class="form-control" name="title">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-form-label col-md-3 col-sm-3 label-align"
-                                                        for="pro-start">시작일
-                                                    </label>
+                                                    <label class="col-form-label col-md-3 col-sm-3 label-align">시작일</label>
                                                     <div class="col-md-6 col-sm-6">
-                                                        <input type="date" id="pro-start" required="required"
-                                                            class="form-control" name="start">
+                                                        <input type="date" required="required" class="form-control" name="startDate">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-form-label col-md-3 col-sm-3 label-align"
-                                                        for="pro-finish">종료일
-                                                    </label>
+                                                    <label class="col-form-label col-md-3 col-sm-3 label-align">종료일</label>
                                                     <div class="col-md-6 col-sm-6">
-                                                        <input type="date" id="pro-finish" required="required"
-                                                            class="form-control" name="finish">
+                                                        <input type="date" required="required" class="form-control" name="finishDate">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-form-label col-md-3 col-sm-3 label-align"
-                                                        for="pro-member">참여인원
-                                                    </label>
+                                                    <label class="col-form-label col-md-3 col-sm-3 label-align">참여인원</label>
                                                     <div class="col-md-6 col-sm-6">
-                                                        <input type="text" id="pro-member" required="required"
-                                                            class="form-control" name="memberNames">
+                                                        <input type="text" required="required" class="form-control" name="memberName">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-form-label col-md-3 col-sm-3 label-align"
-                                                        for="pro-note">메모
-                                                    </label>
+                                                    <label class="col-form-label col-md-3 col-sm-3 label-align">메모</label>
                                                     <div class="col-md-6 col-sm-6">
-                                                        <textarea id="pro-note" class="form-control" name="note"
-                                                            style="height:200px;"></textarea>
+                                                        <textarea class="form-control" name="note" style="height:200px;"></textarea>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row">
-                                                    <label class="col-form-label col-md-3 col-sm-3 label-align"
-                                                        for="pro-attach">파일첨부
-                                                    </label>
+                                                <!-- <div class="form-group row">
+                                                    <label class="col-form-label col-md-3 col-sm-3 label-align">파일첨부</label>
                                                     <div class="col-md-6 col-sm-6">
-                                                        <input type="file" name="uploadFile">
+                                                        <input type="file" name="oldTitle">
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div id="step-2" style="height: 550px;">
-                                            <form action="postTasks" class="form-horizontal form-label-left" method="post">
+                                                <button type="submit">Submit Test</button> -->
+                                            </div>
+                                            <div id="step-2" style="height: 550px;">
                                                 <div class="row" style="display: block;">
                                                     <div class="col-md-12 col-sm-12">
                                                         <div class="x_content">
@@ -118,8 +100,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                        </form>
                                         <div id="step-3" style="height: 550px;">
                                             <div id="tableChart"></div>
                                             <div id="ganttChart"></div>

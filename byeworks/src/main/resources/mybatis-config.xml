@@ -36,6 +36,11 @@
 		<typeAlias type="com.dadada.byeworks.reservation.model.vo.ReservationDTO" alias="ReservationDTO"/>
 		<typeAlias type="com.dadada.byeworks.alarm.model.vo.Alarm" alias="Alarm"/>
 		<typeAlias type="com.dadada.byeworks.project.model.vo.ProjectMain" alias="ProjectMain"/>
+		<typeAlias type="com.dadada.byeworks.project.model.vo.insert.ProjectTB" alias="ProjectTB"/>
+		<typeAlias type="com.dadada.byeworks.project.model.vo.insert.ProjectMemberTB" alias="ProjectMemberTB"/>
+		<typeAlias type="com.dadada.byeworks.project.model.vo.insert.TaskTB" alias="TaskTB"/>
+		<typeAlias type="com.dadada.byeworks.project.model.vo.insert.TaskMemberTB" alias="TaskMemberTB"/>
+		<typeAlias type="com.dadada.byeworks.project.model.vo.insert.TaskDependencyTB" alias="TaskDependencyTB"/>
 	</typeAliases>
 	
 	<mappers>

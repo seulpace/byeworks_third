@@ -35,5 +35,34 @@
 		         ORDER BY T.START_DATE) SUB3
 		 WHERE ROWNUM <![CDATA[<= ]]> 1
 	</select>
-	
+
+	<select id="selectMemberNo" parameterType="String" resultType="_int">
+		SELECT MEMBER_NO FROM TB_MEMBER WHERE MEMBER_NAME = #{memberName}
+	</select>
+	<insert id="insertProject" parameterType="ProjectTB">
+		INSERT INTO TB_PROJECT
+			VALUES(SEQ_PRO.NEXTVAL, #{title}, #{startDate}, #{finishDate}, #{note}, DEFAULT)
+	</insert>
+	<insert id="insertProjectMember" parameterType="ProjectMemberTB">
+		INSERT INTO TB_PROJECT_MEMBER
+			VALUES(#{proNo}, #{memberNo})
+	</insert>
+	<select id="selectRecentlyAddedProject" resultType="_int">
+		SELECT PRO_NO FROM TB_PROJECT WHERE ROWNUM = 1 ORDER BY PRO_NO DESC
+	</select>
+	<insert id="insertTask" parameterType="taskTB">
+		INSERT INTO TB_TASK
+			VALUES(SEQ_IDE.NEXTVAL, #{taskNo}, #{category}, #{title}, #{startDate}, #{duration}, #{proNo})
+	</insert>
+	<insert id="insertTaskMember" parameterType="taskMemberTB">
+		INSERT INTO TB_TASK_MEMBER
+		VALUES(#{proNo}, #{memberNo}, #{ideNo})
+	</insert>
+	<select id="selectRecentlyAddedTask" resultType="_int">
+		SELECT IDE_NO FROM TB_TASK WHERE ROWNUM = 1 ORDER BY IDE_NO DESC
+	</select>
+	<insert id="insertTaskDependency" parameterType="taskDependencyTB">
+		INSERT INTO TB_TASK_DEPENDENCY
+		VALUES(SEQ_DEPEND.NEXTVAL, #{ideNo}, #{reqNo})
+	</insert>
 </mapper>

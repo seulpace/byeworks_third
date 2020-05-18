@@ -41,8 +41,8 @@ function updateTaskNumbers() {
             table.getElementsByTagName("tr")[j].getElementsByTagName("td")[2].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].start");
             table.getElementsByTagName("tr")[0].getElementsByTagName("th")[1].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].category");
             table.getElementsByTagName("tr")[j].getElementsByTagName("td")[3].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].duration");
-            table.getElementsByTagName("tr")[j].getElementsByTagName("td")[4].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].reqNo");
-            table.getElementsByTagName("tr")[j].getElementsByTagName("td")[5].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].dependNo");
+            table.getElementsByTagName("tr")[j].getElementsByTagName("td")[4].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].memberName");
+            table.getElementsByTagName("tr")[j].getElementsByTagName("td")[5].getElementsByTagName("input")[0].setAttribute("name", "tasksCategory["+i+"].tasks["+(j-2)+"].reqNo");
         }
     }
 }
@@ -166,6 +166,8 @@ function ganttChart() {
             var percentComplete = parseInt((currentDate - new Date(tmpTds[2].getElementsByTagName("INPUT")[0].value)) / (24 * 60 * 60 * 1000)) / 3 * 100;
             if (percentComplete < 0) {
                 percentComplete = 0;
+            }else if (percentComplete > 100) {
+                percentComplete = 100;
             }
             tmpData =   [tmpTds[0].innerText, 
                         tmpTds[1].getElementsByTagName("input")[0].value, 
