@@ -79,6 +79,12 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label class="control-label col-md-3 col-sm-3 ">아이디</label>
+                      <div class="col-md-9 col-sm-9 ">
+                        <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.memberId }">
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">소속</label>
                       <div class="col-md-9 col-sm-9 ">
                         <input type="text" class="form-control form-kdh" readonly="readonly" value="${ m.department }">

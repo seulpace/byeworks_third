@@ -45,7 +45,7 @@
 	</select>
 	
 	<insert id="insertView" parameterType="com.dadada.byeworks.reservation.model.vo.ReservationDTO" >
-		INSERT INTO BYEWORKS.TB_RESERVATION 
+		INSERT INTO TB_RESERVATION 
 			(
 				RESERVATION_NO,
 				ROOM_NO,

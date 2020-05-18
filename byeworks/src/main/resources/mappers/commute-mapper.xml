@@ -8,6 +8,7 @@
 		<result property="commuteDate" column="commute_date" />
 		<result property="commuteMember" column="commute_member" />
 		<result property="commuteStatus" column="commute_status" />
+		<result property="commuteStatusStr" column="commute_status_str"/>
 		<result property="commuteWork" column="commute_work" />
 		<result property="commuteLeaved" column="commute_leaved" />
 		<result property="commuteAnnual" column="commute_annual" />
@@ -45,11 +46,13 @@
 	<select id="myCommute" resultMap="commuteResultSet">
 	
 		select to_char(commute_date, 'MM/DD') commute_date_str, NVL(commute_work, ' ') commute_work, NVL(commute_leaved, ' ') commute_leaved, 
-				case when commute_annual = 0 then '연차'
-					 when commute_annual = 1 then '오전반차'
-					 when commute_annual = 2 then '오후반차'
-					 else ' '
-				end commute_ann
+				    case when commute_status = 0 then '출근'
+		             when commute_status = 1 then '연차사용'
+		             when commute_status = 2 then '오전반차사용'
+		             when commute_status = 3 then '오후반차사용'
+		             when commute_status = 4 then '지각'
+		             when commute_status = 5 then '무단결근'
+		        end commute_status
 		from tb_commute
 		where commute_member = #{commuteMember}
 		 	and to_char(commute_date, 'YYYY/MM') = #{commuteDateStr}

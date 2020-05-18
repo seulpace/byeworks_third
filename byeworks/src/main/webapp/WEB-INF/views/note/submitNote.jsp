@@ -33,6 +33,7 @@
  	</style>
 </head>
 <body class="nav-md">
+		
 	<div class="container body">
 		<div class="main_container">
 		
@@ -211,6 +212,8 @@
 			// 받는 사람 아이디
 			var receiverId = $("#receiveId").val();
 			
+			var returnValue = false;
+			
 			// 쪽지 보내기
 			$.ajax({
 				url:'send.nt',
@@ -218,9 +221,9 @@
 					  content:content,
 					  receiveNo:receiveNo},
 				type:'post',
+				async:false,
 				success:function() {
-					alertify.alert("발송되었습니다");
-					// 성공하면 웹소켓으로 보내줘야 한다
+					//alertify.alert("발송되었습니다");
 					if(ws) {
 						// note,보낸사람이름,받는사람아이디
 						let wsMsg = "note," + caller + "," + receiverId;

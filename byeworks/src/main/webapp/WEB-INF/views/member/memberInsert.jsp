@@ -17,7 +17,8 @@
     <link href="${pageContext.request.contextPath}/resources/css/basic/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/resources/css/custom.min.css" rel="stylesheet">
- 
+ 	<!-- 주소 api -->
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
  	<title>Byeworks</title>
  	<style>
  	
@@ -50,20 +51,20 @@
                   <form class="form-horizontal form-label-left" id="updateMember" method="post" enctype="multipart/form-data" action="memberInsert.me"> 
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">프로필사진</label>
-                      <div class="col-md-9 col-sm-9 ">
+                      <div class="col-md-7 col-sm-7 ">
                         <input type="file" name="profilePicture" id="profilePicture" >
                       </div>
                     </div>
                     
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">이름</label>
-                      <div class="col-md-9 col-sm-9 ">
+                      <div class="col-md-7 col-sm-7 ">
                         <input type="text" class="form-control" id="memberName" name="memberName">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="department" class="control-label col-md-3 col-sm-3 ">소속</label>
-                      <div class="col-md-9 col-sm-9 ">
+                      <div class="col-md-7 col-sm-7 ">
                         <select id="department" class="select2_single form-control" tabindex="-1"  name="department">
                           <option value="9">선택 해주세요.</option>
                           <option value="2">사업팀1</option>
@@ -77,7 +78,7 @@
                     </div>
                     <div class="form-group row">
                       <label for="position" class="control-label col-md-3 col-sm-3 ">직위</label>
-                        <div class="col-md-9 col-sm-9 ">
+                        <div class="col-md-7 col-sm-7 ">
                           <select id="position" class="select2_single form-control" tabindex="-1" name="position">
                                 <option value="9">선택 해주세요.</option>
                                 <option value="1">임원</option>
@@ -90,34 +91,37 @@
                     
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">사내 전화</label>
-                      <div class="col-md-9 col-sm-9 ">
+                      <div class="col-md-7 col-sm-7 ">
                         <input type="text" class="form-control" id="extension" name="extension">
                       </div>
                     </div>
                  
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">휴대전화</label>
-                      <div class="col-md-9 col-sm-9 ">
+                      <div class="col-md-7 col-sm-7 ">
                         <input type="text" class="form-control" id="phone" name="phone">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">개인이메일</label>
-                      <div class="col-md-9 col-sm-9 ">
+                      <div class="col-md-7 col-sm-7 ">
                         <input type="email" class="form-control" id="email" name="email">
                       </div>
                     </div>
                    
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">주소</label>
-                      <div class="col-md-9 col-sm-9 ">
-                        <input type="text" class="form-control"  id="address" name="address">
+                      <div class="col-md-7 col-sm-7 ">
+                        <input type="text" class="form-control"  id="address" name="address" readonly>
+                      </div>
+                      <div class="col-md-2 col-sm-2">
+                     	 <button type="button" class="btn btn-secondary" onclick="sample4_execDaumPostcode()">검색</button>
                       </div>
                     </div>
                     <div class="form-group row ">
                       <label class="control-label col-md-3 col-sm-3 ">생년월일</label>
-                      <div class="col-md-9 col-sm-9 ">
-                        <input type="String" class="form-control"  id="birth" name="birth">
+                      <div class="col-md-7 col-sm-7 ">
+                        <input type="text" class="form-control"  id="birth" name="birth">
                       </div>
                     </div>
                     <div class="ln_solid"></div>
@@ -192,6 +196,43 @@
 		}
 		$("#insertBtn").modal();
     });
+    
+    
+    
+	function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+            	 var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                 var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+  
+                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                     extraRoadAddr += data.bname;
+                 }
+                 // 건물명이 있고, 공동주택일 경우 추가한다.
+                 if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                 }
+                 // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                 if(extraRoadAddr !== ''){
+                     extraRoadAddr = ' (' + extraRoadAddr + ')';
+                 }
+                 // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                 if(fullRoadAddr !== ''){
+                     fullRoadAddr += extraRoadAddr;
+                 }
+  
+                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                 
+                 console.log(fullRoadAddr);
+                 
+                 
+               
+                 $("[name=address]").val(fullRoadAddr);
+              
+            }
+        }).open();
+    }
+
     </script>
     <!-- 메인 틀을 구성하기 위한 JS 추가 코드 -->
 	<!-- Bootstrap -->

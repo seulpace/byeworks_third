@@ -240,7 +240,7 @@ public class SignDao {
 
 	public int updateAttachmentList(SqlSessionTemplate sqlSession, ArrayList<SignAttachment> alist) {
 		
-		int result = 0;
+		int result = 1;
 		for(SignAttachment sa : alist) {
 			
 			result = sqlSession.insert("signMapper.updateAttachmentList", sa);

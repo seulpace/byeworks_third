@@ -123,7 +123,7 @@ public class AlarmController {
 	
 	// 쪽지에서 보낸 후에 insert 해주기
 	@RequestMapping("insert.al")
-	public String insertAlarm(Note n, String alarmGroupNo) {
+	public String insertAlarm(Note n, String alarmGroupNo, HttpSession session) {
 		
 		// 이미 ajax로 note에 insert한 뒤기 때문에 가장 큰 번호를 받아온다
 		int noteNo = ntService.returnSequence();
@@ -143,6 +143,8 @@ public class AlarmController {
 		
 		// 알람 넣어주기
 		int result = alService.insertAlarm(a);
+		
+		session.setAttribute("sendMsg", "전송되었습니다.");
 		
 		if(result > 0) {
 			return "redirect:selectList.nt";

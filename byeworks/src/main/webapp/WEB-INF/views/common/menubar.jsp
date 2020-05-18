@@ -111,16 +111,15 @@
                      			<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 1 or loginUser.departmentNo eq 0 }">
                      				<li><a href="memberList.me">전체 사원 조회 (인)</a></li>
                      			</c:if>	
-                     			<li><a>발령<span class="fa fa-chevron-down"></span></a>
-                       				<ul class="nav child_menu">
-                         				<li class="sub_menu"><a href="appointmentList.adto">발령내역</a>
-			                         	</li>
-			                         	<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 1 or loginUser.departmentNo eq 0 }">
-			                         		<li><a href="appointmentForm.adto">발령서</a>
-			                         	</c:if>	
-			                         	</li>
-                       				</ul>
-                     			</li>
+                     			<c:if test="${loginUser.departmentNo eq 4 or loginUser.departmentNo eq 5 or loginUser.departmentNo eq 1 or loginUser.departmentNo eq 0 }">
+	                     			<li><a>발령<span class="fa fa-chevron-down"></span></a>
+	                       				<ul class="nav child_menu">
+	                         				<li class="sub_menu"><a href="appointmentList.adto">발령내역</a>
+				                         	</li>
+				                         		<li><a href="appointmentForm.adto">발령서</a></li>
+	                       				</ul>
+	                     			</li>
+                     			</c:if>
                    			</ul>
                  		</li>
 	                 	<li><a><i class="fa fa-briefcase"></i> 근태 관리 <span class="fa fa-chevron-down"></span></a>

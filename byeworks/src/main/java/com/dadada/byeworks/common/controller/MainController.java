@@ -13,8 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import com.dadada.byeworks.commute.model.service.CommuteService;
+
 import com.dadada.byeworks.alarm.model.service.AlarmService;
+import com.dadada.byeworks.commute.model.service.CommuteService;
 import com.dadada.byeworks.member.model.vo.Member;
 import com.dadada.byeworks.notice.model.service.NoticeService;
 import com.dadada.byeworks.notice.model.vo.Notice;
@@ -67,6 +68,7 @@ public class MainController {
 		// 프로젝트 조회
 		ProjectMain pm = pService.selectProject(no);
 		session.setAttribute("projectMain", pm);
+		System.out.println(pm);
 		
 		mv.setViewName("main");
 		
@@ -122,7 +124,9 @@ public class MainController {
 			commuteStatus=5;
 			map.put("commuteStatus", commuteStatus);
 		}else if(commuteWorkFormat.getTime() >= lateTime.getTime()){	// 9:00 이후 출근 지각
-			//if()	// 오전반차 사용했을경우 지각아니고 
+//			if(commuteMember) { // commuteMember의  tb_sign dType=V 이고  tb_annual_sign startday sysdate이고 annualType=1번일때
+//				// 오전반차 사용했을경우 지각아니고 
+//			}
 			commuteStatus = 4;
 			map.put("commuteStatus", commuteStatus);
 		}else {	// 정상출근

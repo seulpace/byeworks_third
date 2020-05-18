@@ -114,7 +114,7 @@
 			    	                      "<th scope='row'>" + obj.commuteDateStr + "</th>" + 
 			    	                      "<td>" + obj.commuteWork + "</td>" + 
 			    	                      "<td>" + obj.commuteLeaved + "</td>" + 
-			    	                      "<td>" + obj.commuteAnn + "</td>" + 
+			    	                      "<td>" + obj.commuteStatus + "</td>" + 
 			    	                    "</tr>";
 			    						
     					});
