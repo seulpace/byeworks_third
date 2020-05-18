@@ -182,11 +182,11 @@ function ganttChart() {
         }
     }
     var options = {
-        width: document.getElementById("tableChart").offsetWidth,
-        height: 20 * 19,
+        width: 1200,
+        height: 25 * 12,
         gantt: {
-            trackHeight: 20,
-            barHeight: 15,
+            trackHeight: 25,
+            barHeight: 20,
             criticalPathEnabled: false
         }
     };
